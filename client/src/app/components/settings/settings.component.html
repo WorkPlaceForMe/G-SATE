@@ -1,0 +1,11 @@
+<div class="container p-4">
+  <div class="card bg-primary border-primary mb-3">
+  <div class="card-body">
+  <!-- <button type="button" class="btn btn-success btn-lg btn-block" (click)="send()"><i class="fas fa-play"></i> Send information to Algorithms</button>
+  <hr> -->
+  <button type="button" class="btn btn-lg btn-block" [ngClass]="{'btn-success':started == 0,'btn-warning':started == 1,'btn-danger':started == 2 || started == 3}" [disabled]='started == 2 || started == 1 || started == 3' (click)="st1()"><i class="fas fa-play"></i> Start Facial Recognition Analytics</button>
+  <hr>
+  <button type="button" class="btn btn-lg btn-block" [ngClass]="{'btn-danger':started == 1 || started == 0,'btn-success':started == 2,'btn-warning':started == 3}" [disabled]='started == 0 || started == 1 || started == 3' (click)="sto1()"><i class="fas fa-stop"></i> Stop Facial Recognition Analytics</button>
+  </div>
+  </div>
+  </div>

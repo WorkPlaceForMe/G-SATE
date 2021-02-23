@@ -1,0 +1,69 @@
+
+<div class="col-md-4 offset-md-2" [@flyInOut]>
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <h6>Name</h6>
+        <div class="form-group">
+          <input type="text" name="name" [(ngModel)]="user.name" placeholder="Name" class="form-control form-control-lg" autofocus required>
+          </div>
+          <div class="form-group">
+            <h6>Gender</h6>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio1" name="gender" class="custom-control-input" checked="" value="Male"  [(ngModel)]="user.gender">
+                <label class="custom-control-label" for="customRadio1">Male</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="Female"  [(ngModel)]="user.gender">
+                <label class="custom-control-label" for="customRadio2">Female</label>
+              </div>
+              </div>
+              <h6>Age Group</h6>
+              <div class="form-group">
+  <select name="age_group" class="custom-select" [(ngModel)]="user.age_group">
+    <option value="" disabled>Choose:</option>
+    <option value="Senior">Senior</option>
+    <option value="Middle Age">Middle Age</option>
+    <option value="Adult">Adult</option>
+    <option value="Young Adult">Young Adult</option>
+    <option value="Teen">Teen</option>
+  </select>
+</div>
+              <h6>Designation</h6>
+                <div class="form-group">
+    <select name="role" class="custom-select" [(ngModel)]="user.role">
+      <option value="" disabled>Choose:</option>
+      <option value="Employee">Employee</option>
+      <option value="CIP">CIP</option>
+      <option value="VIP">VIP</option>
+    </select>
+  </div>
+  <div class="p-1" *ngIf="mess0">
+    <div class="alert alert-danger">
+      <strong>Oh snap!</strong> Fill all the form please.
+  </div>
+  </div>
+  <h6>Category</h6>
+  <div class="form-group">
+<select name="category" class="custom-select" [(ngModel)]="user.category">
+<option value="" disabled>Choose:</option>
+<option value="Whitelist">Whitelist</option>
+<option value="Blacklist">Blacklist</option>
+</select>
+</div>
+  <button class="btn btn-success btn-block" (click)="edit ? updateUser() : saveUser()" [disabled]="is_saving">Save</button>
+</form>
+    </div>
+  </div>
+</div>
+<div class="col-md-4" [@flyInOut]>
+  <div class="card card-body text-center">
+    <h3>
+    {{user.name == '' ? 'User Name' : user.name}}</h3>
+    <p>{{user.gender == '' ? 'Insert gender' : user.gender}}</p>
+    <p>{{user.age_group == '' ? 'Insert group age' : user.age_group}}</p>
+    <p>{{user.role == '' ? 'Choose designation' : user.role}}</p>
+    <p>{{user.category == '' ? 'Choose category' : user.category}}</p>
+    <a href="/management" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-left"></i> &nbsp;Back</a>
+  </div>
+</div>

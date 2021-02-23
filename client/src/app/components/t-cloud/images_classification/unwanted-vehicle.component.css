@@ -1,0 +1,17 @@
+ng-scrollbar {
+    --scrollbar-size: 8px;
+    --scrollbar-thumb-color: rgba(55,90,127, 0.5);
+    --scrollbar-thumb-hover-color: rgb(55,90,127);
+    --scrollbar-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #375a7f;
+  }
+
+img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #375a7f;
+  }

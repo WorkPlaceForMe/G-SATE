@@ -1,0 +1,25 @@
+<div class="col-md-4 offset-md-2">
+  <div class="card card-body text-center">
+    <h3>
+    {{camera.name == '' ? 'Name of Camera' : camera.name}}</h3>
+    <p>{{camera.rtsp_in == '' ? 'Link' : camera.rtsp_in}}</p>
+    <a href="/camerasList" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-left"></i> Back</a>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <h6>Name:</h6>
+        <div class="form-group">
+          <input type="text" name="name" [(ngModel)]="camera.name" placeholder="Name" class="form-control form-control-lg" autofocus required>
+          </div>
+          <h6>Rtsp link:</h6>
+          <div class="form-group">
+            <input type="text" name="rtsp" [(ngModel)]="camera.rtsp_in" placeholder="Link" class="form-control form-control" required>
+            </div>
+        <button class="btn btn-success btn-block" (click)="edit ? updateCamera() : saveCamera()">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

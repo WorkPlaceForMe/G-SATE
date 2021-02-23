@@ -1,0 +1,48 @@
+<div class="card-group">
+<div class="col-md-10">
+<div class="card border-info" style="min-height: 527.6px;">
+    <div class="card-body" align ='center'>
+<canvas #polygon id="jPolygon" height='{{height}}' width='{{width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"  (click)='annotate($event)'[style.background-image]="link" oncontextmenu="return false;">
+  Your browser does not support the HTML5 canvas tag.
+</canvas>
+</div>
+</div>
+</div>
+
+<div class=" col-md-2">
+<div class="card border-info panel">
+  <div class="card-header" align='center' *ngIf='objDet == false'>List of areas</div>
+  <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
+<ul>
+<li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[2].label}}</li>
+</ul>
+</div>
+
+<div class="card border-info panel" style='margin-top:2px;' *ngIf='objDet == true'>
+  <div class="card-header" align='center' >Instructions</div>
+  <div class="card-body">
+  <p><strong>Click the object to define it with the new label</strong> </p>
+</div>
+</div>
+</div>
+</div>
+<div class="input-group mb-1 p-1" *ngIf='multiple == true'>
+        <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label">
+        <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
+        <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
+        <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
+            <option value="undefined" disabled>Please choose a label</option>
+          <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
+        </select>
+</div>
+<div class='btn-group p-2' role="group">
+<button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
+<button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button>
+<button class="btn btn-info" [routerLink]="['/annotations']" >Back to folders</button>
+<button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
+</div>
+
+
+<div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
+    <strong>Oops!</strong> Please choose a label to start.
+</div>

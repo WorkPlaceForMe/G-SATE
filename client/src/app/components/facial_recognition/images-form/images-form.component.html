@@ -1,0 +1,46 @@
+<div class="col-md-3">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form">
+        <h4>Hello: {{user.name}}</h4>
+        <h6>File: {{this.fileName}}</h6>
+        <div class="form-group">
+  <div class="input-group mb-3">
+    <div class="custom-file">
+       <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" name="file" ng2FileSelect [uploader]="uploader" multiple/>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn btn-success btn-s btn-block"
+      (click)="uploader.uploadAll();"
+      [disabled]="!uploader.getNotUploadedItems().length || uploader.getNotUploadedItems().length + this.images.length == 0">
+      Upload
+</button>
+<!-- <button class="btn btn-primary" (click)="info()">Info</button> -->
+<a [routerLink]="['/management']" class="btn btn-primary btn-block"><i class="fas fa-arrow-circle-left"></i>&nbsp;Go to management</a>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="col-md-3 mb-3" *ngFor = "let image of imagesFiles; index as i" style="min-height: 18rem; margin-top: 10px;">
+  <div class="card text-center">
+        <div class="card-body">
+          <div class="embed-responsive embed-responsive-4by3">
+    <img [src]="image.location | trustedUrl" class="embed-responsive-item img-thumbnail" style='width: 100%; object-fit: contain'>
+    </div>
+<br>
+<div class="row">
+      <button class="btn btn-danger btn-block" (click)="deleteImage(image.name)">
+        <!-- ; deleteImageFile(image.name) -->
+        <i class="far fa-trash-alt"></i>
+      </button>
+       <!-- <div class="form-group col-md-2" align='right'>
+       <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="check{{i}}" (change)="getIt(image.name,i)">
+          <label class="custom-control-label" for="check{{i}}"></label>
+        </div>
+      </div> -->
+        </div>
+    </div>
+  </div>
+  </div>

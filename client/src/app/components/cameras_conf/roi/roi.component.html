@@ -1,0 +1,167 @@
+              
+              <div class="card bg-primary border-primary mb-3">
+                  <div class="card-body">
+                    <h1 align='center'>RoI for {{algorithm.name}}</h1>
+                  </div>
+              </div>               
+                 <div class='btn-group' role="group">
+                <a class="btn btn-success" [href]="['/cameras/algorithms/'+ param]" (click)="saveWrong()" *ngIf='id == 8'>Save</a> 
+                <a class="btn btn-success" [href]="['/cameras/algorithms/'+ param]" (click)="save()" *ngIf='id != 8'>Save</a>
+                <!-- <button class="btn btn-success" (click)="save()">Saveeee</button> -->
+                <button class="btn btn-warning" [routerLink]="['/cameras/algorithms/', param]">Back</button>
+              </div>&nbsp;&nbsp;
+                <div class='btn-group' role="group">
+                <!-- <button *ngIf="different == false" class="btn btn-info" (click)="close()">Confirm area</button> -->
+                <button *ngIf='id == 8'class="btn btn-info" (click)="addPair()">Add new pair of areas</button>
+                <button class="btn btn-primary" (click)="info()">info</button>
+                <button class="btn btn-primary" (click)="undo()">Undo point</button>
+                <button class="btn btn-primary" (click)="clear_canvas()">Clear current unfinished area</button>
+                <button class="btn btn-primary" (click)="remove_last()">Remove previous area</button>
+              </div>
+              <div class="p-1" *ngIf="showMyMessage1">
+                  <div class="alert alert-danger col-md-4">
+                    <strong>Oh snap!</strong> Check at least one vehicle.
+                </div>
+              </div>
+              <div class="p-1" *ngIf="showMyMessage2">
+                  <div class="alert alert-danger col-md-4">
+                    <strong>Oh snap!</strong> Check all inputs.
+                </div>
+              </div>
+              <div class="p-1" *ngIf="showMyMessage3">
+                <div class="alert alert-danger col-md-4">
+                    <strong>Oh snap!</strong> Please finish the direction before starting a new one.
+                </div>
+              </div>
+              <div class="p-1" *ngIf="showMyMessage4">
+              <div class="alert alert-danger col-md-4">
+                  <strong>Oh snap!</strong> Each zone needs a beggining and an end.
+              </div>
+            </div>
+            <div class="p-1" *ngIf="showMyMessage">
+              <div class="alert alert-danger col-md-4">
+                    <strong>Oh snap!</strong> Try adding more than two points.
+                </div></div>
+
+              <div class="col-md-12">
+                <div class="p-2">
+                    <!-- <div class="card border-info"> -->
+                        <div class="card border-info mb-3">
+                  <canvas #polygon id="jPolygon" height='{{height}}' width='{{width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (mousedown)="point_it($event)" [style.background-image]="link" oncontextmenu="return false;">
+                    Your browser does not support the HTML5 canvas tag.
+                  </canvas>
+                  </div>
+                </div>
+                    <div *ngIf="id == 8">
+                        <div class="card-columns p-2">
+                      <div class="card border-info mb-3 panel">
+                        <div class="card-header" align='center'>Wrong way setting</div>
+                        <div class="card-body">
+                                    <div class="form-group">
+                                  <div class="custom-control custom-radio">
+                                    <input [(ngModel)]="wrong['dir']" name="customRadio" class="custom-control-input" id="customRadio1" type="radio" value='beggining' disabled>
+                                    <label class="custom-control-label" for="customRadio1">Beggining</label>
+                                    </div>
+                                  <div class="custom-control custom-radio">
+                                    <input [(ngModel)]="wrong['dir']" name="customRadio" class="custom-control-input" id="customRadio2" type="radio" value='end' disabled>
+                                    <label class="custom-control-label" for="customRadio2">End</label>
+                                  </div>From: &nbsp;
+                                  <input class="text" disabled size="5" value="Area {{wrong['of'] + 1}}">
+                                   <div class="dropdown-divider"></div>
+                        <div class="custom-control custom-checkbox" >
+                            <input type="checkbox" class="custom-control-input" id="anpr4" [(ngModel)]="wrong['anpr']" [disabled]="algos[13]['activated'] == false || algos[13]['activated'] == undefined">
+                            <label class="custom-control-label" for="anpr4">Licence plate detector</label>
+                          </div>   
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card border-info mb-3 panel">
+                          <div class="card-header" align='center'>List of areas</div>
+                    <ul>
+                      <li *ngFor='let pol of polygons; index as i' (click)='get_dir(i)'>Area {{i+1}}</li>
+                    </ul>
+                  </div>
+
+
+                    <div class="card border-info mb-3 panel">
+                      <div class="card-header" align='center'>Wrong way setting of Area {{wrong0['id'] + 1}}</div>
+                      <div class="card-body">
+                                  <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                  <input [(ngModel)]="wrong0['dir']" name="customRadio2" class="custom-control-input" id="customRadio3" type="radio" value='beggining' disabled>
+                                  <label class="custom-control-label" for="customRadio3">Beggining</label>
+                                  </div>
+                                <div class="custom-control custom-radio">
+                                  <input [(ngModel)]="wrong0['dir']" name="customRadio2" class="custom-control-input" id="customRadio4" type="radio" value='end' disabled>
+                                  <label class="custom-control-label" for="customRadio4">End</label>
+                                </div>From: &nbsp;
+                                <input class="text" disabled size="5" value="Area {{wrong0['of'] + 1}}">
+                                 <div class="dropdown-divider"></div>
+                      <div class="custom-control custom-checkbox" >
+                          <input type="checkbox" class="custom-control-input" id="anpr5" [(ngModel)]="wrong0['anpr']" disabled=''>
+                          <label class="custom-control-label" for="anpr5">Licence plate detector</label>
+                        </div>   
+                        </div>
+                      </div>
+                    </div>
+
+
+                    </div>
+                    </div>
+
+                    <div *ngIf="id == 4">
+                      <div class="card-columns p-2">
+                        <div class="card border-info mb-3 panel">
+                          <div class="card-header" align='center'>Parking Violation</div>
+                          <div class="card-body">
+                            <div class="form-group">
+                      
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck3" [(ngModel)]="parking['car']">
+                                <label class="custom-control-label" for="customCheck3">Car</label>
+                              </div>
+                      
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck4" [(ngModel)]="parking['truck']">
+                                <label class="custom-control-label" for="customCheck4">Truck</label>
+                              </div>
+                              <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck5" [(ngModel)]="parking['two_wheeler']">
+                                    <label class="custom-control-label" for="customCheck5">Two wheeler</label>
+                                  </div>
+
+                              <div class="dropdown-divider"></div>
+                              <div align='center'>
+                              Permited time<br>
+                              <input type="number" [(ngModel)]="parking['time']" min="0" max="120"> minutes
+                            </div>
+                      
+                      <div class="dropdown-divider"></div>
+                      <div align='right'>
+                          From:&nbsp;<input type="time" [(ngModel)]="parking['rangeB']">
+                          <br>to:&nbsp;<input type="time" [(ngModel)]="parking['rangeE']">
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="custom-control custom-checkbox" >
+                            <input type="checkbox" class="custom-control-input" id="anpr3" [(ngModel)]="parking['anpr']" [disabled]="algos[13]['activated'] == false || algos[13]['activated'] == undefined">
+                            <label class="custom-control-label" for="anpr3">Licence plate detector</label>
+                          </div>   
+                              </div>                              
+                              <div class="dropdown-divider"></div>
+                          <div align='center' *ngIf='selected != undefined'>
+                            <button class='btn btn-info btn-sm' (click)='close_park()'>Update</button>
+                          </div>
+                          </div>                          
+                        </div>          
+                        
+                            <div class="card border-info mb-3 panel">
+                                <div class="card-header" align='center'>List of areas</div>
+                          <ul>
+                            <li *ngFor='let pol of polygons; index as i' (click)='get(i)'>Area {{i+1}}</li>
+                          </ul>
+                        </div>
+                    </div>
+                      </div>
+
+              </div>

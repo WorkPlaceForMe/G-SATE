@@ -1,0 +1,16 @@
+<table>
+		<tr>
+			<th>
+				<button class="btn btn-primary"  (click)='write()'>New Document</button>
+			</th>
+			<th><input type='text' placeholder="Name of doc" [(ngModel)] = 'name'></th>
+		</tr>
+		<tr  *ngFor='let docId of documents | async'>
+			<td [class.selected]='docId === currentDocId' class='btn btn-outline-primary btn-block' (click)='loadDoc(docId)'>
+				{{ docId }}
+			</td>
+			<td >
+				<button class="btn btn-danger btn-sm"  (click)= 'delDoc(docId)'>Delete</button>
+			</td>
+		</tr>
+</table>

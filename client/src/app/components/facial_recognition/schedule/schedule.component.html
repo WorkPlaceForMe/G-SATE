@@ -1,0 +1,78 @@
+<div class="col-md-12">
+  <table class="table table-hover" frame='border' id="myTable">
+    <thead  align='center'>
+        <tr>
+        <th scope="col"></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Monday</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Tuesday</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Wednesday</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Thurdsay</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Friday</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Saturday</button></th>
+        <th scope="col"><button type="button" class="btn btn-primary btn-block">Sunday</button></th>
+      </tr>
+    </thead>
+    <tr class="table-light">
+        <td scope="row">
+            In:
+          </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[0]}}" #start_1 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[1]}}" #start_2 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[2]}}" #start_3 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[3]}}" #start_4 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[4]}}" #start_5 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[5]}}" #start_6 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriStart[6]}}" #start_7 required>
+      </td>
+          </tr>
+    <tr class="table-light">
+        <td scope="row">
+            Out:
+          </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[0]}}" #end_1 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[1]}}" #end_2 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[2]}}" #end_3 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[3]}}" #end_4 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[4]}}" #end_5 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[5]}}" #end_6 required>
+      </td>
+      <td scope="row">
+        <input type="time" class="form-control" value = "{{this.oriEnd[6]}}" #end_7 required>
+      </td>
+    </tr>
+</table>
+</div>
+<div class="card bg-primary border-primary mb-3">
+    <div class="card-body">
+      <a class="btn btn-success btn-lg btn-block" (click)="submit(start_1.value, start_2.value, start_3.value,
+      start_4.value, start_5.value, start_6.value, start_7.value,
+      end_1.value, end_2.value, end_3.value, end_4.value,
+      end_5.value, end_6.value, end_7.value)"><i class="fas fa-calendar-alt"></i> &nbsp;Add Schedule</a>
+      <a href="/management" class="btn btn-success btn-block"><i class="fas fa-arrow-circle-left"></i> &nbsp;Back</a>
+      <button (click)="deleteSchedule()" class="btn btn-danger btn-lg btn-block"><i class="far fa-trash-alt"></i>&nbsp; Delete</button>
+    </div>
+  </div> 

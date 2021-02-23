@@ -1,0 +1,136 @@
+var express = require('express');
+    var app = express();
+    var fs = require('fs');
+    var Faces = require('./routes/Faces');
+    var Faces2 = require('./routes/Faces2');
+    var Faces3 = require('./routes/Faces3');
+    var Images = require('./routes/Images');
+    var Users = require('./routes/Users');
+    var Users2 = require('./routes/Users2');
+    var Users3 = require('./routes/Users3');
+    var Users4 = require('./routes/Users4');
+    var Users5 = require('./routes/Users5');
+    var Users6 = require('./routes/Users6');
+    var Cameras = require('./routes/Cameras');
+    var hm = require('./routes/Heatmap');
+    var schedule = require('./routes/Schedule');
+    var bodyParser = require('body-parser');
+    var multer = require('multer');
+    var cookieParser = require('cookie-parser');
+    var cp = require('child_process');
+    var morgan = require('morgan')
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+         res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+
+    app.use(morgan('tiny'))
+
+    app.use('/api/face',Faces);
+    app.use('/api/count',Faces2);
+    app.use('/api/emotion',Faces3);
+    app.use('/api/images',Images);
+    app.use('/api/users',Users);
+    app.use('/api/sort/name',Users2);
+    app.use('/api/sort/gender',Users3);
+    app.use('/api/sort/age',Users4);
+    app.use('/api/sort/role',Users5);
+    app.use('/api/sort/category',Users6);
+    app.use('/api/cameras',Cameras);
+    app.use('/api/hm',hm);
+    app.use('/api/schedule',schedule);
+
+    /** Serving from the same express Server
+    No cors required */
+    app.use(express.static('../client'));
+    app.use(bodyParser.json());
+    var storage = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+            cb(null, './uploads/')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = file.originalname.toString()
+            // var datetimestamp = Math.round(Date.now()/4500) * 4500;
+            cb(null, datetimestamp)
+//file.originalname
+        }
+    });
+    var upload = multer({ //multer settings
+                    storage: storage
+                }).single('file');
+    /** API path that will upload the files */
+    app.post('/upload/', function(req, res, next) {
+        upload(req,res,function(err){
+            if(err){
+                 res.json({error_code:1,err_desc:err});
+                 return;
+            }
+             res.json('Uploaded');
+        })
+    });
+   
+   // Some api requires the socket as it needs to wait for a reply
+   /* app.get('/api/send/', function(req, res, err){
+            cp.exec('../multicamera/TRAIN.sh', function(err,data){
+                console.log('err: ',err)
+                console.log('data: ',data);  
+                res.send("success") 
+            })
+    });*/
+    
+
+    const spawn = require("child_process").spawn;
+    app.get('/api/send_socket/', function(req, res, err){
+        const trigger = spawn('python',["trigger.py","-t"], );
+        trigger.stdout.on('data', (data) => { // calling the stdout.on function with res.send as callback function
+            res.send(data)
+        })
+    });
+
+    app.get('/api/start_fr/', function(req, res, err){
+        cp.exec('python2 trigger.py -fr', function(err,data){
+            console.log('err: ',err)
+            console.log('data: ',data);
+            res.send("success")
+        })
+    });
+
+    app.get('/api/stop_fr/', function(req, res, err){
+        cp.exec('python2 trigger.py -k', function(err,data){
+            console.log('err: ',err)
+            console.log('data: ',data);
+            res.send("success")
+        })
+    });
+
+    // app.get('/api/startra/', function(){
+    //     setTimeout(
+    //         cp.exec('python2 startra.py', function(err,data){
+    //             console.log('err: ',err)
+    //             console.log('data: ',data);
+    //         })),500;
+    // });
+    // app.get('/api/stopra/', function(){
+    //     setTimeout(
+    //         cp.exec('python2 stopra.py', function(err,data){
+    //             console.log('err: ',err)
+    //             console.log('data: ',data);
+    //         })),500;
+    // });
+    app.delete('/api/delete/:imageName', (req, res, err) => {
+        fs.unlink('./uploads/' + req.params.imageName, (err) => {
+            if(err) res.send(err);
+            res.json({ message: 'Successfully deleted' })
+            console.log('deleted');
+        })
+    })
+
+    app.listen('3300', function(){
+        console.log('running on 3300...');
+    });

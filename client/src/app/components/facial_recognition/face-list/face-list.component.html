@@ -1,0 +1,36 @@
+<div class="col-md-12">
+<table class="table table-hover" frame='border' id="myTable">
+  <thead  align='center'>
+    <tr>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block" (click)="sortName()">Name</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block" (click)="sortGender()">Gender</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block" (click)="sortAge()">Age Group</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block" (click)="sortRole()">Designation</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block" (click)="sortCategory()">Category</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block">Images</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block">Schedule</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block">Edit</button></th>
+      <th scope="col"><button type="button" class="btn btn-primary btn-block">Delete</button></th>
+    </tr>
+  </thead>
+<tr class="table-light"  *ngFor = "let user of users">
+      <td scope="row">{{user.name}}</td>
+      <td>{{user.gender}}</td>
+      <td>{{user.age_group}}</td>
+      <td align='center'>{{user.role}}</td>
+      <td align='center'>{{user.category}}</td>
+      <td><a [routerLink]="['/user/images', user.uuid]" class= "btn btn-primary btn-block">
+      Images of {{user.name}}
+      </a></td>
+      <td><a [routerLink]="['/user/schedule', user.uuid]" class= "btn btn-primary btn-block">
+        Schedule for {{user.name}}
+        </a></td>
+      <td><a [routerLink]="['/user/edit', user.uuid]" class= "btn btn-info btn-block">
+      Edit
+      </a></td>
+      <td><button class="btn btn-danger btn-block" (click)="deleteUser(user.uuid)">
+        <i class="far fa-trash-alt"></i>
+      </button></td>
+    </tr>
+</table>
+</div>

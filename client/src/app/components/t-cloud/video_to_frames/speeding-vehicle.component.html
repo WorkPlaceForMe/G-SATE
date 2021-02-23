@@ -1,0 +1,22 @@
+<div class="card border-primary mb-3">
+  <mat-video #video [title]="title" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true" color="accent" spinner="spin" [loop]="true" [muted]="true" [showFrameByFrame]="true" src="assets/video.mov">
+    </mat-video>
+  </div>
+
+    <div class="card bg-primary border-primary mb-3">
+      <div class="card-body">
+      <div class="row">
+          <h5>Beggining:</h5>&nbsp;
+    <input type="time" step="1" [(ngModel)]="start"  (ngModelChange)="change(start,'s')">
+    <h5>End:</h5>&nbsp;
+    <input type="time" step="1" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')">
+    <h5>Fps:</h5>&nbsp;
+    <input type="number" [(ngModel)]="conf.fps" min="0" max="60">
+    &nbsp;
+    <div class="btn-group">
+    <button class="btn btn-success btn-sm" (click)="send()" [disabled]="act == false">Make Dataset</button>
+    <button class="btn btn-info btn-sm" [routerLink]="['/annotations']">Back</button>
+    </div>
+  </div>
+  </div>
+  </div>
