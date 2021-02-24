@@ -1,0 +1,7 @@
+
+The following micro-services are yet to be analysed,
+
+1. Algo-server [3330]
+2. fr_server [3333]
+
+Further analysis to be done on training models in VISTA for which credentials are required.

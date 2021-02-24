@@ -1,0 +1,42 @@
+
+3 Phases,
+
+Phase 1,
+
+Automated/ Semi-automated Annotation Platform,
+- Can upload image or CCTV videos
+- Search bar linked with Google image API and Bing Image API
+- Training Cloud - Inference hardware (T4's)
+- Uploaded image go into "Training Cloud" for training "selection models"
+- Reference - TrainingSet.AI video link
+
+
+Phase 2,
+
+Training cloud,
+
+- Same as Inference hardware (T4's)
+
+EC2 URL [VISTA Server as used by G-SATE application] - https://ec2-54-152-186-179.compute-1.amazonaws.com
+
+What is T4 Inference hardware?
+Where to get TrainingSet.AI video link?
+
+Where to get tCloudBrowserExtension_VERSION_NUMBER. zip?
+
+=====================================================
+
+Training cloud --
+
+For training, 250 for positive dataset and 50 for validation dataset
+tCloud training interface - http://training.graymatics.com [Not Available]
+
+=====================================================
+
+Working with the application,
+
+1. Start the client and server using "npm start" command.
+2. Access the application using the URL - http://localhost:4200/objectDetection
+3. Create a folder named "uploads" in server folder.
+4. Use "Browse" button to attach the image and upload the same using "Upload Image" button [Only JPG, JPEG and PNG files allowed]
+
