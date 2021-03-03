@@ -5,7 +5,7 @@ import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
 import { ip } from '../../../models/IpServer'
 
-const baseURL = 'https://ec2-54-152-186-179.compute-1.amazonaws.com';
+const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 @Component({
   selector: 'app-obj-det-img',
   templateUrl: './obj-det-img.component.html',
@@ -18,17 +18,62 @@ export class ObjDetImgComponent implements OnInit {
   constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router) {
     //console.log(this.router.getCurrentNavigation().extras.state.data);
     this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
-    this.link = baseURL + this.data.image;
-    for(let itm in this.data.results) {
-      if(Array.isArray(this.data.results[itm])) {
-        this.data.results[itm].forEach(element => {
-          this.annotations.push(element.class);
-        })
+    //this.link = 'http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png';
+    //this.link = baseURL + this.data.image;
+    
+    //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+    //this.link = sanitizer.bypassSecurityTrustStyle('url(' + 'http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png' + ')');
+    
+    let string = 'data';
+    this.annWidth = 1920;//this.images[this.valueImage].width;
+    this.annHeight = 1080;//this.images[this.valueImage].height;
+
+    if (window.innerWidth >= 1200) {
+      this.width = 835;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 1200 && window.innerWidth >= 992) {
+      this.width = 684;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 992 && window.innerWidth >= 768) {
+      this.width = 490;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 768 && window.innerWidth >= 576) {
+      this.width = 420;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 576) {
+      this.width = window.innerWidth - 140;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
       }
     }
+    
+    this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+    console.log('constructor........')
+    //this.re_draw();
+    //this.getAnn();
+    //this.re_draw();
     //this.annotations = ['cup']
     //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
     //this.link = sanitizer.bypassSecurityTrustStyle("url(" + baseURL + this.data.image + ")");
+    //this.link = sanitizer.bypassSecurityTrustStyle("url(http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png" +")");
     /* const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
     console.log(this.valueImage)
@@ -62,7 +107,7 @@ export class ObjDetImgComponent implements OnInit {
         }
         this.picture = string + '/' + this.images[this.valueImage].name;
         if (this.images[this.valueImage].width)
-          this.annWidth = this.images[this.valueImage].width;
+        this.annWidth = this.images[this.valueImage].width;
         this.annHeight = this.images[this.valueImage].height;
 
         if (window.innerWidth >= 1200) {
@@ -102,8 +147,9 @@ export class ObjDetImgComponent implements OnInit {
           }
         }
         
-        this.link = sanitizer.bypassSecurityTrustStyle("url(http://" + ip + ":6503/datasets/" + this.picture + ")");
-        this.getAnn();
+        this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+        //this.link = sanitizer.bypassSecurityTrustStyle("url(http://" + ip + ":6503/datasets/" + this.picture + ")");
+        //this.getAnn();
       },
       err => console.log(err)
     ) */
@@ -186,10 +232,13 @@ export class ObjDetImgComponent implements OnInit {
   private ctx;
 
   ngOnInit() {
-    this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.drawImage(document.getElementById('picture'),0,0);
-    this.activatedRoute.params
+    console.log('ngOnInit........')
+    this.canvas = this.rd.selectRootElement(this.polygon['nativeElement']);
+    this.ctx = this.canvas.getContext('2d');
+    this.getLabels();
+    this.re_draw();
+    // this.ctx.drawImage(document.getElementById('picture'),0,0);
+    /* this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'multiple') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
@@ -198,7 +247,7 @@ export class ObjDetImgComponent implements OnInit {
     } else {
       this.label = this.activatedRoute.snapshot.params.method;
     }
-    this.getLabels();
+    this.getLabels(); */
   }
 
   getAnn() {
@@ -232,14 +281,21 @@ export class ObjDetImgComponent implements OnInit {
   }
 
   getLabels() {
-    this.annotationsServ.readLabels().subscribe(
+    for(let itm in this.data.results) {
+      if(Array.isArray(this.data.results[itm])) {
+        this.data.results[itm].forEach(element => {
+          this.labels.push(element.class);
+        })
+      }
+    }
+    /* this.annotationsServ.readLabels().subscribe(
       res => {
         this.labels = res;
         this.labels = this.labels.split('\r\n')
         this.labels.pop();
       },
       err => console.log(err)
-    )
+    ) */
   }
 
   next() {
@@ -384,8 +440,10 @@ export class ObjDetImgComponent implements OnInit {
 
   annotate(event) {
     let x, y, rect;
+    console.log('this.objDet..........', this.objDet);
     if (this.objDet == false) {
-      if (this.label != undefined) {
+      console.log('this.label...........', this.label)
+      if (this.label == undefined) {
         this.count++;
         this.showMyMessage = false;
         this.on = false;
@@ -425,7 +483,7 @@ export class ObjDetImgComponent implements OnInit {
           this.coords = [];
         }
       } else {
-        this.showMyMessage = true;
+        this.showMyMessage = false;
         setTimeout(() => {
           this.showMyMessage = false
         }, 5000)
@@ -482,7 +540,31 @@ export class ObjDetImgComponent implements OnInit {
   }
 
   re_draw() {
-    for (let e = 0; e < this.annotations.length; e++) {
+    for(let itm in this.data.results) {
+      if(Array.isArray(this.data.results[itm])) {
+        this.data.results[itm].forEach(element => {
+          console.log('element.boundingBox..............', element.boundingBox);
+          console.log('element.boundingBox[left]..............', element.boundingBox['left']);
+          console.log('this.ctx..........', this.ctx)
+          //this.labels.push(element.class);
+          this.ctx.fillStyle = "lime";
+          this.ctx.strokeStyle = 'lime';
+          this.ctx.fillRect(375, 186, 4, 4);
+          this.ctx.fillRect(375, 186+144, 4, 4);
+          this.ctx.fillRect(186+94, 186+144, 4, 4);
+          this.ctx.strokeRect(375-94, 186, 94, 144);
+          this.ctx.fillRect(375-94, 186, 4, 4);
+          /* this.ctx.fillRect(element.boundingBox['left'] - 2, element.boundingBox['top'] - 2, 4, 4);
+          this.ctx.fillRect(element.boundingBox['left'] - 2, element.boundingBox['height'] - 2, 4, 4);
+          this.ctx.fillRect(element.boundingBox['width'] - 2, element.boundingBox['top'] - 2, 4, 4);
+          this.ctx.strokeRect(element.boundingBox['left'], element.boundingBox['top'], element.boundingBox['width'] - element.boundingBox['left'], element.boundingBox['height'] - element.boundingBox['top']);
+          this.ctx.fillRect(element.boundingBox['width'] - 2, element.boundingBox['height'] - 2, 4, 4); */
+          this.ctx.lineWidth = 1;
+          this.ctx.stroke();
+        })
+      }
+    }
+    /* for (let e = 0; e < this.data.results.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
       this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
@@ -492,7 +574,7 @@ export class ObjDetImgComponent implements OnInit {
       this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
       this.ctx.lineWidth = 1;
       this.ctx.stroke();
-    }
+    } */
   }
 
   addLabel() {

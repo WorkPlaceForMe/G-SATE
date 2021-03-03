@@ -121,7 +121,7 @@ const routes: Routes = [
   },
   {
     path: 'objectDetection/img/label',
-    component: ObjDetImgComponent
+    component: LoiteringDetectionComponent
   },
   {
   path: '**',

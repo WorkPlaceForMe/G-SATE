@@ -5,6 +5,7 @@ import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
 import { ip } from '../../../models/IpServer'
 
+const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 @Component({
   selector: 'app-loitering-detection',
   templateUrl: './loitering-detection.component.html',
@@ -16,6 +17,7 @@ export class LoiteringDetectionComponent implements OnInit {
 
     const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
+    this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
     this.annotationsServ.getImages(string,'data').subscribe(
       res=>{
           this.images = res;
@@ -84,8 +86,8 @@ export class LoiteringDetectionComponent implements OnInit {
               this.width = this.height*this.annWidth/this.annHeight;
           }
           }
-          
-          this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
+          this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+          //this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
           this.getAnn();
       },
       err => console.log(err)
@@ -132,6 +134,7 @@ export class LoiteringDetectionComponent implements OnInit {
     }
   }
 
+data: any;
 initPage:number = 0;
 pages:number;
 total:number;
@@ -146,7 +149,7 @@ card: any ={
 }
 
 link:SafeResourceUrl;
-multiple:boolean = false;
+multiple:boolean = true;
 showMyMessage:boolean = false;
 clearAct:boolean =false;
 valueImage:number;
@@ -198,7 +201,7 @@ getAnn(){
     a = this.picture.replace('.PNG', '');
   }  
   a = a.split('/').join(' ');
-  this.annotationsServ.getAnn(a).subscribe(
+  /* this.annotationsServ.getAnn(a).subscribe(
     res=>{
       if(res != "it doesn't exists this annotation"){
       this.annotations = res;
@@ -211,18 +214,52 @@ getAnn(){
       }
     },
     err => console.log(err)
-  )
+  ) */
+
+  for(let itm in this.data.results) {
+    if(Array.isArray(this.data.results[itm])) {
+      this.data.results[itm].forEach(element => {
+        let obj1 = {
+          x: element.boundingBox.left,
+          y: element.boundingBox.top
+        };
+        this.ann.push(obj1);
+        let obj2 = {
+          x: element.boundingBox.width,
+          y: element.boundingBox.height
+        };
+        this.ann.push(obj2);
+        let obj3 = {
+          label: element.class
+        };
+        this.ann.push(obj3);
+        this.annotations.push(this.ann);
+        this.ann = [];
+      })
+    }
+  }
+  
+  this.cacheAnnot = this.annotations;
+  this.re_draw();
 }
 
 getLabels(){
-  this.annotationsServ.readLabels().subscribe(
+  /* this.annotationsServ.readLabels().subscribe(
     res=>{
       this.labels = res;
       this.labels = this.labels.split('\r\n')
       this.labels.pop();
     },
     err => console.log(err)
-  )
+  ) */
+
+  for(let itm in this.data.results) {
+    if(Array.isArray(this.data.results[itm])) {
+      this.data.results[itm].forEach(element => {
+        this.labels.push(element.class);
+      })
+    }
+  }
 }
 
 next(){
@@ -291,7 +328,7 @@ updateLabel(){
   for(let e = 0; e < this.annotations.length; e++){
     if(e == this.id){
       this.annotations[e].pop();
-      this.annotations[e].push({'label':this.label});
+      this.annotations[e].push(this.label);
     }
   }
   this.re_draw();
@@ -358,6 +395,7 @@ info(){
   on:boolean = false;
 coords= [];
 annotations: any = [];
+ann: any = [];
 cacheAnnot: any =[];
 label:string;
 
@@ -469,10 +507,10 @@ for(let e = 0; e < this.annotations.length; e++){
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle ='lime';
       this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
+      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4,this.annotations[e][0]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']+this.annotations[e][1]['y']-4,4,4);    
       this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4,this.annotations[e][0]['y']+this.annotations[e][1]['y']-4,4,4);
       this.ctx.lineWidth = 1;
       this.ctx.stroke();
     }
