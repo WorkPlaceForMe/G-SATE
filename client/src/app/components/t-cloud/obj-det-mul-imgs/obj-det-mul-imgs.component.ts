@@ -155,7 +155,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   valueImage: number;
   fakeValueImage: number;
   picture: string;
-
+  labelsMessage: boolean = true;
 
   inf: any = {};
   deviceInfo = null;
@@ -184,7 +184,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     } else {
       this.label = this.activatedRoute.snapshot.params.method;
     }
-    this.getLabels();
+    //this.getLabels();
   }
 
   getAnn() {
@@ -517,6 +517,12 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.ctx.stroke();
       //return;
     }
+  }
+
+  getImgAnnotations() {
+    this.labelsMessage = false;
+    //this.getLabels();
+    this.re_draw();
   }
 
   addLabel() {
