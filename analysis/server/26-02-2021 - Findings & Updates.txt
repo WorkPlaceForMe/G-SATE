@@ -1,0 +1,14 @@
+
+On Discussing with Dhananjay and Pramod, the following were concluded,
+
+1. Reference of TrainingSet.AI for the deveployment of G-SATE application.
+2. Brief introduction of VISTA server and it's features
+3. Area to be focused specifically in the application [Object Detection]
+4. Bugs and specification of the existing G-SATE applications
+5. Installation and setup guidelines to use tCloudBrowserExtension
+
+Upcoming proceedings,
+
+1. To show the annotation boxes visually in the canvas once the image is uploaded for annotation
+2. To create new annotations with user defined labels
+3. To get the tCloudBrowserExtension from Lusong and integrated the same into the G-SATE application

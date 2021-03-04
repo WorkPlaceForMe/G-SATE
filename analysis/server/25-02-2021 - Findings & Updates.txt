@@ -1,0 +1,33 @@
+
+As per our understanding, the following points are given
+
+1. The architecture of G-SATE application is like given below,
+
+	Front-End [Angular - G-SATE]	+	Back-End [Node Express JS - G-SATE + Django AI - VISTA]		+	MySQL DB
+
+2. After refering the video links of TrainingSet.AI, we infer the following understandings,
+
+		A. Gets images from the internet using GET IMAGES FROM THE INTERNET button in the annotation creation screen or using AWS S3 storage
+		B. Roles and responsibilities in TrainingSet.AI,
+			-> Client -	The person who creates the "Annotation Tasks" and uploads the images and corresponding labels for them to be identified and assign them to the 							"Annotator".
+					Ex: Upload the image of street traffic with labels such as traffic lights, cars, bikes, cycles, pedestrians, etc., to be annotated in them.
+			-> Annotator -	The person who views the Annotation Tasks and annotate the objects in the image uploaded by the client.
+					Ex: Annotate the objects with the user defined labels such as cars, bikes, etc., using shapes such as square, rectangle, polygon, etc.
+
+			-> QA -		The person who is responsible to view the Annotation Tasks with the identified objects and can perform Accept or Reject action on the task.
+					Ex: Task can be accepted if all the objects are annotated correctly or can reject if missing or incorrect annotations.
+
+
+3. Queries from mail conversation subjected as "Graymatics - TrainingSet.AI integration",
+
+	>> We did have developed an annotation platform but it might not be as robust as TrainingSet.ai
+	Is the developed annotation platform by GrayMatics is refering to VISTA server?
+
+	>> While we could use their platform, we may need to expand the capabilities to include the various additional entities
+	As of now, is the G-SATE application uses the TrainingSet.AI platform for object annotation of the images?
+
+	>> Build on our platform internally to bring in the pertinent features from TrainingSet.AI
+	Is "our platform" refering to the VISTA server and is it extending direct features from TrainingSet.AI?
+
+	>> Towards this, we can also bring in an outsourced front-end s/w services company that could develop this with our guidance
+	Is the term, "front-end s/w services" refering to the application G-SATE?
