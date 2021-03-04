@@ -94,6 +94,10 @@ export class LoiteringDetectionComponent implements OnInit {
     )
   }
 
+  ngAfterViewChecked() {
+    this.re_draw();
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (window.innerWidth >= 1200) {
