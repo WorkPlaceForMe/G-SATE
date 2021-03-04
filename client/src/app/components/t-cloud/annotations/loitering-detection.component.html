@@ -18,7 +18,7 @@
 </ul>
 </div>
 
-<div class="card border-info panel" style='margin-top:2px;' *ngIf='objDet == true'>
+<div class="card border-info panel" style='margin-top:2px;'>
   <div class="card-header" align='center' >Instructions</div>
   <div class="card-body">
   <p><strong>Click the object to define it with the new label</strong> </p>
@@ -31,7 +31,7 @@
         <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
         <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
         <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
-            <option value="undefined" disabled>Please choose a label</option>
+          <!-- <option value="undefined" disabled>Please choose a label</option> -->
           <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
         </select>
 </div>

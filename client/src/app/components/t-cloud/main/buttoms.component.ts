@@ -128,6 +128,83 @@ addLabel(){
     this.showMyMessage = true;
   }
 
+  annotate() {
+    let response = {
+      "image": "/media/perumal/NiceKitchen.png",
+      "results": {
+          "Object": [
+              {
+                  "confidence": 0.999895,
+                  "class": "person",
+                  "boundingBox": {
+                      "top": 186,
+                      "left": 375,
+                      "width": 94,
+                      "height": 144
+                  },
+                  "objectId": "0"
+              },
+              {
+                  "confidence": 0.99876,
+                  "class": "microwave",
+                  "boundingBox": {
+                      "top": 151,
+                      "left": 210,
+                      "width": 112,
+                      "height": 54
+                  },
+                  "objectId": "1"
+              },
+              {
+                  "confidence": 0.995244,
+                  "class": "chair",
+                  "boundingBox": {
+                      "top": 304,
+                      "left": 68,
+                      "width": 97,
+                      "height": 168
+                  },
+                  "objectId": "2"
+              },
+              {
+                  "confidence": 0.994914,
+                  "class": "refrigerator",
+                  "boundingBox": {
+                      "top": 173,
+                      "left": 470,
+                      "width": 131,
+                      "height": 267
+                  },
+                  "objectId": "3"
+              },
+              {
+                  "confidence": 0.99339,
+                  "class": "bowl",
+                  "boundingBox": {
+                      "top": 317,
+                      "left": 419,
+                      "width": 61,
+                      "height": 34
+                  },
+                  "objectId": "4"
+              },
+              {
+                  "confidence": 0.985508,
+                  "class": "oven",
+                  "boundingBox": {
+                      "top": 256,
+                      "left": 196,
+                      "width": 128,
+                      "height": 107
+                  },
+                  "objectId": "5"
+              }
+          ],
+        }
+      }
+    this.router.navigate(['/annotations/multiple/' + 'hand' + '/' + 'miguel' + '/0'], { state: { data: response } });
+  }
+
   @ViewChild('zip', { static: true }) myInputVariable: ElementRef;
 
 check(){
