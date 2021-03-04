@@ -53,6 +53,7 @@ import { CamerasComponent } from './components/cameras_conf/main/cameras.compone
 import { ResumeComponent } from './components/facial_recognition/resume/resume.component';
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
+import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 
 const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
 
@@ -88,7 +89,8 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     CamerasComponent,
     ResumeComponent,
     ObjectDetectionComponent,
-    ObjDetImgComponent
+    ObjDetImgComponent,
+    ObjDetMulImgsComponent
   ],
   imports: [
     BrowserModule,

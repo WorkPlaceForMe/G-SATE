@@ -21,6 +21,7 @@ import { UnwantedVehicleComponent } from './components/t-cloud/images_classifica
 import { LivestreamComponent } from './components/cameras_conf/camera_list/livestream.component';
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
+import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 
 const routes: Routes = [
   { path: '', 
@@ -82,6 +83,10 @@ const routes: Routes = [
   {
   path: 'camerasList',
   component: LivestreamComponent
+  },
+  {
+    path: 'annotations/multiple/:method/:folder/:image',
+    component: ObjDetMulImgsComponent
   },
   {
     path: 'annotations/:method/:folder/:image',

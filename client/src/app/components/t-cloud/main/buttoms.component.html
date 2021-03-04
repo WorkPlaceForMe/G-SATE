@@ -65,7 +65,7 @@
 
   <div class="card bg-primary border-primary mb-3">
     <div class="card-body">
-      <button class="btn btn-success btn-lg btn-block" (click)='go()' [disabled]='choosenDataset == undefined'><i
+      <!-- <button class="btn btn-success btn-lg btn-block" (click)='go()' [disabled]='choosenDataset == undefined'><i
           class="fas fa-user-plus"></i> Single annotation</button>
 
       <div class="p-2" *ngIf='showMyMessage == true'>
@@ -78,11 +78,11 @@
         <button class="btn btn-info btn-sm" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
       </div>
 
-      <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/multiple', choosenDataset, 0]"
-        [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button>
+      <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/', choosenDataset, 0]"
+        [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button> -->
 
-      <button class="btn btn-success btn-lg btn-block" [routerLink]="['/objectDetection/', choosenDataset, 0]"
-        [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Check object detection</button>
+      <button class="btn btn-success btn-lg btn-block" (click)="annotate()"
+        [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Check object detection</button>  <!-- [routerLink]="['/annotations/multiple/', choosenDataset, 0]" -->
     </div>
   </div>
 

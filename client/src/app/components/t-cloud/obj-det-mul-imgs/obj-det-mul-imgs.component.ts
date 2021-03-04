@@ -7,17 +7,17 @@ import { ip } from '../../../models/IpServer'
 
 const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 @Component({
-  selector: 'app-loitering-detection',
-  templateUrl: './loitering-detection.component.html',
-  styleUrls: ['./loitering-detection.component.css']
+  selector: 'app-obj-det-mul-imgs',
+  templateUrl: './obj-det-mul-imgs.component.html',
+  styleUrls: ['./obj-det-mul-imgs.component.css']
 })
-export class LoiteringDetectionComponent implements OnInit {
+export class ObjDetMulImgsComponent implements OnInit {
 
   constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router) {
 
     const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
-    this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
+    this.data = this.router.getCurrentNavigation().extras.state.data;
     this.annotationsServ.getImages(string, 'data').subscribe(
       res => {
         this.images = res;
@@ -404,6 +404,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   annotate(event) {
+    console.log('eveent.............', event);
     let x, y, rect;
     if (this.objDet == false) {
       if (this.label != undefined) {
@@ -532,3 +533,4 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
 }
+
