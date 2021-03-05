@@ -4,14 +4,18 @@
       <div class="card-body" align='center'>
         <div class="container">
           <div class="row">
-            <div class="col-md-6 mb-1">
+            <div class="col-md-6 mb-1" *ngFor="let item of data; let i = index">
               <div class="card">
-                <img class="card-img-top" src="" alt="">
-
+                <img class="card-img-top" src="" alt=""> 
                 <div class="card-body">
-                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon" height='{{height}}' width='{{width}}'
+                  <!-- <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{i}}" height='{{height}}' width='{{width}}'
                     style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
-                    (click)='annotate($event)' [style.background-image]="link" oncontextmenu="return false;">
+                    (click)='annotate($event, i)' style="background-image: url('https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/NiceKitchen.png'); background-size: 100% 100%;" oncontextmenu="return false;">
+                    Your browser does not support the HTML5 canvas tag.
+                  </canvas> -->
+                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{i}}" height='{{height}}' width='{{width}}'
+                    style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
+                    (click)='annotate($event, i)' [style.background-image]="'url(' + item.image + ')'" oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>
 
@@ -19,25 +23,35 @@
                               Card link 
                           </a> -->
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 mb-1">
-              <div class="card">
-                <img class="card-img-top" src="" alt="">
-                <div class="card-body">
-                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon" height='{{height}}' width='{{width}}'
-                    style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
-                    (click)='annotate($event)' [style.background-image]="link" oncontextmenu="return false;">
-                    Your browser does not support the HTML5 canvas tag.
-                  </canvas>
-
-                  <!-- <a href="#" class="btn btn-outline-primary btn-sm"> 
-                              Card link 
-                          </a> -->
+                <div class="card-footer">
+                  <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(i)"> 
+                    Labels 
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 mb-1">
+            <!-- <div class="col-md-6 mb-1">
+              <div class="card">
+                <img class="card-img-top" src="" alt="">
+                <div class="card-body">
+                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon" height='{{height}}' width='{{width}}'
+                    style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
+                    (click)='annotate($event)' [style.background-image]="link" oncontextmenu="return false;">
+                    Your browser does not support the HTML5 canvas tag.
+                  </canvas>
+
+                  <a href="#" class="btn btn-outline-primary btn-sm"> 
+                              Card link 
+                          </a>
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations()"> 
+                    Annotations 
+                  </button>
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="col-md-6 mb-1">
               <div class="card">
                 <img class="card-img-top" src="" alt="">
 
@@ -48,12 +62,17 @@
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>
 
-                  <!-- <a href="#" class="btn btn-outline-primary btn-sm"> 
+                  <a href="#" class="btn btn-outline-primary btn-sm"> 
                             Card link 
-                        </a>  -->
+                        </a> 
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations()"> 
+                    Annotations 
+                  </button>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <!--  <div class="card-columns d-flex justify-content-center">
           <div class="card" style="width: 35rem;">
@@ -117,11 +136,14 @@
 
   <div class=" col-md-2">
     <div class="card border-info panel">
-      <div class="card-header" align='center' *ngIf='objDet == false'>List of areas</div>
-      <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
-      <ul>
+      <div class="card-header" align='center' *ngIf='objDet == true'>List of areas</div>
+      <div class="card-header" align='center' *ngIf='objDet == false'>Labels Detected</div>
+      <ul *ngIf="!labelsMessage">
         <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[2].label}}</li>
       </ul>
+      <div class="card-body" *ngIf="labelsMessage">
+        Click the object labels button to check the detected objects
+      </div>
     </div>
 
     <div class="card border-info panel" style='margin-top:2px;'>

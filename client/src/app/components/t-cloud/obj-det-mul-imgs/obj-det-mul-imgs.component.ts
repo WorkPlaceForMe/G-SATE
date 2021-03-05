@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostListener, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from '../../../services/faces.service';
@@ -47,7 +47,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         }
         this.picture = string + '/' + this.images[this.valueImage].name;
         if (this.images[this.valueImage].width)
-        this.annWidth = 1600;//this.images[this.valueImage].width;
+          this.annWidth = 1600;//this.images[this.valueImage].width;
         this.annHeight = 1080;//this.images[this.valueImage].height;
 
         if (window.innerWidth >= 1200) {
@@ -86,9 +86,9 @@ export class ObjDetMulImgsComponent implements OnInit {
             this.width = this.height * this.annWidth / this.annHeight;
           }
         }
-        this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+        //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
         //this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
-        this.getAnn();
+        //this.getAnn();
       },
       err => console.log(err)
     )
@@ -155,7 +155,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   valueImage: number;
   fakeValueImage: number;
   picture: string;
-
+  labelsMessage: boolean = true;
 
   inf: any = {};
   deviceInfo = null;
@@ -165,15 +165,33 @@ export class ObjDetMulImgsComponent implements OnInit {
   images: any = [];
 
   labels: any = [];
+  annObj = {};
+  labelsObj = {};
 
 
-  @ViewChild('polygon', { static: true }) private polygon: ElementRef;
+  @ViewChildren('polygon') polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
 
+  ngAfterViewInit() {
+    this.polygon.forEach(c => {
+      //this.polygon = new Chart(item.nativeElement, pieData[j]);
+      this.canvas = this.rd.selectRootElement(c["nativeElement"]);
+      this.ctx = this.canvas.getContext("2d");
+    });
+  }
+
   ngOnInit() {
-    this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
-    this.ctx = this.canvas.getContext("2d");
+    /* this.polygon.changes.subscribe(c => 
+      { c.toArray().forEach(item => 
+        { 
+          //this.polygon = new Chart(item.nativeElement, pieData[j]);
+          this.canvas = this.rd.selectRootElement(item["nativeElement"]);
+          this.ctx = this.canvas.getContext("2d");
+        }) 
+      }); */
+    /* this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
+    this.ctx = this.canvas.getContext("2d"); */
 
     this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'multiple') {
@@ -184,10 +202,10 @@ export class ObjDetMulImgsComponent implements OnInit {
     } else {
       this.label = this.activatedRoute.snapshot.params.method;
     }
-    this.getLabels();
+    //this.getLabels();
   }
 
-  getAnn() {
+  getAnn(i) {
     let a, b;
     if (this.picture.includes('.jpg')) {
       a = this.picture.replace('.jpg', '');
@@ -215,35 +233,42 @@ export class ObjDetMulImgsComponent implements OnInit {
       },
       err => console.log(err)
     ) */
-
-    for (let itm in this.data.results) {
-      if (Array.isArray(this.data.results[itm])) {
-        this.data.results[itm].forEach(element => {
-          let obj1 = {
-            x: element.boundingBox.left,
-            y: element.boundingBox.top
-          };
-          this.ann.push(obj1);
-          let obj2 = {
-            x: element.boundingBox.width,
-            y: element.boundingBox.height
-          };
-          this.ann.push(obj2);
-          let obj3 = {
-            label: element.class
-          };
-          this.ann.push(obj3);
-          this.annotations.push(this.ann);
-          this.ann = [];
-        })
+    if (this.annObj.hasOwnProperty(this.data[i].id)) {
+      this.annotations = this.annObj[this.data[i].id];
+      this.cacheAnnot = this.annotations;
+    } else {
+      this.annotations = [];
+      for (let itm in this.data[i].results) {
+        if (Array.isArray(this.data[i].results[itm])) {
+          this.data[i].results[itm].forEach(element => {
+            let obj1 = {
+              x: element.boundingBox.left,
+              y: element.boundingBox.top
+            };
+            this.ann.push(obj1);
+            let obj2 = {
+              x: element.boundingBox.width,
+              y: element.boundingBox.height
+            };
+            this.ann.push(obj2);
+            let obj3 = {
+              label: element.class
+            };
+            this.ann.push(obj3);
+            this.annotations.push(this.ann);
+            this.ann = [];
+          })
+        }
       }
+
+      this.annObj[this.data[i].id] = this.annotations;
+      this.cacheAnnot = this.annotations;
     }
 
-    this.cacheAnnot = this.annotations;
     this.re_draw();
   }
 
-  getLabels() {
+  getLabels(i) {
     /* this.annotationsServ.readLabels().subscribe(
       res=>{
         this.labels = res;
@@ -252,13 +277,28 @@ export class ObjDetMulImgsComponent implements OnInit {
       },
       err => console.log(err)
     ) */
-    for (let itm in this.data.results) {
-      if (Array.isArray(this.data.results[itm])) {
-        this.data.results[itm].forEach(element => {
+    if (this.labelsObj.hasOwnProperty(this.data[i].id)) {
+      this.labels = this.labelsObj[this.data[i].id];
+      this.cacheAnnot = this.labels;
+    } else {
+      this.labels = [];
+      for (let itm in this.data[i].results) {
+        if (Array.isArray(this.data[i].results[itm])) {
+          this.data[i].results[itm].forEach(element => {
+            this.labels.push(element.class);
+          })
+        }
+      }
+
+      this.labelsObj[this.data[i].id] = this.labels;
+    }
+    /* for (let itm in this.data[i].results) {
+      if (Array.isArray(this.data[i].results[itm])) {
+        this.data[i].results[itm].forEach(element => {
           this.labels.push(element.class);
         })
       }
-    }
+    } */
   }
 
   next() {
@@ -282,10 +322,8 @@ export class ObjDetMulImgsComponent implements OnInit {
 
   send() {
     this.annotations.push({ 'width': this.annWidth, 'height': this.annHeight });
-    console.log(this.annotations);
     this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.annotations).subscribe(
       res => {
-        console.log(res);
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
@@ -327,7 +365,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     for (let e = 0; e < this.annotations.length; e++) {
       if (e == this.id) {
         this.annotations[e].pop();
-        this.annotations[e].push({label: this.label});
+        this.annotations[e].push({ label: this.label });
       }
     }
     this.re_draw();
@@ -344,7 +382,6 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
       if (i == e) {
-        console.log('i: ', i, ' e: ', e);
         this.label = this.annotations[e][2].label;
         this.ctx.fillStyle = "yellow";
         this.ctx.strokeStyle = 'yellow';
@@ -403,8 +440,9 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.showMyMessage = false;
   }
 
-  annotate(event) {
-    console.log('eveent.............', event);
+  annotate(event, i) {
+    this.canvas = this.rd.selectRootElement(event.target);
+    this.ctx = this.canvas.getContext("2d");
     let x, y, rect;
     if (this.objDet == false) {
       if (this.label != undefined) {
@@ -438,11 +476,18 @@ export class ObjDetMulImgsComponent implements OnInit {
           this.ctx.strokeStyle = 'lime';
           this.ctx.strokeRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
           this.ctx.fillRect(x - 2, y - 2, 4, 4);
+          x = x - this.coords[0].x;
+          y = y - this.coords[0].y;
           this.coords.push({ 'x': x, 'y': y });
           this.coords.push({ 'label': this.label })
           this.ctx.lineWidth = 1;
           this.ctx.stroke();
           this.annotations.push(this.coords);
+          this.annObj[this.data[i].id] = this.annotations;
+          this.annotations = this.annObj[this.data[i].id];
+          this.labels.push(this.label);
+          this.labelsObj[this.data[i].id] = this.labels;
+          this.labels = this.labelsObj[this.data[i].id];
           this.re_draw();
           this.coords = [];
         }
@@ -480,6 +525,11 @@ export class ObjDetMulImgsComponent implements OnInit {
               this.ctx.strokeStyle = 'lime';
               if (i == e) {
                 this.annotations[e][2].label = this.label;
+                this.annObj[this.data[i].id] = this.annotations;
+                this.annotations = this.annObj[this.data[i].id];
+                this.labels.push(this.label);
+                this.labelsObj[this.data[i].id] = this.labels;
+                this.labels = this.labelsObj[this.data[i].id];
                 this.ctx.strokeStyle = 'yellow';
                 this.ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
                 this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
@@ -504,7 +554,6 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   re_draw() {
-    console.log('annotations..................', this.annotations);
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
@@ -517,6 +566,16 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.ctx.stroke();
       //return;
     }
+  }
+
+  getImgAnnotations(i) {
+    this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    //this.getLabels();
+    this.getAnn(i);
+    this.getLabels(i)
+    this.re_draw();
   }
 
   addLabel() {
