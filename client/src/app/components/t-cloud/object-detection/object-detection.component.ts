@@ -61,7 +61,7 @@ export class ObjectDetectionComponent implements OnInit {
     };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log("Uploaded:", status, response, headers);
-      this.router.navigate(['/annotations/' + 'hand' + '/' + 'miguel' + '/0'], { state: { data: JSON.parse(response) } });
+      this.router.navigate(['/annotations/' + 'object' + '/' + 'miguel' + '/0'], { state: { data: JSON.parse(response) } });
      // this.router.navigate(['/objectDetection/img/label'], { state: { data: JSON.parse(response) } });
     };
     this.uploader.onProgressItem = (progress: any) => {
