@@ -13,15 +13,21 @@
           </span>
           <owl-date-time #date1 firstDayOfWeek='1' pickerMode='dialog'></owl-date-time>
         </label>
+
             </div>
             <div class="dropdown-divider"></div>
-            <div class='btn-group' role="group" style="margin-bottom: 3px;">
-                <select name="camera" class="custom-select" [(ngModel)]="model" (ngModelChange)='watch()' placeholder="Pick a training model">
+            <div class='btn-group' role="group" style="margin: 3px;">
+                <select name="model" [(ngModel)]="model" class="custom-select" placeholder="Pick a training model">
       <option value="undefined" disabled>Pick a training model</option>
       <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
     </select>
             </div>
-
+            <div class='btn-group' role="group" style="margin: 3px;">
+                <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Select version">
+                  <option value="undefined" disabled>Version 1</option>
+                  <option *ngFor="let ver of versions" [value]="ver">{{ver}}</option>
+    </select>
+            </div>
 
         </div>
 
@@ -34,11 +40,10 @@
         </div>
         <div class="card-body">
             <div align="center">
-                <button type="button" class="btn btn-success btn-s training" (click)="check()" [disabled]="!selectedDate || !selectedModel">Confirm
+                <button type="button" (click)='train()' class="btn btn-success btn-s training" [disabled]="this.version === undefined ||this.date === undefined || this.model === undefined ">Confirm
             </button>
             </div>
         </div>
-
     </div>
 
 

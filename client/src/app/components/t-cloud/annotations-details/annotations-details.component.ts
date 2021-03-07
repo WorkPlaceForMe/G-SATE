@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 })
 export class AnnotationsDetailsComponent implements OnInit {
   date: any;
+  model:any;
+  models: any = [];
+  version:any;
+  versions: any = [];
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
   constructor(private router: Router,  private datepipe: DatePipe) { }
@@ -16,4 +20,23 @@ export class AnnotationsDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
+  train() {
+    this.router.navigate(['/annotations' ]);
+    // if (this.valueImage < this.total - 1) {
+    //   this.valueImage++;
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+    //       this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
+    //     });
+    //   }
+    // } else if (this.valueImage == this.total - 1) {
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl('/annotations');
+    //   }
+    // }
+  }
 }
