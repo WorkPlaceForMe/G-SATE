@@ -22,6 +22,7 @@ import { LivestreamComponent } from './components/cameras_conf/camera_list/lives
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
+import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 
 const routes: Routes = [
   { path: '', 
@@ -91,6 +92,10 @@ const routes: Routes = [
   {
     path: 'annotations/:method/:folder/:image',
     component: LoiteringDetectionComponent
+  },
+  {
+    path: 'annotations/:method/:folder/:image/details',
+    component: AnnotationsDetailsComponent
   },
   /* {
     path: 'objectDetection/:folder/:image',
