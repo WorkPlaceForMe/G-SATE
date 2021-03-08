@@ -17,36 +17,36 @@
   </div>
 </div> -->
 <p>
-  {{ dateMessage }}
+    {{ dateMessage }}
 </p>
 <table class="table table-hover" frame='border' id="myTable">
-  <thead align='center'>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Play</th>
-      <th scope="col">Edit</th>
-      <th scope="col"><i class="far fa-dot-circle"></i>&nbsp;Algorithms</th>
-      <!-- <th scope="col" *ngIf='heatmap == true'><i class="far fa-map"></i> &nbsp;Heatmap</th> -->
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tr class="table-light"  *ngFor = "let camera of cams">
-      <td scope="row">{{camera.name}}</td>
-      <td><button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning btn-block">
+    <thead align='center'>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Play</th>
+            <th scope="col">Edit</th>
+            <th scope="col"><i class="far fa-dot-circle"></i>&n
+                <!-- <th scope="col" *ngIf='heatmap == true'><i class="far fa-map"></i> &nbsp;Heatmap</th> -->bsp;Algorithms</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tr class="table-light" *ngFor="let camera of cams">
+        <td scope="row">{{camera.name}}</td>
+        <td><button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning btn-block">
           <i class="fas fa-play"></i>
       </button></td>
-      <td><a [routerLink]="['/cameras/edit', camera.id]" class= "btn btn-info btn-block">
+        <td><a [routerLink]="['/cameras/edit', camera.id]" class="btn btn-info btn-block">
       Edit
       </a></td>
-      <td><a [routerLink]="['/cameras/algorithms', camera.id]" class= "btn btn-info btn-block">
+        <td><a [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-info btn-block">
         Algorithms
         </a></td>
         <!-- <td *ngIf='heatmap == true'><button [routerLink]="['/cameras/heatmap', camera.id]" class= "btn btn-info btn-block" [disabled]= 'camera.hm == undefined'>
           Heatmap
         </button></td> -->
-      <td><button class="btn btn-danger btn-block" (click)="deleteCamera(camera.id)">
+        <td><button class="btn btn-danger btn-block" (click)="deleteCamera(camera.id)">
         <i class="far fa-trash-alt"></i>
       </button></td>
-  </tr>
-  </table>
-  <!-- deleteCamera(camera.id) -->
+    </tr>
+</table>
+<!-- deleteCamera(camera.id) -->

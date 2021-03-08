@@ -269,6 +269,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   next() {
+    this.router.navigate(['/annotations/' + 'object' + '/' + 'miguel' + '/0' + '/details']);
     if (this.valueImage < this.total - 1) {
       this.valueImage++;
       if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
