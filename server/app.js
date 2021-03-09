@@ -94,6 +94,8 @@
     app.use('/api/algorithm', Algorithm);
     app.use('/api/relations', Relations);
     app.use('/api/rel', Rel);
+    app.use('/api/trainingModels', TrainingModels);
+    app.use('/api/customerTrainingDetails', CustomerTrainingDetails);
 
     /** Serving from the same express Server
     No cors required */

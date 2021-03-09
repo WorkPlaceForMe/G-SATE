@@ -2,17 +2,17 @@ var db = require('../dbconnection'); //reference of dbconnection.js
 
 var CustomerTrainingDetails = {
 
-
-    create: function(customer, callback) {
-        return db.query('INSERT INTO cameras values (?,?,?,?,?,?)', [customer.id, camera.name, camera.rtsp_in, camera.rtsp_out, camera.heatmap_pic, camera.pic_height, camera.pic_width, camera.cam_height, camera.cam_width], callback);
+    //Unsure
+    create: function(details, callback) {
+        return db.query('INSERT INTO customer_training_details values (?,?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.time, details.email, details.contactName, details.modelName, details.version], callback);
     },
 
     delete: function(id, callback) {
-        return db.query('DELETE FROM cameras WHERE id = ?', [id], callback);
+        return db.query('DELETE FROM customer_training_details WHERE id = ?', [id], callback);
     },
 
-    update: function(id, camera, callback) {
-        return db.query("UPDATE cameras set name=?,rtsp_in=?,rtsp_out=? where id=?", [camera.name, camera.rtsp_in, camera.rtsp_out, id], callback);
+    update: function(id, details, callback) {
+        return db.query("UPDATE customer_training_details set dataset_name=?,date=?,time=?,email=?,contact_name=?,model_name=?,version=? where id=?", [details.datasetName, details.date, details.time, details.email, details.contactName, details.modelName, details.version, id], callback);
     }
 };
 

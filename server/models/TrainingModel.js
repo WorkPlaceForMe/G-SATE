@@ -1,10 +1,19 @@
-var db=require('../dbconnection'); //reference of dbconnection.js
+var db = require('../dbconnection'); //reference of dbconnection.js
 
-var Algorithm={
+var TrainingModel = {
 
-list:function(callback){
-return db.query('SELECT * FROM algorithms ORDER BY id', callback);
-}
+    //Unsure
+    create: function(model, callback) {
+        return db.query('INSERT INTO training_model values (?,?,?)', [model.id, model.name, model.version], callback);
+    },
+
+    delete: function(id, callback) {
+        return db.query('DELETE FROM training_model WHERE id = ?', [id], callback);
+    },
+
+    update: function(id, model, callback) {
+        return db.query("UPDATE training_model set name=?,version=? where id=?", [model.name, model.version, id], callback);
+    }
 };
 
- module.exports=Algorithm;
+module.exports = TrainingModel;
