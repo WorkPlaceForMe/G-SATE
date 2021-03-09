@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./annotations-details.component.css']
 })
 export class AnnotationsDetailsComponent implements OnInit {
+  datasetName: string;
+  contactName: string;
+  emailAddress: string;
   date: any;
   model:any;
   models: any = [];

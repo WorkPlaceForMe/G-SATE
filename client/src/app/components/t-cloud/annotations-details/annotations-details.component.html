@@ -5,9 +5,18 @@
             <h5>Training Details</h5>
         </div>
         <div class="card-body">
+            <input type="text" class="gsate-input" [(ngModel)]=datasetName [value]=datasetName placeholder="Dataset Name" style="margin-left: 5px;">
+
+            <div class="dropdown-divider"></div>
+
+            <input type="text" class="gsate-input" [(ngModel)]=contactName [value]=contactName placeholder="Contact Name" style="margin-left: 5px;">
+            <br>
+            <input type="text" class="gsate-input" [(ngModel)]=emailAddress [value]=emailAddress placeholder="Email Address" style="margin-left: 5px;">
+            <div class="dropdown-divider"></div>
+
             <div class="example-wrapper">
-                <label class="example-input-wrapper" [owlDateTimeTrigger]="date1">
-          <input placeholder="Select date and time" [(ngModel)]="date" [owlDateTime]="date1" [max]="max" [selectMode]="'single'" id="dateSelector" >
+                <label class="example-input-wrapper gsate-input" [owlDateTimeTrigger]="date1">
+          <input placeholder="Select date and time" class  ="gsate-input" [(ngModel)]="date" [owlDateTime]="date1" [max]="max" [selectMode]="'single'" id="dateSelector" >
           <span>
             &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
           </span>
@@ -16,13 +25,13 @@
 
             </div>
             <div class="dropdown-divider"></div>
-            <div class='btn-group' role="group" style="margin: 3px;">
-                <select name="model" [(ngModel)]="model" class="custom-select" placeholder="Pick a training model">
+            <div class='btn-group ' role="group">
+                <select name="model" [(ngModel)]="model" class="custom-select gsate-input" placeholder="Pick a training model">
       <option value="undefined" disabled>Pick a training model</option>
       <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
     </select>
             </div>
-            <div class='btn-group' role="group" style="margin: 3px;">
+            <div class='btn-group' role="group">
                 <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Select version">
                   <option value="undefined" disabled>Version 1</option>
                   <option *ngFor="let ver of versions" [value]="ver">{{ver}}</option>
@@ -40,8 +49,9 @@
         </div>
         <div class="card-body">
             <div align="center">
-                <button type="button" (click)='train()' class="btn btn-success btn-s training" [disabled]="this.version === undefined ||this.date === undefined || this.model === undefined ">Confirm
+                <button type="button" (click)='train()' class="btn btn-success btn-s training" [disabled]="this.version === undefined ||this.date === undefined || this.model === undefined ">Confirm 
             </button>
+                <p>Pop up for confirmation</p>
             </div>
         </div>
     </div>
