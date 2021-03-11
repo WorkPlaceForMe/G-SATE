@@ -13876,3 +13876,18 @@ Date: Tue, 09 Mar 2021 12:28:28 GMT // Url: ::1 // Method: GET/api/getFolders/cl
 Date: Tue, 09 Mar 2021 12:28:28 GMT // Url: ::1 // Method: GET/api/getFolders/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
 Date: Tue, 09 Mar 2021 12:28:28 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
 Date: Tue, 09 Mar 2021 12:28:29 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:36 GMT // Url: ::1 // Method: GET/api/users // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:37 GMT // Url: ::1 // Method: GET/api/getFolders/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:37 GMT // Url: ::1 // Method: GET/api/getFolders/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:37 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:38 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:47 GMT // Url: ::1 // Method: OPTIONS/api/upload/pic // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:49 GMT // Url: ::1 // Method: GET/api/getFolders/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:50 GMT // Url: ::1 // Method: POST/api/upload/pic // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Date: Tue, 09 Mar 2021 13:24:53 GMT // Url: ::1 // Method: GET/api/getImages/miguel/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36
+Server started at: Thu Mar 11 2021 18:21:03 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Thu Mar 11 2021 18:33:31 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
