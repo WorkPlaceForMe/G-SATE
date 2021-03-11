@@ -2,13 +2,13 @@ import { DatePipe } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PopupService } from 'src/app/services/popup.service';
 
 
 @Component({
   selector: 'app-annotations-details',
   templateUrl: './annotations-details.component.html',
-  styleUrls: ['./annotations-details.component.css'],
-  providers:[ ]
+  styleUrls: ['./annotations-details.component.css']
 })
 export class AnnotationsDetailsComponent implements OnInit {
   datasetName: string;
@@ -21,7 +21,7 @@ export class AnnotationsDetailsComponent implements OnInit {
   versions: any = [];
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
-  constructor(private router: Router,  private datepipe: DatePipe) { }
+  constructor(private router: Router,  private datepipe: DatePipe, public popupService : PopupService) { }
 
   ngOnInit() {
   }
@@ -42,8 +42,9 @@ export class AnnotationsDetailsComponent implements OnInit {
       }
         return (false)
   }
+  
   train() {
-    this.router.navigate(['/annotations' ]);
+    // this.router.navigate(['/annotations' ]);
     // if (this.valueImage < this.total - 1) {
     //   this.valueImage++;
     //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
