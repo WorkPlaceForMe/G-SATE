@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { stringify } from '@angular/compiler/src/util';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AnnotationCreationService} from '../../../services/annotation-creation.service';
+import { AnnotationsService} from '../../../services/annotations.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-annotations-details',
@@ -10,6 +10,7 @@ import { AnnotationCreationService} from '../../../services/annotation-creation.
   styleUrls: ['./annotations-details.component.css']
 })
 export class AnnotationsDetailsComponent implements OnInit {
+  private url = 'localhost:3300/api/annotations/';
   datasetName: string;
   contactName: string;
   emailAddress: string;
@@ -20,9 +21,24 @@ export class AnnotationsDetailsComponent implements OnInit {
   versions: any = [];
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
-  constructor(private router: Router,  private datepipe: DatePipe, private annotationData:AnnotationCreationService) { }
+  constructor(private router: Router,  private datepipe: DatePipe, private annotationsServ:AnnotationsService, private http: HttpClient) {
+    this.annotationsServ.getModels().subscribe(
+      res => {
+        this.models= res;
+        console.log(this.models);
+      },
+      err => console.log(err)
+    )
+
+   }
 
   ngOnInit() {
+    this.datasetName = this.annotationsServ.datasetName ;
+    this.contactName = this.annotationsServ.contactName ;
+    this.emailAddress = this.annotationsServ.emailAddress;
+    this.date = this.annotationsServ.date;
+    this.version = this.annotationsServ.version;
+    this.model = this.annotationsServ.model;
   }
 
   isFormFilled() {
@@ -42,12 +58,12 @@ export class AnnotationsDetailsComponent implements OnInit {
         return (false)
   }
   train() {
-    this.annotationData.datasetName = this.datasetName;
-    this.annotationData.contactName = this.contactName;
-    this.annotationData.emailAddress= this.emailAddress;
-    this.annotationData.date = this.date;
-    this.annotationData.version = this.version;
-    this.annotationData.model = this.model;
+    this.annotationsServ.datasetName = this.datasetName;
+    this.annotationsServ.contactName = this.contactName;
+    this.annotationsServ.emailAddress= this.emailAddress;
+    this.annotationsServ.date = this.date;
+    this.annotationsServ.version = this.version;
+    this.annotationsServ.model = this.model;
     this.router.navigate(['/annotations/confirm' ]);
     // if (this.valueImage < this.total - 1) {
     //   this.valueImage++;
@@ -66,4 +82,5 @@ export class AnnotationsDetailsComponent implements OnInit {
     //   }
     // }
   }
+
 }

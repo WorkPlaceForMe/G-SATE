@@ -7,7 +7,14 @@ import { ip } from '../models/IpServer';
   providedIn: 'root'
 })
 export class AnnotationsService {
-
+  datasetName: string;
+  contactName: string;
+  emailAddress: string;
+  date: any;
+  model:any;
+  models: any = [];
+  version:any;
+  versions: any = [];
   API_URL = 'http://'+ ip +':3300/api';
 
   getImages(where:string,info:string){
@@ -40,6 +47,10 @@ export class AnnotationsService {
 
   moveImage(path:string, name:string, dec:boolean){
     return this.http.get(`${this.API_URL}/classify/${path}/${name}/${dec}`);
+  }
+
+  getModels() {
+    return this.http.get(`${this.API_URL}/annotations/models`);
   }
 
   constructor(private http: HttpClient) { }
