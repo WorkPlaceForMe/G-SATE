@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ip } from '../models/IpServer';
+import { Customer } from '../models/Customer';
 
 
 @Injectable({
@@ -53,5 +54,8 @@ export class AnnotationsService {
     return this.http.get(`${this.API_URL}/annotations/models`);
   }
 
+  saveCustomerDetails(conf: Customer) {
+    return this.http.post(`${this.API_URL}/annotations/confirmed`, conf);
+  }
   constructor(private http: HttpClient) { }
 }

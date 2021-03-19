@@ -7,7 +7,7 @@ let Annotation = {
     },
 
     create: function(details, callback) {
-        return db.query('INSERT INTO customer_training_details values (?,?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.time, details.email, details.contactName, details.modelName, details.version], callback);
+        return db.query('INSERT INTO customer_training_details values (?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.emailAddress, details.contactName, details.model, details.version], callback);
     },
 
     delete: function(id, callback) {

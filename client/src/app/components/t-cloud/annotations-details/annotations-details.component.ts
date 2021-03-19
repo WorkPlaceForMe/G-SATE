@@ -10,14 +10,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./annotations-details.component.css']
 })
 export class AnnotationsDetailsComponent implements OnInit {
-  private url = 'localhost:3300/api/annotations/';
   datasetName: string;
   contactName: string;
   emailAddress: string;
   date: any;
-  model:any;
+  model:string;
   models: any = [];
-  version:any;
+  version:number;
   versions: any = [];
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);

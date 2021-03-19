@@ -15,12 +15,15 @@ router.get('/models', function(req, res, next) {
 });
 
 router.post('/confirmed', function(req, res, next) {
-    Annotation.create(function(err, annotation) {
+    console.log("confirmed");
+    console.log(req.body);
+    Annotation.create(req.body, function(err, annotation) {
         if (err) {
             res.json(err);
         } else {
+            console.log(annotation);
             res.json(annotation);
-            res.redirect("/cameraList");
+            res.redirect("/camerasList");
         }
     });
 });

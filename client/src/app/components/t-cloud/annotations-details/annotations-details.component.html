@@ -32,9 +32,9 @@
     </select>
             </div>
             <div class='btn-group' role="group">
-                <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Select version">
-                  <option value="undefined" disabled>Version 1</option>
-                  <option *ngFor="let mod of models" [value]="mod.version">{{mod.version}}</option>
+                <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Version">
+                    <option value="undefined" disabled>Version</option>
+                  <option *ngFor="let mod of models" [value]="mod.version">Version: {{mod.version}}</option>
     </select>
             </div>
 
