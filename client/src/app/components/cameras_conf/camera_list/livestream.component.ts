@@ -1,6 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { FacesService } from '../../../services/faces.service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FileUploader} from 'ng2-file-upload/ng2-file-upload';
+import { AnnotationsService } from '../../../services/annotations.service';
+import { ip } from 'src/app/models/IpServer';
+
+const URL = 'http://' + ip + ':3300/api/upload/videos';
 
 @Component({
   selector: 'app-livestream',
@@ -16,6 +22,18 @@ import { trigger, style, animate, transition } from '@angular/animations';
   ]
 })
 export class LivestreamComponent implements OnInit, OnDestroy {
+  uploadFileNames: Array<string> = [];
+
+  public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'video' });
+
+  fileName: string = '';
+  uploadName: string;
+  public showMyMessage2 = true;
+  public showMyMessage3 = false;
+  public showMyMessage4 = false;
+  public badFile = true;
+  datasetsNames: any = [];
+  classNames: any = [];
 
   relations: any = [];
   dateMessage: string;
@@ -24,7 +42,7 @@ export class LivestreamComponent implements OnInit, OnDestroy {
   rois: any = [];
   date: any;
   heatmap: Boolean = false;
-  constructor(private facesService: FacesService) { }
+  constructor(private facesService: FacesService, private annotationsServ: AnnotationsService) { }
 
   ngOnDestroy() {
     if (this.date) {
@@ -134,6 +152,32 @@ export class LivestreamComponent implements OnInit, OnDestroy {
         },
         err => console.error(err)
       );
+    }
+  }
+
+  @ViewChild('zip', { static: true }) myInputVariable: ElementRef;
+
+  check() {
+    // for(let i = 0; i < this.datasetsNames.length; i++){
+    //   if(this.fileName == this.datasetsNames[i]){
+    //     this.fileName = '!' + this.fileName;
+    //   }
+    // }
+    this.uploader.uploadAll();
+    this.myInputVariable.nativeElement.value = null;
+    this.fileName = '';
+    this.showMyMessage4 = false;
+    this.showMyMessage3 = true;
+  }
+
+  showInfo(event) {
+    this.fileName = event.target.files[0].name;
+    console.log('filename........', this.fileName);
+    if (this.fileName.includes('.jpg') || this.fileName.includes('.png')) {
+      this.badFile = false;
+      console.log(this.badFile)
+    } else {
+      this.badFile = true;
     }
   }
 

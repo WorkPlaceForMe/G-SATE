@@ -24,6 +24,7 @@ import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AnnotationsConfirmComponent} from './components/t-cloud/annotations-confirm/annotations-confirm.component';
+import { VideosDetailsComponent } from './components/cameras_conf/videos-details/videos-details.component';
 const routes: Routes = [
   { path: '', 
     redirectTo: 'camerasList',
@@ -116,6 +117,10 @@ const routes: Routes = [
   {
     path: 'cameras/add_camera',
     component: VidComponent
+  },
+  {
+    path: 'cameras/videos_details',
+    component: VideosDetailsComponent
   },
   {
     path: 'analytics',

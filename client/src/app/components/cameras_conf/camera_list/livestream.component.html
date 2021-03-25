@@ -19,6 +19,40 @@
 <p>
     {{ dateMessage }}
 </p>
+<div class="card bg-primary border-primary mb-3">
+    <div class="card-header" align='center'>
+        <h5>Upload video</h5>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <!-- <input type="text" placeholder="Input the name of the dataset" [(ngModel)]='datasetName' size="30"
+        (ngModelChange)="detect()">
+      <select name="label" class="custom-select" [(ngModel)]="datasetName" placeholder="Choose a label"
+        (ngModelChange)="detect()">
+        <option value="null" disabled>Or upload to an existing dataset</option>
+        <option *ngFor="let data of datasetsNames" [value]="data.name">{{data.name}}</option>
+      </select> -->
+                <div class="custom-file">
+                    <input class="custom-file-input" id="inputGroupFile02" type="file" name='zip' (change)='showInfo($event)' [uploader]="uploader" ng2FileSelect [disabled]='showMyMessage2 == false' #zip>
+                    <label class="custom-file-label" for="inputGroupFile02">{{fileName == '' ? 'Choose a video to upload' : fileName}}</label>
+                </div>
+                <button type="button" class="btn btn-success btn-s" (click)="check()" [disabled]="!uploader.getNotUploadedItems().length ||showMyMessage2 == false || badFile == true">Upload Image
+      </button>
+            </div>
+            <div class="progress" *ngIf='showMyMessage3 == false'>
+                <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            </div>
+            <div class="progress" *ngIf='showMyMessage4 == true'>
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            </div>
+            <div class="progress" *ngIf='showMyMessage3 == true'>
+                <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': uploader.progress + '%' }">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <table class="table table-hover" frame='border' id="myTable">
     <thead align='center'>
         <tr>
@@ -49,4 +83,5 @@
       </button></td>
     </tr>
 </table>
+
 <!-- deleteCamera(camera.id) -->

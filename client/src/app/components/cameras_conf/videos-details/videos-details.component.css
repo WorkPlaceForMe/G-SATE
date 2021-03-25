@@ -1,0 +1,35 @@
+.card-columns {
+    column-count: 2;
+}
+
+.training {
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.gsate-input {
+    margin: 3px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60%;
+}
+
+#desc {
+    height: 120px;
+    margin-left: 5px;
+    border: 2px solid rgb(96, 87, 87);
+}
+
+.custom-select {
+    border: 2px solid black;
+    border-radius: 5px;
+    height: 40px;
+    margin-left: 20px;
+    width: 30%;
+}
+
+#confirm {
+    height: 150px;
+}

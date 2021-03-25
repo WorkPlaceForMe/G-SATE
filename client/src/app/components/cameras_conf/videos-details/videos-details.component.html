@@ -1,0 +1,38 @@
+<div class="card-columns">
+
+    <div class="card bg-primary border-primary mb-3">
+        <div class="card-header" align='center'>
+            <h5>Video Details</h5>
+        </div>
+        <div class="card-body">
+            <input type="text" class="gsate-input" [(ngModel)]="video.name" [value]="video.name" placeholder="Video Name" style="margin-left: 5px;">
+
+            <div class="dropdown-divider"></div>
+            <textarea name="Description" [(ngModel)]="video.description" [value]="video.description" class="gsate-input" id="desc" cols="30" rows="10" placeholder="Description"></textarea>
+            <div class="dropdown-divider"></div>
+            <div class='form-inline'>
+                <div class="form-group mb-2">1 frame per : </div>
+                <select name="samplingRate" [(ngModel)]="video.samplingRate" class="custom-select gsate-input" placeholder="Sampling Rate">
+                <option *ngFor="let rate of samplingRates" [ngValue] = "rate">{{rate}} s</option>
+              </select>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-primary border-primary mb-3">
+        <div class="card-header" align='center'>
+            <h5>Upload</h5>
+        </div>
+        <div class="card-body" id="confirm">
+            <div align="center">
+                <button type="button" (click)='confirm()' class="btn btn-success btn-s training" [disabled]="!isFormFilled()">Confirm Upload
+          </button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- <button (click)='info()'>in</button> -->

@@ -57,6 +57,8 @@ import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/ob
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { AnnotationCreationService } from './services/annotation-creation.service';
+import { VideosDetailsComponent } from './components/cameras_conf/videos-details/videos-details.component';
+import { CameraService } from './services/camera.service';
 
 const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
 
@@ -95,7 +97,8 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     ObjDetImgComponent,
     ObjDetMulImgsComponent,
     AnnotationsDetailsComponent,
-    AnnotationsConfirmComponent
+    AnnotationsConfirmComponent,
+    VideosDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +128,8 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     ColorsService,
     StrService,
     AnnotationsService,
-    AnnotationCreationService    
+    AnnotationCreationService,
+    CameraService    
   ],
   bootstrap: [
     AppComponent
