@@ -122,6 +122,12 @@ return this.http.post(`${this.API_URI}/images`, image);
   startwsstream(){
     return this.http.get(`${this.API_URI}/StartWsStreaming/`);
   }
+  startWsStream(data:any){
+    return this.http.post(`${this.API_URI}/StartWsStreaming/`, data);
+  }
+  stopWsStream(data:any){
+    return this.http.post(`${this.API_URI}/StopWsStreaming/`, data);
+  }
   killwsstream(){
     return this.http.get(`${this.API_URI}/KillWsStreaming`);
   }
