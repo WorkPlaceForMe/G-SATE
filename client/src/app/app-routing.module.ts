@@ -23,6 +23,7 @@ import { ObjectDetectionComponent } from './components/t-cloud/object-detection/
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
+import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 
 const routes: Routes = [
   { path: '', 
@@ -86,7 +87,7 @@ const routes: Routes = [
   component: LivestreamComponent
   },
   {
-    path: 'annotations/multiple/:method/:folder/:image',
+    path: 'annotations/dataset/:method/:folder/:image',
     component: ObjDetMulImgsComponent
   },
   {
@@ -112,6 +113,10 @@ const routes: Routes = [
   {
     path: 'cameras/add_camera',
     component: VidComponent
+  },
+  {
+    path: 'cameras/add_video',
+    component: AddVideoComponent
   },
   {
     path: 'analytics',
