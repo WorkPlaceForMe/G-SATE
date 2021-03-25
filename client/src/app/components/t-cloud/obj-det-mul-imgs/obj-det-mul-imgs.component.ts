@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
+import { PagerService } from '../../../services/pager.service';
 import { ip } from '../../../models/IpServer'
 
 const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
@@ -13,9 +14,10 @@ const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 })
 export class ObjDetMulImgsComponent implements OnInit {
 
-  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router) {
+  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
+              private pagerService: PagerService) {
 
-    const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
+    /* const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
     this.data = this.router.getCurrentNavigation().extras.state.data;
     this.annotationsServ.getImages(string, 'data').subscribe(
@@ -45,12 +47,19 @@ export class ObjDetMulImgsComponent implements OnInit {
         for (let i = 0; i < this.images.length; i++) {
           this.images[i].name = this.images[i].name + this.images[i].format;
         }
-        this.picture = string + '/' + this.images[this.valueImage].name;
-        if (this.images[this.valueImage].width)
-          this.annWidth = 1600;//this.images[this.valueImage].width;
-        this.annHeight = 1080;//this.images[this.valueImage].height;
-
-        if (window.innerWidth >= 1200) {
+        this.picture = string + '/' + this.images[this.valueImage].name; */
+        /* if (this.images[this.valueImage].width)
+        this.annWidth = 719;//1600;//this.images[this.valueImage].width;
+        this.annHeight = 487;//1080;//this.images[this.valueImage].height;
+        let rect = this.canvas.getBoundingClientRect();
+        let res_width = 719//this.camera.cam_width;
+        let res_height = 487//this.camera.cam_height;
+        let resRelation = res_height / res_width;
+        this.width = rect.width;
+        console.log(this.width, rect.width)
+        this.height = this.width*resRelation;
+        console.log(this.height, rect.height) */
+        /* if (window.innerWidth >= 1200) {
           this.width = 835;
           this.height = this.width * this.annHeight / this.annWidth;
           if (this.height >= 480) {
@@ -85,13 +94,14 @@ export class ObjDetMulImgsComponent implements OnInit {
             this.height = 480;
             this.width = this.height * this.annWidth / this.annHeight;
           }
-        }
+        } */
         //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
         //this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
         //this.getAnn();
-      },
+        //this.setPage(1);
+      /* },
       err => console.log(err)
-    )
+    ) */
   }
 
   @HostListener('window:resize', ['$event'])
@@ -134,6 +144,12 @@ export class ObjDetMulImgsComponent implements OnInit {
     }
   }
 
+  pager: any = {};
+
+  // paged items
+  pagedItems: any[];
+  items = [];
+  pageOfItems: Array<any>;
   data: any;
   initPage: number = 0;
   pages: number;
@@ -143,6 +159,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   annWidth: number;
   annHeight: number;
   objDet: boolean = false;
+  spin: boolean = false;
   card: any = {
     width: 0,
     height: 0
@@ -156,6 +173,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   fakeValueImage: number;
   picture: string;
   labelsMessage: boolean = true;
+  datasetFlag: boolean = false;
 
   inf: any = {};
   deviceInfo = null;
@@ -174,27 +192,39 @@ export class ObjDetMulImgsComponent implements OnInit {
   private ctx;
 
   ngAfterViewInit() {
-    this.polygon.forEach(c => {
-      //this.polygon = new Chart(item.nativeElement, pieData[j]);
+    this.polygon.forEach((c, index) => {
       this.canvas = this.rd.selectRootElement(c["nativeElement"]);
       this.ctx = this.canvas.getContext("2d");
+      let rect = this.canvas.getBoundingClientRect();
+      this.data[index].res_width = this.data[index].width;
+      this.data[index].res_height = this.data[index].height;
+      this.data[index].width = rect.width;
+      let resRelation = this.data[index].res_height / this.data[index].res_width;
+      this.data[index].height = this.data[index].width*resRelation;
     });
   }
 
-  ngOnInit() {
-    /* this.polygon.changes.subscribe(c => 
-      { c.toArray().forEach(item => 
-        { 
-          //this.polygon = new Chart(item.nativeElement, pieData[j]);
-          this.canvas = this.rd.selectRootElement(item["nativeElement"]);
-          this.ctx = this.canvas.getContext("2d");
-        }) 
-      }); */
-    /* this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
-    this.ctx = this.canvas.getContext("2d"); */
+  setContext (ind) {
+    setTimeout(() => {
+      this.polygon.forEach((c) => {
+        let index = ind;
+        this.canvas = this.rd.selectRootElement(c["nativeElement"]);
+        this.ctx = this.canvas.getContext("2d");
+        let rect = this.canvas.getBoundingClientRect();
+        this.data[index].res_width = this.data[index].width;
+        this.data[index].res_height = this.data[index].height;
+        this.data[index].width = rect.width;
+        let resRelation = this.data[index].res_height / this.data[index].res_width;
+        this.data[index].height = this.data[index].width*resRelation;
+        ++ind;
+    });
+    }, 1000);
+  }
 
+  ngOnInit() {
+    this.processDataset();
     this.activatedRoute.params
-    if (this.activatedRoute.snapshot.params.method == 'multiple') {
+    if (this.activatedRoute.snapshot.params.method == 'dataset') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
       this.multiple = true;
@@ -202,11 +232,45 @@ export class ObjDetMulImgsComponent implements OnInit {
     } else {
       this.label = this.activatedRoute.snapshot.params.method;
     }
-    //this.getLabels();
+  }
+
+  processDataset() {
+    this.spin = true;
+    let data = {
+      name: this.activatedRoute.snapshot.params.folder
+    }
+    this.annotationsServ.processDataset(data).subscribe(res => {
+      this.data = res;
+      this.spin = false;
+      this.datasetFlag = true;
+      this.setPage(1);
+    })
+  }
+
+  setPage(page: number) {
+    if (page < 1 || page > this.pager.totalPages) {
+        return;
+    }
+    if(page > 1) {
+      this.setContext(this.pager.endIndex + 1);
+    } else {
+      this.setContext(0);
+    }
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.data.length, page);
+
+    // get current page of items
+    this.pagedItems = this.data.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    
+}
+
+  onChangePage(pageOfItems: Array<any>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
   }
 
   getAnn(i) {
-    let a, b;
+    /* let a, b;
     if (this.picture.includes('.jpg')) {
       a = this.picture.replace('.jpg', '');
     } else if (this.picture.includes('.png')) {
@@ -218,7 +282,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     } else if (this.picture.includes('.PNG')) {
       a = this.picture.replace('.PNG', '');
     }
-    a = a.split('/').join(' ');
+    a = a.split('/').join(' '); */
     /* this.annotationsServ.getAnn(a).subscribe(
       res=>{
         if(res != "it doesn't exists this annotation"){
@@ -242,13 +306,13 @@ export class ObjDetMulImgsComponent implements OnInit {
         if (Array.isArray(this.data[i].results[itm])) {
           this.data[i].results[itm].forEach(element => {
             let obj1 = {
-              x: element.boundingBox.left,
-              y: element.boundingBox.top
+              x: element.boundingBox.left * this.data[i].width / this.data[i].res_width,
+              y: element.boundingBox.top * this.data[i].height / this.data[i].res_height
             };
             this.ann.push(obj1);
             let obj2 = {
-              x: element.boundingBox.width,
-              y: element.boundingBox.height
+              x: element.boundingBox.width * this.data[i].width / this.data[i].res_width,
+              y: element.boundingBox.height * this.data[i].height / this.data[i].res_height
             };
             this.ann.push(obj2);
             let obj3 = {
@@ -557,6 +621,11 @@ export class ObjDetMulImgsComponent implements OnInit {
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
+      /* this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
+      this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
+      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4); */
       this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
       this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
       this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);

@@ -1,0 +1,1 @@
+export var vistaIP: string = 'http://ec2-54-210-219-113.compute-1.amazonaws.com';

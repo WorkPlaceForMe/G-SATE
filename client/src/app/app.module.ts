@@ -41,7 +41,7 @@ import { ClimbingBarricadeComponent } from './components/others/main_docs/climbi
 import { LoiteringDetectionComponent } from './components/t-cloud/annotations/loitering-detection.component';
 import { SpeedingVehicleComponent } from './components/t-cloud/video_to_frames/speeding-vehicle.component';
 import { UnwantedVehicleComponent } from './components/t-cloud/images_classification/unwanted-vehicle.component';
-import { MatExpansionModule,  MatButtonModule  } from '@angular/material';
+import { MatExpansionModule, MatButtonModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SearchComponent } from './components/facial_recognition/search/search.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
@@ -55,10 +55,13 @@ import { ObjectDetectionComponent } from './components/t-cloud/object-detection/
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
+import { JwPaginationComponent } from 'jw-angular-pagination';
+import { PagerService } from './services/pager.service';
+import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { AnnotationCreationService } from './services/annotation-creation.service';
 
-const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
+const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
   declarations: [
@@ -95,6 +98,8 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     ObjDetImgComponent,
     ObjDetMulImgsComponent,
     AnnotationsDetailsComponent,
+    JwPaginationComponent,
+    AddVideoComponent
     AnnotationsConfirmComponent
   ],
   imports: [
@@ -105,7 +110,7 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     ReactiveFormsModule,
     FileUploadModule,
     BrowserAnimationsModule,
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     SocketIoModule.forRoot(config),
     MatExpansionModule,
@@ -125,7 +130,8 @@ const config: SocketIoConfig = { url: 'http://'+ ip +':4444', options: {} };
     ColorsService,
     StrService,
     AnnotationsService,
-    AnnotationCreationService    
+    PagerService
+    AnnotationCreationService
   ],
   bootstrap: [
     AppComponent
