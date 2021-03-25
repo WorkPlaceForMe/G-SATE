@@ -1,3 +1,32 @@
 .card-footer {
     background-color: #303030;
 }
+
+a {
+    cursor: pointer;
+}
+
+.page-item.disabled {
+    background-color: #375a7f;
+}
+
+.page-link {
+    background-color: #375a7f;
+}
+
+.page-item.disabled .page-link {
+    background-color: #375a7f;
+}
+
+/* .page-item.active .page-link {
+    background-color: #375a7f;
+} */
+
+.spin{
+    position: absolute;
+    margin: auto;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

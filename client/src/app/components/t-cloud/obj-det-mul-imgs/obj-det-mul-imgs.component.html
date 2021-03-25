@@ -3,19 +3,25 @@
     <div class="card border-info" style="min-height: 600.6px;">
       <div class="card-body" align='center'>
         <div class="container">
-          <div class="row">
-            <div class="col-md-6 mb-1" *ngFor="let item of data; let i = index">
+          <div class="d-flex justify-content-center" *ngIf="spin">
+              <div class="spinner-border spin" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          <div class="row" *ngIf="datasetFlag">
+            <div class="col-md-6 mb-1" *ngFor="let item of pagedItems; let i = index">
               <div class="card">
-                <img class="card-img-top" src="" alt=""> 
+                <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <!-- <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{i}}" height='{{height}}' width='{{width}}'
                     style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
                     (click)='annotate($event, i)' style="background-image: url('https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/NiceKitchen.png'); background-size: 100% 100%;" oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas> -->
-                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{i}}" height='{{height}}' width='{{width}}'
+                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}'
                     style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
-                    (click)='annotate($event, i)' [style.background-image]="'url(' + item.image + ')'" oncontextmenu="return false;">
+                    (click)='annotate($event, i)' [style.background-image]="'url(' + item.image + ')'"
+                    oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>
 
@@ -24,8 +30,8 @@
                           </a> -->
                 </div>
                 <div class="card-footer">
-                  <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(i)"> 
-                    Labels 
+                  <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
+                    Labels
                   </button>
                 </div>
               </div>
@@ -130,6 +136,43 @@
             </div>
           </div> -->
         </div>
+      </div>
+      <div class="card-footer" align='center'>
+        <!-- pager -->
+        <!-- <div *ngFor="let item of pagedItems">{{item.name}}</div> -->
+        <nav aria-label="Page navigation example">
+          <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+              <a class="page-link" (click)="setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+              <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+              <a class="page-link" (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+              <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+              <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination> -->
+        <!-- <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav> -->
       </div>
     </div>
   </div>
