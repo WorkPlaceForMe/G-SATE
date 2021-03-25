@@ -25,6 +25,7 @@ import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/ob
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 
+import { AnnotationsConfirmComponent} from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 const routes: Routes = [
   { path: '', 
     redirectTo: 'camerasList',
@@ -97,6 +98,10 @@ const routes: Routes = [
   {
     path: 'annotations/:method/:folder/:image/details',
     component: AnnotationsDetailsComponent
+  },
+  {
+    path: 'annotations/confirm',
+    component: AnnotationsConfirmComponent
   },
   /* {
     path: 'objectDetection/:folder/:image',
