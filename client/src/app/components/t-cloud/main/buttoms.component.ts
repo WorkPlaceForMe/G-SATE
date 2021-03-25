@@ -270,7 +270,7 @@ export class ButtomsComponent implements OnInit {
     this.date = this.datepipe.transform(this.date, 'yyyy-M-dd')
     if (this.camera != undefined && this.date != undefined) {
       this.showMyWatch = true;
-    }
+    } 
   }
 
   detect() {
