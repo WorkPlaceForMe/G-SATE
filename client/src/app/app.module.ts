@@ -59,7 +59,6 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
 import { PagerService } from './services/pager.service';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
-import { AnnotationCreationService } from './services/annotation-creation.service';
 
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
@@ -130,8 +129,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ColorsService,
     StrService,
     AnnotationsService,
-    PagerService,
-    AnnotationCreationService
+    PagerService
   ],
   bootstrap: [
     AppComponent
