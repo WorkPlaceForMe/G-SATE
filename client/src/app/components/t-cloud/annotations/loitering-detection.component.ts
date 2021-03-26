@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
+import { vistaIP } from '../../../models/VistaServer';
 import { ip } from '../../../models/IpServer'
 
-const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
+//const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
+const baseURL = vistaIP;
 @Component({
   selector: 'app-loitering-detection',
   templateUrl: './loitering-detection.component.html',
@@ -47,9 +49,8 @@ export class LoiteringDetectionComponent implements OnInit {
         }
         this.picture = string + '/' + this.images[this.valueImage].name;
         if (this.images[this.valueImage].width)
-        this.annWidth = 1600;//this.images[this.valueImage].width;
-        this.annHeight = 1080;//this.images[this.valueImage].height;
-
+        this.annWidth = 3104;//1600;//this.images[this.valueImage].width;
+        this.annHeight = 1746;//1080;//this.images[this.valueImage].height;
         if (window.innerWidth >= 1200) {
           this.width = 835;
           this.height = this.width * this.annHeight / this.annWidth;

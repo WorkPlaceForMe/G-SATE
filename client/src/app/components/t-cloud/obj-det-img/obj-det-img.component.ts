@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
+import { vistaIP } from '../../../models/VistaServer';
 import { ip } from '../../../models/IpServer'
 
-const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
+// const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
+const baseURL = vistaIP;
 @Component({
   selector: 'app-obj-det-img',
   templateUrl: './obj-det-img.component.html',
@@ -24,7 +26,6 @@ export class ObjDetImgComponent implements OnInit {
     //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
     //this.link = sanitizer.bypassSecurityTrustStyle('url(' + 'http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png' + ')');
     
-    let string = 'data';
     this.annWidth = 1920;//this.images[this.valueImage].width;
     this.annHeight = 1080;//this.images[this.valueImage].height;
 
@@ -66,7 +67,6 @@ export class ObjDetImgComponent implements OnInit {
     }
     
     this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-    console.log('constructor........')
     //this.re_draw();
     //this.getAnn();
     //this.re_draw();
@@ -232,11 +232,11 @@ export class ObjDetImgComponent implements OnInit {
   private ctx;
 
   ngOnInit() {
-    console.log('ngOnInit........')
     this.canvas = this.rd.selectRootElement(this.polygon['nativeElement']);
     this.ctx = this.canvas.getContext('2d');
     this.getLabels();
-    this.re_draw();
+    //this.re_draw();
+    this.getAnn();
     // this.ctx.drawImage(document.getElementById('picture'),0,0);
     /* this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'multiple') {
@@ -264,7 +264,7 @@ export class ObjDetImgComponent implements OnInit {
       a = this.picture.replace('.PNG', '');
     }
     a = a.split('/').join(' ');
-    this.annotationsServ.getAnn(a).subscribe(
+    /* this.annotationsServ.getAnn(a).subscribe(
       res => {
         if (res != "it doesn't exists this annotation") {
           this.annotations = res;
@@ -277,7 +277,28 @@ export class ObjDetImgComponent implements OnInit {
         }
       },
       err => console.log(err)
-    )
+    ) */
+    for (let itm in this.data.results) {
+      if (Array.isArray(this.data.results[itm])) {
+        this.data.results[itm].forEach(element => {
+          let obj1 = {
+            x: element.boundingBox.left,
+            y: element.boundingBox.top
+          };
+          this.annotations.push(obj1);
+          let obj2 = {
+            x: element.boundingBox.width,
+            y: element.boundingBox.height
+          };
+          this.annotations.push(obj2);
+          let obj3 = {
+            label: element.class
+          };
+          this.annotations.push(obj3);
+        })
+      }
+    }
+    this.re_draw();
   }
 
   getLabels() {
@@ -319,10 +340,8 @@ export class ObjDetImgComponent implements OnInit {
 
   send() {
     this.annotations.push({ 'width': this.annWidth, 'height': this.annHeight });
-    console.log(this.annotations);
     this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.annotations).subscribe(
       res => {
-        console.log(res);
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
@@ -440,9 +459,7 @@ export class ObjDetImgComponent implements OnInit {
 
   annotate(event) {
     let x, y, rect;
-    console.log('this.objDet..........', this.objDet);
     if (this.objDet == false) {
-      console.log('this.label...........', this.label)
       if (this.label == undefined) {
         this.count++;
         this.showMyMessage = false;
@@ -540,7 +557,7 @@ export class ObjDetImgComponent implements OnInit {
   }
 
   re_draw() {
-    for(let itm in this.data.results) {
+    /* for(let itm in this.data.results) {
       if(Array.isArray(this.data.results[itm])) {
         this.data.results[itm].forEach(element => {
           console.log('element.boundingBox..............', element.boundingBox);
@@ -554,16 +571,16 @@ export class ObjDetImgComponent implements OnInit {
           this.ctx.fillRect(186+94, 186+144, 4, 4);
           this.ctx.strokeRect(375-94, 186, 94, 144);
           this.ctx.fillRect(375-94, 186, 4, 4);
-          /* this.ctx.fillRect(element.boundingBox['left'] - 2, element.boundingBox['top'] - 2, 4, 4);
+          this.ctx.fillRect(element.boundingBox['left'] - 2, element.boundingBox['top'] - 2, 4, 4);
           this.ctx.fillRect(element.boundingBox['left'] - 2, element.boundingBox['height'] - 2, 4, 4);
           this.ctx.fillRect(element.boundingBox['width'] - 2, element.boundingBox['top'] - 2, 4, 4);
           this.ctx.strokeRect(element.boundingBox['left'], element.boundingBox['top'], element.boundingBox['width'] - element.boundingBox['left'], element.boundingBox['height'] - element.boundingBox['top']);
-          this.ctx.fillRect(element.boundingBox['width'] - 2, element.boundingBox['height'] - 2, 4, 4); */
+          this.ctx.fillRect(element.boundingBox['width'] - 2, element.boundingBox['height'] - 2, 4, 4);
           this.ctx.lineWidth = 1;
           this.ctx.stroke();
         })
       }
-    }
+    } */
     /* for (let e = 0; e < this.data.results.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
@@ -575,6 +592,24 @@ export class ObjDetImgComponent implements OnInit {
       this.ctx.lineWidth = 1;
       this.ctx.stroke();
     } */
+
+    for (let e = 0; e < this.annotations.length; e++) {
+      this.ctx.fillStyle = "lime";
+      this.ctx.strokeStyle = 'lime';
+      /* this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
+      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
+      this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
+      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4); */
+      this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
+      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
+      this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+      this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
+      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+      this.ctx.lineWidth = 2.5;
+      this.ctx.stroke();
+      //return;
+    }
   }
 
   addLabel() {
