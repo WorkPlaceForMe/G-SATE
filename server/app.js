@@ -36,6 +36,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const command = ffmpeg();
 const Stream = require('node-rtsp-stream');
 const sharp = require('sharp');
+const Annotation = require('./routes/Annotation');
 
 app.use(express.json({
     limit: '50mb'
@@ -107,6 +108,7 @@ app.use('/api/algorithm', Algorithm);
 app.use('/api/datasets', Datasets);
 app.use('/api/relations', Relations);
 app.use('/api/rel', Rel);
+app.use('/api/annotations', Annotation);
 
 /** Serving from the same express Server
 No cors required */
