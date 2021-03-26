@@ -1,0 +1,31 @@
+<div class="container p-4">
+    <div class="card text-white bg-warning mb-3">
+        <div class="card-header" align="center">
+            <h3>Confirm Training?</h3>
+        </div>
+        <br>
+        <div class="content">
+            <h4>Summary</h4>
+            <div class="row">
+                <div class="col-sm-5">
+                    <ul>
+                        <li> Dataset Name: {{this.customerData.datasetName}}</li>
+                        <li> Contact Person: {{this.customerData.contactName}}</li>
+                        <li> Email Address: {{this.customerData.emailAddress}}</li>
+                    </ul>
+
+                </div>
+                <div class="col-sm-7">
+                    <ul>
+                        <li> Date Selected: {{this.customerData.date}}</li>
+                        <li> Model Selected: {{this.customerData.model}}</li>
+                        <li> Version Selected: {{this.customerData.version}}</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <a class="btn btn-primary" (click)="send()"><i class="fas fa-arrow-circle-left"></i>&nbsp; Yes</a>
+        <a class="btn btn-primary" (click)="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp; Go Back</a>
+    </div>
+</div>

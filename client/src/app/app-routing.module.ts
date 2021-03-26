@@ -24,8 +24,9 @@ import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
-
 import { AnnotationsConfirmComponent} from './components/t-cloud/annotations-confirm/annotations-confirm.component';
+import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
+import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 const routes: Routes = [
   { path: '', 
     redirectTo: 'camerasList',
@@ -92,6 +93,14 @@ const routes: Routes = [
     component: ObjDetMulImgsComponent
   },
   {
+    path: 'annotations/dataset/:method/:folder/:image/details',
+    component: ObjectDetectionDetailsComponent
+  },
+  {
+    path: 'annotations/objectDetection/confirm',
+    component: ObjectDetectionConfirmComponent
+  },
+  {
     path: 'annotations/:method/:folder/:image',
     component: LoiteringDetectionComponent
   },
@@ -102,6 +111,10 @@ const routes: Routes = [
   {
     path: 'annotations/confirm',
     component: AnnotationsConfirmComponent
+  },
+  {
+    path: 'annotations/:method/:folder/:image/details',
+    component: AnnotationsDetailsComponent
   },
   /* {
     path: 'objectDetection/:folder/:image',

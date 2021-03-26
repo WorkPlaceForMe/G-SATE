@@ -59,6 +59,8 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
 import { PagerService } from './services/pager.service';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
+import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
+import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
@@ -99,7 +101,9 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     AnnotationsDetailsComponent,
     JwPaginationComponent,
     AddVideoComponent,
-    AnnotationsConfirmComponent
+    AnnotationsConfirmComponent,
+    ObjectDetectionConfirmComponent,
+    ObjectDetectionDetailsComponent
   ],
   imports: [
     BrowserModule,
