@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Datasets = require('../models/Datasets');
+const Datasets = require('../models/Dataset');
 const DsetController = require('../controller/Dataset');
 
 router.get('/:which', function (req, res, next) {

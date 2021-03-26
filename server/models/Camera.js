@@ -25,7 +25,7 @@ var Camera = {
   },
 
   create: function (camera, callback) {
-    return db.query('INSERT INTO cameras values (?,?,?,?,?,?,?,?,?)', [camera.id, camera.name, camera.rtsp_in, camera.rtsp_out, camera.heatmap_pic, camera.pic_height, camera.pic_width, camera.cam_height, camera.cam_width], callback);
+    return db.query('INSERT INTO cameras values (?,?,?,?,?,?,?,?,?,?,?)', [camera.id, camera.name, camera.rtsp_in, camera.rtsp_out, camera.heatmap_pic, camera.pic_height, camera.pic_width, camera.cam_height, camera.cam_width, camera.stored_vid, camera.vid_length], callback);
   },
 
   delete: function (id, callback) {
