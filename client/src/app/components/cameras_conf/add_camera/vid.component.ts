@@ -15,7 +15,8 @@ export class VidComponent implements OnInit {
   camera: Camera = {
     id: '',
     name: '',
-    rtsp_in: ''
+    rtsp_in: '',
+    stored_vid: ''
   };
 
   edit : boolean = false;
@@ -39,6 +40,7 @@ export class VidComponent implements OnInit {
 
   saveCamera(){
    this.camera.id = uuid();
+   this.camera.stored_vid = 'No';
     if(this.camera.name != ''){
     this.facesService.saveCamera(this.camera)
     .subscribe(

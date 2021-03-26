@@ -14,6 +14,7 @@ const hm = require('./routes/Heatmap');
 const schedule = require('./routes/Schedule');
 const Algorithm = require('./routes/Algorithms');
 const Datasets = require('./routes/Dataset');
+const Video = require('./routes/Video');
 const Relations = require('./routes/Relations');
 const Rel = require('./routes/Rel');
 const bodyParser = require('body-parser');
@@ -106,6 +107,7 @@ app.use('/api/hm', hm);
 app.use('/api/schedule', schedule);
 app.use('/api/algorithm', Algorithm);
 app.use('/api/datasets', Datasets);
+app.use('/api/video', Video);
 app.use('/api/relations', Relations);
 app.use('/api/rel', Rel);
 app.use('/api/annotations', Annotation);
@@ -777,7 +779,8 @@ app.post('/api/StartWsStreaming/', function(req, res) {
             res.status(200).send({
                 success: true,
                 my_ip: process.env.my_ip,
-                port: stream.port
+                port: stream.port,
+                stream
             })
         })
         .catch(err => {

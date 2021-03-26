@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AnnotationsService } from '../../../services/annotations.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader, FileLikeObject } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ip } from '../../../models/IpServer';
 import { FacesService } from '../../../services/faces.service';
 import { PagerService } from '../../../services/pager.service';

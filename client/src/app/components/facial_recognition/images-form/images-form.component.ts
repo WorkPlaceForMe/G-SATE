@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Image } from 'src/app/models/Image';
 import { FacesService } from '../../../services/faces.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader, FileLikeObject } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ip } from '../../../models/IpServer';
 import { v4 as uuid } from 'uuid';
 import { User } from 'src/app/models/User';
