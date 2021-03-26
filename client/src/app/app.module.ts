@@ -99,7 +99,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ObjDetMulImgsComponent,
     AnnotationsDetailsComponent,
     JwPaginationComponent,
-    AddVideoComponent
+    AddVideoComponent,
     AnnotationsConfirmComponent
   ],
   imports: [
@@ -130,7 +130,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ColorsService,
     StrService,
     AnnotationsService,
-    PagerService
+    PagerService,
     AnnotationCreationService
   ],
   bootstrap: [

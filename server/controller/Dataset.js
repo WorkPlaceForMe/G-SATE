@@ -7,7 +7,7 @@ const multer = require('multer');
 const unzipper = require("unzipper");
 const ffmpeg = require('fluent-ffmpeg');
 const Camera = require('../models/Camera');
-const Datasets = require('../models/Datasets');
+const Datasets = require('../models/Dataset');
 const Relations = require('../models/Relations');
 const Algorithms = require('../models/Algorithms');
 const requestImageSize = require('request-image-size');
@@ -16,7 +16,7 @@ let Dataset = {
     process: (req, callback) => {
         let body = req.body;
         let dName = body.name;
-        Datasets.listOne(dName, function (err, rows) {
+        Datasets.listOne(dName, function(err, rows) {
             if (err) return callback(err);
             if (rows.length === 0) {
                 return callback('', 'Dataset Not Exists');
@@ -43,7 +43,7 @@ let Dataset = {
                 .seekInput('00:00:00')
                 .duration(`${body.t}`)
                 .saveToFile(directory)
-                .on('end', function (stdout, stderr) {
+                .on('end', function(stdout, stderr) {
                     let data = {
                         id: body.cam_id,
                         clientId: uuidv4(),
@@ -54,7 +54,7 @@ let Dataset = {
                         type: 'video',
                         uploaded: 'Yes'
                     };
-                    Datasets.add(data, function (err, row) {
+                    Datasets.add(data, function(err, row) {
                         if (err) return res.status(500).json(err);
                         res.status(200).json('Video Extracted Sucessfully.');
                     });
@@ -68,12 +68,12 @@ let Dataset = {
     unzipDataset: (req, res) => {
 
         let stor = multer.diskStorage({ //multers disk storage settings
-            filename: function (req, file, cb) {
+            filename: function(req, file, cb) {
                 var newName = file.originalname.toString()
                 cb(null, newName)
-                //file.originalname
+                    //file.originalname
             },
-            destination: function (req, file, cb) {
+            destination: function(req, file, cb) {
                 const pathName = file.originalname.toString().replace('.zip', '');
                 var lugar = process.env.resources2 + 'datasets/' + pathName;
                 if (!fs.existsSync(lugar)) {
@@ -87,7 +87,7 @@ let Dataset = {
             storage: stor
         }).single('zip');
 
-        upZip(req, res, function (err) {
+        upZip(req, res, function(err) {
             if (err) {
                 res.json({
                     error_code: 1,
@@ -111,7 +111,7 @@ let Dataset = {
                     type: 'zip',
                     uploaded: 'Yes'
                 };
-                Datasets.add(data, function (err, row) {
+                Datasets.add(data, function(err, row) {
                     if (err) return res.status(500).json(err);
                     fs.unlinkSync(pat);
                     res.status(200).json('Uploaded');
@@ -124,19 +124,19 @@ let Dataset = {
 let getImgSize = (url) => {
     return new Promise((resolve, reject) => {
         const options = {
-            url: process.env.vista_server_ip +  url,
+            url: process.env.vista_server_ip + url,
             strictSSL: false,
             headers: {
-              'User-Agent': 'request-image-size'
+                'User-Agent': 'request-image-size'
             }
-          };
+        };
         requestImageSize(options)
-         .then(size => 
-            resolve(size)
+            .then(size =>
+                resolve(size)
             )
-         .catch(err => 
-            reject(err)
-        );
+            .catch(err =>
+                reject(err)
+            );
     })
 }
 let processByVista = (name) => {
@@ -170,14 +170,14 @@ let processByVista = (name) => {
             let count = 0;
             Promise.all(promises).then(async(data) => {
                 for (const element of data) {
-                   let itm = JSON.parse(element);
-                   itm.id = count;
-                   let size = await getImgSize(itm.image);
-                   itm.width = size.width;
-                   itm.height = size.height;
-                   itm.image = process.env.vista_server_ip + itm.image
-                   rm.push(itm);
-                   ++count;
+                    let itm = JSON.parse(element);
+                    itm.id = count;
+                    let size = await getImgSize(itm.image);
+                    itm.width = size.width;
+                    itm.height = size.height;
+                    itm.image = process.env.vista_server_ip + itm.image
+                    rm.push(itm);
+                    ++count;
                 };
                 resolve(rm);
             }).catch(err => {
@@ -198,17 +198,17 @@ let table = {
 let processByAnalytics = (name) => {
     let result = [];
     return new Promise((resolve, reject) => {
-        Camera.getByName(name, function (err, cam) {
+        Camera.getByName(name, function(err, cam) {
             if (err) reject(err);
             if (cam.length === 0) resolve('Camera does not exists.')
-            Relations.getRels(cam[0].id, function (err, rows) {
+            Relations.getRels(cam[0].id, function(err, rows) {
                 if (rows.length > 0) {
                     rows.forEach(async element => {
                         let data = {
                             table: table[element.algo_name],
                             id: cam.id
                         }
-                        await Algorithms.fetchAlgoData(data, function (err, response) {
+                        await Algorithms.fetchAlgoData(data, function(err, response) {
                             result.push(response);
                         });
                     });
