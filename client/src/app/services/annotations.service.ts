@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ip } from '../models/IpServer';
+import { Customer } from '../models/Customer';
 import { vistaIP } from '../models/VistaServer';
 
 
@@ -8,7 +9,14 @@ import { vistaIP } from '../models/VistaServer';
   providedIn: 'root'
 })
 export class AnnotationsService {
-
+  datasetName: string;
+  contactName: string;
+  emailAddress: string;
+  date: any;
+  model:any;
+  models: any = [];
+  version:any;
+  versions: any = [];
   API_URL = 'http://'+ ip +':3300/api';
   VISTA_API_URL = vistaIP;
 
@@ -48,6 +56,14 @@ export class AnnotationsService {
     return this.http.get(`${this.API_URL}/classify/${path}/${name}/${dec}`);
   }
 
+  getModels() {
+    return this.http.get(`${this.API_URL}/annotations/models`);
+  }
+
+  saveCustomerDetails(conf: Customer) {
+    return this.http.post(`${this.API_URL}/annotations/confirmed`, conf);
+  }
+  
   createDataset(data:any){
     return this.http.post(`${this.API_URL}/dataset/create/`, data);
   }

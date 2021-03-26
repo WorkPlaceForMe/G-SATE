@@ -37,6 +37,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const command = ffmpeg();
 const Stream = require('node-rtsp-stream');
 const sharp = require('sharp');
+const Annotation = require('./routes/Annotation');
 
 app.use(express.json({
     limit: '50mb'
@@ -52,7 +53,7 @@ app.use(bodyParser.urlencoded({
     parameterLimit:50000
 })); */
 app.use(cookieParser());
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -109,6 +110,7 @@ app.use('/api/datasets', Datasets);
 app.use('/api/video', Video);
 app.use('/api/relations', Relations);
 app.use('/api/rel', Rel);
+app.use('/api/annotations', Annotation);
 
 /** Serving from the same express Server
 No cors required */
@@ -125,24 +127,24 @@ process.on('unhandledRejection', (error, promise) => {
     console.log(' The error was: ', error)
 })
 
-process.on('uncaughtException', function (err, promise) {
+process.on('uncaughtException', function(err, promise) {
     console.log(' Oh Lord! We forgot to handle a promise rejection here: ', promise)
     console.log(' The error was: ', err)
 })
 
 app.use(express.static('../client'));
 var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         frPicPath = file.originalname.toString().split('_');
         if (!fs.existsSync(process.env.resources + frPicPath[0])) {
             fs.mkdirSync(process.env.resources + frPicPath[0]);
         }
         cb(null, process.env.resources + frPicPath[0])
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         var newName = file.originalname.toString().split('_');
         cb(null, newName[1])
-        //file.originalname
+            //file.originalname
     }
 });
 
@@ -150,8 +152,8 @@ var upload = multer({ //multer settings
     storage: storage
 }).single('file');
 /** API path that will upload the files */
-app.post('/upload/', function (req, res, next) {
-    upload(req, res, function (err) {
+app.post('/upload/', function(req, res, next) {
+    upload(req, res, function(err) {
         if (err) {
             res.json({
                 error_code: 1,
@@ -162,14 +164,14 @@ app.post('/upload/', function (req, res, next) {
         try {
             new ExifImage({
                 image: process.env.resources + frPicPath[0] + '/' + frPicPath[1]
-            }, function (error, exifData) {
+            }, function(error, exifData) {
                 if (error) {
                     console.log('Error: ' + error.message);
                     res.json('no tiene exif')
                 } else
                 if (exifData.image.Orientation == 6) {
                     const form = frPicPath[1].split('.')
-                    cp.exec('ffmpeg -y -i ' + process.env.resources + frPicPath[0] + '/' + form[0] + '.' + form[1] + ' -vf transpose=1 ' + process.env.resources + frPicPath[0] + '/' + form[0] + '_1.' + form[1], function (err, data) {
+                    cp.exec('ffmpeg -y -i ' + process.env.resources + frPicPath[0] + '/' + form[0] + '.' + form[1] + ' -vf transpose=1 ' + process.env.resources + frPicPath[0] + '/' + form[0] + '_1.' + form[1], function(err, data) {
                         console.log('err: ', err)
                         console.log('data: ', data);
                         fs.unlink(process.env.resources + frPicPath[0] + '/' + form[0] + '.' + form[1], (err) => {
@@ -192,9 +194,9 @@ app.post('/upload/', function (req, res, next) {
     })
 });
 
-app.get('/api/v1/operation/:id', function (req, res) {
+app.get('/api/v1/operation/:id', function(req, res) {
     let id = req.params.id + '\r\n';
-    request.get(`${process.env.vista_server_ip}/api/v1/operation/${id}`, function (err, response) {
+    request.get(`${process.env.vista_server_ip}/api/v1/operation/${id}`, function(err, response) {
         if (err) return res.error(err.message);
         return res.json(response.body);
     });
@@ -209,8 +211,8 @@ app.get('/api/v1/operation/:id', function (req, res) {
          })
  });*/
 
-app.get('/api/turnOn/', function (req, res, err) {
-    cp.exec('node algo_server/app.js', function (err, data) {
+app.get('/api/turnOn/', function(req, res, err) {
+    cp.exec('node algo_server/app.js', function(err, data) {
         if (err) {
             console.log(err)
         }
@@ -221,7 +223,7 @@ app.get('/api/turnOn/', function (req, res, err) {
     res.send("turning on")
 });
 
-app.get('/api/send/', function (req, res, err) {
+app.get('/api/send/', function(req, res, err) {
     var spawn = require('child_process').spawn;
     const trigger = spawn('python3', ["offline_trigger.py", "-t"]);
     trigger.stdout.on('data', (data) => { // calling the stdout.on function with res.send as callback function
@@ -230,24 +232,24 @@ app.get('/api/send/', function (req, res, err) {
 });
 
 
-app.get('/api/stopfr/', function (req, res, err) {
-    cp.exec('bash stop.sh ' + process.env.passServer, function (err, data) {
+app.get('/api/stopfr/', function(req, res, err) {
+    cp.exec('bash stop.sh ' + process.env.passServer, function(err, data) {
         console.log('err: ', err)
         console.log('data: ', data);
         res.send("success")
     })
 });
 
-app.get('/api/cameraImages/:camera_id', function (req, res, err) {
+app.get('/api/cameraImages/:camera_id', function(req, res, err) {
     const camID = req.params.camera_id;
     if (camID == 'all') {
-        cp.exec('python heatmap.py --ip ' + process.env.host + '--user ' + process.env.user + ' --pwd ' + process.env.password, function (err, data) {
+        cp.exec('python heatmap.py --ip ' + process.env.host + '--user ' + process.env.user + ' --pwd ' + process.env.password, function(err, data) {
             console.log('error: ', err);
             console.log('data: ', data);
             res.send('Executed!')
         })
     } else {
-        cp.exec('python heatmap.py --host ' + process.env.host + ' --ip ' + process.env.my_ip + ' --user ' + process.env.user + ' --pwd ' + process.env.password + ' --db ' + process.env.database + ' --path ' + process.env.resources2 + ' --cameraid ' + camID, function (err, data) {
+        cp.exec('python heatmap.py --host ' + process.env.host + ' --ip ' + process.env.my_ip + ' --user ' + process.env.user + ' --pwd ' + process.env.password + ' --db ' + process.env.database + ' --path ' + process.env.resources2 + ' --cameraid ' + camID, function(err, data) {
             console.log('error: ', err);
             console.log('data: ', data);
             res.send('Ex')
@@ -280,16 +282,16 @@ io.on("connection", socket => {
         }
     });
 
-    io.on('connection', function (socket) {
+    io.on('connection', function(socket) {
         console.log('a user connected');
-        socket.on('disconnect', function () {
+        socket.on('disconnect', function() {
             console.log('user disconnected');
         });
     });
 
     socket.on("wenaMax", message => {
         console.log(message);
-    }, function (res) {
+    }, function(res) {
         res('chupadla')
     });
 
@@ -438,10 +440,10 @@ app.use(express.static('../client'));
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, './uploads/');
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         let datetimestamp = Date.now();
         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
     }
@@ -451,10 +453,10 @@ var upload = multer({ //multer settings
     storage: storage
 }).single('photo');
 
-app.post('/api/upload/pic', function (req, res, next) {
+app.post('/api/upload/pic', function(req, res, next) {
     let path = '';
     let resizePath = '';
-    upload(req, res, function (err) {
+    upload(req, res, function(err) {
         if (err) {
             // An error occurred when uploading
             console.log(err);
@@ -464,7 +466,7 @@ app.post('/api/upload/pic', function (req, res, next) {
         path = req.file.path;
         let datetimestamp = Date.now();
         resizePath = `./uploads/photo-${datetimestamp}.jpg`;
-        sharp(path).resize(710, 480).toFile(resizePath, function (err) {
+        sharp(path).resize(710, 480).toFile(resizePath, function(err) {
             if (err) {
                 res.status(500).json({
                     success: false,
@@ -498,7 +500,7 @@ var processImage = (imgPath, path, res) => {
                 'subscriptions': 'Object,themes,food,tags,face,fashion'
             }
         };
-        request(options, function (error, response) {
+        request(options, function(error, response) {
             if (error) {
                 console.log('error.............', error);
                 return res.status(500).json(error.message);
@@ -511,7 +513,7 @@ var processImage = (imgPath, path, res) => {
     }
 }
 
-app.get('/api/search/:keyword', async function (req, res) {
+app.get('/api/search/:keyword', async function(req, res) {
     let result = [];
     let count = 150;
     let offset = 0;
@@ -542,7 +544,7 @@ app.get('/api/search/:keyword', async function (req, res) {
 
 function searchImages(keyword, count, offset) {
     let result = [];
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         try {
             let request_params = {
                 method: 'GET',
@@ -552,12 +554,12 @@ function searchImages(keyword, count, offset) {
                     'Ocp-Apim-Subscription-Key': process.env.subscriptionKey,
                 }
             };
-            let response_handler = function (response) {
+            let response_handler = function(response) {
                 let body = '';
-                response.on('data', function (d) {
+                response.on('data', function(d) {
                     body += d;
                 });
-                response.on('end', function () {
+                response.on('end', function() {
                     result = JSON.parse(body);
                     // console.log(offset , '>>>>>>>>>>>>>>>>>>>', result);
                     resolve(result);
@@ -619,17 +621,17 @@ function searchImages(keyword, count, offset) {
     }
 }) */
 
-app.post('/api/dataset/create/', function (req, res) {
+app.post('/api/dataset/create/', function(req, res) {
     let data = req.body;
     let images = data.images;
     let directory = process.env.resources2 + 'datasets/' + data.name;
     try {
-        images.forEach(async (element, i) => {
+        images.forEach(async(element, i) => {
             if (!fs.existsSync(directory)) {
                 fs.mkdirSync(directory);
             }
             let filePath = directory + '/' + 'image' + i + '.jpg';
-            await save(element.contentUrl, filePath, directory, i, function () {
+            await save(element.contentUrl, filePath, directory, i, function() {
                 console.log('Done!')
             });
         });
@@ -642,14 +644,14 @@ app.post('/api/dataset/create/', function (req, res) {
     }
 })
 
-let save = function (uri, filePath, directory, i, callback) {
+let save = function(uri, filePath, directory, i, callback) {
     try {
-        request.head(uri, function (err, res, body) {
-            request(uri).pipe(fs.createWriteStream(filePath)).on('close', function () {
+        request.head(uri, function(err, res, body) {
+            request(uri).pipe(fs.createWriteStream(filePath)).on('close', function() {
                 console.log('filename>>>>>>>>>>>', filePath);
                 let resizePath = directory + '/' + 'resize-image' + i + '.jpg';
                 console.log('resizePath>>>>>>>>>>>', resizePath);
-                sharp(filePath).resize(365, 205).toFile(resizePath, function (err) {
+                sharp(filePath).resize(365, 205).toFile(resizePath, function(err) {
                     if (err) {
                         throw err;
                     } else {
@@ -694,7 +696,7 @@ let save = function (uri, filePath, directory, i, callback) {
         res.json(arreglo)
     }) */
 
-app.get('/api/classify/:path/:name/:yn', function (req, res) {
+app.get('/api/classify/:path/:name/:yn', function(req, res) {
     var where_this_it = process.env.resources2 + 'classifications/' + req.params.path;
     if (JSON.stringify(req.params.path).includes('_true')) {
         where_this_it = where_this_it.replace('_true', '');
@@ -768,7 +770,7 @@ function getStream(camera_name, rtsp_in, port, id, tries) {
     })
 }
 
-app.post('/api/StartWsStreaming/', function (req, res) {
+app.post('/api/StartWsStreaming/', function(req, res) {
     let body = req.body;
     let port = 9999;
     port = port - streams.length;
@@ -791,14 +793,14 @@ app.post('/api/StartWsStreaming/', function (req, res) {
         })
 })
 
-app.post('/api/StopWsStreaming/', function (req, res) {
+app.post('/api/StopWsStreaming/', function(req, res) {
     stopCam = (req, res) => {
         const data = req.body;
         for (let i = 0; i < streams.length; i++) {
             if (streams[i].id == data.id) {
                 streams[i].str.stop()
                 streams.splice(i, 1)
-                //continue;
+                    //continue;
             }
         }
         res.status(200).send({
@@ -809,7 +811,7 @@ app.post('/api/StopWsStreaming/', function (req, res) {
 })
 
 async function f(where) {
-    streamWebCam = cp.exec('bash rtsp_webcam.sh', function (err, data) {
+    streamWebCam = cp.exec('bash rtsp_webcam.sh', function(err, data) {
         console.log('err: ', err)
         console.log('data: ', data);
 
@@ -817,7 +819,7 @@ async function f(where) {
     pidWeb = streamWebCam.pid + 1;
 
     await new Promise((resolve, reject) => setTimeout(resolve, 3000));
-    ffmpeg_child = cp.exec('ffmpeg -i ' + rtsp + ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' + where + '/yoursecret', function (err, data) {
+    ffmpeg_child = cp.exec('ffmpeg -i ' + rtsp + ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' + where + '/yoursecret', function(err, data) {
         console.log('err: ', err)
         console.log('data: ', data);
     })
@@ -828,10 +830,10 @@ async function f(where) {
 
 let FFMPEG_PID = 0;
 var pidWeb = 0;
-app.get('/api/FeedWsStreaming/:port/:rtsp', function (req, res) {
+app.get('/api/FeedWsStreaming/:port/:rtsp', function(req, res) {
     rtsp = req.params.rtsp.split(' ').join('/');
     let listen = req.params.port;
-    ffmpeg_child = cp.exec('ffmpeg -i ' + rtsp + ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' + listen + '/yoursecret', function (err, data) {
+    ffmpeg_child = cp.exec('ffmpeg -i ' + rtsp + ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' + listen + '/yoursecret', function(err, data) {
         console.log('err: ', err)
         console.log('data: ', data);
     })
@@ -839,12 +841,12 @@ app.get('/api/FeedWsStreaming/:port/:rtsp', function (req, res) {
     res.json(FFMPEG_PID)
 });
 
-app.get('/api/getPorts', function (req, res) {
+app.get('/api/getPorts', function(req, res) {
     res.json(ports)
 })
 
 
-app.get('/api/StartWsStreaming/', function (req, res) {
+app.get('/api/StartWsStreaming/', function(req, res) {
     let listen, portUsed, num;
     for (let a = 0; a < ports.length; a++) {
         if (ports[a].used == 0) {
@@ -852,7 +854,7 @@ app.get('/api/StartWsStreaming/', function (req, res) {
             ports[a].used = 1;
             portUsed = ports[a].out;
             a = ports.length;
-            ws_child = cp.exec('node websocket-relay.js yoursecret ' + listen + ' ' + portUsed, function (err, data) {
+            ws_child = cp.exec('node websocket-relay.js yoursecret ' + listen + ' ' + portUsed, function(err, data) {
                 console.log('err: ', err)
                 console.log('data: ', data);
             })
@@ -868,7 +870,7 @@ app.get('/api/StartWsStreaming/', function (req, res) {
     }
 });
 
-app.get('/api/KillWsStreaming/:pid/:port/:server', function (req, res) {
+app.get('/api/KillWsStreaming/:pid/:port/:server', function(req, res) {
     if (req.params.server == 'true') {
         for (let a = 0; a < ports.length; a++) {
             if (req.params.port == ports[a].out) {
@@ -877,18 +879,18 @@ app.get('/api/KillWsStreaming/:pid/:port/:server', function (req, res) {
         }
     }
     if (process.platform == "win32") {
-        cp.exec('taskkill /PID ' + req.params.pid + ' /F', function (err, data) {
+        cp.exec('taskkill /PID ' + req.params.pid + ' /F', function(err, data) {
             console.log('err: ', err)
             console.log('data: ', data);
         })
         res.json('FFMPEG killed ' + req.params.pid)
     } else {
-        cp.exec('kill ' + req.params.pid, function (err, data) {
+        cp.exec('kill ' + req.params.pid, function(err, data) {
             console.log('err: ', err)
             console.log('data: ', data);
         })
         if (pidWeb != 0) {
-            cp.exec('kill ' + pidWeb, function (err, data) {
+            cp.exec('kill ' + pidWeb, function(err, data) {
                 console.log('err: ', err)
                 console.log('data: ', data);
             })
@@ -897,7 +899,7 @@ app.get('/api/KillWsStreaming/:pid/:port/:server', function (req, res) {
     }
 });
 
-app.get('/api/readAnn/:path', function (req, res) {
+app.get('/api/readAnn/:path', function(req, res) {
     const nameAnn = req.params.path.split(' ');
     if (nameAnn[1].includes('.jpg')) {
         nameAnn[1] = nameAnn[1].replace('.jpg', '');
@@ -923,7 +925,7 @@ app.get('/api/readAnn/:path', function (req, res) {
     }
 })
 
-app.post('/api/createAnn/:pathPic', function (req, res) {
+app.post('/api/createAnn/:pathPic', function(req, res) {
     let annotation = JSON.stringify(req.body);
     const joinedPath = req.params.pathPic.split(' ');
     if (joinedPath[1].includes('.jpg')) {
@@ -944,7 +946,7 @@ app.post('/api/createAnn/:pathPic', function (req, res) {
     writeStream.write(annotation);
 })
 
-app.get('/api/getImages/:path/:where', function (req, res) {
+app.get('/api/getImages/:path/:where', function(req, res) {
     let arreglo = [];
     if (req.params.where == 'data') {
         var theEnd = 'datasets/'
@@ -979,7 +981,7 @@ app.get('/api/getImages/:path/:where', function (req, res) {
 })
 
 
-app.get('/api/writeLabel/:label', function (req, res) {
+app.get('/api/writeLabel/:label', function(req, res) {
     var theThing = req.params.label + '\r\n';
     fs.createWriteStream(process.env.resources2 + 'labels.txt', {
         flags: 'a'
@@ -988,7 +990,7 @@ app.get('/api/writeLabel/:label', function (req, res) {
 });
 
 
-app.get('/api/readStatus/:mod', function (req, res, err) {
+app.get('/api/readStatus/:mod', function(req, res, err) {
     const statusFr = process.env.resources2 + 'statusFr.json';
     if (req.params.mod == 0) {
         if (!fs.existsSync(statusFr)) {
@@ -1024,7 +1026,7 @@ app.get('/api/readStatus/:mod', function (req, res, err) {
     }
 });
 
-app.get('/api/readLabels/', function (req, res) {
+app.get('/api/readLabels/', function(req, res) {
     fs.readFile(process.env.resources2 + 'labels.txt', (e, data) => {
         if (e) throw e;
         console.log(data.toString());
@@ -1032,7 +1034,7 @@ app.get('/api/readLabels/', function (req, res) {
     });
 });
 
-app.post('/api/getInfo/', function (req, res, next) {
+app.post('/api/getInfo/', function(req, res, next) {
     let writeStream = fs.createWriteStream('./access.log', {
         flags: 'a'
     });
@@ -1051,7 +1053,7 @@ app.post('/api/getInfo/', function (req, res, next) {
     res.json('buena');
 });
 
-let server = app.listen(process.env.server, process.env.my_ip, function () {
+let server = app.listen(process.env.server, process.env.my_ip, function() {
     let writeStream = fs.createWriteStream('./access.log', {
         flags: 'a'
     });
@@ -1061,15 +1063,15 @@ let server = app.listen(process.env.server, process.env.my_ip, function () {
     console.log('IP: ' + process.env.my_ip)
     console.log('running on ' + process.env.server + '...');
 });
-http.listen(process.env.io, function () {
+http.listen(process.env.io, function() {
     console.log('Running ' + process.env.io + ' for socket...')
 });
 
-messOff = function () {
+messOff = function() {
     console.log('shutting off')
 }
 
-app.get('/api/turnOff', function (req, res) {
+app.get('/api/turnOff', function(req, res) {
     gracefulExit.gracefulExitHandler(app, server, {
         log: true,
         callback: messOff()
