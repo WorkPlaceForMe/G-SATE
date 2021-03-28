@@ -24,6 +24,7 @@ export class SpeedingVehicleComponent implements OnInit {
   title: string;
   start: any;
   finish: any;
+  maxTime: any;
   act: boolean = false;
   stored_vid: boolean = false;
   liveFeed: boolean = false;
@@ -91,6 +92,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.stored_vid = true;
       this.start = '00:00:00';
       this.finish = cam[0].vid_length;
+      this.maxTime = this.finish;
       this.rtsp_in = '/assets/' + cam[0].name + '.mp4';
     } else {
       this.liveFeed = true;
