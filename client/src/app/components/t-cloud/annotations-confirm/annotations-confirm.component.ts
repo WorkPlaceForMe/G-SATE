@@ -21,22 +21,24 @@ export class AnnotationsConfirmComponent implements OnInit {
   //   version: null
   // };
   customerData:Customer = {
-       id : '',
+    id : '',
     datasetName : null,
     contactName: null,
     emailAddress: null,
     date: null,
     model: null,
-    version: null
+    version: null,
+    data: null
   }
   folder: string;
 
-  constructor(private annotationsService:AnnotationsService, private router:Router, private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private annotationsService:AnnotationsService, private router:Router, private route: ActivatedRoute, private http: HttpClient) { 
+    this.customerData.data = this.router.getCurrentNavigation().extras.state.data;
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params:Params)=>{
       this.folder = params['dataName'];
-      console.log(this.folder);
     });
     this.customerData.datasetName = this.annotationsService.datasetName ;
     this.customerData.contactName = this.annotationsService.contactName ;
@@ -52,10 +54,8 @@ export class AnnotationsConfirmComponent implements OnInit {
 
   send(){
     this.customerData.id = uuid();
-
     this.annotationsService.saveCustomerDetails(this.customerData).subscribe(
       res=>{
-        console.log(res)
         this.router.navigate(['/camerasList'])
       },
       err => console.log(err)

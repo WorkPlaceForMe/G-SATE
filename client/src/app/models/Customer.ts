@@ -6,6 +6,7 @@ export interface Customer{
     date: any;
     model:string;
     version:number;
+    data: any
     //The ? is for make it optionals
   }
   

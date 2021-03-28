@@ -150,7 +150,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   pagedItems: any[];
   items = [];
   pageOfItems: Array<any>;
-  data: any;
+  data: any = [];
   initPage: number = 0;
   pages: number;
   total: number;
@@ -223,7 +223,6 @@ export class ObjDetMulImgsComponent implements OnInit {
 
   ngOnInit() {
     this.processDataset();
-    this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'dataset') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
@@ -394,8 +393,8 @@ export class ObjDetMulImgsComponent implements OnInit {
       }
     }
     else {
-      alert("ERROR!");
-      this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details']);
+      //alert("ERROR!");
+      this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details'], { state: { data: this.annObj } });
     }
   }
 
