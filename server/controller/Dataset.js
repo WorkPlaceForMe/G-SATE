@@ -8,6 +8,7 @@ const unzipper = require("unzipper");
 const ffmpeg = require('fluent-ffmpeg');
 const Camera = require('../models/Camera');
 const Datasets = require('../models/Dataset');
+const child_process = require('child_process'); 
 const Relations = require('../models/Relations');
 const Algorithms = require('../models/Algorithms');
 const requestImageSize = require('request-image-size');
@@ -118,6 +119,32 @@ let Dataset = {
                 });
             }
         })
+    },
+    imageSeachDataset: (req, res) => {
+        let child = child_process.spawn('node', ['SaveImage.js', req.body.name, JSON.stringify(req.body.images)]);
+        child.stdout.on('data', function (data) {  
+            console.log('stdout: ' + data);
+            res.json(`${req.body.name} dataset created successfully!`);
+        });  
+        child.stderr.on('data', function (data) {  
+            console.log('stderr: ' + data);
+            res.json(data);
+        });  
+        child.on('message', function(msg) {
+            console.log('message from child: ' + require('util').inspect(msg));
+          });
+        child.on('exit', function() {
+            console.log(`${req.body.name} dataset cretaed successfully!`);
+            res.json(`${req.body.name} dataset created successfully!`);
+        });
+        child.on('end', function() {
+            console.log(`${req.body.name} dataset cretaed successfully!`);
+            res.json(`${req.body.name} dataset created successfully!`);
+        });
+        child.on('close', function (code) {  
+            console.log('child process exited with code: ' + code); 
+            res.json(`${req.body.name} dataset cretaed successfully!`);
+        });  
     }
 }
 
@@ -139,6 +166,7 @@ let getImgSize = (url) => {
             );
     })
 }
+
 let processByVista = (name) => {
     let directory = process.env.resources2 + 'datasets/' + name;
     return new Promise((resolve, reject) => {

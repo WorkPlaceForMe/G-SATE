@@ -112,6 +112,15 @@ a {
   transform: rotate(45deg);
 }
 
+.spinner{
+  position: absolute;
+  margin: auto;
+  top:33rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .spin{
   position: absolute;
   margin: auto;
