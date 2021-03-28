@@ -7,11 +7,11 @@ let Annotation = {
     },
 
     createImage: function(details, callback) {
-        return db.query('INSERT INTO customer_training_details values (?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.emailAddress, details.contactName, details.model, details.version], callback);
+        return db.query('INSERT INTO customer_training_details values (?,?,?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.emailAddress, details.contactName, details.model, details.version,details.path, details.processed], callback);
     },
 
     createObject: function(details, callback) {
-        return db.query('INSERT INTO object_detection_training_details values (?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.emailAddress, details.contactName, details.model, details.version], callback);
+        return db.query('INSERT INTO object_detection_training_details values (?,?,?,?,?,?,?,?,?)', [details.id, details.datasetName, details.date, details.emailAddress, details.contactName, details.model, details.version, details.path, details.processed], callback);
     },
 };
 

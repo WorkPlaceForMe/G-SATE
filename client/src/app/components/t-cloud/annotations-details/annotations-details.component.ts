@@ -14,6 +14,7 @@ export class AnnotationsDetailsComponent implements OnInit {
   contactName: string;
   emailAddress: string;
   date: any;
+  data: any;
   model:string;
   models: any = [];
   version:number;
@@ -21,10 +22,10 @@ export class AnnotationsDetailsComponent implements OnInit {
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
   constructor(private router: Router,  private datepipe: DatePipe, private annotationsServ:AnnotationsService, private http: HttpClient, private activatedRoute:ActivatedRoute) {
+    this.data = this.router.getCurrentNavigation().extras.state.data;
     this.annotationsServ.getModels().subscribe(
       res => {
         this.models= res;
-        console.log(this.models);
       },
       err => console.log(err)
     )
@@ -63,7 +64,7 @@ export class AnnotationsDetailsComponent implements OnInit {
     this.annotationsServ.date = this.date;
     this.annotationsServ.version = this.version;
     this.annotationsServ.model = this.model;
-    this.router.navigate(['/annotations/confirm' ]);
+    this.router.navigate(['/annotations/confirm'], { state: { data: this.data } });
     // if (this.valueImage < this.total - 1) {
     //   this.valueImage++;
     //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {

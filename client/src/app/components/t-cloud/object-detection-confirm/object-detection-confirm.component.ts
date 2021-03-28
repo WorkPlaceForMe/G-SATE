@@ -27,7 +27,8 @@ export class ObjectDetectionConfirmComponent implements OnInit {
     emailAddress: null,
     date: null,
     model: null,
-    version: null
+    version: null,
+    data: null
   }
   folder: string;
 
@@ -36,7 +37,6 @@ export class ObjectDetectionConfirmComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params:Params)=>{
       this.folder = params['dataName'];
-      console.log(this.folder);
     });
     this.customerData.datasetName = this.annotationsService.datasetName ;
     this.customerData.contactName = this.annotationsService.contactName ;
@@ -55,7 +55,6 @@ export class ObjectDetectionConfirmComponent implements OnInit {
 
     this.annotationsService.saveObjectDetectionDetails(this.customerData).subscribe(
       res=>{
-        console.log(res)
         this.router.navigate(['/camerasList'])
       },
       err => console.log(err)

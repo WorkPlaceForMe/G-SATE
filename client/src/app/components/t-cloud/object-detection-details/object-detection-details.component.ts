@@ -24,7 +24,6 @@ export class ObjectDetectionDetailsComponent implements OnInit {
     this.annotationsServ.getModels().subscribe(
       res => {
         this.models= res;
-        console.log(this.models);
       },
       err => console.log(err)
     )
