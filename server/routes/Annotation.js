@@ -17,7 +17,7 @@ router.get('/models', function(req, res, next) {
 router.post('/confirmed', function(req, res, next) {
     console.log("confirmed");
     console.log(req.body);
-    Annotation.create(req.body, function(err, annotation) {
+    Annotation.createImage(req.body, function(err, annotation) {
         if (err) {
             res.json(err);
         } else {
@@ -28,5 +28,18 @@ router.post('/confirmed', function(req, res, next) {
     });
 });
 
+router.post('/object-detection/confirmed', function(req, res, next) {
+    console.log("object detection training confirmed");
+    console.log(req.body);
+    Annotation.createObject(req.body, function(err, annotation) {
+        if (err) {
+            res.json(err);
+        } else {
+            console.log(annotation);
+            res.json(annotation);
+            res.redirect("/camerasList");
+        }
+    });
+});
 
 module.exports = router;

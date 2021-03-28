@@ -1,0 +1,29 @@
+.card-columns {
+    column-count: 2;
+}
+
+.training {
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.gsate-input {
+    margin: 3px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60%;
+}
+
+.custom-select {
+    border: 2px solid black;
+    border-radius: 5px;
+    height: 40px;
+    width: auto;
+    margin-left: 6px;
+}
+
+#dateSelector {
+    width: 90%;
+}

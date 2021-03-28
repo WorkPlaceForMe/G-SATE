@@ -1,15 +1,15 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { AnnotationsService} from '../../../services/annotations.service';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-annotations-details',
-  templateUrl: './annotations-details.component.html',
-  styleUrls: ['./annotations-details.component.css']
+  selector: 'app-object-detection-details',
+  templateUrl: './object-detection-details.component.html',
+  styleUrls: ['./object-detection-details.component.css']
 })
-export class AnnotationsDetailsComponent implements OnInit {
+export class ObjectDetectionDetailsComponent implements OnInit {
   datasetName: string;
   contactName: string;
   emailAddress: string;
@@ -63,7 +63,7 @@ export class AnnotationsDetailsComponent implements OnInit {
     this.annotationsServ.date = this.date;
     this.annotationsServ.version = this.version;
     this.annotationsServ.model = this.model;
-    this.router.navigate(['/annotations/confirm' ]);
+    this.router.navigate(['/annotations/objectDetection/confirm' ]);
     // if (this.valueImage < this.total - 1) {
     //   this.valueImage++;
     //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {

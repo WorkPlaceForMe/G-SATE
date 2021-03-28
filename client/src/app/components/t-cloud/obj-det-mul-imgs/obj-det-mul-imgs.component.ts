@@ -392,7 +392,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       res => {
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
+            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage + '/details']);
           });
         } else if (this.valueImage == this.total - 1) {
           this.router.navigateByUrl('/annotations');

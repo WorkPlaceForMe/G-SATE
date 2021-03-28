@@ -64,6 +64,10 @@ export class AnnotationsService {
     return this.http.post(`${this.API_URL}/annotations/confirmed`, conf);
   }
   
+  saveObjectDetectionDetails(conf: Customer) {
+    return this.http.post(`${this.API_URL}/annotations/object-detection/confirmed`, conf);
+  }
+
   createDataset(data:any){
     return this.http.post(`${this.API_URL}/dataset/create/`, data);
   }
