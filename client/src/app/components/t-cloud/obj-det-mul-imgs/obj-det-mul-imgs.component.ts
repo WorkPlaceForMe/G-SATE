@@ -383,7 +383,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.send();
       } else {
         this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
+          this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage + '/details']);
         });
       }
     } else if (this.valueImage == this.total - 1) {
@@ -392,6 +392,10 @@ export class ObjDetMulImgsComponent implements OnInit {
       } else {
         this.router.navigateByUrl('/annotations');
       }
+    }
+    else {
+      alert("ERROR!");
+      this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details']);
     }
   }
 
