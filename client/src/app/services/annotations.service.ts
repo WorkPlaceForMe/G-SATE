@@ -69,7 +69,7 @@ export class AnnotationsService {
   }
 
   createDataset(data:any){
-    return this.http.post(`${this.API_URL}/dataset/create/`, data);
+    return this.http.post(`${this.API_URL}/datasets/image/search/create`, data);
   }
 
   processDataset(data:any) {

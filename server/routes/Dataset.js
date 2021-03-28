@@ -32,5 +32,9 @@ router.post('/upZip', function(req, res, next) {
     DsetController.unzipDataset(req, res);
 });
 
+router.post('/image/search/create', function(req, res, next) {
+    DsetController.imageSeachDataset(req, res);
+})
+
 
 module.exports = router;

@@ -621,7 +621,7 @@ function searchImages(keyword, count, offset) {
     }
 }) */
 
-app.post('/api/dataset/create/', function(req, res) {
+/* app.post('/api/datasets/image/search/create/', function(req, res) {
     let data = req.body;
     let images = data.images;
     let directory = process.env.resources2 + 'datasets/' + data.name;
@@ -654,7 +654,7 @@ let save = function(uri, filePath, directory, i, callback) {
     } catch (err) {
         console.log('Error>>>>>>>>>', err);
     }
-};
+}; */
 
 /*     app.get('/api/getFolders/:which', function (req, res) {
         let arreglo = [];

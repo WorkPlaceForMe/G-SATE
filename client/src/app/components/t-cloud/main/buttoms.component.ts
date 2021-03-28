@@ -703,7 +703,9 @@ export class ButtomsComponent implements OnInit {
             this.images = res;
             this.images = this.images.map(obj => ({ ...obj, checked: true }))
             this.setPage(1);
-        })
+            this.searchFlag = true;
+            this.isSearchDisabled = true;
+        });
         /* this.images = this.images.map(obj=> ({ ...obj, checked: true }))
         setTimeout(() => {
           this.spinner = false;
