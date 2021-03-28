@@ -54,6 +54,7 @@ export class ButtomsComponent implements OnInit {
     cameras: any = [];
     camera: any;
     rtsp_in: any;
+    selectedDate: any;
     date: any;
     response: any = [];
     images: any = [];
@@ -623,12 +624,13 @@ export class ButtomsComponent implements OnInit {
         this.showMyMessage3 = true; */
     }
 
-    watch() {
-        this.date = this.datepipe.transform(this.date, 'yyyy-M-dd');
+
+    isCameraReady() {
+        this.date = this.datepipe.transform(this.selectedDate, 'yyyy-M-dd');
         if (this.camera != undefined && this.date != undefined) {
-            this.showMyWatch = true;
+            return true;
         }
-    }
+      }
 
     refresh() {
         this.datasetsNames = [];
