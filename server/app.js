@@ -648,19 +648,7 @@ let save = function(uri, filePath, directory, i, callback) {
     try {
         request.head(uri, function(err, res, body) {
             request(uri).pipe(fs.createWriteStream(filePath)).on('close', function() {
-                console.log('filename>>>>>>>>>>>', filePath);
-                let resizePath = directory + '/' + 'resize-image' + i + '.jpg';
-                console.log('resizePath>>>>>>>>>>>', resizePath);
-                sharp(filePath).resize(365, 205).toFile(resizePath, function(err) {
-                    if (err) {
-                        throw err;
-                    } else {
-                        /* if(fs.existsSync(filePath)) {
-                            fs.unlinkSync(filePath);
-                        } */
-                        callback();
-                    }
-                })
+                callback();
             });
         });
     } catch (err) {
