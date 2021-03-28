@@ -18,7 +18,7 @@
                     (click)='annotate($event, i)' style="background-image: url('https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/NiceKitchen.png'); background-size: 100% 100%;" oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas> -->
-                                    <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, i)' [style.background-image]="'url(' + item.image + ')'"
+                                    <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, item.id)' [style.background-image]="'url(' + item.image + ')'"
                                         oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>

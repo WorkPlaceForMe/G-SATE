@@ -25,6 +25,8 @@ export class SpeedingVehicleComponent implements OnInit {
   start: any;
   finish: any;
   act: boolean = false;
+  stored_vid: boolean = false;
+  liveFeed: boolean = false;
   cameras: any;
   cam_name: any;
   rtsp_in: any;
@@ -83,21 +85,30 @@ export class SpeedingVehicleComponent implements OnInit {
   }
 
   loadLiveCam() {
+    
     let cam = this.cameras.filter(element => element.name === this.cam_name);
-    this.rtsp_in = cam[0].rtsp_in;
-    let data = {
-      camera_name: cam[0].name,
-      rtsp_in: cam[0].rtsp_in,
-      id: cam[0].id
-    };
-    this.facesservices.startWsStream(data).subscribe(
-      res =>{
-        this.player = new JSMpeg.Player(`ws://${res['my_ip']}:${res['port']}`, {
-          canvas: this.streamingcanvas.nativeElement, autoplay: true, audio: false, loop: true
-        })
-      },
-      err=> console.error(err)
-    )
+    if(cam[0].stored_vid === 'Yes') {
+      this.stored_vid = true;
+      this.start = '00:00:00';
+      this.finish = cam[0].vid_length;
+      this.rtsp_in = '/assets/' + cam[0].name + '.mp4';
+    } else {
+      this.liveFeed = true;
+      this.rtsp_in = cam[0].rtsp_in;
+      let data = {
+        camera_name: cam[0].name,
+        rtsp_in: cam[0].rtsp_in,
+        id: cam[0].id
+      };
+      this.facesservices.startWsStream(data).subscribe(
+        res =>{
+          this.player = new JSMpeg.Player(`ws://${res['my_ip']}:${res['port']}`, {
+            canvas: this.streamingcanvas.nativeElement, autoplay: true, audio: false, loop: true
+          })
+        },
+        err=> console.error(err)
+      )
+    }
   }
 
   change(i, t) {

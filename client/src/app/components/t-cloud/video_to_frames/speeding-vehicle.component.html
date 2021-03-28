@@ -1,7 +1,10 @@
-<div class="card border-primary mb-3">
-  <!-- <mat-video #video [title]="title" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true"
-    color="accent" spinner="spin" [loop]="true" [muted]="true" [showFrameByFrame]="true" src="/assets/video.mov">
-  </mat-video> -->
+<div class="card border-primary mb-3" *ngIf="stored_vid">
+  <mat-video #video [title]="title" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true"
+    color="accent" spinner="spin" [loop]="true" [muted]="true" [showFrameByFrame]="true" [src]="rtsp_in">
+  </mat-video>
+</div>
+
+<div class="card border-primary mb-3" *ngIf="liveFeed">
   <canvas #streaming id="canvas" width="1102" height="480"
     style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
 </div>
@@ -26,7 +29,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

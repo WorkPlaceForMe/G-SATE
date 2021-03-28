@@ -133,7 +133,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ColorsService,
     StrService,
     AnnotationsService,
-    PagerService
+    PagerService,
   ],
   bootstrap: [
     AppComponent

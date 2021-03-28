@@ -248,6 +248,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   setPage(page: number) {
+    this.annotations = [];
+    this.labels = [];
+    this.labelsMessage = true;
     if (page < 1 || page > this.pager.totalPages) {
         return;
     }
@@ -353,7 +356,6 @@ export class ObjDetMulImgsComponent implements OnInit {
           })
         }
       }
-
       this.labelsObj[this.data[i].id] = this.labels;
     }
     /* for (let itm in this.data[i].results) {
@@ -469,24 +471,26 @@ export class ObjDetMulImgsComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e) {
     let x, y, rect;
-    // console.log(e.clientX+','+e.clientY, this.click);
-    rect = this.canvas.getBoundingClientRect();
-    x = e.clientX - rect.left - 3;
-    y = e.clientY - rect.top - 3;
-    if (this.count == 1) {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.re_draw();
-      this.ctx.fillStyle = 'white';
-      this.ctx.strokeStyle = 'white';
-      this.ctx.fillRect(this.coords[0]['x'] - 2, this.coords[0]['y'] - 2, 4, 4);
-      this.ctx.fillRect(this.coords[0]['x'] - 2, y - 2, 4, 4);
-      this.ctx.fillRect(x - 2, this.coords[0]['y'] - 2, 4, 4);
-      this.ctx.strokeRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
-      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-      this.ctx.fillRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
-      this.ctx.fillRect(x - 2, y - 2, 4, 4);
-      this.ctx.lineWidth = 1;
-      this.ctx.stroke();
+    if(this.datasetFlag) {
+      // console.log(e.clientX+','+e.clientY, this.click);
+      rect = this.canvas.getBoundingClientRect();
+      x = e.clientX - rect.left - 3;
+      y = e.clientY - rect.top - 3;
+      if (this.count == 1) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.re_draw();
+        this.ctx.fillStyle = 'white';
+        this.ctx.strokeStyle = 'white';
+        this.ctx.fillRect(this.coords[0]['x'] - 2, this.coords[0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.coords[0]['x'] - 2, y - 2, 4, 4);
+        this.ctx.fillRect(x - 2, this.coords[0]['y'] - 2, 4, 4);
+        this.ctx.strokeRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        this.ctx.fillRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
+        this.ctx.fillRect(x - 2, y - 2, 4, 4);
+        this.ctx.lineWidth = 1;
+        this.ctx.stroke();
+    }
     }
   }
 
@@ -507,6 +511,10 @@ export class ObjDetMulImgsComponent implements OnInit {
   annotate(event, i) {
     this.canvas = this.rd.selectRootElement(event.target);
     this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    //this.getLabels();
+    this.getAnn(i);
+    this.getLabels(i);
     let x, y, rect;
     if (this.objDet == false) {
       if (this.label != undefined) {
@@ -549,7 +557,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           this.annotations.push(this.coords);
           this.annObj[this.data[i].id] = this.annotations;
           this.annotations = this.annObj[this.data[i].id];
-          this.labels.push(this.label);
+          //this.labels.push(this.label);
           this.labelsObj[this.data[i].id] = this.labels;
           this.labels = this.labelsObj[this.data[i].id];
           this.re_draw();
@@ -644,7 +652,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     //this.getLabels();
     this.getAnn(i);
     this.getLabels(i)
-    this.re_draw();
+    //this.re_draw();
   }
 
   addLabel() {
