@@ -251,6 +251,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.annotations = [];
     this.labels = [];
     this.labelsMessage = true;
+    this.label = 'object';
     if (page < 1 || page > this.pager.totalPages) {
         return;
     }
@@ -301,7 +302,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       err => console.log(err)
     ) */
     if (this.annObj.hasOwnProperty(this.data[i].id)) {
-      this.annotations = this.annObj[this.data[i].id];
+      this.annotations = this.annObj[this.data[i].id].results;
       this.cacheAnnot = this.annotations;
     } else {
       this.annotations = [];
@@ -319,7 +320,7 @@ export class ObjDetMulImgsComponent implements OnInit {
             };
             this.ann.push(obj2);
             let obj3 = {
-              label: element.class
+              label: element.class,
             };
             this.ann.push(obj3);
             this.annotations.push(this.ann);
@@ -327,8 +328,16 @@ export class ObjDetMulImgsComponent implements OnInit {
           })
         }
       }
-
-      this.annObj[this.data[i].id] = this.annotations;
+      this.annObj[this.data[i].id] = {
+        image: this.data[i].image,
+        width: this.data[i].res_width,
+        height: this.data[i].res_height,
+        results: this.annotations
+      };
+      //this.annObj[this.data[i].id] = {image: this.data[i].image};
+      //this.annObj[this.data[i].id] = {width: this.data[i].width};
+      //this.annObj[this.data[i].id] = {height: this.data[i].height};
+      //this.annObj[this.data[i].id] = this.annotations;
       this.cacheAnnot = this.annotations;
     }
 
@@ -392,7 +401,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       res => {
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage + '/details']);
+            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
           });
         } else if (this.valueImage == this.total - 1) {
           this.router.navigateByUrl('/annotations');
@@ -488,7 +497,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
         this.ctx.fillRect(this.coords[0]['x'], this.coords[0]['y'], x - this.coords[0]['x'], y - this.coords[0]['y']);
         this.ctx.fillRect(x - 2, y - 2, 4, 4);
-        this.ctx.lineWidth = 1;
+        this.ctx.lineWidth = 2.5;
         this.ctx.stroke();
     }
     }
@@ -552,12 +561,12 @@ export class ObjDetMulImgsComponent implements OnInit {
           y = y - this.coords[0].y;
           this.coords.push({ 'x': x, 'y': y });
           this.coords.push({ 'label': this.label })
-          this.ctx.lineWidth = 1;
+          this.ctx.lineWidth = 2.5;
           this.ctx.stroke();
           this.annotations.push(this.coords);
-          this.annObj[this.data[i].id] = this.annotations;
-          this.annotations = this.annObj[this.data[i].id];
-          //this.labels.push(this.label);
+          this.annObj[this.data[i].id].results = this.annotations;
+          //this.annotations = this.annObj[this.data[i].id].results;
+          this.labels.push(this.label);
           this.labelsObj[this.data[i].id] = this.labels;
           this.labels = this.labelsObj[this.data[i].id];
           this.re_draw();
@@ -597,8 +606,8 @@ export class ObjDetMulImgsComponent implements OnInit {
               this.ctx.strokeStyle = 'lime';
               if (i == e) {
                 this.annotations[e][2].label = this.label;
-                this.annObj[this.data[i].id] = this.annotations;
-                this.annotations = this.annObj[this.data[i].id];
+                this.annObj[this.data[i].id].results = this.annotations;
+                //this.annotations = this.annObj[this.data[i].id];
                 this.labels.push(this.label);
                 this.labelsObj[this.data[i].id] = this.labels;
                 this.labels = this.labelsObj[this.data[i].id];
@@ -611,7 +620,7 @@ export class ObjDetMulImgsComponent implements OnInit {
               this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
               this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
               this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
-              this.ctx.lineWidth = 2;
+              this.ctx.lineWidth = 2.5;
               this.ctx.stroke();
             }
           }

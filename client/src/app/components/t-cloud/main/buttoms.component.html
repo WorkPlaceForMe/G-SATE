@@ -133,11 +133,11 @@
         <h5 class="modal-title font-weight-bold w-100 text-center">{{searchKeyword | titlecase}} Images</h5>
         <button class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="min-height: 440px;">
         <div class="container">
           <div class="row">
-            <div class="img-responsive">
-              <div class="spinner-grow" role="status" *ngIf="spinner">
+            <div>
+              <div class="spinner-grow spinner" role="status" *ngIf="spinner">
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
