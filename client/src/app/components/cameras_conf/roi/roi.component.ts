@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { FacesService } from '../../../services/faces.service';
 import { ColorsService } from '../../../services/colors';
@@ -7,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Camera } from 'src/app/models/Camera';
 import { Roi } from 'src/app/models/Roi';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-roi',
@@ -17,7 +18,7 @@ import { Roi } from 'src/app/models/Roi';
 
 export class ROIComponent implements OnInit {
   link: SafeResourceUrl;
-  constructor(private rd: Renderer2, private facesService: FacesService, private activatedRoute: ActivatedRoute,sanitizer: DomSanitizer, private colo:ColorsService, private router: Router) {
+  constructor(private rd: Renderer2, private facesService: FacesService, private activatedRoute: ActivatedRoute,sanitizer: DomSanitizer, private colo:ColorsService, private router: Router, private datePipe: DatePipe) {
     const params = this.activatedRoute.snapshot.params;
     this.wrong['dir'] = 'beggining';
     this.wrong['of'] = this.polygons.length + 1;
@@ -79,7 +80,8 @@ export class ROIComponent implements OnInit {
     camera_id: '',
     algo_id: 0,
     roi_id: null,
-    atributes: null
+    atributes: null,
+    id: null
   };
 
   @Input() private src: string;
@@ -766,6 +768,7 @@ saveWrong(){
           }
           this.relation.algo_id = this.id;
           this.relation.camera_id = params.uuid;
+          this.relation.id = uuidv4();
             this.facesService.saveRelation(this.relation)
             .subscribe(
               res=>{
@@ -819,7 +822,8 @@ saveWrong(){
               }
               this.relation.algo_id = this.id;
               this.relation.camera_id = params.uuid;
-                this.facesService.saveRelation(this.relation)
+              this.relation.id = uuidv4();
+              this.facesService.saveRelation(this.relation)
                 .subscribe(
                   res=>{
                     console.log(res);

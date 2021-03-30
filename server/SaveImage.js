@@ -21,7 +21,8 @@ function saveHttpImage(uri, filePath, directory, i, callback) {
 
 async function saveImg() {
     let name = process.argv[2];
-    let images = JSON.parse(process.argv[3]);
+    let dir = process.env.resources2 + 'search_images_json/' + name + '.json';
+    let images = JSON.parse(fs.readFileSync(dir));
     let directory = process.env.resources2 + 'datasets/' + name;
     let i = 0;
     try {
@@ -33,14 +34,15 @@ async function saveImg() {
             await saveHttpImage(element.contentUrl, filePath, directory, i, function () {});
         };
         let data = {
-            id: uuidv4(),
+            cam_id: uuidv4(),
             clientId: uuidv4(),
             name: name,
             path: directory,
             processed: 'Yes',
             class: 'data',
             type: 'zip',
-            uploaded: 'Yes'
+            uploaded: 'Yes',
+            snippet_id: uuidv4()
         };
         Datasets.add(data, function (err, row) {
             if (err) throw err;

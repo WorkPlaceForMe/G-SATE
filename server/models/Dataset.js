@@ -11,7 +11,7 @@ var Datasets = {
     },
 
     add: function(data, callback) {
-        return db.query('INSERT INTO datasets values (?,?,?,?,?,?,?,?)', [data.id, data.clientId, data.name, data.path, data.processed, data.class, data.type, data.uploaded], callback);
+        return db.query('INSERT INTO datasets values (?,?,?,?,?,?,?,?,?)', [data.cam_id, data.clientId, data.name, data.path, data.processed, data.class, data.type, data.uploaded, data.snippet_id], callback);
     }
 };
 

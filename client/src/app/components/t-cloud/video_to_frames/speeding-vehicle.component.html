@@ -16,6 +16,8 @@
             <input type="time" step="1" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime">
             <h5>Fps:</h5>&nbsp;
             <input type="number" [(ngModel)]="conf.fps" min="0" max="60"> &nbsp;
+            <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20"
+            (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
             <div class="btn-group">
                 <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal">Make Dataset</button>
                 <button class="btn btn-info btn-sm" [routerLink]="['/annotations']">Back</button>
@@ -35,8 +37,11 @@
         </button>
             </div>
             <div class="modal-body">
-                <h4 class="text-center">Thank You!!!</h4>
-                <h6 class="text-center">Processing Feed will take {{t}} secs. Please confirm!!</h6>
+                <!-- <h4 class="text-center">Thank You!!!</h4> -->
+                <h5 class="text-center">Processing dataset will take some time.</h5>
+                <br>
+                <h5 class="text-center">Please refresh and check datasets section after {{waitingTime*2}} seconds.</h5>
+                <!-- <h5 class="text-center">Thank You</h5> -->
             </div>
             <!-- <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="send()">Okay</button>

@@ -17,7 +17,8 @@ export class SpeedingVehicleComponent implements OnInit {
     t: 0,
     fps: 1,
     name: '',
-    stream: ''
+    stream: '',
+    datasetName: ''
   };
   ss: number;
   t: number;
@@ -28,10 +29,13 @@ export class SpeedingVehicleComponent implements OnInit {
   act: boolean = false;
   stored_vid: boolean = false;
   liveFeed: boolean = false;
+  flag: boolean = false;
   cameras: any;
   cam_name: any;
   rtsp_in: any;
   player: any;
+  waitingTime: any;
+  datasetName: string;
   link: SafeResourceUrl;
 
   @ViewChild('streaming', {static: false}) streamingcanvas: ElementRef;
@@ -131,27 +135,40 @@ export class SpeedingVehicleComponent implements OnInit {
         this.finish = this.finish + ':00'
       }
       this.t = time[0] * 60 * 60 + time[1] * 60 + time[2];
+      this.waitingTime = this.t - this.ss;
     }
     if (this.start != undefined && this.finish != undefined) {
-      this.act = true;
+      //this.act = true;
+      this.flag = true;
+    }
+  }
+
+  detect() {
+    if(this.datasetName != undefined) {
+      if(this.datasetName == '' || this.datasetName == undefined || this.datasetName == null){
+        this.act = false;
+      } else {
+        this.act = true;
+      }
     }
   }
 
   send() {
     let cam = this.cameras.filter(element => element.name === this.cam_name);
-    this.conf.ss = this.ss;
+    /* this.conf.ss = (this.ss === undefined) ? this.start : this.ss;
+    this.t = (this.t === undefined) ? this.finish : this.t; */
     this.conf.cam_id = cam[0].id;
     this.conf.t = this.t - this.ss;
     this.conf.name = this.cam_name;
-    this.conf.stream = this.rtsp_in;
-    console.log('>>>>>>>>>>>', this.conf);
-    this.router.navigate(['/annotations'])
-    /* this.annotationservice.cutVideo(this.conf).subscribe(
+    this.conf.datasetName = this.datasetName;
+    this.conf.stream = cam[0].rtsp_in;
+    this.router.navigate(['/annotations']);
+    this.annotationservice.cutVideo(this.conf).subscribe(
       res => {
         this.router.navigate(['/annotations'])
       },
       err => console.log(err)
-    ) */
+    )
   }
 
 }
