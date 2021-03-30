@@ -307,11 +307,11 @@ let processByVista = (name) => {
                 };
                 resolve(rm);
             }).catch(err => {
-                console.log('1.error>>>>>>>>>>>>>>>>', error);
+                console.log('1.error>>>>>>>>>>>>>>>>', err);
                 reject(err);
             });
         } catch (err) {
-            console.log('2.error>>>>>>>>>>>>>>>>', error);
+            console.log('2.error>>>>>>>>>>>>>>>>', err);
             reject(err);
         }
     })
