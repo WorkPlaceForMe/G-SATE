@@ -265,6 +265,7 @@ let getImgSize = (url) => {
 }
 
 let processByVista = (name) => {
+    console.log('processByVista>>>>>>>>>>>>>>>>>>>', process.env.vista_server_ip + '/api/v1/sync');
     let directory = process.env.resources2 + 'datasets/' + name;
     return new Promise((resolve, reject) => {
         try {
@@ -306,9 +307,11 @@ let processByVista = (name) => {
                 };
                 resolve(rm);
             }).catch(err => {
+                console.log('1.error>>>>>>>>>>>>>>>>', error);
                 reject(err);
             });
         } catch (err) {
+            console.log('2.error>>>>>>>>>>>>>>>>', error);
             reject(err);
         }
     })
