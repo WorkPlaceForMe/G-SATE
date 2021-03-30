@@ -1,6 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { FacesService } from '../../../services/faces.service';
 import { ColorsService } from '../../../services/colors';
+import { DatePipe } from '@angular/common';
 import { Relation } from 'src/app/models/Relation';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
@@ -17,7 +19,7 @@ export class AlgorithmsComponent implements OnInit {
     link: SafeResourceUrl;
     previousUrl: string;
 
-    constructor(private rd: Renderer2, private facesService: FacesService, private activatedRoute: ActivatedRoute,sanitizer: DomSanitizer, private colo:ColorsService, private router:Router) {
+    constructor(private rd: Renderer2, private facesService: FacesService, private activatedRoute: ActivatedRoute,sanitizer: DomSanitizer, private colo:ColorsService, private router:Router, private datePipe: DatePipe) {
       // this.router.events
       // .pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise())
       // .subscribe((events: RoutesRecognized[]) => {
@@ -128,7 +130,8 @@ export class AlgorithmsComponent implements OnInit {
       camera_id: '',
       algo_id: 0,
       roi_id: null,
-      atributes: null
+      atributes: null,
+      id: null
     };
   
     @Input() private src: string;
@@ -535,6 +538,7 @@ saveAndBack(){
               }
               this.relation.algo_id = this.algos[i].id;
               this.relation.camera_id = params.uuid;
+              this.relation.id = uuidv4();
               this.facesService.saveRelation(this.relation)
               .subscribe(
                 res=>{
@@ -573,6 +577,7 @@ saveAndBack(){
           }
           this.relation.algo_id = this.algos[i].id;
           this.relation.camera_id = params.uuid;
+          this.relation.id = uuidv4();
           this.facesService.saveRelation(this.relation)
           .subscribe(
             res=>{
@@ -617,6 +622,7 @@ saveAndBack(){
       }else if(this.algos[i].id == 12){
         this.relation.atributes = JSON.stringify(this.quantity);
       }
+      this.relation.id = uuidv4();
       this.facesService.saveRelation(this.relation)
       .subscribe(
         res=>{
@@ -656,6 +662,7 @@ saveAndBack(){
   this.relation.roi_id = null;
   this.relation.algo_id = this.algos[i].id;
   this.relation.camera_id = params.uuid;
+  this.relation.id = uuidv4();
   this.facesService.saveRelation(this.relation)
   .subscribe(
     res=>{
@@ -697,6 +704,7 @@ saveAndBack(){
             this.relation.algo_id = this.algos[i].id;
             this.relation.camera_id = params.uuid;
             this.relation.roi_id = string;
+            this.relation.id = uuidv4();
               this.facesService.saveRelation(this.relation)
               .subscribe(
                 res=>{
@@ -724,6 +732,7 @@ saveAndBack(){
                 this.relation.algo_id = this.algos[i].id;
                 this.relation.camera_id = params.uuid;
                 this.relation.roi_id = string;
+                this.relation.id = uuidv4();
                   this.facesService.saveRelation(this.relation)
                   .subscribe(
                     res=>{

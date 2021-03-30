@@ -6,8 +6,14 @@ var Algorithm = {
         return db.query('SELECT * FROM algorithms ORDER BY id', callback);
     },
 
-    fetchAlgoData: function (data, callback) {
-        return db.query(`SELECT * FROM ${data.table} where cam_id='${data.id}' ORDER BY time asc`, callback);
+    fetchAlgoData: function (data) {
+        return new Promise((resolve, reject) => {
+          db.query(`SELECT * FROM ${data.table} where snippet_id='${data.snippet_id}' ORDER BY time asc`, function (error, results, fields) {
+            if (error) {console.log(error);resolve([])};
+            resolve(results);
+          });
+        })
+        //return db.query(`SELECT * FROM ${data.table} where snippet_id='${data.snippet_id}' ORDER BY time asc`, callback);
     }
 };
 

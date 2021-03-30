@@ -15,13 +15,7 @@ router.get('/:which', function(req, res, next) {
 });
 
 router.post('/process', function(req, res, next) {
-    DsetController.process(req, function(err, rows) {
-        if (err) {
-            res.status(500).json(err);
-        } else {
-            res.status(200).json(rows);
-        }
-    });
+    DsetController.process(req, res, next);
 });
 
 router.post('/cortarFrames', function(req, res, next) {

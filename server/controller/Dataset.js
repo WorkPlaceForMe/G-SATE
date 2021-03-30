@@ -8,73 +8,164 @@ const unzipper = require("unzipper");
 const ffmpeg = require('fluent-ffmpeg');
 const Camera = require('../models/Camera');
 const Datasets = require('../models/Dataset');
-const child_process = require('child_process'); 
+const child_process = require('child_process');
 const Relations = require('../models/Relations');
 const Algorithms = require('../models/Algorithms');
 const requestImageSize = require('request-image-size');
 
 let Dataset = {
-    process: (req, callback) => {
+    process: (req, res, next) => {
         let body = req.body;
         let dName = body.name;
-        Datasets.listOne(dName, function(err, rows) {
+        Datasets.listOne(dName, function (err, rows) {
             if (err) return callback(err);
             if (rows.length === 0) {
-                return callback('', 'Dataset Not Exists');
+                return res.json('Dataset Does Not Exists');
             }
             if (rows[0].type === 'zip') {
-                processByVista(dName).then(res => {
-                    callback('', res);
+                processByVista(dName).then(resp => {
+                    return res.json(resp);
                 });
             } else {
-                callback('', 'Process By Analytics docker');
+                processByAnalytics(dName).then(resp => {
+                    return res.json(resp);
+                }).catch(err => {
+                    console.log('error in catch>>>>>>>>>>>>>>>', err);
+                });
             }
         });
     },
-    createDataset: (req, res) => {
+    createDataset: async (req, res) => {
         const body = req.body;
         if (body.name.includes('.mov')) {
             body.name = body.name.replace('.mov', '');
             body.format = '.mov';
         }
         try {
-            let directory = process.env.resources2 + 'recordings/' + body.name + '.mp4';
-            ffmpeg(body.stream)
+            let directory = process.env.resources2 + 'recordings/' + body.datasetName + '.mp4';
+            let datasetDir = process.env.resources2 + 'datasets/' + body.datasetName;
+            if (!fs.existsSync(datasetDir)) {
+                fs.mkdirSync(datasetDir);
+            }
+            let snippetId = uuidv4();
+            let accId = uuidv4();
+            let cam_id = body.cam_id;
+            let datasetName = body.datasetName;
+            let promise1 = new Promise((resolve, reject) => {
+                ffmpeg(body.stream)
+                    .format('mp4')
+                    .seekInput('00:00:00')
+                    .duration(`${body.t}`)
+                    .saveToFile(directory)
+                    .on('end', function (stdout, stderr) {
+                        resolve('Done');
+                    });
+            });
+            let promise2 = new Promise((resolve, reject) => {
+
+                ffmpeg(body.stream)
+                    //.format('mp4')
+                    .seekInput('00:00:00')
+                    .outputOptions([`-r 1/${body.fps}`])
+                    .duration(`${body.t}`)
+                    .saveToFile(datasetDir + '/image%d.jpg')
+                    .on('end', function (stdout, stderr) {
+                        resolve('Done!!');
+                    });
+            })
+            await Promise.all([promise1, promise2]);
+            let data = {
+                cam_id: cam_id,
+                clientId: uuidv4(),
+                name: datasetName,
+                path: directory,
+                processed: 'No',
+                class: 'data',
+                type: 'video',
+                uploaded: 'Yes',
+                snippet_id: snippetId
+            };
+            Datasets.add(data, function (err, row) {
+                if (err) return res.status(500).json(err);
+                Relations.getRels(cam_id, function (err, result) {
+                    if (err) return res.status(500).json(err);
+                    for (const itm of result) {
+                        let d = {
+                            id: uuidv4(),
+                            camera_id: cam_id,
+                            algo_id: itm.algo_id,
+                            roi_id: null,
+                            atributes: `{"fps": ${body.fps}}`,
+                            id_account: accId,
+                            id_branch: accId,
+                            createdAt: new Date(),
+                            updatedAt: new Date(),
+                            snippet_id: snippetId
+                        }
+                        Relations.create(d, function (err, r) {
+                            if (err) console.log('err>>>>>>>>>>>>>>>>', err);
+                        });
+                    };
+                });
+                res.status(200).json('Dataset created successfully!');
+            });
+            /* ffmpeg(body.stream)
                 .format('mp4')
                 .seekInput('00:00:00')
                 .duration(`${body.t}`)
                 .saveToFile(directory)
-                .on('end', function(stdout, stderr) {
+                .on('end', function (stdout, stderr) {
                     let data = {
-                        id: body.cam_id,
+                        cam_id: cam_id,
                         clientId: uuidv4(),
-                        name: body.name,
+                        name: datasetName,
                         path: directory,
                         processed: 'No',
                         class: 'data',
                         type: 'video',
-                        uploaded: 'Yes'
+                        uploaded: 'Yes',
+                        snippet_id: snippetId
                     };
-                    Datasets.add(data, function(err, row) {
+                    Datasets.add(data, function (err, row) {
                         if (err) return res.status(500).json(err);
-                        res.status(200).json('Video Extracted Sucessfully.');
+                        Relations.getRels(cam_id, function (err, result) {
+                            if (err) return res.status(500).json(err);
+                            for (const itm of result) {
+                                let d = {
+                                    id: uuidv4(),
+                                    camera_id: cam_id,
+                                    algo_id: itm.algo_id,
+                                    roi_id: null,
+                                    atributes: `{"fps": ${body.fps}}`,
+                                    id_account: accId,
+                                    id_branch: accId,
+                                    createdAt: new Date(),
+                                    updatedAt: new Date(),
+                                    snippet_id: snippetId
+                                }
+                                Relations.create(d, function (err, r) {
+                                    if (err) console.log('err>>>>>>>>>>>>>>>>', err);
+                                });
+                            };
+                        });
+                        res.status(200).json('Dataset created successfully!');
                     });
-                });
+                }); */
         } catch (e) {
             console.log('error>>>>>>>>>>', e);
-            console.log(e.code);
-            console.log(e.msg);
+            //console.log(e.code);
+            //console.log(e.msg);
         }
     },
     unzipDataset: (req, res) => {
 
         let stor = multer.diskStorage({ //multers disk storage settings
-            filename: function(req, file, cb) {
+            filename: function (req, file, cb) {
                 var newName = file.originalname.toString()
                 cb(null, newName)
-                    //file.originalname
+                //file.originalname
             },
-            destination: function(req, file, cb) {
+            destination: function (req, file, cb) {
                 const pathName = file.originalname.toString().replace('.zip', '');
                 var lugar = process.env.resources2 + 'datasets/' + pathName;
                 if (!fs.existsSync(lugar)) {
@@ -88,7 +179,7 @@ let Dataset = {
             storage: stor
         }).single('zip');
 
-        upZip(req, res, function(err) {
+        upZip(req, res, function (err) {
             if (err) {
                 res.json({
                     error_code: 1,
@@ -103,16 +194,17 @@ let Dataset = {
                     path: unZippedPath
                 }));
                 let data = {
-                    id: uuidv4(),
+                    cam_id: uuidv4(),
                     clientId: uuidv4(),
                     name: pathName,
                     path: unZippedPath,
                     processed: 'Yes',
                     class: 'data',
                     type: 'zip',
-                    uploaded: 'Yes'
+                    uploaded: 'Yes',
+                    snippet_id: uuidv4()
                 };
-                Datasets.add(data, function(err, row) {
+                Datasets.add(data, function (err, row) {
                     if (err) return res.status(500).json(err);
                     fs.unlinkSync(pat);
                     res.status(200).json('Uploaded');
@@ -121,30 +213,35 @@ let Dataset = {
         })
     },
     imageSeachDataset: (req, res) => {
-        let child = child_process.spawn('node', ['SaveImage.js', req.body.name, JSON.stringify(req.body.images)]);
-        child.stdout.on('data', function (data) {  
+        let directory = process.env.resources2 + 'search_images_json/';
+        if(!fs.existsSync(directory)) {
+            fs.mkdirSync(directory);
+        }
+        fs.writeFileSync(directory + req.body.name + '.json', JSON.stringify(req.body.images));
+        let child = child_process.spawn('node', ['SaveImage.js', req.body.name]);
+        child.stdout.on('data', function (data) {
             console.log('stdout: ' + data);
             res.json(`${req.body.name} dataset created successfully!`);
-        });  
-        child.stderr.on('data', function (data) {  
+        });
+        child.stderr.on('data', function (data) {
             console.log('stderr: ' + data);
             res.json(data);
-        });  
-        child.on('message', function(msg) {
+        });
+        child.on('message', function (msg) {
             console.log('message from child: ' + require('util').inspect(msg));
-          });
-        child.on('exit', function() {
+        });
+        child.on('exit', function () {
             console.log(`${req.body.name} dataset cretaed successfully!`);
             res.json(`${req.body.name} dataset created successfully!`);
         });
-        child.on('end', function() {
+        child.on('end', function () {
             console.log(`${req.body.name} dataset cretaed successfully!`);
             res.json(`${req.body.name} dataset created successfully!`);
         });
-        child.on('close', function (code) {  
-            console.log('child process exited with code: ' + code); 
+        child.on('close', function (code) {
+            console.log('child process exited with code: ' + code);
             res.json(`${req.body.name} dataset cretaed successfully!`);
-        });  
+        });
     }
 }
 
@@ -196,7 +293,7 @@ let processByVista = (name) => {
             });
             let rm = [];
             let count = 0;
-            Promise.all(promises).then(async(data) => {
+            Promise.all(promises).then(async (data) => {
                 for (const element of data) {
                     let itm = JSON.parse(element);
                     itm.id = count;
@@ -218,34 +315,69 @@ let processByVista = (name) => {
 }
 
 let table = {
-    "Person Detection": "",
-    "Clothing": "clothing_gsate",
-    "Vehicles Detection": ""
+    '0': 'person_gsate',
+    '1': 'vehicle_gsate',
+    '2': 'clothing_gsate'
 }
 
 let processByAnalytics = (name) => {
     let result = [];
-    return new Promise((resolve, reject) => {
-        Camera.getByName(name, function(err, cam) {
-            if (err) reject(err);
-            if (cam.length === 0) resolve('Camera does not exists.')
-            Relations.getRels(cam[0].id, function(err, rows) {
-                if (rows.length > 0) {
-                    rows.forEach(async element => {
-                        let data = {
-                            table: table[element.algo_name],
-                            id: cam.id
+    let index = 0;
+    let count = 0;
+    return new Promise(async(resolve, reject) => {
+        try {
+            await processByVista(name).then(data => {
+                result = data;
+                count = data.length;
+                Datasets.listOne(name, function (err, dataset) {
+                    if (err) reject(err);
+    
+                    if (dataset.length === 0) resolve('Dataset does not exists.');
+                    Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function (err, rows) {
+                        if (err) reject(err);
+    
+                        if (rows.length > 0) {
+                            for (const itm of rows) {
+                                let data = {
+                                        table: table[itm.algo_id],
+                                        snippet_id: itm.snippet_id
+                                    }
+                                    ++index;
+                                await Algorithms.fetchAlgoData(data).then(resp => {
+                                    for (const element of resp) {
+                                        let obj = {
+                                            id: count,
+                                            image: element.image_path,
+                                            width: element.width,
+                                            height: element.height,
+                                            results: {
+                                                Object: [{
+                                                    class: 'person',
+                                                    boundingBox: {
+                                                        top: element.x1,
+                                                        left: element.y1,
+                                                        width: element.x2,
+                                                        height: element.y2
+                                                    }
+                                                }]
+                                            }
+                                        };
+                                        ++count;
+                                        result.push(obj);
+                                    }
+                                });
+                            };
+                            //result = [].concat(...result);
+                            resolve(result);
+                        } else {
+                            resolve([]);
                         }
-                        await Algorithms.fetchAlgoData(data, function(err, response) {
-                            result.push(response);
-                        });
                     });
-
-                } else {
-                    resolve([]);
-                }
-            });
-        });
+                });
+            })
+        } catch (err) {
+            reject(err);
+        }
     })
 }
 

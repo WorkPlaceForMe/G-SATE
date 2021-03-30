@@ -20,7 +20,7 @@ export class LoiteringDetectionComponent implements OnInit {
     const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
     this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
-    this.annotationsServ.getImages(string, 'data').subscribe(
+    /* this.annotationsServ.getImages(string, 'data').subscribe(
       res => {
         this.images = res;
         this.total = this.images[this.images.length - 1]['total'];
@@ -92,7 +92,10 @@ export class LoiteringDetectionComponent implements OnInit {
         this.getAnn();
       },
       err => console.log(err)
-    )
+    ) */
+    this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
+        //this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
+    //this.getAnn();
   }
 
   ngAfterViewChecked() {
@@ -181,7 +184,7 @@ export class LoiteringDetectionComponent implements OnInit {
   ngOnInit() {
     this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
     this.ctx = this.canvas.getContext("2d");
-
+    this.getAnn();
     this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'multiple') {
       this.multiple = true;
@@ -195,7 +198,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   getAnn() {
-    let a, b;
+    /* let a, b;
     if (this.picture.includes('.jpg')) {
       a = this.picture.replace('.jpg', '');
     } else if (this.picture.includes('.png')) {
@@ -207,7 +210,7 @@ export class LoiteringDetectionComponent implements OnInit {
     } else if (this.picture.includes('.PNG')) {
       a = this.picture.replace('.PNG', '');
     }
-    a = a.split('/').join(' ');
+    a = a.split('/').join(' '); */
     /* this.annotationsServ.getAnn(a).subscribe(
       res=>{
         if(res != "it doesn't exists this annotation"){
@@ -270,7 +273,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(['/annotations/' + 'object' + '/' + 'miguel' + '/0' + '/details']);
+    this.router.navigate(['/annotations/' + 'object' + '/' + 'image' + '/0' + '/details'], { state: { data: [] }} );
     if (this.valueImage < this.total - 1) {
       this.valueImage++;
       if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
