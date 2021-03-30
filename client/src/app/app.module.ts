@@ -55,7 +55,6 @@ import { ObjectDetectionComponent } from './components/t-cloud/object-detection/
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
-import { JwPaginationComponent } from 'jw-angular-pagination';
 import { PagerService } from './services/pager.service';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
@@ -99,7 +98,6 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ObjDetImgComponent,
     ObjDetMulImgsComponent,
     AnnotationsDetailsComponent,
-    JwPaginationComponent,
     AddVideoComponent,
     AnnotationsConfirmComponent,
     ObjectDetectionConfirmComponent,
