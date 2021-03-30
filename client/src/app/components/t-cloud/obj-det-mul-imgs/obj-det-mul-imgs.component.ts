@@ -382,7 +382,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.send();
       } else {
         this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage + '/details']);
+          this.router.navigate(['/annotations/dataset/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage + '/details']);
         });
       }
     } else if (this.valueImage == this.total - 1) {
@@ -394,7 +394,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     }
     else {
       //alert("ERROR!");
-      this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details'], { state: { data: this.annObj } });
+      this.router.navigate(['/annotations/dataset/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details'], { state: { data: this.annObj } });
     }
   }
 
@@ -404,7 +404,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       res => {
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
+            this.router.navigate(['/annotations/dataset/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
           });
         } else if (this.valueImage == this.total - 1) {
           this.router.navigateByUrl('/annotations');

@@ -61,5 +61,5 @@ export class ObjectDetectionConfirmComponent implements OnInit {
     )
 
     }
-   
+
 }

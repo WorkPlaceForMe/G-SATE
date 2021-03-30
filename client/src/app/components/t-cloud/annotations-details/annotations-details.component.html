@@ -15,9 +15,9 @@
             <div class="dropdown-divider"></div>
 
             <div class="example-wrapper">
-                <label class="example-input-wrapper gsate-input" [owlDateTimeTrigger]="date1">
+                <label class="example-input-wrapper gsate-input">
           <input placeholder="Select date and time" class  ="gsate-input" [(ngModel)]="date" [owlDateTime]="date1" [max]="max" [selectMode]="'single'" id="dateSelector" >
-          <span>
+          <span  [owlDateTimeTrigger]="date1">
             &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
           </span>
           <owl-date-time #date1 firstDayOfWeek='1' pickerMode='dialog'></owl-date-time>

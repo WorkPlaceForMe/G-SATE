@@ -112,10 +112,6 @@ const routes: Routes = [
     path: 'annotations/confirm',
     component: AnnotationsConfirmComponent
   },
-  {
-    path: 'annotations/:method/:folder/:image/details',
-    component: AnnotationsDetailsComponent
-  },
   /* {
     path: 'objectDetection/:folder/:image',
     component: LoiteringDetectionComponent
