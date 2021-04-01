@@ -76,6 +76,10 @@ export class AnnotationsService {
     return this.http.post(`${this.API_URL}/datasets/process/`, data);
   }
 
+  deleteDataset(datasetID:string) {
+    return this.http.delete(`${this.API_URL}/datasets/${datasetID}`);
+  }
+
   searchImages(keyword:any) {
     return this.http.get(`${this.API_URL}/search/${keyword}`);
   }

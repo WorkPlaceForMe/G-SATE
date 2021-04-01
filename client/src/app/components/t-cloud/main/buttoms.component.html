@@ -244,14 +244,15 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <ul style="list-style-type:none;">
+            <ul style="list-style-type:none;" id="datasets">
                 <li class="align-items-center" *ngFor="let data of datasetsNames; index as i">
                     <div class="form-group">
-                        <div class="custom-control custom-radio">
+                        <div class="custom-control custom-radio datasets">
                             <input name="customRadio" class="custom-control-input" id="cust{{i}}" type="radio" [value]="data.open" (change)="change(i);">
                             <label class="custom-control-label" for="cust{{i}}"><i class="fas fa-folder"
                   *ngIf='data.open == false'></i><i class="fas fa-folder-open"
-                  *ngIf='data.open == true'></i>&nbsp;{{data.name}}</label>
+                  *ngIf='data.open == true'></i>&nbsp;{{data.name}}
+                   <span class="delete" (click) = "deleteDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
                         </div>
                     </div>
                 </li>
