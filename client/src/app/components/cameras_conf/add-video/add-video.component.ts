@@ -3,7 +3,7 @@ import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ip } from '../../../models/IpServer';
 import { ActivatedRoute, Router } from '@angular/router';
 
-const URL = 'http://' + ip + ':3300/api/video/upload';
+const URL = 'http://' + ip + ':3000/api/video/upload';
 @Component({
   selector: 'app-add-video',
   templateUrl: './add-video.component.html',

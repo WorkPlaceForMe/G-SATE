@@ -7,8 +7,8 @@ import { FacesService } from '../../../services/faces.service'
 import { PagerService } from '../../../services/pager.service'
 import { DatePipe } from '@angular/common'
 
-const zipURL = 'http://' + ip + ':3300/api/datasets/upZip'
-const imgURL = 'http://' + ip + ':3300/api/upload/pic'
+const zipURL = 'http://' + ip + ':3000/api/datasets/upZip'
+const imgURL = 'http://' + ip + ':3000/api/upload/pic'
 
 @Component({
   selector: 'app-buttoms',
