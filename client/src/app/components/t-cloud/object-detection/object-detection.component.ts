@@ -6,7 +6,7 @@ import { ip } from '../../../models/IpServer';
 import { FacesService } from '../../../services/faces.service';
 import { DatePipe } from '@angular/common';
 
-const URL = 'http://' + ip + ':3300/api/upload/pic';
+const URL = 'http://' + ip + ':3000/api/upload/pic';
 
 @Component({
   selector: 'app-object-detection',

@@ -12,7 +12,7 @@ import { Relation } from 'src/app/models/Relation';
   providedIn: 'root'
 })
 export class FacesService {
-API_URI = 'http://'+ ip +':3300/api';
+API_URI = 'http://'+ ip +':3000/api';
 API_FR = 'http://'+ ip +':3330/api';
   constructor(private http: HttpClient) { }
 

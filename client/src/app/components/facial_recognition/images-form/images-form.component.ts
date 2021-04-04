@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { User } from 'src/app/models/User';
 import { AnnotationsService } from 'src/app/services/annotations.service';
 
-const URL = 'http://' + ip + ':3300/upload';
+const URL = 'http://' + ip + ':3000/upload';
 
 @Component({
   selector: 'app-images-form',

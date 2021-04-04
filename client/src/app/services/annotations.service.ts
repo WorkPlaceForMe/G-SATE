@@ -17,7 +17,7 @@ export class AnnotationsService {
   models: any = [];
   version:any;
   versions: any = [];
-  API_URL = 'http://'+ ip +':3300/api';
+  API_URL = 'http://'+ ip +':3000/api';
   VISTA_API_URL = vistaIP;
 
   getImages(where:string,info:string){
