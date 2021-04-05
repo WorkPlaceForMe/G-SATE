@@ -12,7 +12,7 @@
         <div class="row">
             <h5>Beginning:</h5>&nbsp;
             <div class="time-select1">
-                <input class="time-select" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [class.invalid-input]="!isValidTime">
+                <input class="time-select" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [ngClass]="{'invalidInput': !isValidStart}">
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                     <i class="far fa-clock"></i>
                 </a>
@@ -27,7 +27,7 @@
             </div>
             <h5>End:</h5>&nbsp;
             <div class="time-select2">
-                <input class="time-select" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required>
+                <input class="time-select" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required [ngClass]="{'invalidInput': !isValidFinish}">
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                     <i class="far fa-clock "></i>
                 </a>
@@ -43,7 +43,7 @@
             <h5>Fps:</h5>&nbsp;
             <input type="number" [(ngModel)]="conf.fps" min="0" max="60"> &nbsp;
             <h5>Dataset Name:</h5>&nbsp;
-            <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
+            <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false || !isValidStart || !isValidFinish"> &nbsp;
             <div class="btn-group">
                 <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal">Make Dataset</button>
                 <button class="btn btn-info btn-sm" [routerLink]="['/annotations']">Back</button>
