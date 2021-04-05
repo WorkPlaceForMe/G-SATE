@@ -168,10 +168,11 @@ export class ButtomsComponent implements OnInit {
         if (thing == 'data') {
           this.datasetsNames = res
           for (let i = 0; i < this.datasetsNames.length; i++) {
-            this.datasetsNames[i]['open'] = false
-            this.datasetsNames[i]['name'] = this.datasetsNames[i]['name']
+            this.datasetsNames[i]['open'] = false;
+            this.datasetsNames[i]['name'] = this.datasetsNames[i]['name'];
               //.split('_')
               //.join(' ')
+            this.datasetsNames[i]['id'] = this.datasetsNames[i]['id'];
           }
         } else if (thing == 'class') {
           this.classNames = res
@@ -179,7 +180,8 @@ export class ButtomsComponent implements OnInit {
             this.classNames[i]['open'] = false
             this.classNames[i]['name'] = this.classNames[i]['name']
               .split('_')
-              .join(' ')
+              .join(' ');
+            this.classNames[i]['id'] = this.classNames[i]['id'];
           }
         }
       },
@@ -803,6 +805,18 @@ export class ButtomsComponent implements OnInit {
     }
     if (this.choosenClass != undefined) {
       this.showClass = true
+    }
+  }
+
+  deleteDataset(dataset:any) {
+    if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
+      this.annotationsServ.deleteDataset(dataset.id).subscribe(
+        res => {
+          console.log(res);
+          this.refresh();
+        },
+        err => console.error(err)
+      )
     }
   }
 

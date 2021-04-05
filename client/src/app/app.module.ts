@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -48,7 +49,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { MatVideoModule } from 'mat-video';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
+import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS, ScrollViewport } from 'ngx-scrollbar';
 import { CamerasComponent } from './components/cameras_conf/main/cameras.component';
 import { ResumeComponent } from './components/facial_recognition/resume/resume.component';
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
@@ -60,7 +61,6 @@ import { AddVideoComponent } from './components/cameras_conf/add-video/add-video
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
-
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -121,7 +121,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     MatVideoModule,
     MatPaginatorModule,
     NgxPaginationModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    ScrollingModule
   ],
   providers: [
     FacesService,

@@ -11,13 +11,39 @@
     <div class="card-body">
         <div class="row">
             <h5>Beginning:</h5>&nbsp;
-            <input type="time" step="1" [(ngModel)]="start" (ngModelChange)="change(start,'s')" min="00:00:00" [max]="finish">
+            <div class="time-select1">
+                <input class="time-select" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [class.invalid-input]="!isValidTime">
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+                    <i class="far fa-clock"></i>
+                </a>
+                <!-- Time Accordion with Virtual Scroll -->
+                <div class="collapse" id="collapse1">
+                    <cdk-virtual-scroll-viewport itemSize="20" class="card card-body container">
+                        <div *cdkVirtualFor="let singleTime of availableTimeStart" class="number" (click)="this.start = singleTime;refreshTime();" data-toggle="collapse" href="#collapse1">
+                            {{singleTime}}
+                        </div>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+            </div>
             <h5>End:</h5>&nbsp;
-            <input type="time" step="1" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime">
+            <div class="time-select2">
+                <input class="time-select" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                    <i class="far fa-clock "></i>
+                </a>
+                <!-- Time Accordion with Virtual Scroll -->
+                <div class="collapse" id="collapse2">
+                    <cdk-virtual-scroll-viewport itemSize="20" class="card card-body container">
+                        <div *cdkVirtualFor="let singleTime of availableTimeFinish" class="number" (click)="this.finish = singleTime; refreshTime();" data-toggle="collapse" href="#collapse2">
+                            {{singleTime}}
+                        </div>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+            </div>
             <h5>Fps:</h5>&nbsp;
             <input type="number" [(ngModel)]="conf.fps" min="0" max="60"> &nbsp;
-            <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20"
-            (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
+            <h5>Dataset Name:</h5>&nbsp;
+            <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
             <div class="btn-group">
                 <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal">Make Dataset</button>
                 <button class="btn btn-info btn-sm" [routerLink]="['/annotations']">Back</button>
@@ -26,6 +52,9 @@
     </div>
 </div>
 
+
+
+
 <!-- Modal -->
 <div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -33,8 +62,8 @@
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold w-100 text-center">Confirmation Dialog</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <!-- <h4 class="text-center">Thank You!!!</h4> -->
