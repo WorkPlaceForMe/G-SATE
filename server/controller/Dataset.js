@@ -247,12 +247,10 @@ let Dataset = {
 
 let getImgSize = (url) => {
     return new Promise((resolve, reject) => {
+        
         const options = {
-            url: process.env.vista_server_ip + url,
-            strictSSL: false,
-            headers: {
-                'User-Agent': 'request-image-size'
-            }
+            'url': url,
+            'strictSSL': false
         };
         requestImageSize(options)
             .then(size =>
@@ -295,13 +293,17 @@ let processByVista = (name) => {
             let rm = [];
             let count = 0;
             Promise.all(promises).then(async (data) => {
+                console.log('Data>>>>>>>>>>>>>>>>>>>>>>', data);
                 for (const element of data) {
                     let itm = JSON.parse(element);
                     itm.id = count;
+                    console.log('id>>>>>>>>>>>>>>>>>>', itm.id);
+                    itm.image = process.env.vista_server_ip + itm.image;
+                    console.log('image>>>>>>>>>>>>>>>>>>>>', itm.image);
                     let size = await getImgSize(itm.image);
+                    console.log('size>>>>>>>>>>>>>>>>>>', size);
                     itm.width = size.width;
                     itm.height = size.height;
-                    itm.image = process.env.vista_server_ip + itm.image
                     rm.push(itm);
                     ++count;
                 };
