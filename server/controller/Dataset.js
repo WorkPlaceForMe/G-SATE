@@ -247,6 +247,7 @@ let Dataset = {
 
 let getImgSize = (url) => {
     return new Promise((resolve, reject) => {
+        
         const options = {
             'url': process.env.vista_server_ip + url,
             'strictSSL': false
@@ -297,10 +298,10 @@ let processByVista = (name) => {
                     let itm = JSON.parse(element);
                     itm.id = count;
                     console.log('id>>>>>>>>>>>>>>>>>>', itm.id);
-                    let size = await getImgSize(itm.image);
-                    console.log('size>>>>>>>>>>>>>>>>>>', size);
-                    itm.width = size.width;
-                    itm.height = size.height;
+                    //let size = await getImgSize(itm.image);
+                    //console.log('size>>>>>>>>>>>>>>>>>>', size);
+                    itm.width = 407;//size.width;
+                    itm.height = 268;//size.height;
                     itm.image = process.env.vista_server_ip + itm.image;
                     console.log('image>>>>>>>>>>>>>>>>>>>>', itm.image);
                     rm.push(itm);
