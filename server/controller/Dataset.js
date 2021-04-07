@@ -249,7 +249,7 @@ let getImgSize = (url) => {
     return new Promise((resolve, reject) => {
         
         const options = {
-            'url': process.env.vista_server_ip + url,
+            'url': url,
             'strictSSL': false
         };
         requestImageSize(options)
