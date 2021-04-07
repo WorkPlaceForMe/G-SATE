@@ -4,6 +4,7 @@ const {
     v4: uuidv4
 } = require('uuid');
 const multer = require('multer');
+const sizeOf = require('image-size');
 const unzipper = require("unzipper");
 const ffmpeg = require('fluent-ffmpeg');
 const Camera = require('../models/Camera');
@@ -248,11 +249,11 @@ let Dataset = {
 let getImgSize = (url) => {
     return new Promise((resolve, reject) => {
         
-        const options = {
+        /* const options = {
             'url': url,
             'strictSSL': false
-        };
-        requestImageSize(options)
+        }; */
+        requestImageSize(url)
             .then(size =>
                 resolve(size)
             )
@@ -293,17 +294,18 @@ let processByVista = (name) => {
             let rm = [];
             let count = 0;
             Promise.all(promises).then(async (data) => {
-                console.log('Data>>>>>>>>>>>>>>>>>>>>>>', data);
                 for (const element of data) {
                     let itm = JSON.parse(element);
                     itm.id = count;
-                    console.log('id>>>>>>>>>>>>>>>>>>', itm.id);
-                    itm.image = process.env.vista_server_ip + itm.image;
-                    console.log('image>>>>>>>>>>>>>>>>>>>>', itm.image);
-                    let size = await getImgSize(itm.image);
-                    console.log('size>>>>>>>>>>>>>>>>>>', size);
+                    let xx = itm.image.split('/')[3];
+                    let yy = xx.split('.')[1];
+                    let zz = xx.split('_');
+                    zz.splice(zz.length-1, 1);
+                    let imgPath = directory + '/' + zz.join('_') + '.' + yy;
+                    let size = await sizeOf(imgPath);
                     itm.width = size.width;
                     itm.height = size.height;
+                    itm.image = process.env.vista_server_ip + itm.image;
                     rm.push(itm);
                     ++count;
                 };
