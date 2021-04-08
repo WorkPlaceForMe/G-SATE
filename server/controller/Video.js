@@ -50,7 +50,7 @@ let Video = {
                         id: uuidv4(),
                         name: req.file.originalname.split('.')[0],
                         rtsp_in: `${process.env.resources2}stored_videos/${req.file.originalname}`,
-                        rtsp_out: '',
+                        rtsp_out: `/assets/stored_videos/${req.file.originalname}`,
                         heatmap_pic: '',
                         pic_height: null,
                         pic_width: null,
