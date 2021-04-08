@@ -105,6 +105,11 @@ export class SpeedingVehicleComponent implements OnInit {
       this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
       this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
     } else {
+      this.start = '00:00:00';
+      this.finish = '24:00:00';
+      this.availableTimeStart = this.generateTimeRange(this.start, this.finish);
+      this.availableTimeFinish = this.generateTimeRange(this.start, this.finish);
+      this.finish = '00:00:00';
       this.liveFeed = true;
       this.rtsp_in = cam[0].rtsp_in;
       let data = {
