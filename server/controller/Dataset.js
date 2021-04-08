@@ -96,13 +96,15 @@ let Dataset = {
                             id: uuidv4(),
                             camera_id: cam_id,
                             algo_id: itm.algo_id,
+                            snippet_id: snippetId,
                             roi_id: null,
                             atributes: `{"fps": ${body.fps}}`,
                             id_account: accId,
                             id_branch: accId,
+                            stream: null,
                             createdAt: new Date(),
                             updatedAt: new Date(),
-                            snippet_id: snippetId
+                            http_out: null
                         }
                         Relations.create(d, function (err, r) {
                             if (err) console.log('err>>>>>>>>>>>>>>>>', err);
