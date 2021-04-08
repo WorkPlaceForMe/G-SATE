@@ -45,6 +45,7 @@ let Dataset = {
         try {
             let directory = process.env.resources2 + 'recordings/' + body.datasetName + '.mp4';
             let datasetDir = process.env.resources2 + 'datasets/' + body.datasetName;
+            let absDir = process.env.resources3 + 'recordings/' + body.datasetName + '.mp4';
             if (!fs.existsSync(datasetDir)) {
                 fs.mkdirSync(datasetDir);
             }
@@ -79,7 +80,7 @@ let Dataset = {
                 cam_id: cam_id,
                 clientId: uuidv4(),
                 name: datasetName,
-                path: directory,
+                path: absDir,
                 processed: 'No',
                 class: 'data',
                 type: 'video',

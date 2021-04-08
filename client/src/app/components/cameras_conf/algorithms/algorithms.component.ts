@@ -35,11 +35,11 @@ export class AlgorithmsComponent implements OnInit {
           for(let i = 0; i < this.algos.length; i++){
             this.algos[i].conf = 95;
             if(this.algos[i]['available'] == 1){
-            if(this.algos[i]['id'] <= 3 || this.algos[i]['id'] == 12 || this.algos[i]['id'] == 14 || this.algos[i]['id'] == 15){
+            if(false/* this.algos[i]['id'] <= 3 || this.algos[i]['id'] == 12 || this.algos[i]['id'] == 14 || this.algos[i]['id'] == 15 */){
               this.Calgos.push(this.algos[i]);
-            }else if(this.algos[i]['id'] > 3 && this.algos[i]['id'] <= 8 || this.algos[i]['id'] == 13){
+            }else if(this.algos[i]['id'] == 1){  /* this.algos[i]['id'] > 3 && this.algos[i]['id'] <= 8 || this.algos[i]['id'] == 13 */
               this.Balgos.push(this.algos[i]);
-            }else if(this.algos[i]['id'] > 8 && this.algos[i]['id'] <= 11){
+            }else if(this.algos[i]['id'] == 0 || this.algos[i]['id'] == 2){
               this.Aalgos.push(this.algos[i]);
             }
           }
