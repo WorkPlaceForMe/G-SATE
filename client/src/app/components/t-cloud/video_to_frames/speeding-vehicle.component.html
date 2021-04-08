@@ -11,7 +11,8 @@
     <div class="card-body">
         <div class="row">
             <h5>Beginning:</h5>&nbsp;
-            <div class="time-select1">
+            <input type="time" step="1" [(ngModel)]="start" (ngModelChange)="change(start,'s')" *ngIf="!stored_vid">
+            <div class="time-select1" *ngIf="stored_vid">
                 <input class="time-select" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [ngClass]="{'invalidInput': !isValidStart}">
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                     <i class="far fa-clock"></i>
@@ -26,7 +27,8 @@
                 </div>
             </div>
             <h5>End:</h5>&nbsp;
-            <div class="time-select2">
+            <input type="time" step="1" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" *ngIf="!stored_vid">
+            <div class="time-select2" *ngIf="stored_vid">
                 <input class="time-select" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required [ngClass]="{'invalidInput': !isValidFinish}">
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                     <i class="far fa-clock "></i>

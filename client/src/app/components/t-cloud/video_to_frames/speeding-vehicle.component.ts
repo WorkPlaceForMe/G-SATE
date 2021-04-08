@@ -41,6 +41,7 @@ export class SpeedingVehicleComponent implements OnInit {
   waitingTime: any;
   datasetName: string;
   link: SafeResourceUrl;
+  
 
   @ViewChild('streaming', { static: false }) streamingcanvas: ElementRef;
 
