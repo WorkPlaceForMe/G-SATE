@@ -100,7 +100,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.start = '00:00:00';
       this.finish = cam[0].vid_length;
       this.maxTime = this.finish;
-      this.rtsp_in = '/assets/' + cam[0].name + '.mp4';
+      this.rtsp_in = cam[0].rtsp_out;//'/assets/' + cam[0].name + '.mp4';
       this.availableTimeStart = this.generateTimeRange(this.start,this.finish);
       this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
       this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
