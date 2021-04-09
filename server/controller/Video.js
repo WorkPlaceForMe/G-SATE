@@ -44,10 +44,11 @@ let Video = {
                         error_code: 1
                     })
                 }
+                let cam_id = uuidv4();
                 ffmpeg.ffprobe(`${process.env.resources2}stored_videos/${req.file.originalname}`, function(err, metadata) {
                     //console.dir(metadata); // all metadata
                     let data = {
-                        id: uuidv4(),
+                        id: cam_id,
                         name: req.file.originalname.split('.')[0],
                         rtsp_in: `${process.env.resources2}stored_videos/${req.file.originalname}`,
                         rtsp_out: `/assets/stored_videos/${req.file.originalname}`,
@@ -67,6 +68,7 @@ let Video = {
                             res.status(200).send({
                                 success: true,
                                 message: 'Stored video added successfully!',
+                                id: cam_id,
                                 name: req.file.originalname.split('.')[0]
                             })
                         }
