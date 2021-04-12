@@ -271,29 +271,33 @@ app.post('/api/general/object/detection', function(req, res) {
                 let single = [];
                 /* let str = `92 169 273 384
                         175 37 269 168`; */
-                console.log('str>>>>>>>>>>>', str.split('\n'));
-                str.split('\n').forEach(ele => {
-                    let itm = ele.trim().split(" ");
-                    let obj1 = {
-                        'x': itm[0] * details.width / details.res_width,
-                        'y': itm[1] * details.height / details.res_height
+                console.log('data splitted >>>>>>>>>>>', data.split('\n'));
+                data.split('\n').forEach(ele => {
+                    if(ele.includes('Predicted in')) {
+                        console.log('element >>>>>>>>>>>>', ele);
+                    } else {
+                        let itm = ele.trim().split(" ");
+                        let obj1 = {
+                            'x': itm[0] * details.width / details.res_width,
+                            'y': itm[1] * details.height / details.res_height
+                        }
+                        single.push(obj1);
+                        let obj2 = {
+                            'x': itm[2] * details.width / details.res_width,
+                            'y': itm[3] * details.height / details.res_height
+                        }
+                        single.push(obj2);
+                        let obj3 = {
+                            'label': ''
+                        }
+                        single.push(obj3);
+                        let obj4 = {
+                            'general_detection': 'Yes'
+                        }
+                        single.push(obj4);
+                        result.push(single);
+                        single = [];   
                     }
-                    single.push(obj1);
-                    let obj2 = {
-                        'x': itm[2] * details.width / details.res_width,
-                        'y': itm[3] * details.height / details.res_height
-                    }
-                    single.push(obj2);
-                    let obj3 = {
-                        'label': ''
-                    }
-                    single.push(obj3);
-                    let obj4 = {
-                        'general_detection': 'Yes'
-                    }
-                    single.push(obj4);
-                    result.push(single);
-                    single = [];
                 });
                 res.json(result);
             }
