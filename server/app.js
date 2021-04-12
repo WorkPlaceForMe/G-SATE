@@ -260,7 +260,7 @@ app.post('/api/general/object/detection', function(req, res) {
     let dir = './objdet/darknet/data/' + imgName;
     console.log('dir>>>>>>>>', dir);
     saveImg(image, dir, function(err, data) {
-        cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imageName}`, function(err, data) {
+        cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`, function(err, data) {
             if (err) {
                 console.log('Error : ', err);
                 res.json(err);
