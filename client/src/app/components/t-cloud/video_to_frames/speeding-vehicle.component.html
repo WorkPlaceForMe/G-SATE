@@ -4,7 +4,9 @@
 </div>
 
 <div class="card border-primary mb-3" *ngIf="liveFeed">
-    <canvas #streaming id="canvas" width="1102" height="480" style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
+    <canvas #streaming id="canvas" width="1090" height="480" style="display: block; width: 1090px !important; height: 480px !important;"></canvas>
+    <a id="play" *ngIf="!isPlaying" (click)="loadLiveCam()"><i class="fas fa-play"></i></a>
+    <a id="stop" *ngIf="isPlaying" (click)="stopStream()"><i class="fas fa-stop"></i></a>
 </div>
 
 <div class="card bg-primary border-primary mb-3">

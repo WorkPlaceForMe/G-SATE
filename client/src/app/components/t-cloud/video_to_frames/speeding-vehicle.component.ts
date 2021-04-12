@@ -41,7 +41,7 @@ export class SpeedingVehicleComponent implements OnInit {
   waitingTime: any;
   datasetName: string;
   link: SafeResourceUrl;
-  
+  isPlaying: boolean = true;
 
   @ViewChild('streaming', { static: false }) streamingcanvas: ElementRef;
 
@@ -70,19 +70,24 @@ export class SpeedingVehicleComponent implements OnInit {
     if (this.player != undefined) {
       this.player.destroy();
       this.player = null;
-      let cam = this.cameras.filter(element => element.name === this.cam_name);
-      this.rtsp_in = cam[0].rtsp_in;
-      let data = {
-        camera_name: cam[0].name,
-        rtsp_in: cam[0].rtsp_in,
-        id: cam[0].id
-      };
-      this.facesservices.stopWsStream(data).subscribe(
-        res => {
-        },
-        err => console.error(err)
-      )
+      this.stopStream();
     }
+  }
+
+  stopStream() {
+    let cam = this.cameras.filter(element => element.name === this.cam_name);
+    this.rtsp_in = cam[0].rtsp_in;
+    let data = {
+      camera_name: cam[0].name,
+      rtsp_in: cam[0].rtsp_in,
+      id: cam[0].id
+    };
+    this.facesservices.stopWsStream(data).subscribe(
+      res => {
+      },
+      err => console.error(err)
+    )
+    this.isPlaying = false;
   }
 
   getCameraList() {
@@ -128,6 +133,7 @@ export class SpeedingVehicleComponent implements OnInit {
         err => console.error(err)
       )
     }
+    this.isPlaying = true;
   }
 
   change(i, t) {
