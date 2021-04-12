@@ -76,6 +76,10 @@ export class AnnotationsService {
     return this.http.post(`${this.API_URL}/datasets/process/`, data);
   }
 
+  generalDetection(data:any) {
+    return this.http.post(`${this.API_URL}/general/object/detection`, data);
+  }
+
   deleteDataset(datasetID:string) {
     return this.http.delete(`${this.API_URL}/datasets/${datasetID}`);
   }
