@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ip } from '../../../models/IpServer';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FacesService } from '../../../services/faces.service';
 
 const URL = 'http://' + ip + ':3000/api/video/upload';
 @Component({
@@ -18,7 +19,7 @@ export class AddVideoComponent implements OnInit {
   finished: boolean = false;
   progress:number = 0;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private facesService: FacesService) { }
   
   @ViewChild('fileInput', { static: false }) fileInputVariable: any;
   public uploader: FileUploader = new FileUploader({
@@ -46,7 +47,16 @@ export class AddVideoComponent implements OnInit {
       this.fileInputVariable.nativeElement.value = '';
       this.fileName = null;
       this.name = null;
-      this.router.navigate(['/camerasList']);
+      this.facesService.doOneImage(JSON.parse(response).id).subscribe(
+        res => {
+          console.log(res)
+          this.router.navigate(['/cameras/algorithms/'+JSON.parse(response).id]);
+        },
+        err => {
+          console.log(err)
+        this.router.navigate(['/cameras/algorithms/'+JSON.parse(response).id]);
+        }
+      )
     };
     this.uploader.onProgressItem = (progress: any) => {
       this.progress = progress['progress']

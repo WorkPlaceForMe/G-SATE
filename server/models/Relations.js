@@ -15,11 +15,13 @@ var Relations = {
     },
 
     create: function (relation, callback) {
-        return db.query('INSERT INTO relations values (?,?,?,?,?,?,?,?,?,?)', [relation.id,relation.camera_id, relation.algo_id, relation.roi_id, relation.atributes, relation.id_account, relation.id_branch, relation.createdAt, relation.updatedAt, relation.snippet_id], callback);
+        return db.query('INSERT INTO relations values (?,?,?,?,?,?,?,?,?,?,?,?)', [relation.id,relation.camera_id, relation.algo_id, relation.snippet_id, relation.roi_id, relation.atributes, relation.id_account, relation.id_branch, relation.stream, relation.createdAt, relation.updatedAt, relation.http_out], callback);
     },
+
     delete: function (id, callback) {
         return db.query('DELETE FROM relations WHERE id = ?', [id], callback);
     },
+
     update: function (id, relation, callback) {
         return db.query("UPDATE relations set atributes=? where id=?", [relation.atributes, id], callback);
     }
