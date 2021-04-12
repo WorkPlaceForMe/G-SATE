@@ -98,7 +98,7 @@ let Dataset = {
                             algo_id: itm.algo_id,
                             snippet_id: snippetId,
                             roi_id: null,
-                            atributes: `{"fps": ${body.fps}}`,
+                            atributes: `[{"conf": 10, "save": true, "time": 0, "fps":${body.fps}}]`,
                             id_account: accId,
                             id_branch: accId,
                             stream: null,
@@ -309,6 +309,7 @@ let processByVista = (name) => {
                     itm.width = size.width;
                     itm.height = size.height;
                     itm.image = process.env.vista_server_ip + itm.image;
+                    itm.checked = true;
                     rm.push(itm);
                     ++count;
                 };
