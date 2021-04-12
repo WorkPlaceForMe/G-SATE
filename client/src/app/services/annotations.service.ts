@@ -77,7 +77,7 @@ export class AnnotationsService {
   }
 
   generalDetection(data:any) {
-    return this.http.post(`${this.API_URL}/general/object/detection`, data);
+    return this.http.post<any[]>(`${this.API_URL}/general/object/detection`, data);
   }
 
   deleteDataset(datasetID:string) {
