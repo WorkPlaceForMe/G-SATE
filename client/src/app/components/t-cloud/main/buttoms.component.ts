@@ -172,7 +172,7 @@ export class ButtomsComponent implements OnInit {
             this.datasetsNames[i]['name'] = this.datasetsNames[i]['name'];
               //.split('_')
               //.join(' ')
-            this.datasetsNames[i]['id'] = this.datasetsNames[i]['id'];
+            this.datasetsNames[i]['id'] = this.datasetsNames[i]['id'];          
           }
         } else if (thing == 'class') {
           this.classNames = res
@@ -810,7 +810,7 @@ export class ButtomsComponent implements OnInit {
 
   deleteDataset(dataset:any) {
     if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
-      this.annotationsServ.deleteDataset(dataset.id).subscribe(
+      this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
         res => {
           console.log(res);
           this.refresh();
