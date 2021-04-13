@@ -251,6 +251,7 @@ app.post('/api/general/object/detection', function(req, res) {
     let data = req.body;
     let image = data.img;
     let details = data.details;
+    let singleImage = data.singleImage;
     console.log('details >>>>>>>>>>>>>>>>>>>>>>', image);
     let xx = image.split('/')[5];
     let yy = xx.split('.')[1];
@@ -277,8 +278,8 @@ app.post('/api/general/object/detection', function(req, res) {
                         console.log('element >>>>>>>>>>>>', ele);
                     } else {
                         let itm = ele.trim().split(" ");
-                        console.log('single image ? ', data.singleImage);
-                        if(data.singleImage) {
+                        console.log('single image ? ', singleImage);
+                        if(singleImage) {
                             console.log('in if');
                             let obj1 = {
                                 'x': itm[0],
@@ -333,7 +334,7 @@ app.post('/api/general/object/detection', function(req, res) {
                         175 37 269 168`; */
 /*     let result = [];
     let single = [];
-    if(data.singleImage) {
+    if(singleImage) {
         let obj1 = {
             'x': 92,
             'y': 169
