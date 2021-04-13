@@ -547,7 +547,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           y = y - this.coords[0].y;
           this.coords.push({ 'x': x, 'y': y });
           this.coords.push({ 'label': this.label });
-          this.coords.push({'general_detection': 'No'})
+          this.coords.push({'general_detection': 'No'});
           this.ctx.lineWidth = 2.5;
           this.ctx.stroke();
           this.annotations.push(this.coords);
@@ -658,16 +658,26 @@ export class ObjDetMulImgsComponent implements OnInit {
   generalDetection(i) {
     let body = {
       details: this.data[i],
-      img: this.annObj[this.data[i].id].image
+      img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image
     };
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
     this.annotationsServ.generalDetection(body).subscribe(res => {
-      console.log('res>>>>>>>>>>>>>>>>>>>>>>>', res);
       res.forEach(element => {
-        this.annotations = this.annObj[this.data[i].id].results;
-        this.annotations.push(element);
-        this.annObj[this.data[i].id].results = this.annotations;
+        this.annotations = [];
+        if(!this.annObj.hasOwnProperty(this.data[i].id)) {
+          this.annotations.push(element);
+          this.annObj[this.data[i].id] = {
+            image: this.data[i].image,
+            width: this.data[i].res_width,
+            height: this.data[i].res_height,
+            results: this.annotations
+          };
+        } else {
+          this.annotations = this.annObj[this.data[i].id].results;
+          this.annotations.push(element);
+          this.annObj[this.data[i].id].results = this.annotations;
+        }
       })
       this.re_draw();
     });
