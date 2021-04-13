@@ -40,7 +40,7 @@ export class SpeedingVehicleComponent implements OnInit {
   waitingTime: any;
   datasetName: string;
   link: SafeResourceUrl;
-  pictures: number;
+  picturesNumber: number;
 
   @ViewChild('streaming', { static: false }) streamingcanvas: ElementRef;
 
@@ -66,7 +66,7 @@ export class SpeedingVehicleComponent implements OnInit {
   }
 
   calculate(){
-    this.pictures = ( ( parseInt(this.finish.split(":")[0]) * 3600 + parseInt(this.finish.split(":")[1]) * 60 + parseInt(this.finish.split(":")[2]) ) - ( parseInt(this.start.split(":")[0]) * 3600 + parseInt(this.start.split(":")[1]) * 60 + parseInt(this.start.split(":")[2]) ) ) * this.conf.fps
+    this.picturesNumber = ( ( parseInt(this.finish.split(":")[0]) * 3600 + parseInt(this.finish.split(":")[1]) * 60 + parseInt(this.finish.split(":")[2]) ) - ( parseInt(this.start.split(":")[0]) * 3600 + parseInt(this.start.split(":")[1]) * 60 + parseInt(this.start.split(":")[2]) ) ) * this.conf.fps
   }
 
   destroy() {
