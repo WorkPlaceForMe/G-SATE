@@ -41,9 +41,11 @@
                 </div>
             </div>
             <h5>Fps:</h5>&nbsp;
-            <input type="number" [(ngModel)]="conf.fps" min="0" max="60"> &nbsp;
+            <input type="number" [(ngModel)]="conf.fps" min="0" max="60" (ngModelChange)="calculate()" > &nbsp;
             <h5>Dataset Name:</h5>&nbsp;
             <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
+            <h5>Total images:</h5>&nbsp;
+            <input type="number" disabled [(ngModel)]='picturesNumber'> &nbsp;
             <div class="btn-group">
                 <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal" style="max-height: 2.3em;">Make Dataset</button>
                 <button class="btn btn-info btn-sm" [routerLink]="['/annotations']" style="max-height: 2.3em;">Back</button>
