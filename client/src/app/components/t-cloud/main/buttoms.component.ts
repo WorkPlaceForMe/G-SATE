@@ -810,7 +810,7 @@ export class ButtomsComponent implements OnInit {
 
   deleteDataset(dataset:any) {
     if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
-      this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
+      this.annotationsServ.deleteDataset(dataset).subscribe(
         res => {
           console.log(res);
           this.refresh();

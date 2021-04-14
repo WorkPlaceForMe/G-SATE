@@ -80,8 +80,13 @@ export class AnnotationsService {
     return this.http.post<any[]>(`${this.API_URL}/general/object/detection`, data);
   }
 
-  deleteDataset(datasetID:string) {
-    return this.http.delete(`${this.API_URL}/datasets/${datasetID}`);
+  deleteDataset(dataset:any) {
+    return this.http.request('DELETE',`${this.API_URL}/datasets/${dataset.cam_id}`,{
+      body: {
+        id: dataset.cam_id,
+        name: dataset.name,
+      }
+    });
   }
 
   searchImages(keyword:any) {

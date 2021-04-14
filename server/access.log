@@ -14060,3 +14060,230 @@ Date: Sun, 28 Mar 2021 09:58:30 GMT // Url: ::1 // Method: OPTIONS/api/datasets/
 Date: Sun, 28 Mar 2021 09:59:05 GMT // Url: ::1 // Method: POST/api/datasets/process/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36
 Date: Sun, 28 Mar 2021 09:59:10 GMT // Url: ::1 // Method: OPTIONS/api/datasets/process/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36
 Date: Sun, 28 Mar 2021 10:01:10 GMT // Url: ::1 // Method: POST/api/datasets/process/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36
+Server started at: Mon Apr 12 2021 23:09:26 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Mon Apr 12 2021 23:19:17 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Tue Apr 13 2021 09:45:15 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Tue, 13 Apr 2021 03:09:54 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/rel // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:55 GMT // Url: ::1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:09:56 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:10:03 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:13:23 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:13:23 GMT // Url: ::1 // Method: OPTIONS/api/StartWsStreaming/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:13:25 GMT // Url: ::1 // Method: OPTIONS/api/StopWsStreaming/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:15:23 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:15:25 GMT // Url: ::1 // Method: POST/api/StopWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:15:25 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:17:23 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:17:25 GMT // Url: ::1 // Method: POST/api/StopWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:17:25 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:17:58 GMT // Url: ::1 // Method: GET/api/users // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:03 GMT // Url: ::1 // Method: GET/api/users // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:05 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:05 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:05 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:05 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:10 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:10 GMT // Url: ::1 // Method: OPTIONS/api/StartWsStreaming/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:35 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:38 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:38 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:38 GMT // Url: ::1 // Method: OPTIONS/api/StartWsStreaming/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:47 GMT // Url: ::1 // Method: POST/api/StartWsStreaming/ // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:48 GMT // Url: ::1 // Method: GET/api/users // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:52 GMT // Url: ::1 // Method: GET/api/users // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:57 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:57 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:57 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:18:57 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:33:46 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:34:47 GMT // Url: ::1 // Method: GET/api/getImages/rickshaw/class // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:35:32 GMT // Url: ::1 // Method: GET/api/getImages/faces/class // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:31 GMT // Url: ::1 // Method: GET/api/rel // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:31 GMT // Url: ::1 // Method: GET/api/readStatus/0/ // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:31 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:32 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:32 GMT // Url: ::1 // Method: GET/api/rel // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:32 GMT // Url: ::1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:44 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:44 GMT // Url: ::1 // Method: GET/api/rel // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:44 GMT // Url: ::1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:36:59 GMT // Url: ::1 // Method: GET/api/users // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:37:39 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:37:39 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:37:39 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:37:39 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:48 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:49 GMT // Url: ::1 // Method: GET/api/rel // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:49 GMT // Url: ::1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:55 GMT // Url: ::1 // Method: GET/api/users // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:59 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:59 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:59 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Date: Tue, 13 Apr 2021 03:43:59 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4456.0 Safari/537.36 Edg/91.0.845.2
+Server started at: Wed Apr 14 2021 16:46:09 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 20:31:57 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 12:32:03 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 20:34:16 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 20:34:30 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 21:23:00 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 13:28:12 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:28:13 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:28:13 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:28:13 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 21:46:24 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 21:46:29 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 21:46:40 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 13:46:43 GMT // Url: ::1 // Method: OPTIONS/api/datasets/2 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 21:47:05 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 13:47:14 GMT // Url: ::ffff:127.0.0.1 // Method: OPTIONS/api/datasets/2 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:49:05 GMT // Url: ::1 // Method: DELETE/api/datasets/2 // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:49:14 GMT // Url: ::ffff:127.0.0.1 // Method: DELETE/api/datasets/2 // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:51:14 GMT // Url: ::1 // Method: DELETE/api/datasets/2 // Status:- // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:59:43 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:59:43 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:59:43 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 13:59:43 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:11:12 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:11:12 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:11:12 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:11:12 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:18 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:18 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:18 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:18 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:37 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:37 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:37 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:12:37 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:03 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:03 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:03 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:04 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:52 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:52 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:52 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:15:52 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:16:41 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:16:41 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:16:41 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:16:41 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:17:20 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:17:20 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:17:20 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:17:20 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:19:10 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:19:10 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:19:10 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:19:10 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:20:14 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:23:05 GMT // Url: ::1 // Method: OPTIONS/api/datasets/2 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:23:15 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:23:22 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:24:38 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:29:49 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:33:37 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:36:54 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:37:26 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:37:54 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:38:33 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:39:05 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Server started at: Wed Apr 14 2021 22:39:12 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:39:37 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:37 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:38 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:38 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:43 GMT // Url: ::1 // Method: OPTIONS/api/datasets/2 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:43 GMT // Url: ::1 // Method: DELETE/api/datasets/2 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:39:44 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:40:30 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:42:39 GMT // Url: ::1 // Method: OPTIONS/api/datasets/3 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:42:56 GMT // Url: ::1 // Method: OPTIONS/api/datasets/4 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:43:26 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:43:26 GMT // Url: ::ffff:127.0.0.1 // Method: DELETE/api/datasets/3 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:26 GMT // Url: ::ffff:127.0.0.1 // Method: DELETE/api/datasets/4 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:43:27 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:43:28 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:28 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:43:31 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
+Date: Wed, 14 Apr 2021 14:43:41 GMT // Url: ::1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:41 GMT // Url: ::1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:41 GMT // Url: ::1 // Method: GET/api/datasets/class // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:41 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:45 GMT // Url: ::1 // Method: OPTIONS/api/datasets/5 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:46 GMT // Url: ::1 // Method: DELETE/api/datasets/5 // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:43:46 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:200 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Date: Wed, 14 Apr 2021 14:44:16 GMT // Url: ::1 // Method: GET/api/datasets/data // Status:304 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
+Server started at: Wed Apr 14 2021 22:45:33 GMT+0800 (Singapore Standard Time)
+From: localhost
+Using port 3300 for server and 4444 for socket. 
