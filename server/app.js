@@ -251,10 +251,16 @@ app.post('/api/general/object/detection', function(req, res) {
     let data = req.body;
     let image = data.img;
     let details = data.details;
-    console.log('details >>>>>>>>>>>>>>>>>>>>>>', details);
+    let singleImage = data.singleImage;
+    console.log('details >>>>>>>>>>>>>>>>>>>>>>', image);
     let xx = image.split('/')[5];
     let yy = xx.split('.')[1];
-    let zz = xx.split('_');
+    let zz;
+    if(singleImage) {
+        zz = xx.split('-');
+    } else {
+        zz = xx.split('_');
+    }
     zz.splice(zz.length-1, 1);
     let imgName = zz.join('_') + '.' + yy;
     let dir = './objdet/darknet/data/' + imgName;
@@ -269,96 +275,153 @@ app.post('/api/general/object/detection', function(req, res) {
                 console.log('data>>>>>>>>>>>>>>', data);
                 let result = [];
                 let single = [];
-                /* let str = `92 169 273 384
-                        175 37 269 168`; */
+                
                 console.log('data splitted >>>>>>>>>>>', data.split('\n'));
                 data.split('\n').forEach(ele => {
-                    if(ele.includes('Predicted in')) {
+                    if(ele.includes('Predicted in') || ele == '') {
                         console.log('element >>>>>>>>>>>>', ele);
                     } else {
                         let itm = ele.trim().split(" ");
-                        let obj1 = {
-                            'x': itm[0] * details.width / details.res_width,
-                            'y': itm[1] * details.height / details.res_height
-                        }
-                        single.push(obj1);
-                        let obj2 = {
-                            'x': itm[2] * details.width / details.res_width,
-                            'y': itm[3] * details.height / details.res_height
-                        }
-                        single.push(obj2);
-                        let obj3 = {
-                            'label': ''
-                        }
-                        single.push(obj3);
-                        let obj4 = {
-                            'general_detection': 'Yes'
-                        }
-                        single.push(obj4);
-                        result.push(single);
-                        single = [];   
+                        console.log('single image ? ', singleImage);
+                        if(singleImage) {
+                            console.log('in if');
+                            let obj1 = {
+                                'x': itm[0],
+                                'y': itm[1]
+                            }
+                            single.push(obj1);
+                            let obj2 = {
+                                'x': itm[2],
+                                'y': itm[3]
+                            }
+                            single.push(obj2);
+                            let obj3 = {
+                                'general_detection': 'Yes'
+                            }
+                            single.push(obj3);
+                            let obj4 = {
+                                'label': ''
+                            }
+                            single.push(obj4);
+                            result.push(single);
+                            single = [];
+                        } else {
+                            console.log('in else');
+                            let obj1 = {
+                                'x': itm[0] * details.width / details.res_width,
+                                'y': itm[1] * details.height / details.res_height
+                            }
+                            single.push(obj1);
+                            let obj2 = {
+                                'x': itm[2] * details.width / details.res_width,
+                                'y': itm[3] * details.height / details.res_height
+                            }
+                            single.push(obj2);
+                            let obj3 = {
+                                'general_detection': 'Yes'
+                            }
+                            single.push(obj3);
+                            let obj4 = {
+                                'label': ''
+                            }
+                            single.push(obj4);
+                            result.push(single);
+                            single = [];
+                        }   
                     }
                 });
                 res.json(result);
             }
         });
     });
-    /* let result = [];
+    /* let str = `92 169 273 384
+                        175 37 269 168`; */
+/*     let result = [];
     let single = [];
-    let obj1 = {
-        'x': 92 * details.width / details.res_width,
-        'y': 169 * details.height / details.res_height
-    }
-    single.push(obj1);
-    let obj2 = {
-        'x': 273 * details.width / details.res_width,
-        'y': 384 * details.height / details.res_height
-    }
-    single.push(obj2);
-    let obj3 = {
-        'label': 'jug'
-    }
-    single.push(obj3);
-    let obj4 = {
-        'general_detection': 'Yes'
-    }
-    single.push(obj4);
-    result.push(single);
-    single = [];
-    let obj5 = {
-        'x': 175 * details.width / details.res_width,
-        'y': 37 * details.height / details.res_height
-    }
-    single.push(obj5);
-    let obj6 = {
-        'x': 269 * details.width / details.res_width,
-        'y': 168 * details.height / details.res_height
-    }
-    single.push(obj6);
-    let obj7 = {
-        'label': 'jug'
-    }
-    single.push(obj7);
-    let obj8 = {
-        'general_detection': 'Yes'
-    }
-    single.push(obj8);
-
-    result.push(single); */
-    //res.json(result);
-    /* cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imageName}`, function(err, data) {
-        if (err) {
-            console.log('Error : ', err);
-            res.json(err);
-        } else {
-            console.log('type of data>>>>>>>>', typeof(data));
-            console.log('data>>>>>>>>>>>>>>', data);
-            let result = {
-                
-            }
-            res.json(data);
+    if(singleImage) {
+        let obj1 = {
+            'x': 92,
+            'y': 169
         }
-    }); */
+        single.push(obj1);
+        let obj2 = {
+            'x': 273,
+            'y': 384
+        }
+        single.push(obj2);
+        let obj3 = {
+            'general_detection': 'Yes'
+        }
+        single.push(obj3);
+        let obj4 = {
+            'label': ''
+        }
+        single.push(obj4);
+        result.push(single);
+        single = [];
+        let obj5 = {
+            'x': 175,
+            'y': 37
+        }
+        single.push(obj5);
+        let obj6 = {
+            'x': 269,
+            'y': 168
+        }
+        single.push(obj6);
+        let obj7 = {
+            'general_detection': 'Yes'
+        }
+        single.push(obj7);
+        let obj8 = {
+            'label': ''
+        }
+        single.push(obj8);  
+    
+        result.push(single);
+    } else {
+        let obj1 = {
+            'x': 92 * details.width / details.res_width,
+            'y': 169 * details.height / details.res_height
+        }
+        single.push(obj1);
+        let obj2 = {
+            'x': 273 * details.width / details.res_width,
+            'y': 384 * details.height / details.res_height
+        }
+        single.push(obj2);
+        let obj3 = {
+            'general_detection': 'Yes'
+        }
+        single.push(obj3);
+        let obj4 = {
+            'label': ''
+        }
+        single.push(obj4);
+        result.push(single);
+        single = [];
+        let obj5 = {
+            'x': 175 * details.width / details.res_width,
+            'y': 37 * details.height / details.res_height
+        }
+        single.push(obj5);
+        let obj6 = {
+            'x': 269 * details.width / details.res_width,
+            'y': 168 * details.height / details.res_height
+        }
+        single.push(obj6);
+        let obj7 = {
+            'general_detection': 'Yes'
+        }
+        single.push(obj7);
+        let obj8 = {
+            'label': ''
+        }
+        single.push(obj8);
+    
+        result.push(single);
+    }
+    res.json(result); */
 });
 
 

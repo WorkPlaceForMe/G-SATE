@@ -49,8 +49,8 @@
             <h5>Dataset Name:</h5>&nbsp;
             <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false || !isValidStart || !isValidFinish"> &nbsp;
             <div class="btn-group">
-                <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal">Make Dataset</button>
-                <button class="btn btn-info btn-sm" [routerLink]="['/annotations']">Back</button>
+                <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal" style="max-height: 2.3em;">Make Dataset</button>
+                <button class="btn btn-info btn-sm" [routerLink]="['/annotations']" style="max-height: 2.3em;">Back</button>
             </div>
         </div>
     </div>
@@ -82,8 +82,8 @@
       </div> -->
             <div class="dropdown-divider"></div>
             <div class="mt-2 mb-3" align='center'>
-                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="send()">Okay</button>
-                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="send()" style="max-height: 3em;">Okay</button>
+                <button class="btn btn-secondary" data-dismiss="modal" style="max-height: 3em;">Close</button>
             </div>
         </div>
     </div>

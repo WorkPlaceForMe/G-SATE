@@ -370,17 +370,19 @@ let processByAnalytics = (name) => {
                                     ++index;
                                 await Algorithms.fetchAlgoData(data).then(resp => {
                                     for (const element of resp) {
+                                        let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
                                         let obj = {
                                             id: count,
-                                            image: element.image_path,
-                                            width: element.width,
-                                            height: element.height,
+                                            image: '/assets/' + element.image_path.split('/').splice(6,5).join('/'),
+                                            width: element.cam_width,
+                                            height: element.cam_height,
+                                            checked: true,
                                             results: {
                                                 Object: [{
-                                                    class: 'person',
+                                                    class: cl,
                                                     boundingBox: {
-                                                        top: element.x1,
-                                                        left: element.y1,
+                                                        left: element.x1,
+                                                        top: element.y1,
                                                         width: element.x2,
                                                         height: element.y2
                                                     }

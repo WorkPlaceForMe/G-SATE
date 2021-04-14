@@ -119,7 +119,7 @@ export class ButtomsComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      console.log('Uploaded:', status, response, headers)
+      //console.log('Uploaded:', status, response, headers)
       this.router.navigate(
         ['/annotations/' + 'object' + '/' + 'image' + '/0'],
         { state: { data: JSON.parse(response) } }
