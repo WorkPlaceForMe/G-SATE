@@ -360,8 +360,8 @@ let processByAnalytics = (name) => {
                                         let obj = {
                                             id: count,
                                             image: '/assets/' + element.image_path.split('/').splice(6,5).join('/'),
-                                            width: element.width,
-                                            height: element.height,
+                                            width: element.cam_width,
+                                            height: element.cam_height,
                                             results: {
                                                 Object: [{
                                                     class: cl,
