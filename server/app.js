@@ -255,8 +255,12 @@ app.post('/api/general/object/detection', function(req, res) {
     console.log('details >>>>>>>>>>>>>>>>>>>>>>', image);
     let xx = image.split('/')[5];
     let yy = xx.split('.')[1];
-    let zz = xx.split('_');
-    zz = xx.split('-');
+    let zz;
+    if(singleImage) {
+        zz = xx.split('-');
+    } else {
+        zz = xx.split('_');
+    }
     zz.splice(zz.length-1, 1);
     let imgName = zz.join('_') + '.' + yy;
     let dir = './objdet/darknet/data/' + imgName;
@@ -292,11 +296,11 @@ app.post('/api/general/object/detection', function(req, res) {
                             }
                             single.push(obj2);
                             let obj3 = {
-                                'label': ''
+                                'general_detection': 'Yes'
                             }
                             single.push(obj3);
                             let obj4 = {
-                                'general_detection': 'Yes'
+                                'label': ''
                             }
                             single.push(obj4);
                             result.push(single);
@@ -314,11 +318,11 @@ app.post('/api/general/object/detection', function(req, res) {
                             }
                             single.push(obj2);
                             let obj3 = {
-                                'label': ''
+                                'general_detection': 'Yes'
                             }
                             single.push(obj3);
                             let obj4 = {
-                                'general_detection': 'Yes'
+                                'label': ''
                             }
                             single.push(obj4);
                             result.push(single);
@@ -346,11 +350,11 @@ app.post('/api/general/object/detection', function(req, res) {
         }
         single.push(obj2);
         let obj3 = {
-            'label': 'jug'
+            'general_detection': 'Yes'
         }
         single.push(obj3);
         let obj4 = {
-            'general_detection': 'Yes'
+            'label': ''
         }
         single.push(obj4);
         result.push(single);
@@ -366,11 +370,11 @@ app.post('/api/general/object/detection', function(req, res) {
         }
         single.push(obj6);
         let obj7 = {
-            'label': 'jug'
+            'general_detection': 'Yes'
         }
         single.push(obj7);
         let obj8 = {
-            'general_detection': 'Yes'
+            'label': ''
         }
         single.push(obj8);  
     
@@ -387,11 +391,11 @@ app.post('/api/general/object/detection', function(req, res) {
         }
         single.push(obj2);
         let obj3 = {
-            'label': 'jug'
+            'general_detection': 'Yes'
         }
         single.push(obj3);
         let obj4 = {
-            'general_detection': 'Yes'
+            'label': ''
         }
         single.push(obj4);
         result.push(single);
@@ -407,30 +411,17 @@ app.post('/api/general/object/detection', function(req, res) {
         }
         single.push(obj6);
         let obj7 = {
-            'label': 'jug'
+            'general_detection': 'Yes'
         }
         single.push(obj7);
         let obj8 = {
-            'general_detection': 'Yes'
+            'label': ''
         }
         single.push(obj8);
     
         result.push(single);
     }
     res.json(result); */
-    /* cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imageName}`, function(err, data) {
-        if (err) {
-            console.log('Error : ', err);
-            res.json(err);
-        } else {
-            console.log('type of data>>>>>>>>', typeof(data));
-            console.log('data>>>>>>>>>>>>>>', data);
-            let result = {
-                
-            }
-            res.json(data);
-        }
-    }); */
 });
 
 
