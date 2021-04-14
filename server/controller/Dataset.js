@@ -362,12 +362,13 @@ let processByAnalytics = (name) => {
                                             image: '/assets/' + element.image_path.split('/').splice(6,5).join('/'),
                                             width: element.cam_width,
                                             height: element.cam_height,
+                                            checked: true,
                                             results: {
                                                 Object: [{
                                                     class: cl,
                                                     boundingBox: {
-                                                        top: element.x1,
-                                                        left: element.y1,
+                                                        left: element.x1,
+                                                        top: element.y1,
                                                         width: element.x2,
                                                         height: element.y2
                                                     }
