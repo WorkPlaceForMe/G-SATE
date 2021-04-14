@@ -29,7 +29,7 @@ import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-det
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 const routes: Routes = [
   { path: '', 
-    redirectTo: 'camerasList',
+    redirectTo: 'annotations',
     pathMatch: 'full' 
   },
   {

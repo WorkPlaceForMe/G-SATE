@@ -113,6 +113,7 @@ export class SpeedingVehicleComponent implements OnInit {
     } else {
       this.start = '00:00:00';
       this.finish = '24:00:00';
+      this.maxTime = this.finish;
       this.availableTimeStart = this.generateTimeRange(this.start, this.finish);
       this.availableTimeFinish = this.generateTimeRange(this.start, this.finish);
       this.finish = '00:00:00';

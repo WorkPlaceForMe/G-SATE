@@ -21,7 +21,7 @@
       <div class="card-header" align='center' *ngIf='objDet == false'>List of areas</div>
       <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
       <ul>
-        <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[2].label}}</li>
+        <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[3].label}}</li>
       </ul>
     </div>
 
