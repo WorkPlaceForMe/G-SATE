@@ -614,7 +614,14 @@ export class AlgorithmsComponent implements OnInit {
           }
           this.relation.algo_id = this.algos[i].id
           this.relation.camera_id = params.uuid
-          this.relation.id = uuidv4()
+          this.relation.id = uuidv4();
+          this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+          let time = new Date();
+          this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          let id = uuidv4();
+          this.relation.id_account = id;
+          this.relation.id_branch = id;
           this.facesService.saveRelation(this.relation).subscribe(
             res => {
               console.log(res)
@@ -652,7 +659,14 @@ export class AlgorithmsComponent implements OnInit {
             }
             this.relation.algo_id = this.algos[i].id
             this.relation.camera_id = params.uuid
-            this.relation.id = uuidv4()
+            this.relation.id = uuidv4();
+            this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+            let time = new Date();
+            this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+            this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+            let id = uuidv4();
+            this.relation.id_account = id;
+            this.relation.id_branch = id;
             this.facesService.saveRelation(this.relation).subscribe(
               res => {
                 console.log(res)
@@ -699,7 +713,14 @@ export class AlgorithmsComponent implements OnInit {
           } else if (this.algos[i].id == 12) {
             this.relation.atributes = JSON.stringify(this.quantity)
           }
-          this.relation.id = uuidv4()
+          this.relation.id = uuidv4();
+          this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+          let time = new Date();
+          this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          let id = uuidv4();
+          this.relation.id_account = id;
+          this.relation.id_branch = id;
           this.facesService.saveRelation(this.relation).subscribe(
             res => {
               console.log(res)
@@ -738,7 +759,14 @@ export class AlgorithmsComponent implements OnInit {
           this.relation.roi_id = null
           this.relation.algo_id = this.algos[i].id
           this.relation.camera_id = params.uuid
-          this.relation.id = uuidv4()
+          this.relation.id = uuidv4();
+          this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+          let time = new Date();
+          this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+          let id = uuidv4();
+          this.relation.id_account = id;
+          this.relation.id_branch = id;
           this.facesService.saveRelation(this.relation).subscribe(
             res => {
               console.log(res)
@@ -787,7 +815,14 @@ export class AlgorithmsComponent implements OnInit {
               this.relation.algo_id = this.algos[i].id
               this.relation.camera_id = params.uuid
               this.relation.roi_id = string
-              this.relation.id = uuidv4()
+              this.relation.id = uuidv4();
+              this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+              let time = new Date();
+              this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+              this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+              let id = uuidv4();
+              this.relation.id_account = id;
+              this.relation.id_branch = id;
               this.facesService.saveRelation(this.relation).subscribe(
                 res => {
                   console.log(res)
@@ -817,7 +852,14 @@ export class AlgorithmsComponent implements OnInit {
                 this.relation.algo_id = this.algos[i].id
                 this.relation.camera_id = params.uuid
                 this.relation.roi_id = string
-                this.relation.id = uuidv4()
+                this.relation.id = uuidv4();
+                this.relation.atributes = '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+                let time = new Date();
+                this.relation.createdAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+                this.relation.updatedAt = this.datePipe.transform(time, 'yyyy-M-dd HH:mm:ss');
+                let id = uuidv4();
+                this.relation.id_account = id;
+                this.relation.id_branch = id;
                 this.facesService.saveRelation(this.relation).subscribe(
                   res => {
                     console.log(res)
