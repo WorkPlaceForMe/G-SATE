@@ -634,6 +634,9 @@ app.use(express.static('../client'));
 
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function(req, file, cb) {
+        if (!fs.existsSync('./uploads')) {
+            fs.mkdirSync('./uploads');
+        }
         cb(null, './uploads/');
     },
     filename: function(req, file, cb) {
