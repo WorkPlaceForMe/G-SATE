@@ -73,6 +73,7 @@ export class ButtomsComponent implements OnInit {
   pagedImages: any = []
   selectedImages: any = []
   pager: any = {}
+  uploadImage:boolean = false;
 
   public date_now = new Date(Date.now()).toString()
   public max = new Date(this.date_now)
@@ -93,6 +94,7 @@ export class ButtomsComponent implements OnInit {
       status: any,
       headers: any
     ) => {
+      this.uploadImage = false;
       console.log('Uploaded:', status, response, headers)
     }
     this.uploader.onProgressItem = (progress: any) => {
@@ -673,6 +675,7 @@ export class ButtomsComponent implements OnInit {
     //     this.fileName = '!' + this.fileName;
     //   }
     // }
+    this.uploadImage = true;
     this.photoUploader.uploadAll()
     this.myImgInputVariable.nativeElement.value = null
     this.imgFileName = ''

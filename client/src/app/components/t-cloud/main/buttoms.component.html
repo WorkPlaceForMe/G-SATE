@@ -50,8 +50,13 @@
                             <label class="custom-file-label" for="inputGroupFile02">{{imgFileName == '' ? 'Choose a image to upload' :
                 imgFileName}}</label>
                         </div>
-                        <button type="button" class="btn btn-success btn-s" (click)="checkImg()" [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true">Upload
+                        <button type="button" class="btn btn-success btn-s" (click)="checkImg()" [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true" *ngIf='!uploadImage'>Upload
               Image</button>
+                    <button class='btn btn-success btn-s' disabled *ngIf='uploadImage'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                     </div>
                     <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
             <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
@@ -234,7 +239,7 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
-            <h5>UnAnnotated Datasets List</h5>
+            <h5>Un-Annotated Datasets List</h5>
         </div>
         <div class="card-body" style="min-height: 250px;">
             <i class="fas fa-sync-alt" style="float:right;" (click)="unAnnRefresh()"></i>
