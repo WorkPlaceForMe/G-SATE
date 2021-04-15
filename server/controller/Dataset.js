@@ -128,52 +128,8 @@ let Dataset = {
                     });
                 });
             });
-            /* ffmpeg(body.stream)
-                .format('mp4')
-                .seekInput('00:00:00')
-                .duration(`${body.t}`)
-                .saveToFile(directory)
-                .on('end', function (stdout, stderr) {
-                    let data = {
-                        cam_id: cam_id,
-                        clientId: uuidv4(),
-                        name: datasetName,
-                        path: directory,
-                        processed: 'No',
-                        class: 'data',
-                        type: 'video',
-                        uploaded: 'Yes',
-                        snippet_id: snippetId
-                    };
-                    Datasets.add(data, function (err, row) {
-                        if (err) return res.status(500).json(err);
-                        Relations.getRels(cam_id, function (err, result) {
-                            if (err) return res.status(500).json(err);
-                            for (const itm of result) {
-                                let d = {
-                                    id: uuidv4(),
-                                    camera_id: cam_id,
-                                    algo_id: itm.algo_id,
-                                    roi_id: null,
-                                    atributes: `{"fps": ${body.fps}}`,
-                                    id_account: accId,
-                                    id_branch: accId,
-                                    createdAt: new Date(),
-                                    updatedAt: new Date(),
-                                    snippet_id: snippetId
-                                }
-                                Relations.create(d, function (err, r) {
-                                    if (err) console.log('err>>>>>>>>>>>>>>>>', err);
-                                });
-                            };
-                        });
-                        res.status(200).json('Dataset created successfully!');
-                    });
-                }); */
         } catch (e) {
             console.log('error>>>>>>>>>>', e);
-            //console.log(e.code);
-            //console.log(e.msg);
         }
     },
     unzipDataset: (req, res) => {
@@ -374,7 +330,7 @@ let processByAnalytics = (name) => {
                                         let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
                                         let obj = {
                                             id: count,
-                                            image: '/assets/' + element.image_path.split('/').splice(6,5).join('/'),
+                                            image: '/assets/shared-data/' + element.image_path.split('/').splice(6,5).join('/'),
                                             width: element.cam_width,
                                             height: element.cam_height,
                                             checked: true,
