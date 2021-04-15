@@ -8,7 +8,7 @@
                 <input type="text" placeholder="Input the name of the dataset" [(ngModel)]='datasetName' size="30" (ngModelChange)="detect()">
                 <select name="label" class="custom-select" [(ngModel)]="datasetName" placeholder="Choose a label" (ngModelChange)="detect()">
           <option value="null" disabled>Or upload to an existing dataset</option>
-          <option *ngFor="let data of datasetsNames" [value]="data.name">{{data.name}}</option>
+          <option *ngFor="let data of unAnnDatasetsNames" [value]="data.name">{{data.name}}</option>
         </select>
                 <div class="custom-file">
                     <input class="custom-file-input" id="inputGroupFile02" type="file" name='zip' (change)='showInfo($event)' [uploader]="uploader" ng2FileSelect [disabled]='showMyMessage2 == false' #zip>
