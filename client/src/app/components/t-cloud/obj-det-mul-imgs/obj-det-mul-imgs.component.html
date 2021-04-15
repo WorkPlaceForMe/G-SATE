@@ -83,7 +83,7 @@
     </div>
   </div>
 
-  <div class=" col-md-2">
+  <div class="col-md-2">
     <div class="card border-info panel">
       <div class="card-header" align='center' *ngIf='objDet == true'>List of areas</div>
       <div class="card-header" align='center' *ngIf='objDet == false'>Labels Detected</div>
@@ -91,7 +91,12 @@
         <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[3].label}}</li>
       </ul>
       <div class="card-body" *ngIf="labelsMessage">
-        Click the object labels button to check the detected objects
+        <p>Click the object labels button to check the detected objects</p>
+        <div class="d-flex justify-content-center" *ngIf="generalDetSpin">
+          <div class="spinner-border spin" role="status">
+              <span class="sr-only">Loading...</span>
+          </div>
+      </div>
       </div>
     </div>
 

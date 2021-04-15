@@ -3,9 +3,20 @@ const router = express.Router();
 const Datasets = require('../models/Dataset');
 const DsetController = require('../controller/Dataset');
 
-router.get('/:which', function(req, res, next) {
+router.get('/unannotated/:which', function(req, res, next) {
     let which = req.params.which;
-    Datasets.list(which, function(err, rows) {
+    Datasets.UnAnnotatedList(which, function(err, rows) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
+router.get('/annotated/:which', function(req, res, next) {
+    let which = req.params.which;
+    Datasets.annotatedList(which, function(err, rows) {
         if (err) {
             res.status(500).json(err);
         } else {

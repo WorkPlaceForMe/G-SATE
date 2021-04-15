@@ -18,12 +18,13 @@ let Dataset = {
     process: (req, res, next) => {
         let body = req.body;
         let dName = body.name;
-        Datasets.listOne(dName, function (err, rows) {
-            if (err) return callback(err);
+        let method = body.method;
+        //Datasets.listOne(dName, function (err, rows) {
+            /* if (err) return callback(err);
             if (rows.length === 0) {
                 return res.json('Dataset Does Not Exists');
-            }
-            if (rows[0].type === 'zip') {
+            } */
+            if (method === 'vista') {
                 processByVista(dName).then(resp => {
                     return res.json(resp);
                 });
@@ -34,7 +35,7 @@ let Dataset = {
                     console.log('error in catch>>>>>>>>>>>>>>>', err);
                 });
             }
-        });
+        //});
     },
     createDataset: async (req, res) => {
         const body = req.body;
@@ -110,8 +111,22 @@ let Dataset = {
                             if (err) console.log('err>>>>>>>>>>>>>>>>', err);
                         });
                     };
+                    let data = {
+                        cam_id: cam_id,
+                        clientId: uuidv4(),
+                        name: datasetName,
+                        path: datasetDir,
+                        processed: 'Yes',
+                        class: 'data',
+                        type: 'zip',
+                        uploaded: 'Yes',
+                        snippet_id: uuidv4()
+                    };
+                    Datasets.add(data, function (err, row) {
+                        if (err) return res.status(500).json(err);
+                        res.status(200).json('Dataset created successfully!');
+                    });
                 });
-                res.status(200).json('Dataset created successfully!');
             });
             /* ffmpeg(body.stream)
                 .format('mp4')
@@ -337,9 +352,9 @@ let processByAnalytics = (name) => {
     let count = 0;
     return new Promise(async(resolve, reject) => {
         try {
-            await processByVista(name).then(data => {
-                result = data;
-                count = data.length;
+            //await processByVista(name).then(data => {
+                //result = data;
+                //count = data.length;
                 Datasets.listOne(name, function (err, dataset) {
                     if (err) reject(err);
     
@@ -387,7 +402,7 @@ let processByAnalytics = (name) => {
                         }
                     });
                 });
-            })
+            //})
         } catch (err) {
             reject(err);
         }

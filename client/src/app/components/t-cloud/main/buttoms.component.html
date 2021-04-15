@@ -234,25 +234,25 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
-            <h5>Select a Dataset to Annotate</h5>
+            <h5>UnAnnotated Datasets List</h5>
         </div>
         <div class="card-body" style="min-height: 250px;">
-            <i class="fas fa-sync-alt" style="float:right;" (click)="refresh()"></i>
+            <i class="fas fa-sync-alt" style="float:right;" (click)="unAnnRefresh()"></i>
             <br>
-            <div class="d-flex justify-content-center" *ngIf="spin">
+            <div class="d-flex justify-content-center" *ngIf="unAnnSpin">
                 <div class="spinner-border spin" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
             <ul style="list-style-type:none;" id="datasets">
-                <li class="align-items-center" *ngFor="let data of datasetsNames; index as i">
+                <li class="align-items-center" *ngFor="let data of unAnnDatasetsNames; index as i">
                     <div class="form-group">
                         <div class="custom-control custom-radio datasets">
-                            <input name="customRadio" class="custom-control-input" id="cust{{i}}" type="radio" [value]="data.open" (change)="change(i);">
+                            <input name="customRadio" class="custom-control-input" id="cust{{i}}" type="radio" [value]="data.open" (change)="UnAnnDSetchange(i);">
                             <label class="custom-control-label" for="cust{{i}}"><i class="fas fa-folder"
                   *ngIf='data.open == false'></i><i class="fas fa-folder-open"
                   *ngIf='data.open == true'></i>&nbsp;{{data.name}}
-                   <span class="delete" (click) = "deleteDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
+                   <span class="delete" (click) = "deleteUnAnnDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
                         </div>
                     </div>
                 </li>
@@ -260,10 +260,9 @@
         </div>
     </div>
 
-
     <div class="card bg-primary border-primary mb-3">
         <div class="card-body">
-            <button class="btn btn-success btn-lg btn-block" (click)='go()' [disabled]='choosenDataset == undefined'><i
+            <!-- <button class="btn btn-success btn-lg btn-block" (click)='go()' [disabled]='choosenDataset == undefined'><i
           class="fas fa-user-plus"></i> Single annotation</button>
 
             <div class="p-2" *ngIf='showMyMessage == true'>
@@ -275,10 +274,12 @@
                 <button class="btn btn-info btn-sm" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
             </div>
 
-            <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/', choosenDataset, 0]" [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button>
+            <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/', choosenDataset, 0]" [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button> -->
 
-            <button class="btn btn-success btn-lg btn-block" (click)="annotate()" [disabled]='choosenDataset == undefined'><i
-          class="fas fa-user-plus"></i> Check object detection</button>
+            <button class="btn btn-success btn-lg btn-block" (click)="annotateByVista()" [disabled]='choosenDatasetForVista == undefined'><i
+          class="fas fa-user-plus"></i> Vista object detection</button>
+          <button class="btn btn-success btn-lg btn-block" (click)="annotateByAnalytics()" [disabled]='choosenDatasetForAnalytics == undefined'><i
+            class="fas fa-user-plus"></i> Analytics object detection</button>
             <!-- [routerLink]="['/annotations/multiple/', choosenDataset, 0]" -->
         </div>
     </div>
@@ -312,6 +313,37 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
+            <h5>Annotated Datasets List</h5>
+        </div>
+        <div class="card-body" style="min-height: 250px;">
+            <i class="fas fa-sync-alt" style="float:right;" (click)="annRefresh()"></i>
+            <br>
+            <div class="d-flex justify-content-center" *ngIf="annSpin">
+                <div class="spinner-border spin" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <ul style="list-style-type:none;" id="anndatasets">
+                <li class="align-items-center" *ngFor="let data of annDatasetsNames; index as i">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio anndatasets">
+                            <input name="customRadio" class="custom-control-input" id="anncust{{i}}" type="radio" [value]="data.open" (change)="AnnDSetchange(i);">
+                            <label class="custom-control-label" for="anncust{{i}}"><i class="fas fa-folder"
+                  *ngIf='data.open == false'></i><i class="fas fa-folder-open"
+                  *ngIf='data.open == true'></i>&nbsp;{{data.name}}
+                   <span class="delete" (click) = "deleteAnnDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div class="card-columns">
+    <div class="card bg-primary border-primary mb-3">
+        <div class="card-header" align='center'>
             <h5>Classification for Retrain</h5>
         </div>
         <!-- <div class="card-body"> -->
@@ -336,7 +368,6 @@
         </div>
 
     </div>
-
 </div>
 
 

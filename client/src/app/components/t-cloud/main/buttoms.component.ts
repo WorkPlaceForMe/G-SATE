@@ -39,7 +39,8 @@ export class ButtomsComponent implements OnInit {
   fileName: string = ''
   imgFileName: string = ''
   uploadName: string
-  datasetsNames: any = []
+  unAnnDatasetsNames: any = []
+  annDatasetsNames: any = []
   classNames: any = []
   datasetName: string = null
   searchDatasetName: string = null
@@ -56,8 +57,11 @@ export class ButtomsComponent implements OnInit {
   public badImgFile = true
   public open = false
   spinner: boolean = false
-  spin: boolean = false
+  unAnnSpin: boolean = false
+  annSpin: boolean = false
   choosenDataset: string
+  choosenDatasetForVista: string
+  choosenDatasetForAnalytics: string
   choosenClass: string
   cameras: any = []
   camera: any
@@ -134,9 +138,9 @@ export class ButtomsComponent implements OnInit {
       }
     }
 
-    this.getDsets('data')
-    this.getDsets('class')
-
+    this.getUnAnnDsets('data')
+    this.getUnAnnDsets('class')
+    this.getAnnDsets('data')
     this.getLabels()
 
     this.facesservices.getCameras().subscribe(
@@ -162,17 +166,44 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  getDsets (thing: string) {
-    this.annotationsServ.getDatasets(thing).subscribe(
+  getUnAnnDsets (thing: string) {
+    this.annotationsServ.getUnAnnDatasets(thing).subscribe(
       res => {
         if (thing == 'data') {
-          this.datasetsNames = res
-          for (let i = 0; i < this.datasetsNames.length; i++) {
-            this.datasetsNames[i]['open'] = false;
-            this.datasetsNames[i]['name'] = this.datasetsNames[i]['name'];
+          this.unAnnDatasetsNames = res
+          for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
+            this.unAnnDatasetsNames[i]['open'] = false;
+            this.unAnnDatasetsNames[i]['name'] = this.unAnnDatasetsNames[i]['name'];
               //.split('_')
               //.join(' ')
-            this.datasetsNames[i]['id'] = this.datasetsNames[i]['id'];          
+            this.unAnnDatasetsNames[i]['id'] = this.unAnnDatasetsNames[i]['id'];          
+          }
+        } else if (thing == 'class') {
+          this.classNames = res
+          for (let i = 0; i < this.classNames.length; i++) {
+            this.classNames[i]['open'] = false
+            this.classNames[i]['name'] = this.classNames[i]['name']
+              .split('_')
+              .join(' ');
+            this.classNames[i]['id'] = this.classNames[i]['id'];
+          }
+        }
+      },
+      err => console.log(err)
+    )
+  }
+
+  getAnnDsets (thing: string) {
+    this.annotationsServ.getAnnDatasets(thing).subscribe(
+      res => {
+        if (thing == 'data') {
+          this.annDatasetsNames = res
+          for (let i = 0; i < this.annDatasetsNames.length; i++) {
+            this.annDatasetsNames[i]['open'] = false;
+            this.annDatasetsNames[i]['name'] = this.annDatasetsNames[i]['name'];
+              //.split('_')
+              //.join(' ')
+            this.annDatasetsNames[i]['id'] = this.annDatasetsNames[i]['id'];          
           }
         } else if (thing == 'class') {
           this.classNames = res
@@ -214,11 +245,11 @@ export class ButtomsComponent implements OnInit {
     this.showMyMessage = true
   }
 
-  annotate () {
+  annotateByVista () {
     let res1 = {
       id: 1,
       image:
-        'https://ec2-54-210-219-113.compute-1.amazonaws.com/media/perumal/NiceKitchen_RBE1hUp.png',
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/NiceKitchen_RBE1hUp.png',
       width: 719,
       height: 487,
       results: {
@@ -295,7 +326,7 @@ export class ButtomsComponent implements OnInit {
     let res2 = {
       id: 2,
       image:
-        'https://ec2-54-210-219-113.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg',
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg',
       width: 3104,
       height: 1746,
       results: {
@@ -348,7 +379,7 @@ export class ButtomsComponent implements OnInit {
     let res3 = {
       id: 3,
       image:
-        'https://ec2-54-210-219-113.compute-1.amazonaws.com/media/perumal/face_HNN5bcw.jpg',
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/face_HNN5bcw.jpg',
       width: 1024,
       height: 575,
       results: {
@@ -369,7 +400,7 @@ export class ButtomsComponent implements OnInit {
     }
     /* let res4 = {
           "id": 1,
-          "image": "https://ec2-54-210-219-113.compute-1.amazonaws.com/media/perumal/NiceKitchen_iCVg45n.png",
+          "image": "https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/NiceKitchen_iCVg45n.png",
           "image": "https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/NiceKitchen.png",
           "results": {
             "Object": [
@@ -553,7 +584,7 @@ export class ButtomsComponent implements OnInit {
         }
         let res5 = {
           "id": 2,
-          "image": "https://ec2-54-210-219-113.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg",
+          "image": "https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg",
           "image": "https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/cup_MNUNepE.jpg",
           "results": {
             "Object": [
@@ -602,22 +633,18 @@ export class ButtomsComponent implements OnInit {
             "fashion": []
         }
         } */
-    this.response.push(res1)
+    /* this.response.push(res1)
     this.response.push(res2)
-    this.response.push(res3)
+    this.response.push(res3) */
     this.router.navigate([
-      '/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/0'
+      '/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/vista'
     ])
-    //this.response.push(res4);
-    //this.response.push(res5);
-    //this.router.navigate(['/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/0'], { state: { data: this.response } });
-    /* let data = {
-          name: this.choosenDataset
-        }
-        this.annotationsServ.processDataset(data).subscribe(res => {
-          this.response = res;
-          this.router.navigate(['/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/0'], { state: { data: this.response } });
-        }) */
+  }
+
+  annotateByAnalytics () {
+    this.router.navigate([
+      '/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/analytics'
+    ])
   }
 
   @ViewChild('zip', { static: true }) myInputVariable: ElementRef
@@ -632,7 +659,7 @@ export class ButtomsComponent implements OnInit {
     this.myInputVariable.nativeElement.value = null
     this.fileName = ''
     setTimeout(() => {
-      this.getDsets('data')
+      this.unAnnDatasetsNames('data')
     }, 2000)
     this.showMyMessage4 = false
     this.showMyMessage3 = true
@@ -665,13 +692,22 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  refresh () {
-    this.datasetsNames = []
-    this.spin = true
+  unAnnRefresh () {
+    this.unAnnDatasetsNames = []
+    this.unAnnSpin = true
     setTimeout(() => {
-      this.getDsets('data')
-      this.spin = false
-    }, 500)
+      this.getUnAnnDsets('data')
+      this.unAnnSpin = false
+    }, 100)
+  }
+
+  annRefresh () {
+    this.annDatasetsNames = []
+    this.annSpin = true
+    setTimeout(() => {
+      this.getAnnDsets('data')
+      this.annSpin = false
+    }, 100)
   }
 
   detect () {
@@ -761,7 +797,7 @@ export class ButtomsComponent implements OnInit {
       this.searchDatasetName = null
       this.searchKeyword = null
       this.images = []
-      this.getDsets('data')
+      this.getUnAnnDsets('data')
     })
   }
 
@@ -771,7 +807,7 @@ export class ButtomsComponent implements OnInit {
   }
 
   info () {
-    console.log(this.datasetsNames)
+    console.log(this.unAnnDatasetsNames)
   }
 
   showInfo (event) {
@@ -783,13 +819,28 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  change (e) {
-    for (let i = 0; i < this.datasetsNames.length; i++) {
+  UnAnnDSetchange (e) {
+    for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
       if (e == i) {
-        this.datasetsNames[i]['open'] = true
-        this.choosenDataset = this.datasetsNames[i]['name']
+        this.unAnnDatasetsNames[i]['open'] = true
+        this.choosenDatasetForAnalytics = undefined
+        this.choosenDataset = this.unAnnDatasetsNames[i]['name']
+        this.choosenDatasetForVista = this.unAnnDatasetsNames[i]['name']
       } else {
-        this.datasetsNames[i]['open'] = false
+        this.unAnnDatasetsNames[i]['open'] = false
+      }
+    }
+  }
+
+  AnnDSetchange (e) {
+    for (let i = 0; i < this.annDatasetsNames.length; i++) {
+      if (e == i) {
+        this.annDatasetsNames[i]['open'] = true
+        this.choosenDatasetForVista = undefined
+        this.choosenDataset = this.annDatasetsNames[i]['name']
+        this.choosenDatasetForAnalytics = this.annDatasetsNames[i]['name']
+      } else {
+        this.annDatasetsNames[i]['open'] = false
       }
     }
   }
@@ -808,12 +859,24 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  deleteDataset(dataset:any) {
+  deleteUnAnnDataset(dataset:any) {
     if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
       this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
         res => {
           console.log(res);
-          this.refresh();
+          this.unAnnRefresh();
+        },
+        err => console.error(err)
+      )
+    }
+  }
+
+  deleteAnnDataset(dataset:any) {
+    if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
+      this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
+        res => {
+          console.log(res);
+          this.annRefresh();
         },
         err => console.error(err)
       )

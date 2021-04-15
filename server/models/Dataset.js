@@ -2,8 +2,12 @@ var db = require('../dbconnection'); //reference of dbconnection.js
 
 var Datasets = {
 
-    list: function(which, callback) {
-        return db.query(`SELECT * FROM datasets where processed="Yes" and class='${which}' ORDER BY name asc`, callback);
+    UnAnnotatedList: function(which, callback) {
+        return db.query(`SELECT * FROM datasets where processed="Yes" and type= 'zip' and class='${which}' ORDER BY name asc`, callback);
+    },
+
+    annotatedList: function(which, callback) {
+        return db.query(`SELECT * FROM datasets where processed="Yes" and type= 'video' and class='${which}' ORDER BY name asc`, callback);
     },
 
     listOne: function(name, callback) {
