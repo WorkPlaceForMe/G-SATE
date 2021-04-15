@@ -865,6 +865,7 @@ export class ButtomsComponent implements OnInit {
         res => {
           console.log(res);
           this.unAnnRefresh();
+          this.choosenDatasetForVista = undefined;
         },
         err => console.error(err)
       )
@@ -877,6 +878,7 @@ export class ButtomsComponent implements OnInit {
         res => {
           console.log(res);
           this.annRefresh();
+          this.choosenDatasetForAnalytics = undefined;
         },
         err => console.error(err)
       )
