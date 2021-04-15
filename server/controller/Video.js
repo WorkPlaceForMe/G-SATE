@@ -51,7 +51,7 @@ let Video = {
                         id: cam_id,
                         name: req.file.originalname.split('.')[0],
                         rtsp_in: `${process.env.resources2}stored_videos/${req.file.originalname}`,
-                        rtsp_out: `/assets/stored_videos/${req.file.originalname}`,
+                        rtsp_out: `/assets/shared-data/stored_videos/${req.file.originalname}`,
                         heatmap_pic: '',
                         pic_height: null,
                         pic_width: null,
