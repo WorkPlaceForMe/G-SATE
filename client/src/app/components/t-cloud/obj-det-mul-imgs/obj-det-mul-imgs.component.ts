@@ -159,6 +159,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   annWidth: number;
   annHeight: number;
   objDet: boolean = false;
+  generalDetSpin: boolean = false;
   spin: boolean = false;
   card: any = {
     width: 0,
@@ -236,14 +237,173 @@ export class ObjDetMulImgsComponent implements OnInit {
   processDataset() {
     this.spin = true;
     let data = {
-      name: this.activatedRoute.snapshot.params.folder
+      name: this.activatedRoute.snapshot.params.folder,
+      method: this.activatedRoute.snapshot.params.image
     }
+    let res1 = {
+      id: 1,
+      image:
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/NiceKitchen_RBE1hUp.png',
+      width: 719,
+      height: 487,
+      results: {
+        Object: [
+          {
+            confidence: 0.999895,
+            class: 'person',
+            boundingBox: {
+              top: 186,
+              left: 375,
+              width: 94,
+              height: 144
+            },
+            objectId: '0'
+          },
+          {
+            confidence: 0.99876,
+            class: 'microwave',
+            boundingBox: {
+              top: 151,
+              left: 210,
+              width: 112,
+              height: 54
+            },
+            objectId: '1'
+          },
+          {
+            confidence: 0.995244,
+            class: 'chair',
+            boundingBox: {
+              top: 304,
+              left: 68,
+              width: 97,
+              height: 168
+            },
+            objectId: '2'
+          },
+          {
+            confidence: 0.994914,
+            class: 'refrigerator',
+            boundingBox: {
+              top: 173,
+              left: 470,
+              width: 131,
+              height: 267
+            },
+            objectId: '3'
+          },
+          {
+            confidence: 0.99339,
+            class: 'bowl',
+            boundingBox: {
+              top: 317,
+              left: 419,
+              width: 61,
+              height: 34
+            },
+            objectId: '4'
+          },
+          {
+            confidence: 0.985508,
+            class: 'oven',
+            boundingBox: {
+              top: 256,
+              left: 196,
+              width: 128,
+              height: 107
+            },
+            objectId: '5'
+          }
+        ]
+      }
+    }
+    let res2 = {
+      id: 2,
+      image:
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg',
+      width: 3104,
+      height: 1746,
+      results: {
+        Object: [
+          {
+            confidence: 0.998644,
+            class: 'cup',
+            boundingBox: {
+              top: 650,
+              left: 379,
+              width: 967,
+              height: 729
+            },
+            objectId: '0'
+          }
+        ],
+        themes: {
+          deep_themes: {
+            themes: [
+              {
+                confidence: 0.8699,
+                label: 'indoor-bathroom'
+              }
+            ]
+          }
+        },
+        food: {},
+        tags: {
+          deep_lostFound: {
+            tags1: [
+              {
+                confidence: 0.9984,
+                label: 'electronics-Ipod'
+              }
+            ]
+          },
+          deep_tags: {
+            tags2: [
+              {
+                confidence: 0.4261,
+                label: 'WHISKEY JUG'
+              }
+            ]
+          }
+        },
+        face: {},
+        fashion: []
+      }
+    }
+    let res3 = {
+      id: 3,
+      image:
+        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/face_HNN5bcw.jpg',
+      width: 1024,
+      height: 575,
+      results: {
+        Object: [
+          {
+            confidence: 0.991882,
+            class: 'person',
+            boundingBox: {
+              top: 3,
+              left: 246,
+              width: 546,
+              height: 567
+            },
+            objectId: '0'
+          }
+        ]
+      }
+    }
+    /* this.data.push(res1)
+    this.data.push(res2)
+    this.data.push(res3)
+    this.spin = false;
+    this.datasetFlag = true;
+    this.setPage(1); */
     this.annotationsServ.processDataset(data).subscribe(res => {
       this.data = res;
       this.spin = false;
       this.datasetFlag = true;
       this.setPage(1);
-    })
+    });
   }
 
   setPage(page: number) {
@@ -656,6 +816,8 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   generalDetection(i) {
+    this.generalDetSpin = true;
+    this.labelsMessage = false;
     let body = {
       details: this.data[i],
       img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image
@@ -678,7 +840,9 @@ export class ObjDetMulImgsComponent implements OnInit {
           this.annotations.push(element);
           this.annObj[this.data[i].id].results = this.annotations;
         }
-      })
+      });
+      this.labelsMessage = true;
+      this.generalDetSpin = false;
       this.re_draw();
     });
   }
