@@ -253,16 +253,22 @@ app.post('/api/general/object/detection', function(req, res) {
     let details = data.details;
     let singleImage = data.singleImage;
     console.log('details >>>>>>>>>>>>>>>>>>>>>>', image);
-    let xx = image.split('/')[5];
-    let yy = xx.split('.')[1];
-    let zz;
-    if(singleImage) {
-        zz = xx.split('-');
+    let xx, yy, zz;
+    if(data.type === 'analytics') {
+        xx = image.split('/')[7];
+        image = process.env.vista_server_ip + image;
+        console.log('image >>>>>>>>>>>>>> ', image);
     } else {
-        zz = xx.split('_');
+        xx = image.split('/')[5];
+        //yy = xx.split('.')[1];
+        /* if(singleImage) {
+            zz = xx.split('-');
+        } else {
+            zz = xx.split('_');
+        } */
     }
-    zz.splice(zz.length-1, 1);
-    let imgName = zz.join('_') + '.' + yy;
+    //zz.splice(zz.length-1, 1);
+    let imgName = xx; //zz.join('_') + '.' + yy;
     let dir = './objdet/darknet/data/' + imgName;
     console.log('dir>>>>>>>>', dir);
     saveImg(image, dir, function(err, data) {
@@ -330,6 +336,9 @@ app.post('/api/general/object/detection', function(req, res) {
                         }   
                     }
                 });
+                if(fs.existsSync(dir)) {
+                    fs.unlinkSync(dir);
+                }
                 res.json(result);
             }
         });
