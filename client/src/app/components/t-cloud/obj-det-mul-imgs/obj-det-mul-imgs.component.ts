@@ -426,8 +426,8 @@ export class ObjDetMulImgsComponent implements OnInit {
     console.log('pager 434 : ', this.pager);
     if(page > 1) {
       console.log('page : 425', page);
-      console.log('in page 426 : ', this.pager.startIndex + 1);
-      this.setContext(this.pager.startIndex + 1);
+      console.log('in page 426 : ', this.pager.startIndex);
+      this.setContext(this.pager.startIndex);
     } else {
       console.log('page : 428', page);
       this.setContext(0);
