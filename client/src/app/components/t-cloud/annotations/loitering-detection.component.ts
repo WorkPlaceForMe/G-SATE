@@ -34,6 +34,7 @@ export class LoiteringDetectionComponent implements OnInit {
   showMyMessage: boolean = false;
   clearAct: boolean = false;
   flag: boolean = false;
+  spinflag: boolean = false;
   valueImage: number;
   fakeValueImage: number;
   picture: string;
@@ -460,6 +461,7 @@ export class LoiteringDetectionComponent implements OnInit {
 
   generalDetection() {
     this.flag = true;
+    this.spinflag = true;
     let body = {
       details: this.data,
       img: baseURL + this.data.image,
@@ -472,7 +474,8 @@ export class LoiteringDetectionComponent implements OnInit {
       res.forEach(element => {
         this.annotations.push(element);
         ++this.annCount;
-        this.flag = true;
+        this.flag = false;
+        this.spinflag = false;
       });
       this.re_draw();
     });

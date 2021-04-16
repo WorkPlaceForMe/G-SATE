@@ -817,7 +817,6 @@ export class ObjDetMulImgsComponent implements OnInit {
 
   generalDetection(i) {
     this.generalDetSpin = true;
-    this.labelsMessage = false;
     let body = {
       details: this.data[i],
       img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image
@@ -841,7 +840,6 @@ export class ObjDetMulImgsComponent implements OnInit {
           this.annObj[this.data[i].id].results = this.annotations;
         }
       });
-      this.labelsMessage = true;
       this.generalDetSpin = false;
       this.re_draw();
     });

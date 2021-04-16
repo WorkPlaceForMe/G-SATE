@@ -30,7 +30,6 @@
                     <label class="checkbox-container">&nbsp;
                       <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked"
                       (change)="handleSelected(item, item.checked)" [checked]="item.checked">
-                      <!-- (change)="handleSelected(img, img.checked)" [checked]="img.checked" -->
                       <span class="checkmark"></span>
                     </label>
 
@@ -92,12 +91,21 @@
       </ul>
       <div class="card-body" *ngIf="labelsMessage">
         <p>Click the object labels button to check the detected objects</p>
+      </div>
+      <div class="card-footer">
         <div class="d-flex justify-content-center" *ngIf="generalDetSpin">
+          <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="card-footer" *ngIf="generalDetSpin">
+        <div class="d-flex justify-content-center">
           <div class="spinner-border spin" role="status">
               <span class="sr-only">Loading...</span>
           </div>
-      </div>
-      </div>
+        </div>
+      </div> -->
     </div>
 
     <div class="card border-info panel" style='margin-top:2px;'>

@@ -8,6 +8,7 @@ const sizeOf = require('image-size');
 const unzipper = require("unzipper");
 const ffmpeg = require('fluent-ffmpeg');
 const Camera = require('../models/Camera');
+const del = require('del');
 const Datasets = require('../models/Dataset');
 const child_process = require('child_process');
 const Relations = require('../models/Relations');
@@ -217,7 +218,23 @@ let Dataset = {
             console.log('child process exited with code: ' + code);
             res.json(`${req.body.name} dataset cretaed successfully!`);
         });
-    }
+    },
+    deleteDataset: async(req, res) => {
+        console.log(req.body);
+        let data = req.params;
+        let directory = process.env.resources2 + 'datasets/' + data.name;
+        console.log(directory);
+        //fs.rmdirSync(directory, { recursive: true });
+        await del(directory, {force: true});
+        Datasets.delete(data.snippet_id, function(err, count) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(count);
+            }
+        });
+
+    },
 }
 
 let getImgSize = (url) => {
@@ -340,8 +357,8 @@ let processByAnalytics = (name) => {
                                                     boundingBox: {
                                                         left: element.x1,
                                                         top: element.y1,
-                                                        width: element.x2,
-                                                        height: element.y2
+                                                        width: element.x2 - element.x1,
+                                                        height: element.y2 - element.y1
                                                     }
                                                 }]
                                             }
