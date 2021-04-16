@@ -94,8 +94,9 @@ export class ButtomsComponent implements OnInit {
       status: any,
       headers: any
     ) => {
+      console.log('Uploaded:', status, response, headers);
       this.uploadImage = false;
-      console.log('Uploaded:', status, response, headers)
+      this.getUnAnnDsets('data');
     }
     this.uploader.onProgressItem = (progress: any) => {
       console.log(progress['progress'])
@@ -400,241 +401,6 @@ export class ButtomsComponent implements OnInit {
         ]
       }
     }
-    /* let res4 = {
-          "id": 1,
-          "image": "https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/NiceKitchen_iCVg45n.png",
-          "image": "https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/NiceKitchen.png",
-          "results": {
-            "Object": [
-                {
-                    "confidence": 0.999895,
-                    "class": "person",
-                    "boundingBox": {
-                        "top": 186,
-                        "left": 375,
-                        "width": 94,
-                        "height": 144
-                    },
-                    "objectId": "0"
-                },
-                {
-                    "confidence": 0.99876,
-                    "class": "microwave",
-                    "boundingBox": {
-                        "top": 151,
-                        "left": 210,
-                        "width": 112,
-                        "height": 54
-                    },
-                    "objectId": "1"
-                },
-                {
-                    "confidence": 0.995244,
-                    "class": "chair",
-                    "boundingBox": {
-                        "top": 304,
-                        "left": 68,
-                        "width": 97,
-                        "height": 168
-                    },
-                    "objectId": "2"
-                },
-                {
-                    "confidence": 0.994914,
-                    "class": "refrigerator",
-                    "boundingBox": {
-                        "top": 173,
-                        "left": 470,
-                        "width": 131,
-                        "height": 267
-                    },
-                    "objectId": "3"
-                },
-                {
-                    "confidence": 0.99339,
-                    "class": "bowl",
-                    "boundingBox": {
-                        "top": 317,
-                        "left": 419,
-                        "width": 61,
-                        "height": 34
-                    },
-                    "objectId": "4"
-                },
-                {
-                    "confidence": 0.985508,
-                    "class": "oven",
-                    "boundingBox": {
-                        "top": 256,
-                        "left": 196,
-                        "width": 128,
-                        "height": 107
-                    },
-                    "objectId": "5"
-                }
-            ],
-            "themes": {
-                "deep_themes": {
-                    "themes": [
-                        {
-                            "confidence": 0.3101,
-                            "label": "indoor-kitchen"
-                        }
-                    ]
-                }
-            },
-            "food": {},
-            "tags": {
-                "deep_lostFound": {
-                    "tags1": [
-                        {
-                            "confidence": 0.388,
-                            "label": "electronics-Laptop"
-                        }
-                    ]
-                },
-                "deep_tags": {
-                    "tags2": [
-                        {
-                            "confidence": 0.3963,
-                            "label": "WARDROBE"
-                        }
-                    ]
-                }
-            },
-            "face": {},
-            "fashion": [
-                {
-                    "confidence": 0.999895,
-                    "class": "person",
-                    "boundingBox": {
-                        "top": 186,
-                        "left": 375,
-                        "width": 94,
-                        "height": 144
-                    },
-                    "objectId": "0",
-                    "deep_fashion_color": {
-                        "color": [
-                            {
-                                "confidence": 0.9782,
-                                "label": "blue"
-                            }
-                        ]
-                    },
-                    "deep_fashion_pattern": {
-                        "pattern": [
-                            {
-                                "confidence": 0.689,
-                                "label": "embellished"
-                            }
-                        ]
-                    },
-                    "deep_fashion_tf": {
-                        "neck_design": [
-                            {
-                                "confidence": 0.9864,
-                                "label": "Invisible"
-                            }
-                        ],
-                        "coat_length": [
-                            {
-                                "confidence": 0.7457,
-                                "label": "Long"
-                            }
-                        ],
-                        "sleeve_length": [
-                            {
-                                "confidence": 0.4187,
-                                "label": "LongSleeves"
-                            }
-                        ],
-                        "neckline_design": [
-                            {
-                                "confidence": 0.9994,
-                                "label": "Invisible"
-                            }
-                        ],
-                        "collar_design": [
-                            {
-                                "confidence": 0.999,
-                                "label": "Invisible"
-                            }
-                        ],
-                        "pant_length": [
-                            {
-                                "confidence": 0.6154,
-                                "label": "Invisible"
-                            }
-                        ],
-                        "skirt_length": [
-                            {
-                                "confidence": 0.539,
-                                "label": "Floor"
-                            }
-                        ],
-                        "lapel_design": [
-                            {
-                                "confidence": 0.9923,
-                                "label": "Invisible"
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-        }
-        let res5 = {
-          "id": 2,
-          "image": "https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg",
-          "image": "https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/cup_MNUNepE.jpg",
-          "results": {
-            "Object": [
-                {
-                    "confidence": 0.998644,
-                    "class": "cup",
-                    "boundingBox": {
-                        "top": 650,
-                        "left": 379,
-                        "width": 967,
-                        "height": 729
-                    },
-                    "objectId": "0"
-                }
-            ],
-            "themes": {
-                "deep_themes": {
-                    "themes": [
-                        {
-                            "confidence": 0.8699,
-                            "label": "indoor-bathroom"
-                        }
-                    ]
-                }
-            },
-            "food": {},
-            "tags": {
-                "deep_lostFound": {
-                    "tags1": [
-                        {
-                            "confidence": 0.9984,
-                            "label": "electronics-Ipod"
-                        }
-                    ]
-                },
-                "deep_tags": {
-                    "tags2": [
-                        {
-                            "confidence": 0.4261,
-                            "label": "WHISKEY JUG"
-                        }
-                    ]
-                }
-            },
-            "face": {},
-            "fashion": []
-        }
-        } */
     /* this.response.push(res1)
     this.response.push(res2)
     this.response.push(res3) */
@@ -864,7 +630,7 @@ export class ButtomsComponent implements OnInit {
 
   deleteUnAnnDataset(dataset:any) {
     if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
-      this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
+      this.annotationsServ.deleteDataset(dataset.snippet_id, dataset.name).subscribe(
         res => {
           console.log(res);
           this.unAnnRefresh();
@@ -877,7 +643,7 @@ export class ButtomsComponent implements OnInit {
 
   deleteAnnDataset(dataset:any) {
     if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
-      this.annotationsServ.deleteDataset(dataset.cam_id).subscribe(
+      this.annotationsServ.deleteDataset(dataset.snippet_id, dataset.name).subscribe(
         res => {
           console.log(res);
           this.annRefresh();

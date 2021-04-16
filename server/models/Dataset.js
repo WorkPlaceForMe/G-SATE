@@ -19,7 +19,7 @@ var Datasets = {
     },
 
     delete: function(id, callback) {
-        return db.query('DELETE FROM datasets WHERE cam_id = ?', [id], callback);
+        return db.query('DELETE FROM datasets WHERE snippet_id = ?', [id], callback);
     }
 
 
