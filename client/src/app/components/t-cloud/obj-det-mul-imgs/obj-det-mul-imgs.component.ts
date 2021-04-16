@@ -835,8 +835,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   generalDetection(i) {
     this.generalDetSpin = true;
     let body = {
+      type: 'analytics',
       details: this.data[i],
-      img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image
+      img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image,
     };
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
