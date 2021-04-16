@@ -33,6 +33,7 @@ export class LoiteringDetectionComponent implements OnInit {
   multiple: boolean = true;
   showMyMessage: boolean = false;
   clearAct: boolean = false;
+  flag: boolean = false;
   valueImage: number;
   fakeValueImage: number;
   picture: string;
@@ -458,6 +459,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   generalDetection() {
+    this.flag = true;
     let body = {
       details: this.data,
       img: baseURL + this.data.image,
@@ -470,6 +472,7 @@ export class LoiteringDetectionComponent implements OnInit {
       res.forEach(element => {
         this.annotations.push(element);
         ++this.annCount;
+        this.flag = true;
       });
       this.re_draw();
     });

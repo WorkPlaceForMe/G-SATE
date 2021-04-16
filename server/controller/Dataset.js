@@ -18,23 +18,24 @@ let Dataset = {
     process: (req, res, next) => {
         let body = req.body;
         let dName = body.name;
-        Datasets.listOne(dName, function(err, rows) {
-            if (err) return callback(err);
-            if (rows.length === 0) {
-                return res.json('Dataset Does Not Exists');
-            }
-            if (rows[0].type === 'zip') {
-                processByVista(dName).then(resp => {
-                    return res.json(resp);
-                });
-            } else {
-                processByAnalytics(dName).then(resp => {
-                    return res.json(resp);
-                }).catch(err => {
-                    console.log('error in catch>>>>>>>>>>>>>>>', err);
-                });
-            }
-        });
+        let method = body.method;
+        //Datasets.listOne(dName, function (err, rows) {
+        /* if (err) return callback(err);
+        if (rows.length === 0) {
+            return res.json('Dataset Does Not Exists');
+        } */
+        if (method === 'vista') {
+            processByVista(dName).then(resp => {
+                return res.json(resp);
+            });
+        } else {
+            processByAnalytics(dName).then(resp => {
+                return res.json(resp);
+            }).catch(err => {
+                console.log('error in catch>>>>>>>>>>>>>>>', err);
+            });
+        }
+        //});
     },
     createDataset: async(req, res) => {
         const body = req.body;
@@ -110,55 +111,25 @@ let Dataset = {
                             if (err) console.log('err>>>>>>>>>>>>>>>>', err);
                         });
                     };
-                });
-                res.status(200).json('Dataset created successfully!');
-            });
-            /* ffmpeg(body.stream)
-                .format('mp4')
-                .seekInput('00:00:00')
-                .duration(`${body.t}`)
-                .saveToFile(directory)
-                .on('end', function (stdout, stderr) {
                     let data = {
                         cam_id: cam_id,
                         clientId: uuidv4(),
                         name: datasetName,
-                        path: directory,
-                        processed: 'No',
+                        path: datasetDir,
+                        processed: 'Yes',
                         class: 'data',
-                        type: 'video',
+                        type: 'zip',
                         uploaded: 'Yes',
-                        snippet_id: snippetId
+                        snippet_id: uuidv4()
                     };
-                    Datasets.add(data, function (err, row) {
+                    Datasets.add(data, function(err, row) {
                         if (err) return res.status(500).json(err);
-                        Relations.getRels(cam_id, function (err, result) {
-                            if (err) return res.status(500).json(err);
-                            for (const itm of result) {
-                                let d = {
-                                    id: uuidv4(),
-                                    camera_id: cam_id,
-                                    algo_id: itm.algo_id,
-                                    roi_id: null,
-                                    atributes: `{"fps": ${body.fps}}`,
-                                    id_account: accId,
-                                    id_branch: accId,
-                                    createdAt: new Date(),
-                                    updatedAt: new Date(),
-                                    snippet_id: snippetId
-                                }
-                                Relations.create(d, function (err, r) {
-                                    if (err) console.log('err>>>>>>>>>>>>>>>>', err);
-                                });
-                            };
-                        });
                         res.status(200).json('Dataset created successfully!');
                     });
-                }); */
+                });
+            });
         } catch (e) {
             console.log('error>>>>>>>>>>', e);
-            //console.log(e.code);
-            //console.log(e.msg);
         }
     },
     unzipDataset: (req, res) => {
@@ -351,57 +322,57 @@ let processByAnalytics = (name) => {
     let count = 0;
     return new Promise(async(resolve, reject) => {
         try {
-            await processByVista(name).then(data => {
-                result = data;
-                count = data.length;
-                Datasets.listOne(name, function(err, dataset) {
+            //await processByVista(name).then(data => {
+            //result = data;
+            //count = data.length;
+            Datasets.listOne(name, function(err, dataset) {
+                if (err) reject(err);
+
+                if (dataset.length === 0) resolve('Dataset does not exists.');
+                Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function(err, rows) {
                     if (err) reject(err);
 
-                    if (dataset.length === 0) resolve('Dataset does not exists.');
-                    Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function(err, rows) {
-                        if (err) reject(err);
-
-                        if (rows.length > 0) {
-                            for (const itm of rows) {
-                                let data = {
-                                        table: table[itm.algo_id],
-                                        snippet_id: itm.snippet_id
-                                    }
-                                    ++index;
-                                await Algorithms.fetchAlgoData(data).then(resp => {
-                                    for (const element of resp) {
-                                        let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
-                                        let obj = {
-                                            id: count,
-                                            image: '/assets/' + element.image_path.split('/').splice(6,5).join('/'),
-                                            width: element.cam_width,
-                                            height: element.cam_height,
-                                            checked: true,
-                                            results: {
-                                                Object: [{
-                                                    class: cl,
-                                                    boundingBox: {
-                                                        left: element.x1,
-                                                        top: element.y1,
-                                                        width: element.x2,
-                                                        height: element.y2
-                                                    }
-                                                }]
-                                            }
-                                        };
-                                        ++count;
-                                        result.push(obj);
-                                    }
-                                });
-                            };
-                            //result = [].concat(...result);
-                            resolve(result);
-                        } else {
-                            resolve([]);
-                        }
-                    });
+                    if (rows.length > 0) {
+                        for (const itm of rows) {
+                            let data = {
+                                    table: table[itm.algo_id],
+                                    snippet_id: itm.snippet_id
+                                }
+                                ++index;
+                            await Algorithms.fetchAlgoData(data).then(resp => {
+                                for (const element of resp) {
+                                    let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
+                                    let obj = {
+                                        id: count,
+                                        image: '/assets/shared-data/' + element.image_path.split('/').splice(6, 5).join('/'),
+                                        width: element.cam_width,
+                                        height: element.cam_height,
+                                        checked: true,
+                                        results: {
+                                            Object: [{
+                                                class: cl,
+                                                boundingBox: {
+                                                    left: element.x1,
+                                                    top: element.y1,
+                                                    width: element.x2,
+                                                    height: element.y2
+                                                }
+                                            }]
+                                        }
+                                    };
+                                    ++count;
+                                    result.push(obj);
+                                }
+                            });
+                        };
+                        //result = [].concat(...result);
+                        resolve(result);
+                    } else {
+                        resolve([]);
+                    }
                 });
-            })
+            });
+            //})
         } catch (err) {
             reject(err);
         }

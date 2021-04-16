@@ -24,8 +24,12 @@ export class AnnotationsService {
     return this.http.get(`${this.API_URL}/getImages/${where}/${info}`);
   }
 
-  getDatasets(which:string){
-    return this.http.get(`${this.API_URL}/datasets/${which}`);
+  getUnAnnDatasets(which:string){
+    return this.http.get(`${this.API_URL}/datasets/unannotated/${which}`);
+  }
+
+  getAnnDatasets(which:string){
+    return this.http.get(`${this.API_URL}/datasets/annotated/${which}`);
   }
 
   getOperation(id: number) {

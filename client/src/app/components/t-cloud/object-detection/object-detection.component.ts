@@ -86,7 +86,7 @@ export class ObjectDetectionComponent implements OnInit {
   }
 
   getDsets(thing: string) {
-    this.annotationsServ.getDatasets(thing).subscribe(
+    this.annotationsServ.getUnAnnDatasets(thing).subscribe(
       res => {
         if (thing == 'data') {
           this.datasetsNames = res;

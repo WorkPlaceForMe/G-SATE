@@ -42,6 +42,7 @@ export class SpeedingVehicleComponent implements OnInit {
   datasetName: string;
   link: SafeResourceUrl;
   isPlaying: boolean = true;
+  picturesNumber: number;
 
   @ViewChild('streaming', { static: false }) streamingcanvas: ElementRef;
 
@@ -64,6 +65,10 @@ export class SpeedingVehicleComponent implements OnInit {
 
   ngOnDestroy() {
     this.destroy();
+  }
+
+  calculate(){
+    this.picturesNumber = ( ( parseInt(this.finish.split(":")[0]) * 3600 + parseInt(this.finish.split(":")[1]) * 60 + parseInt(this.finish.split(":")[2]) ) - ( parseInt(this.start.split(":")[0]) * 3600 + parseInt(this.start.split(":")[1]) * 60 + parseInt(this.start.split(":")[2]) ) ) * this.conf.fps
   }
 
   destroy() {
@@ -111,6 +116,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.availableTimeStart = this.generateTimeRange(this.start,this.finish);
       this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
       this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
+      this.calculate()
     } else {
       this.start = '00:00:00';
       this.finish = '24:00:00';
@@ -120,6 +126,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.finish = '00:00:00';
       this.liveFeed = true;
       this.rtsp_in = cam[0].rtsp_in;
+      this.calculate()
       let data = {
         camera_name: cam[0].name,
         rtsp_in: cam[0].rtsp_in,
@@ -142,6 +149,7 @@ export class SpeedingVehicleComponent implements OnInit {
     // time[0] = +time[0];
     // time[1] = +time[1];
     // time[2] = +time[2];
+    this.calculate()
     // Manual Input
     let hours;
     let mins;
@@ -258,13 +266,13 @@ export class SpeedingVehicleComponent implements OnInit {
       if (hours < 10) hours = '0' + hours;
       timeRange.push(`${hours}:${minutes}:${seconds}`);
     }
-    /* console.log(timeRange); */
     return timeRange;
   }
 
   refreshTime() {
-    this.availableTimeFinish = this.generateTimeRange(this.start, this.maxTime);
-    this.availableTimeStart = this.generateTimeRange('00:00:00', this.finish);
+    this.calculate()
+    this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
+    this.availableTimeStart = this.generateTimeRange('00:00:00',this.finish);
     this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
   }
 
