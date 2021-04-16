@@ -347,7 +347,7 @@ let processByAnalytics = (name) => {
                                         let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
                                         let obj = {
                                             id: count,
-                                            image: '/assets/shared-data/' + element.image_path.split('/').splice(6,5).join('/'),
+                                            image: '/assets/shared-data/' + element.image_path.split('/').splice(5,5).join('/'),
                                             width: element.cam_width,
                                             height: element.cam_height,
                                             checked: true,
