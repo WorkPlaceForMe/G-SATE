@@ -54,12 +54,16 @@
               <!-- [disabled]='showMyMessage2 == 'false' -->
               <label class="custom-file-label" for="inputGroupFile02">{{imgFileName == '' ? 'Choose a image to upload' :
                 imgFileName}}</label>
-            </div>
-            <button type="button" class="btn btn-success btn-s" (click)="checkImg()"
-              [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true">Upload
+                        </div>
+                        <button type="button" class="btn btn-success btn-s" (click)="checkImg()" [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true" *ngIf='!uploadImage'>Upload
               Image</button>
-          </div>
-          <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
+                    <button class='btn btn-success btn-s' disabled *ngIf='uploadImage'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                    <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
             <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
               style="width: 100%;"></div>
           </div>
