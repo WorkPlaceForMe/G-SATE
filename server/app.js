@@ -257,7 +257,6 @@ app.post('/api/general/object/detection', function(req, res) {
     if(data.type === 'analytics') {
         xx = image.split('/')[7];
         image = process.env.vista_server_ip + image;
-        console.log('image >>>>>>>>>>>>>> ', image);
     } else {
         xx = image.split('/')[5];
         //yy = xx.split('.')[1];

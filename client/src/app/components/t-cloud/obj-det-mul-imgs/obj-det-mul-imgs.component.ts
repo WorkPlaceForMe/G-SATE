@@ -835,7 +835,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   generalDetection(i) {
     this.generalDetSpin = true;
     let body = {
-      type: 'analytics',
+      type: this.activatedRoute.snapshot.params.image,
       details: this.data[i],
       img: (!this.annObj.hasOwnProperty(this.data[i].id)) ? this.data[i].image : this.annObj[this.data[i].id].image,
     };
