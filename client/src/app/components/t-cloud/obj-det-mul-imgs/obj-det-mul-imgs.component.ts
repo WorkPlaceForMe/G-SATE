@@ -193,7 +193,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   private ctx;
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit');
     this.polygon.forEach((c, index) => {
+      console.log('in foreach start ', this.data[index]);
       this.canvas = this.rd.selectRootElement(c["nativeElement"]);
       this.ctx = this.canvas.getContext("2d");
       let rect = this.canvas.getBoundingClientRect();
@@ -202,13 +204,16 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.data[index].width = rect.width;
       let resRelation = this.data[index].res_height / this.data[index].res_width;
       this.data[index].height = this.data[index].width*resRelation;
+      console.log('in foreach end ', this.data[index]);
     });
   }
 
   setContext (ind) {
+    console.log('setContext : ', ind);
     setTimeout(() => {
       this.polygon.forEach((c) => {
         let index = ind;
+        console.log('in setcontext foreach start ', this.data[index]);
         this.canvas = this.rd.selectRootElement(c["nativeElement"]);
         this.ctx = this.canvas.getContext("2d");
         let rect = this.canvas.getBoundingClientRect();
@@ -218,6 +223,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         let resRelation = this.data[index].res_height / this.data[index].res_width;
         this.data[index].height = this.data[index].width*resRelation;
         ++ind;
+        console.log('in setcontext foreach end ', this.data[index]);
     });
     }, 1000);
   }
@@ -411,17 +417,21 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.labels = [];
     this.labelsMessage = true;
     this.label = 'object';
+    console.log('page 420 : ', page);
     if (page < 1 || page > this.pager.totalPages) {
         return;
     }
     if(page > 1) {
+      console.log('page : 425', page);
+      console.log('in page 426 : ', this.pager.endIndex + 1);
       this.setContext(this.pager.endIndex + 1);
     } else {
+      console.log('page : 428', page);
       this.setContext(0);
     }
     // get pager object from service
     this.pager = this.pagerService.getPager(this.data.length, page);
-
+    console.log('pager 434 : ', this.pager);
     // get current page of items
     this.pagedItems = this.data.slice(this.pager.startIndex, this.pager.endIndex + 1);
     
@@ -433,14 +443,19 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   getAnn(i) {
+    console.log('getAnn 446 : ', i);
     if (this.annObj.hasOwnProperty(this.data[i].id)) {
       this.annotations = this.annObj[this.data[i].id].results;
       this.cacheAnnot = this.annotations;
+      console.log('get ann 450 : ', this.annotations);
     } else {
+      console.log('in else 452');
       this.annotations = [];
+      console.log('data[i] 454 ', this.data[i])
       for (let itm in this.data[i].results) {
         if (Array.isArray(this.data[i].results[itm])) {
           this.data[i].results[itm].forEach(element => {
+            console.log('element 458 : ', element);
             let obj1 = {
               x: element.boundingBox.left * this.data[i].width / this.data[i].res_width,
               y: element.boundingBox.top * this.data[i].height / this.data[i].res_height
@@ -464,12 +479,14 @@ export class ObjDetMulImgsComponent implements OnInit {
           })
         }
       }
+      console.log('annoatations 482 : ', this.annotations)
       this.annObj[this.data[i].id] = {
         image: this.data[i].image,
         width: this.data[i].res_width,
         height: this.data[i].res_height,
         results: this.annotations
       };
+      console.log('ann obj 489 : ', this.annObj)
       //this.annObj[this.data[i].id] = {image: this.data[i].image};
       //this.annObj[this.data[i].id] = {width: this.data[i].width};
       //this.annObj[this.data[i].id] = {height: this.data[i].height};
@@ -782,7 +799,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   re_draw() {
-    console.log('annotations >>>>>>>>>>>>>>', this.annotations);
+    console.log('annotations 802 >>>>>>>>>>>>>>', this.annotations);
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
