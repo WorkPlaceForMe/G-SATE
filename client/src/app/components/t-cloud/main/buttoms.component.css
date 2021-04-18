@@ -145,7 +145,7 @@ a {
     right: 0;
 }
 
-#datasets li:hover .delete {
+.datasets li:hover .delete {
     width: 36px;
     opacity: 1.0;
 }
