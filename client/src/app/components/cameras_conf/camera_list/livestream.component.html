@@ -44,7 +44,7 @@
         <!-- <td *ngIf='heatmap == true'><button [routerLink]="['/cameras/heatmap', camera.id]" class= "btn btn-info btn-block" [disabled]= 'camera.hm == undefined'>
           Heatmap
         </button></td> -->
-        <td><button class="btn btn-danger btn-block" (click)="deleteCamera(camera.id)">
+        <td><button class="btn btn-danger btn-block" (click)="deleteCamera(camera)">
         <i class="far fa-trash-alt"></i>
       </button></td>
     </tr>

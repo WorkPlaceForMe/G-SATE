@@ -21,8 +21,6 @@ export class SpeedingVehicleComponent implements OnInit {
     stream: '',
     datasetName: ''
   };
-  // ss: number;
-  // t: number;
   title: string;
   start: any;
   finish: any;

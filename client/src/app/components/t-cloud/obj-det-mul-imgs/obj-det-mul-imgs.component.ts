@@ -14,136 +14,6 @@ const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 })
 export class ObjDetMulImgsComponent implements OnInit {
 
-  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
-              private pagerService: PagerService) {
-
-    /* const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
-    this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
-    this.data = this.router.getCurrentNavigation().extras.state.data;
-    this.annotationsServ.getImages(string, 'data').subscribe(
-      res => {
-        this.images = res;
-        this.total = this.images[this.images.length - 1]['total'];
-        this.images.pop();
-        for (let i = 0; i < this.images.length; i++) {
-          if (this.images[i].name.includes('.jpg')) {
-            this.images[i].name = this.images[i].name.replace('.jpg', '');
-            this.images[i].format = '.jpg';
-          } else if (this.images[i].name.includes('.png')) {
-            this.images[i].name = this.images[i].name.replace('.png', '');
-            this.images[i].format = '.png';
-          } else if (this.images[i].name.includes('.jpeg')) {
-            this.images[i].name = this.images[i].name.replace('.jpeg', '');
-            this.images[i].format = '.jpeg';
-          } else if (this.images[i].name.includes('.JPG')) {
-            this.images[i].name = this.images[i].name.replace('.JPG', '');
-            this.images[i].format = '.JPG';
-          } if (this.images[i].name.includes('.PNG')) {
-            this.images[i].name = this.images[i].name.replace('.PNG', '');
-            this.images[i].format = '.PNG';
-          }
-        }
-        this.images.sort(function (a, b) { return a.name - b.name });
-        for (let i = 0; i < this.images.length; i++) {
-          this.images[i].name = this.images[i].name + this.images[i].format;
-        }
-        this.picture = string + '/' + this.images[this.valueImage].name; */
-        /* if (this.images[this.valueImage].width)
-        this.annWidth = 719;//1600;//this.images[this.valueImage].width;
-        this.annHeight = 487;//1080;//this.images[this.valueImage].height;
-        let rect = this.canvas.getBoundingClientRect();
-        let res_width = 719//this.camera.cam_width;
-        let res_height = 487//this.camera.cam_height;
-        let resRelation = res_height / res_width;
-        this.width = rect.width;
-        console.log(this.width, rect.width)
-        this.height = this.width*resRelation;
-        console.log(this.height, rect.height) */
-        /* if (window.innerWidth >= 1200) {
-          this.width = 835;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 1200 && window.innerWidth >= 992) {
-          this.width = 684;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 992 && window.innerWidth >= 768) {
-          this.width = 490;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 768 && window.innerWidth >= 576) {
-          this.width = 420;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 576) {
-          this.width = window.innerWidth - 140;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } */
-        //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-        //this.link = sanitizer.bypassSecurityTrustStyle("url(http://"+ ip +":6503/datasets/"+ this.picture +")");
-        //this.getAnn();
-        //this.setPage(1);
-      /* },
-      err => console.log(err)
-    ) */
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (window.innerWidth >= 1200) {
-      this.width = 835;
-      this.height = this.width * this.annHeight / this.annWidth;
-      if (this.height >= 480) {
-        this.height = 480;
-        this.width = this.height * this.annWidth / this.annHeight;
-      }
-    } else if (window.innerWidth < 1200 && window.innerWidth >= 992) {
-      this.width = 684;
-      this.height = this.width * this.annHeight / this.annWidth;
-      if (this.height >= 480) {
-        this.height = 480;
-        this.width = this.height * this.annWidth / this.annHeight;
-      }
-    } else if (window.innerWidth < 992 && window.innerWidth >= 768) {
-      this.width = 490;
-      this.height = this.width * this.annHeight / this.annWidth;
-      if (this.height >= 480) {
-        this.height = 480;
-        this.width = this.height * this.annWidth / this.annHeight;
-      }
-    } else if (window.innerWidth < 768 && window.innerWidth >= 576) {
-      this.width = 420;
-      this.height = this.width * this.annHeight / this.annWidth;
-      if (this.height >= 480) {
-        this.height = 480;
-        this.width = this.height * this.annWidth / this.annHeight;
-      }
-    } else if (window.innerWidth < 576) {
-      this.width = window.innerWidth - 140;
-      this.height = this.width * this.annHeight / this.annWidth;
-      if (this.height >= 480) {
-        this.height = 480;
-        this.width = this.height * this.annWidth / this.annHeight;
-      }
-    }
-  }
-
   pager: any = {};
 
   // paged items
@@ -191,6 +61,49 @@ export class ObjDetMulImgsComponent implements OnInit {
   @ViewChildren('polygon') polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
+  
+  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
+              private pagerService: PagerService) {}
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth >= 1200) {
+      this.width = 835;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 1200 && window.innerWidth >= 992) {
+      this.width = 684;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 992 && window.innerWidth >= 768) {
+      this.width = 490;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 768 && window.innerWidth >= 576) {
+      this.width = 420;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    } else if (window.innerWidth < 576) {
+      this.width = window.innerWidth - 140;
+      this.height = this.width * this.annHeight / this.annWidth;
+      if (this.height >= 480) {
+        this.height = 480;
+        this.width = this.height * this.annWidth / this.annHeight;
+      }
+    }
+  }
 
   ngAfterViewInit() {
     this.polygon.forEach((c, index) => {
@@ -240,164 +153,6 @@ export class ObjDetMulImgsComponent implements OnInit {
       name: this.activatedRoute.snapshot.params.folder,
       method: this.activatedRoute.snapshot.params.image
     }
-    let res1 = {
-      id: 1,
-      image:
-        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/NiceKitchen_RBE1hUp.png',
-      width: 719,
-      height: 487,
-      results: {
-        Object: [
-          {
-            confidence: 0.999895,
-            class: 'person',
-            boundingBox: {
-              top: 186,
-              left: 375,
-              width: 94,
-              height: 144
-            },
-            objectId: '0'
-          },
-          {
-            confidence: 0.99876,
-            class: 'microwave',
-            boundingBox: {
-              top: 151,
-              left: 210,
-              width: 112,
-              height: 54
-            },
-            objectId: '1'
-          },
-          {
-            confidence: 0.995244,
-            class: 'chair',
-            boundingBox: {
-              top: 304,
-              left: 68,
-              width: 97,
-              height: 168
-            },
-            objectId: '2'
-          },
-          {
-            confidence: 0.994914,
-            class: 'refrigerator',
-            boundingBox: {
-              top: 173,
-              left: 470,
-              width: 131,
-              height: 267
-            },
-            objectId: '3'
-          },
-          {
-            confidence: 0.99339,
-            class: 'bowl',
-            boundingBox: {
-              top: 317,
-              left: 419,
-              width: 61,
-              height: 34
-            },
-            objectId: '4'
-          },
-          {
-            confidence: 0.985508,
-            class: 'oven',
-            boundingBox: {
-              top: 256,
-              left: 196,
-              width: 128,
-              height: 107
-            },
-            objectId: '5'
-          }
-        ]
-      }
-    }
-    let res2 = {
-      id: 2,
-      image:
-        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/cup_t4At384.jpg',
-      width: 3104,
-      height: 1746,
-      results: {
-        Object: [
-          {
-            confidence: 0.998644,
-            class: 'cup',
-            boundingBox: {
-              top: 650,
-              left: 379,
-              width: 967,
-              height: 729
-            },
-            objectId: '0'
-          }
-        ],
-        themes: {
-          deep_themes: {
-            themes: [
-              {
-                confidence: 0.8699,
-                label: 'indoor-bathroom'
-              }
-            ]
-          }
-        },
-        food: {},
-        tags: {
-          deep_lostFound: {
-            tags1: [
-              {
-                confidence: 0.9984,
-                label: 'electronics-Ipod'
-              }
-            ]
-          },
-          deep_tags: {
-            tags2: [
-              {
-                confidence: 0.4261,
-                label: 'WHISKEY JUG'
-              }
-            ]
-          }
-        },
-        face: {},
-        fashion: []
-      }
-    }
-    let res3 = {
-      id: 3,
-      image:
-        'https://ec2-3-211-144-140.compute-1.amazonaws.com/media/perumal/face_HNN5bcw.jpg',
-      width: 1024,
-      height: 575,
-      results: {
-        Object: [
-          {
-            confidence: 0.991882,
-            class: 'person',
-            boundingBox: {
-              top: 3,
-              left: 246,
-              width: 546,
-              height: 567
-            },
-            objectId: '0'
-          }
-        ]
-      }
-    }
-    /* this.data.push(res1)
-    this.data.push(res2)
-    this.data.push(res3)
-    this.spin = false;
-    this.datasetFlag = true;
-    this.setPage(1); */
     this.annotationsServ.processDataset(data).subscribe(res => {
       this.data = res;
       this.spin = false;
@@ -471,10 +226,6 @@ export class ObjDetMulImgsComponent implements OnInit {
         results: this.annotations,
         fixedSize: this.annotations.length
       };
-      //this.annObj[this.data[i].id] = {image: this.data[i].image};
-      //this.annObj[this.data[i].id] = {width: this.data[i].width};
-      //this.annObj[this.data[i].id] = {height: this.data[i].height};
-      //this.annObj[this.data[i].id] = this.annotations;
       this.cacheAnnot = this.annotations;
     }
 
@@ -482,14 +233,6 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   getLabels(i) {
-    /* this.annotationsServ.readLabels().subscribe(
-      res=>{
-        this.labels = res;
-        this.labels = this.labels.split('\r\n')
-        this.labels.pop();
-      },
-      err => console.log(err)
-    ) */
     if (this.labelsObj.hasOwnProperty(this.data[i].id)) {
       this.labels = this.labelsObj[this.data[i].id];
       this.cacheAnnot = this.labels;
@@ -527,11 +270,6 @@ export class ObjDetMulImgsComponent implements OnInit {
       }
     }
     else {
-      //alert("ERROR!");
-      /* this.router.navigate(
-        ['/annotations/' + 'object' + '/' + 'image' + '/0'],
-        { state: { data: JSON.parse(response) } }
-      ) */
       this.router.navigate(['/annotations/dataset/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.activatedRoute.snapshot.params.image + '/details'], { state: { data: this.annObj } });
     }
   }
@@ -826,10 +564,8 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
     this.labelsMessage = false;
-    //this.getLabels();
     this.getAnn(i);
-    this.getLabels(i)
-    //this.re_draw();
+    this.getLabels(i);
   }
 
   generalDetection(i) {
@@ -873,14 +609,6 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   addLabel() {
-    /* this.annotationsServ.writeLabel(this.newLabel).subscribe(
-      res => {
-        console.log(res)
-        this.newLabel = null;
-        this.getLabels();
-      },
-      err => console.log(err)
-    ) */
     this.labels.push(this.newLabel);
     this.newLabel = null;
   }

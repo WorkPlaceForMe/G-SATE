@@ -80,8 +80,8 @@ return this.http.post(`${this.API_URI}/images`, image);
   getCamera(uuid: string){
     return this.http.get(`${this.API_URI}/cameras/${uuid}`);
   }
-  deleteCamera(id: string){
-    return this.http.delete(`${this.API_URI}/cameras/${id}`);
+  deleteCamera(id: string, data: any){
+    return this.http.post(`${this.API_URI}/cameras/${id}`,data);
   }
   saveCamera(camera: Camera){
     return this.http.post(`${this.API_URI}/cameras`, camera);

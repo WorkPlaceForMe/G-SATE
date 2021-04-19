@@ -41,15 +41,7 @@ router.post('/image/search/create', function(req, res, next) {
     DsetController.imageSeachDataset(req, res);
 })
 
-router.delete('/:name/:snippet_id', function(req, res, next) {
-    /* Datasets.delete(req.params.id, function(err, count) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(count);
-        }
-    }); */
-    // console.log(req.body);
+router.delete('/:name/:snippet_id/:type', function(req, res, next) {
     DsetController.deleteDataset(req, res);
 });
 
