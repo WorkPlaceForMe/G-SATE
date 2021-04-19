@@ -20,11 +20,6 @@ let Dataset = {
         let body = req.body;
         let dName = body.name;
         let method = body.method;
-        //Datasets.listOne(dName, function (err, rows) {
-            /* if (err) return callback(err);
-            if (rows.length === 0) {
-                return res.json('Dataset Does Not Exists');
-            } */
             if (method === 'vista') {
                 processByVista(dName).then(resp => {
                     return res.json(resp);
@@ -36,7 +31,6 @@ let Dataset = {
                     console.log('error in catch>>>>>>>>>>>>>>>', err);
                 });
             }
-        //});
     },
     createDataset: async (req, res) => {
         const body = req.body;
@@ -220,20 +214,29 @@ let Dataset = {
         });
     },
     deleteDataset: async(req, res) => {
-        console.log(req.body);
+        let directory;
         let data = req.params;
-        let directory = process.env.resources2 + 'datasets/' + data.name;
-        console.log(directory);
+        let snippetId = data.snippet_id;
+        if(data.type == 'video') {
+            directory = process.env.resources2 + 'recordings/' + data.name + '.mp4';
+        } else {
+            directory = process.env.resources2 + 'datasets/' + data.name;
+        }
         //fs.rmdirSync(directory, { recursive: true });
         await del(directory, {force: true});
-        Datasets.delete(data.snippet_id, function(err, count) {
+        Relations.delete(snippetId, function(err, rows) {
             if (err) {
-                res.json(err);
+                return res.json(err);
             } else {
-                res.json(count);
+                Datasets.delete(snippetId, function(err, count) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        res.json(count);
+                    }
+                });
             }
-        });
-
+        })
     },
 }
 

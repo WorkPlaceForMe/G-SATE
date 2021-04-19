@@ -109,9 +109,9 @@ export class LivestreamComponent implements OnInit, OnDestroy {
   }
 
 
-  deleteCamera(id: string) {
+  deleteCamera(cam: any) {
     if (confirm('Do you want to delete this camera?')) {
-      this.facesService.deleteCamera(id).subscribe(
+      this.facesService.deleteCamera(cam.id, cam).subscribe(
         res => {
           console.log(res);
           this.getCameras();
@@ -122,7 +122,7 @@ export class LivestreamComponent implements OnInit, OnDestroy {
         res => {
           this.relations = res;
           for (let e = 0; e < this.relations.length; e++) {
-            if (this.relations[e]['camera_id'] == id) {
+            if (this.relations[e]['camera_id'] == cam.id) {
               this.facesService.deleteRelation(this.relations[e]['id']).subscribe(
                 res => {
                   console.log(res);

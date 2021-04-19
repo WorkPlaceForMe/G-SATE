@@ -19,7 +19,7 @@ var Relations = {
     },
 
     delete: function (id, callback) {
-        return db.query('DELETE FROM relations WHERE id = ?', [id], callback);
+        return db.query('DELETE FROM relations WHERE snippet_id = ?', [id], callback);
     },
 
     update: function (id, relation, callback) {

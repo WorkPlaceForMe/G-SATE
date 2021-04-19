@@ -8,11 +8,6 @@
           Your browser does not support the HTML5 canvas tag.
         </canvas>
       </div>
-      <!-- <div class="card-footer" align='center'>
-        <button class="btn btn-outline-primary btn-sm" (click)="generalDetection()">
-          Detect Objects
-        </button>
-      </div> -->
     </div>
   </div>
 
@@ -52,7 +47,6 @@
   <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
   <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
   <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
-    <!-- <option value="undefined" disabled>Please choose a label</option> -->
     <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
   </select>
 </div>

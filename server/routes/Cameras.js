@@ -1,3 +1,4 @@
+const fs = require('fs');
 var express = require('express');
 var router = express.Router();
 var Camera = require('../models/Camera');
@@ -43,7 +44,10 @@ router.post('/', function (req, res, next) {
   });
 });
 
-router.delete('/:id', function (req, res, next) {
+router.post('/:id', function (req, res, next) {
+  if(req.body.stored_vid == 'Yes') {
+    fs.unlinkSync(req.body.rtsp_in);
+  }
   Camera.delete(req.params.id, function (err, count) {
     if (err) {
       res.json(err);
