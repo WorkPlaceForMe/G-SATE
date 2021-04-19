@@ -16,7 +16,6 @@ router.get('/models', function(req, res, next) {
 });
 
 router.post('/confirmed', function(req, res, next) {
-    console.log("confirmed");
     let body = req.body;
     let directory = process.env.resources2 + 'training_details/' + body.datasetName + '.json';
     fs.writeFileSync(directory, JSON.stringify(body.data));
@@ -26,23 +25,25 @@ router.post('/confirmed', function(req, res, next) {
         if (err) {
             res.json(err);
         } else {
-            console.log(annotation);
             res.json(annotation);
-            res.redirect("/camerasList");
+            //res.redirect("/camerasList");
         }
     });
 });
 
 router.post('/object-detection/confirmed', function(req, res, next) {
     console.log("object detection training confirmed");
-    console.log(req.body);
+    let body = req.body;
+    let directory = process.env.resources2 + 'training_details/' + body.datasetName + '.json';
+    fs.writeFileSync(directory, JSON.stringify(body.data));
+    body.path = directory;
+    body.processed = 'No';
     Annotation.createObject(req.body, function(err, annotation) {
         if (err) {
             res.json(err);
         } else {
-            console.log(annotation);
             res.json(annotation);
-            res.redirect("/camerasList");
+            //res.redirect("/camerasList");
         }
     });
 });

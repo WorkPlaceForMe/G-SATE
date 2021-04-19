@@ -28,10 +28,6 @@ import { AnnotationsConfirmComponent} from './components/t-cloud/annotations-con
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 const routes: Routes = [
-  { path: '', 
-    redirectTo: 'annotations',
-    pathMatch: 'full' 
-  },
   {
     path: 'management',
     component: FaceListComponent
@@ -151,6 +147,10 @@ const routes: Routes = [
   {
     path: 'objectDetection/img/label',
     component: LoiteringDetectionComponent
+  },
+  { path: '', 
+    redirectTo: 'annotations',
+    pathMatch: 'full' 
   },
   {
   path: '**',

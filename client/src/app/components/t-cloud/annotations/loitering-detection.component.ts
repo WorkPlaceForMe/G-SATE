@@ -182,7 +182,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(['/annotations/' + 'object' + '/' + 'image' + '/0' + '/details'], { state: { data: [] }} );
+    this.router.navigate(['/annotations/' + 'object' + '/' + 'image' + '/0' + '/details'], { state: { data: this.data }} );
     if (this.valueImage < this.total - 1) {
       this.valueImage++;
       if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
@@ -275,17 +275,17 @@ export class LoiteringDetectionComponent implements OnInit {
       this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
       this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4); */
       if(this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x']-6,this.annotations[e][0]['y']-6,4,4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-6,this.annotations[e][1]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-6,4,4);    
+        this.ctx.fillRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],4,4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-3,4,4);
+        this.ctx.fillRect(this.annotations[e][1]['x'],this.annotations[e][0]['y'],4,4);    
         this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4);
+        this.ctx.fillRect(this.annotations[e][1]['x']-3,this.annotations[e][1]['y']-3,4,4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4, this.annotations[e][0]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-4, 4, 4);
         this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-3, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-3, 4, 4);
       }
       this.ctx.lineWidth = 2.5;
       this.ctx.stroke();
@@ -436,17 +436,17 @@ export class LoiteringDetectionComponent implements OnInit {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
       if(this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
+        this.ctx.fillRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],4,4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-3,4,4);
+        this.ctx.fillRect(this.annotations[e][1]['x'],this.annotations[e][0]['y'],4,4);    
         this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4);
+        this.ctx.fillRect(this.annotations[e][1]['x']-3,this.annotations[e][1]['y']-3,4,4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4, this.annotations[e][0]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-4, 4, 4);
         this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-3, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-3, 4, 4);
       }
       /* this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
       this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
@@ -471,11 +471,12 @@ export class LoiteringDetectionComponent implements OnInit {
       this.annotations.splice(this.fixedSize, this.annotations.length);
     }
     this.annotationsServ.generalDetection(body).subscribe(res => {
+      this.flag = false;
+      this.spinflag = false;
+      alert(`${res.length} objects detected.`);
       res.forEach(element => {
         this.annotations.push(element);
         ++this.annCount;
-        this.flag = false;
-        this.spinflag = false;
       });
       this.re_draw();
     });

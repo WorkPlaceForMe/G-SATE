@@ -427,7 +427,7 @@ export class ButtomsComponent implements OnInit {
     this.myInputVariable.nativeElement.value = null
     this.fileName = ''
     setTimeout(() => {
-      this.unAnnDatasetsNames('data')
+      this.getUnAnnDsets('data')
     }, 2000)
     this.showMyMessage4 = false
     this.showMyMessage3 = true

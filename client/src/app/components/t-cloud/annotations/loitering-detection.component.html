@@ -18,7 +18,7 @@
 
   <div class=" col-md-2">
     <div class="card border-info panel">
-      <div class="card-header" align='center' *ngIf='objDet == false'>List of areas</div>
+      <div class="card-header" align='center' *ngIf='objDet == false'>Objects detected <span class="font-italic">{{annotations.length}}</span></div>
       <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
       <ul>
         <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[3].label}}</li>

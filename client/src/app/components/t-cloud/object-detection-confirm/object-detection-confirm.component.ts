@@ -31,8 +31,11 @@ export class ObjectDetectionConfirmComponent implements OnInit {
     data: null
   }
   folder: string;
+  details: any;
 
-  constructor(private annotationsService:AnnotationsService, private router:Router, private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private annotationsService:AnnotationsService, private router:Router, private route: ActivatedRoute, private http: HttpClient) { 
+    this.details = this.router.getCurrentNavigation().extras.state.data
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params:Params)=>{
@@ -44,6 +47,7 @@ export class ObjectDetectionConfirmComponent implements OnInit {
     this.customerData.date = this.annotationsService.date;
     this.customerData.version = this.annotationsService.version;
     this.customerData.model = this.annotationsService.model;
+    this.customerData.data = this.details;
   }
 
   back() {
