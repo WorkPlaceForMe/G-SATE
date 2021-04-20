@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router'; 
+import { Routes, RouterModule } from '@angular/router';
 import { FaceFormComponent } from './components/facial_recognition/face-form/face-form.component';
 import { ImagesFormComponent } from './components/facial_recognition/images-form/images-form.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
@@ -24,13 +24,14 @@ import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img
 import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
-import { AnnotationsConfirmComponent} from './components/t-cloud/annotations-confirm/annotations-confirm.component';
+import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 const routes: Routes = [
-  { path: '', 
+  {
+    path: '',
     redirectTo: 'annotations',
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
   {
     path: 'management',
@@ -51,7 +52,7 @@ const routes: Routes = [
   {
     path: 'annotations',
     component: ButtomsComponent
-  },  
+  },
   {
     path: 'user/images/:id',
     component: ImagesFormComponent
@@ -67,15 +68,15 @@ const routes: Routes = [
   {
     path: 'cameras/heatmap/:uuid',
     component: HeatmapComponent
-   },
-   {
+  },
+  {
     path: 'classify/:choose',
-    component:    UnwantedVehicleComponent
-   },
-   {
+    component: UnwantedVehicleComponent
+  },
+  {
     path: 'prediction/:choose',
-    component:    UnwantedVehicleComponent
-   },
+    component: UnwantedVehicleComponent
+  },
   {
     path: 'cameras/algorithms/:uuid/:id',
     component: ROIComponent
@@ -85,8 +86,8 @@ const routes: Routes = [
     component: SearchComponent
   },
   {
-  path: 'camerasList',
-  component: LivestreamComponent
+    path: 'camerasList',
+    component: LivestreamComponent
   },
   {
     path: 'annotations/dataset/:method/:folder/:image',
@@ -118,7 +119,7 @@ const routes: Routes = [
   }, */
   {
     path: 'annotation/video/:cam_name/:date',
-    component:   SpeedingVehicleComponent
+    component: SpeedingVehicleComponent
   },
   {
     path: 'cameras/edit/:uuid',
@@ -138,11 +139,11 @@ const routes: Routes = [
   },
   {
     path: 'cameras/algorithms/:uuid',
-    component:   AlgorithmsComponent
+    component: AlgorithmsComponent
   },
   {
     path: 'documents',
-    component:   ClimbingBarricadeComponent
+    component: ClimbingBarricadeComponent
   },
   {
     path: 'objectDetection',
@@ -153,9 +154,9 @@ const routes: Routes = [
     component: LoiteringDetectionComponent
   },
   {
-  path: '**',
-  component: PagenotfoundComponent
-  } 
+    path: '**',
+    component: PagenotfoundComponent
+  }
 ];
 
 @NgModule({
