@@ -66,7 +66,7 @@ let Dataset = {
                 ffmpeg(body.stream)
                     //.format('mp4')
                     .seekInput('00:00:00')
-                    .outputOptions([`-r 1/${body.fps}`])
+                    .outputOptions([`-vf fps=${body.fps}`])
                     .duration(`${body.t}`)
                     .saveToFile(datasetDir + '/image%d.jpg')
                     .on('end', function (stdout, stderr) {
