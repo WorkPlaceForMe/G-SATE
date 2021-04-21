@@ -74,6 +74,11 @@ export class ButtomsComponent implements OnInit {
   selectedImages: any = []
   pager: any = {}
   uploadImage:boolean = false;
+  showMyMessage: boolean = false
+  newLabel: string
+
+  label: string
+  labels: any = []
 
   public date_now = new Date(Date.now()).toString()
   public max = new Date(this.date_now)
@@ -119,10 +124,15 @@ export class ButtomsComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      this.router.navigate(
-        ['/annotations/' + 'object' + '/' + 'image' + '/0'],
-        { state: { data: JSON.parse(response) } }
-      )
+      if(status == 500) {
+        this.uploadImage = false;
+        alert('There is an error Processing you request. Please try again.');
+      } else {
+        this.router.navigate(
+          ['/annotations/' + 'object' + '/' + 'image' + '/0'],
+          { state: { data: JSON.parse(response) } }
+        )
+      }
     }
     this.photoUploader.onProgressItem = (progress: any) => {
       console.log(progress['progress'])
@@ -471,10 +481,4 @@ export class ButtomsComponent implements OnInit {
       ])
     }
   }
-
-  showMyMessage: boolean = false
-  newLabel: string
-
-  label: string
-  labels: any = []
 }

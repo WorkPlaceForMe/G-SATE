@@ -23,6 +23,8 @@ let Dataset = {
             if (method === 'vista') {
                 processByVista(dName).then(resp => {
                     return res.json(resp);
+                }).catch(err => {
+                    return res.status(500).json(err);
                 });
             } else {
                 processByAnalytics(dName).then(resp => {
@@ -258,7 +260,7 @@ let getImgSize = (url) => {
 }
 
 let processByVista = (name) => {
-    console.log('processByVista>>>>>>>>>>>>>>>>>>>', process.env.vista_server_ip + '/api/v1/sync');
+    console.log('******* Process By Vista APIs ********* ', process.env.vista_server_ip + '/api/v1/sync');
     let directory = process.env.resources2 + 'datasets/' + name;
     return new Promise((resolve, reject) => {
         try {
@@ -306,11 +308,11 @@ let processByVista = (name) => {
                 };
                 resolve(rm);
             }).catch(err => {
-                console.log('1.error>>>>>>>>>>>>>>>>', err);
+                console.log('error>>>>>>>>>>>>>>>>', err);
                 reject(err);
             });
         } catch (err) {
-            console.log('2.error>>>>>>>>>>>>>>>>', err);
+            console.log('error>>>>>>>>>>>>>>>>', err);
             reject(err);
         }
     })
@@ -323,62 +325,59 @@ let table = {
 }
 
 let processByAnalytics = (name) => {
+    console.log('******* Process By Analytics ********* ');
     let result = [];
     let index = 0;
     let count = 0;
     return new Promise(async(resolve, reject) => {
         try {
-            //await processByVista(name).then(data => {
-                //result = data;
-                //count = data.length;
-                Datasets.listOne(name, function (err, dataset) {
+            Datasets.listOne(name, function (err, dataset) {
+                if (err) reject(err);
+
+                if (dataset.length === 0) resolve('Dataset does not exists.');
+                Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function (err, rows) {
                     if (err) reject(err);
-    
-                    if (dataset.length === 0) resolve('Dataset does not exists.');
-                    Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function (err, rows) {
-                        if (err) reject(err);
-    
-                        if (rows.length > 0) {
-                            for (const itm of rows) {
-                                let data = {
-                                        table: table[itm.algo_id],
-                                        snippet_id: itm.snippet_id
-                                    }
-                                    ++index;
-                                await Algorithms.fetchAlgoData(data).then(resp => {
-                                    for (const element of resp) {
-                                        let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
-                                        let obj = {
-                                            id: count,
-                                            image: '/assets/shared-data/' + element.image_path.split('/').splice(5,5).join('/'),
-                                            width: element.cam_width,
-                                            height: element.cam_height,
-                                            checked: true,
-                                            results: {
-                                                Object: [{
-                                                    class: cl,
-                                                    boundingBox: {
-                                                        left: element.x1,
-                                                        top: element.y1,
-                                                        width: element.x2 - element.x1,
-                                                        height: element.y2 - element.y1
-                                                    }
-                                                }]
-                                            }
-                                        };
-                                        ++count;
-                                        result.push(obj);
-                                    }
-                                });
-                            };
-                            //result = [].concat(...result);
-                            resolve(result);
-                        } else {
-                            resolve([]);
-                        }
-                    });
+
+                    if (rows.length > 0) {
+                        for (const itm of rows) {
+                            let data = {
+                                    table: table[itm.algo_id],
+                                    snippet_id: itm.snippet_id
+                                }
+                                ++index;
+                            await Algorithms.fetchAlgoData(data).then(resp => {
+                                for (const element of resp) {
+                                    let cl = (table[itm.algo_id] == 'person_gsate') ? 'person' : (table[itm.algo_id] == 'vehicle_gsate') ? element.class : 'clothes';
+                                    let obj = {
+                                        id: count,
+                                        image: '/assets/shared-data/' + element.image_path.split('/').splice(5,5).join('/'),
+                                        width: element.cam_width,
+                                        height: element.cam_height,
+                                        checked: true,
+                                        results: {
+                                            Object: [{
+                                                class: cl,
+                                                boundingBox: {
+                                                    left: element.x1,
+                                                    top: element.y1,
+                                                    width: element.x2 - element.x1,
+                                                    height: element.y2 - element.y1
+                                                }
+                                            }]
+                                        }
+                                    };
+                                    ++count;
+                                    result.push(obj);
+                                }
+                            });
+                        };
+                        //result = [].concat(...result);
+                        resolve(result);
+                    } else {
+                        resolve([]);
+                    }
                 });
-            //})
+            });
         } catch (err) {
             reject(err);
         }

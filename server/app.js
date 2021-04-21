@@ -202,15 +202,6 @@ app.get('/api/v1/operation/:id', function(req, res) {
     });
 });
 
-// Some api requires the socket as it needs to wait for a reply
-/* app.get('/api/send/', function(req, res, err){
-         cp.exec('../multicamera/TRAIN.sh', function(err,data){
-             console.log('err: ',err)
-             console.log('data: ',data);  
-             res.send("success") 
-         })
- });*/
-
 app.get('/api/turnOn/', function(req, res, err) {
     cp.exec('node algo_server/app.js', function(err, data) {
         if (err) {
@@ -259,15 +250,8 @@ app.post('/api/general/object/detection', function(req, res) {
         image = process.env.vista_server_ip + image;
     } else {
         xx = image.split('/')[5];
-        //yy = xx.split('.')[1];
-        /* if(singleImage) {
-            zz = xx.split('-');
-        } else {
-            zz = xx.split('_');
-        } */
     }
-    //zz.splice(zz.length-1, 1);
-    let imgName = xx; //zz.join('_') + '.' + yy;
+    let imgName = xx;
     let dir = './objdet/darknet/data/' + imgName;
     console.log('dir>>>>>>>>', dir);
     saveImg(image, dir, function(err, data) {
@@ -342,94 +326,6 @@ app.post('/api/general/object/detection', function(req, res) {
             }
         });
     });
-    /* let str = `92 169 273 384
-                        175 37 269 168`; */
-/*     let result = [];
-    let single = [];
-    if(singleImage) {
-        let obj1 = {
-            'x': 92,
-            'y': 169
-        }
-        single.push(obj1);
-        let obj2 = {
-            'x': 273,
-            'y': 384
-        }
-        single.push(obj2);
-        let obj3 = {
-            'general_detection': 'Yes'
-        }
-        single.push(obj3);
-        let obj4 = {
-            'label': ''
-        }
-        single.push(obj4);
-        result.push(single);
-        single = [];
-        let obj5 = {
-            'x': 175,
-            'y': 37
-        }
-        single.push(obj5);
-        let obj6 = {
-            'x': 269,
-            'y': 168
-        }
-        single.push(obj6);
-        let obj7 = {
-            'general_detection': 'Yes'
-        }
-        single.push(obj7);
-        let obj8 = {
-            'label': ''
-        }
-        single.push(obj8);  
-    
-        result.push(single);
-    } else {
-        let obj1 = {
-            'x': 92 * details.width / details.res_width,
-            'y': 169 * details.height / details.res_height
-        }
-        single.push(obj1);
-        let obj2 = {
-            'x': 273 * details.width / details.res_width,
-            'y': 384 * details.height / details.res_height
-        }
-        single.push(obj2);
-        let obj3 = {
-            'general_detection': 'Yes'
-        }
-        single.push(obj3);
-        let obj4 = {
-            'label': ''
-        }
-        single.push(obj4);
-        result.push(single);
-        single = [];
-        let obj5 = {
-            'x': 175 * details.width / details.res_width,
-            'y': 37 * details.height / details.res_height
-        }
-        single.push(obj5);
-        let obj6 = {
-            'x': 269 * details.width / details.res_width,
-            'y': 168 * details.height / details.res_height
-        }
-        single.push(obj6);
-        let obj7 = {
-            'general_detection': 'Yes'
-        }
-        single.push(obj7);
-        let obj8 = {
-            'label': ''
-        }
-        single.push(obj8);
-    
-        result.push(single);
-    }
-    res.json(result); */
 });
 
 
@@ -553,92 +449,6 @@ app.delete('/api/delAll/:user_id', (req, res, err) => {
 })
 
 app.use(express.static('../client'));
-/* var stor = multer.diskStorage({ //multers disk storage settings
-    filename: function (req, file, cb) {
-        var newName = file.originalname.toString()
-        cb(null, newName)
-        //file.originalname
-    },
-    destination: function (req, file, cb) {
-        const pathName = file.originalname.toString().replace('.zip', '');
-        var lugar = process.env.resources2 + 'datasets/temp-' + pathName;
-        if (!fs.existsSync(lugar)) {
-            fs.mkdirSync(lugar);
-        }
-        cb(null, lugar)
-    }
-}); */
-
-/* let resizeImages = (unTempZippedPath, unZippedPath) => {
-    return new Promise((resolve, reject) => {
-        let dir = fs.readdirSync(unTempZippedPath);
-        console.log('dir>>>>>>>>>>>>>>', dir);
-        dir.forEach(ele => {
-            path = unTempZippedPath + '/' + ele;
-            console.log('path>>>>>>>>>>>>>', path);
-            resizePath = unZippedPath + '/' + ele;
-            console.log('resizePath>>>>>>>>>>>>>', resizePath);
-            sharp(path).resize(365, 205).toFile(resizePath, function (err) {
-                if (err) {
-                    console.log('Error : ', err);
-                    //res.status(500).json({success:false, message: err.message});
-                }
-            });
-        });
-        resolve();
-    }, 3000);
-} */
-
-/* var upZip = multer({ //multer settings
-    storage: stor
-}).single('zip'); */
-/** API path that will upload the files */
-/* app.post('/api/upZip/', function (req, res, next) {
-    upZip(req, res, function (err) {
-        if (err) {
-            res.json({
-                error_code: 1,
-                err_desc: err
-            });
-            return;
-        } else {
-            const pathName = req.file.originalname.toString().replace('.zip', '');
-            pat = process.env.resources2 + 'datasets/temp-' + pathName + '/' + req.file.originalname;
-            unTempZippedPath = process.env.resources2 + 'datasets/temp-' + pathName;
-            unZippedPath = process.env.resources2 + 'datasets/' + pathName;
-            fs.createReadStream(pat).pipe(unzipper.Extract({
-                path: unTempZippedPath
-            }));
-
-
-            fs.unlinkSync(pat);
-            setTimeout(async () => {
-                if (!fs.existsSync(unZippedPath)) {
-                    fs.mkdirSync(unZippedPath);
-                }
-                console.log('unTempZippedPath>>>>>>>>>>>>>>', unTempZippedPath);
-                await resizeImages(unTempZippedPath, unZippedPath);
-                setTimeout(() => {
-                    let tempDir = fs.readdirSync(unTempZippedPath);
-                    tempDir.forEach(file => {
-                        fs.unlinkSync(unTempZippedPath + '/' + file);
-                    });
-                    fs.rmdirSync(unTempZippedPath);
-                }, 2000);
-                
-                //fs.unlinkSync(pat)
-                fs.unlink(pat, function() {
-                    console.log('unZippedPath>>>>>>>>>>>>>>', unZippedPath);
-                    let dir = fs.readdirSync(unZippedPath);
-                    console.log('dir>>>>>>>>>>>>>>', dir)
-                })
-            }, 3000);
-           //fs.unlinkSync(unTempZippedPath);
-            res.json('Uploaded');
-        }
-    });
-}) */
-
 
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function(req, file, cb) {
@@ -713,7 +523,7 @@ var processImage = (imgPath, path, res) => {
             return res.json(response.body);
         });
     } catch (err) {
-        res.send(err);
+        return res.status(500).json(error.message);
     }
 }
 
@@ -776,105 +586,6 @@ function searchImages(keyword, count, offset) {
         }
     })
 }
-
-/* app.post('/api/images/batch/async/', function (req, res) {
-    let data = req.body;
-    let directory = process.env.resources2 + 'datasets/' + data.name;
-    try {
-        let readDir = fs.readdirSync(directory);
-        const promises = readDir.map(imageName => {
-            let datetimestamp = Date.now();
-            let resizePath = directory + '/' + imageName.split('.')[0] + '-resize';
-            sharp(`${directory}/${imageName}`).resize(365, 205).toFile(resizePath, function (err) {
-                if (err) {
-                    res.status(500).json({
-                        success: false,
-                        message: err.message
-                    });
-                } else {
-
-                }
-            })
-            let options = {
-                'method': 'POST',
-                'url': process.env.vista_server_ip + '/api/v1/sync',
-                'strictSSL': false,
-                'headers': {
-                    'Authorization': 'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx'
-                },
-                formData: {
-                    'upload': {
-                        'value': fs.createReadStream(resizePath),
-                        'options': {
-                            'filename': resizePath,
-                            'contentType': null
-                        }
-                    },
-                    'subscriptions': 'Object,themes,food,tags,face,fashion'
-                }
-            };
-            return rp(options);
-        });
-        Promise.all(promises).then((data) => {
-            res.status(200).json(data);
-        }).catch(err => {
-            res.status(500).send(err.message);
-        });
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-}) */
-
-/* app.post('/api/datasets/image/search/create/', function(req, res) {
-    let data = req.body;
-    let images = data.images;
-    let directory = process.env.resources2 + 'datasets/' + data.name;
-    try {
-        images.forEach(async(element, i) => {
-            if (!fs.existsSync(directory)) {
-                fs.mkdirSync(directory);
-            }
-            let filePath = directory + '/' + 'image' + i + '.jpg';
-            await save(element.contentUrl, filePath, directory, i, function() {
-                console.log('Done!')
-            });
-        });
-        res.status(200).json({
-            success: true,
-            message: 'Dataset created Sucessfully'
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})  */
-
-/*     app.get('/api/getFolders/:which', function (req, res) {
-        let arreglo = [];
-        if (req.params.which == 'data') {
-            var end = 'datasets'
-            if (!fs.existsSync(process.env.resources2 + end)) {
-                fs.mkdirSync(process.env.resources2 + end);
-            }
-        } else if (req.params.which == 'class') {
-            var end = 'classifications'
-            if (!fs.existsSync(process.env.resources2 + end)) {
-                fs.mkdirSync(process.env.resources2 + end);
-            }
-        }
-        const newStuff = process.env.resources2 + end;
-        const files = fs.readdirSync(newStuff);
-        for (let i = 0; i < files.length; i++) {
-            const fileName = newStuff + '/' + files[i];
-            const idk = files[i];
-            const file = fs.statSync(fileName);
-            if (file.isDirectory()) {
-                arreglo.push({
-                    'name': idk
-                })
-            }
-        }
-        res.json(arreglo)
-    }) */
 
 app.get('/api/classify/:path/:name/:yn', function(req, res) {
     var where_this_it = process.env.resources2 + 'classifications/' + req.params.path;
