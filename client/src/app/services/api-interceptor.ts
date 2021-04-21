@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
@@ -19,18 +20,40 @@ export class ApiInterceptor implements HttpInterceptor {
         private route: Router,
     ) { }
     /* istanbul ignore next */
-    intercept(req: HttpRequest<any>, next: HttpHandler) {
-        // tslint:disable-next-line:max-line-length
-        return next.handle(req).map((event: HttpEvent<any>) => {
-            return event;
-        }).do((event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
+    // intercept(req: HttpRequest<any>, next: HttpHandler) {
+    //     // tslint:disable-next-line:max-line-length
+    //     return next.handle(req).map((event: HttpEvent<any>) => {
+    //         return event;
+    //     }).do((event: HttpEvent<any>) => {
+    //         if (event instanceof HttpResponse) {
                 
-            }
-        }, (err: any) => {
-            if (err instanceof HttpErrorResponse) {
+    //         }
+    //     }, (err: any) => {
+    //         if (err instanceof HttpErrorResponse) {
 
+    //         }
+    //     });
+    // }
+
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log('req - ', req);
+        return next.handle(req).pipe(
+          map((event: HttpEvent<any>) => {
+            if (event instanceof HttpResponse) {
+    
             }
-        });
-    }
+            return event;
+          }),
+          catchError((error: HttpErrorResponse) => {
+            console.log('req - ', error);
+            //   if (error.status === 401) {
+            //     if (error.error.success === false) {
+            //       this.presentToast('Login failed');
+            //     } else {
+            //       this.router.navigate(['login']);
+            //     }
+            //   }
+            return throwError(error);
+          }));
+      }
 }

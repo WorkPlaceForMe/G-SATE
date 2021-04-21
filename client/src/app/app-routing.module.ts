@@ -27,6 +27,7 @@ import { AddVideoComponent } from './components/cameras_conf/add-video/add-video
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
+import { AuthGuard } from './services/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -35,83 +36,103 @@ const routes: Routes = [
   },
   {
     path: 'management',
-    component: FaceListComponent
+    component: FaceListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/schedule/:id',
-    component: ScheduleComponent
+    component: ScheduleComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/edit/:uuid',
-    component: FaceFormComponent
+    component: FaceFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/add',
-    component: FaceFormComponent
+    component: FaceFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations',
-    component: ButtomsComponent
+    component: ButtomsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/images/:id',
-    component: ImagesFormComponent
+    component: ImagesFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'settings',
-    component: SettingsComponent
+    component: SettingsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/live/:id',
-    component: LiveComponent
+    component: LiveComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/heatmap/:uuid',
-    component: HeatmapComponent
+    component: HeatmapComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'classify/:choose',
-    component: UnwantedVehicleComponent
+    component: UnwantedVehicleComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'prediction/:choose',
-    component: UnwantedVehicleComponent
+    component: UnwantedVehicleComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/algorithms/:uuid/:id',
-    component: ROIComponent
+    component: ROIComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/search',
-    component: SearchComponent
+    component: SearchComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'camerasList',
-    component: LivestreamComponent
+    component: LivestreamComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/dataset/:method/:folder/:image',
-    component: ObjDetMulImgsComponent
+    component: ObjDetMulImgsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/dataset/:method/:folder/:image/details',
-    component: ObjectDetectionDetailsComponent
+    component: ObjectDetectionDetailsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/objectDetection/confirm',
-    component: ObjectDetectionConfirmComponent
+    component: ObjectDetectionConfirmComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/:method/:folder/:image',
-    component: LoiteringDetectionComponent
+    component: LoiteringDetectionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/:method/:folder/:image/details',
-    component: AnnotationsDetailsComponent
+    component: AnnotationsDetailsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'annotations/confirm',
-    component: AnnotationsConfirmComponent
+    component: AnnotationsConfirmComponent,
+    canActivate: [AuthGuard]
   },
   /* {
     path: 'objectDetection/:folder/:image',
@@ -119,39 +140,48 @@ const routes: Routes = [
   }, */
   {
     path: 'annotation/video/:cam_name/:date',
-    component: SpeedingVehicleComponent
+    component: SpeedingVehicleComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/edit/:uuid',
-    component: VidComponent
+    component: VidComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/add_camera',
-    component: VidComponent
+    component: VidComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/add_video',
-    component: AddVideoComponent
+    component: AddVideoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'analytics',
-    component: AnalyticsComponent
+    component: AnalyticsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cameras/algorithms/:uuid',
-    component: AlgorithmsComponent
+    component: AlgorithmsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'documents',
-    component: ClimbingBarricadeComponent
+    component: ClimbingBarricadeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'objectDetection',
-    component: ObjectDetectionComponent
+    component: ObjectDetectionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'objectDetection/img/label',
-    component: LoiteringDetectionComponent
+    component: LoiteringDetectionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
