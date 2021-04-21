@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ip } from '../models/IpServer';
 import { Customer } from '../models/Customer';
 import { vistaIP } from '../models/VistaServer';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -77,7 +79,10 @@ export class AnnotationsService {
   }
 
   processDataset(data:any) {
-    return this.http.post(`${this.API_URL}/datasets/process/`, data);
+    return this.http.post<any[]>(`${this.API_URL}/datasets/process/`, data)
+    .pipe(
+      catchError(this.handleError)
+  );;
   }
 
   generalDetection(data:any) {
@@ -92,4 +97,17 @@ export class AnnotationsService {
     return this.http.get(`${this.API_URL}/search/${keyword}`);
   }
   constructor(private http: HttpClient) { }
+
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+        // client-side error
+        errorMessage = `Error: ${error.error.message}`;
+    } else {
+        // server-side error
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    // console.log(errorMessage);
+    return throwError(errorMessage);
+}
 }

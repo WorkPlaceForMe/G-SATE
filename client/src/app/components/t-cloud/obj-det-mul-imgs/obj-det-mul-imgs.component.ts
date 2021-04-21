@@ -154,10 +154,19 @@ export class ObjDetMulImgsComponent implements OnInit {
       method: this.activatedRoute.snapshot.params.image
     }
     this.annotationsServ.processDataset(data).subscribe(res => {
-      this.data = res;
       this.spin = false;
-      this.datasetFlag = true;
-      this.setPage(1);
+      if(res.length == 0) {
+        alert('Zero detections happened.');
+        this.router.navigate(['/annotations']);
+      } else {
+        this.data = res;
+        this.datasetFlag = true;
+        this.setPage(1);
+      }
+    },error => {
+      this.spin = false;
+      alert(`There is an error processing your request. Please retry operation once or contact system administrator.`);
+      this.router.navigate(['/annotations']);
     });
   }
 
