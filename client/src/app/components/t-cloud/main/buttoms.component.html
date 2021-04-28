@@ -7,16 +7,17 @@
             <div class="input-group mb-3">
                 <input type="text" placeholder="Input the name of the dataset" [(ngModel)]='datasetName' size="30" (ngModelChange)="detect()">
                 <select name="label" class="custom-select" [(ngModel)]="datasetName" placeholder="Choose a label" (ngModelChange)="detect()">
-          <option value="null" disabled>Or upload to an existing dataset</option>
-          <option *ngFor="let data of unAnnDatasetsNames" [value]="data.name">{{data.name}}</option>
-        </select>
+                    <option value="null" disabled>Or upload to an existing dataset</option>
+                    <option *ngFor="let data of unAnnDatasetsNames" [value]="data.name">{{data.name}}</option>
+                </select>
                 <div class="custom-file">
                     <input class="custom-file-input" id="inputGroupFile02" type="file" name='zip' (change)='showInfo($event)' [uploader]="uploader" ng2FileSelect [disabled]='showMyMessage2 == false' #zip>
                     <label class="custom-file-label" for="inputGroupFile02">{{fileName == '' ? 'Choose a Zip File' :
             fileName}}</label>
                 </div>
-                <button type="button" class="btn btn-success btn-s" (click)="check()" [disabled]="!uploader.getNotUploadedItems().length ||showMyMessage2 == false || badFile == true">Upload Zip
-          file</button>
+                <button type="button" class="btn btn-success btn-s" (click)="check()" [disabled]="!uploader.getNotUploadedItems().length ||showMyMessage2 == false || badFile == true">Upload
+                    Zip
+                    file</button>
             </div>
             <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
         <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
@@ -51,12 +52,12 @@
                 imgFileName}}</label>
                         </div>
                         <button type="button" class="btn btn-success btn-s" (click)="checkImg()" [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true" *ngIf='!uploadImage'>Upload
-              Image</button>
+                            Image</button>
                         <button class='btn btn-success btn-s' disabled *ngIf='uploadImage'>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<div class="spinner-border spinner-border-sm" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                     </div>
                     <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
             <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
@@ -92,7 +93,7 @@
                         <input class="form-control amber-border" [(ngModel)]='searchKeyword' type="text" placeholder="Search" aria-label="Search" (ngModelChange)="detectSearchChange()" [disabled]="searchFlag">
                         <div class="input-group-append" [ngClass]="{'disableDiv': isSearchDisabled}">
                             <span class="input-group-text amber lighten-3" id="basic-text1" data-toggle="modal" data-target="#imagesModal" (click)="search()"><i class="fas fa-search text-grey"
-                  aria-hidden="true"></i></span>
+                                    aria-hidden="true"></i></span>
                         </div>
                         <!--  <div class="custom-file">
               <input class="custom-file-input" id="inputGroupFile02" type="file" name='zip' (change)='showInfo($event)'
@@ -156,10 +157,11 @@
                                 <div class="modal-card-footer">
                                     <div class="form-check" align='center'>
                                         <label class="container">&nbsp;
-                      <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked"
-                        (change)="handleSelected(img, img.checked)" [checked]="img.checked">
-                      <span class="checkmark"></span>
-                    </label>
+                                            <input type="checkbox" value="img.checked" name="flexCheckChecked"
+                                                id="flexCheckChecked" (change)="handleSelected(img, img.checked)"
+                                                [checked]="img.checked">
+                                            <span class="checkmark"></span>
+                                        </label>
                                         <!--  <input class="form-check-input" type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked" (change)="handleSelected(img, img.checked)" [checked]="img.checked">
                     <label class="form-check-label" for="flexCheckChecked"> 
                     </label>-->
@@ -255,9 +257,10 @@
                         <div class="custom-control custom-radio datasets">
                             <input name="customRadio" class="custom-control-input" id="cust{{i}}" type="radio" [value]="data.open" (change)="UnAnnDSetchange(i);">
                             <label class="custom-control-label" for="cust{{i}}"><i class="fas fa-folder"
-                  *ngIf='data.open == false'></i><i class="fas fa-folder-open"
-                  *ngIf='data.open == true'></i>&nbsp;{{data.name}}
-                <span class="delete" (click)="deleteUnAnnDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
+                                    *ngIf='data.open == false'></i><i class="fas fa-folder-open"
+                                    *ngIf='data.open == true'></i>&nbsp;{{data.name}}
+                                <span class="delete" (click)="deleteUnAnnDataset(data)"><i
+                                        class="fas fa-trash-alt"></i></span></label>
                         </div>
                     </div>
                 </li>
@@ -282,14 +285,14 @@
             <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/', choosenDataset, 0]" [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button> -->
 
             <button class="btn btn-success btn-lg btn-block" (click)="annotateByVista()" [disabled]='choosenDatasetForVista == undefined'><i class="fas fa-user-plus"></i> Vista object
-        detection</button>
+                detection</button>
             <button class="btn btn-success btn-lg btn-block" (click)="annotateByAnalytics()" [disabled]='choosenDatasetForAnalytics == undefined'><i class="fas fa-user-plus"></i> Analytics object
-        detection</button>
+                detection</button>
             <!-- [routerLink]="['/annotations/multiple/', choosenDataset, 0]" -->
         </div>
     </div>
 
-    <div class="card bg-primary border-primary mb-3">
+    <div class="card bg-primary border-primary mb-3" *ngIf="cameras && cameras.length > 0">
         <div class="card-header" align='center'>
             <h5>Create Dataset From Live CCTV Feed</h5>
         </div>
@@ -297,18 +300,19 @@
 
             <div class="example-wrapper">
                 <label class="example-input-wrapper">
-          <input placeholder="Date" [(ngModel)]="selectedDate" [owlDateTime]="dt2" [max]="max" [selectMode]="'single'">
-          <span class="example-trigger" [owlDateTimeTrigger]="dt2">
-            &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
-          </span>
-          <owl-date-time #dt2 firstDayOfWeek='1' pickerType="calendar" pickerMode='dialog'></owl-date-time>
-        </label>
+                    <input placeholder="Date" [(ngModel)]="selectedDate" [owlDateTime]="dt2" [max]="max"
+                        [selectMode]="'single'" readonly>
+                    <span class="example-trigger" [owlDateTimeTrigger]="dt2">
+                        &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <owl-date-time #dt2 firstDayOfWeek='1' pickerType="calendar" pickerMode='dialog'></owl-date-time>
+                </label>
             </div>
 
             <select name="camera" class="custom-select" [(ngModel)]="camera" placeholder="Pick a camera">
-        <option value="undefined" disabled>Pick a camera</option>
-        <option *ngFor="let cam of cameras" [value]="cam.name">{{cam.name}}</option>
-      </select>
+                <option value="undefined" disabled>Pick a camera</option>
+                <option *ngFor="let cam of cameras" [value]="cam.name">{{cam.name}}</option>
+            </select>
             <div class="dropdown-divider"></div>
             <div align="center">
                 <button class="btn btn-success btn-sm m-1" [routerLink]="['/annotation/video', camera, date]" [disabled]='!isCameraReady()'>Watch</button>
@@ -334,9 +338,10 @@
                         <div class="custom-control custom-radio anndatasets">
                             <input name="customRadio" class="custom-control-input" id="anncust{{i}}" type="radio" [value]="data.open" (change)="AnnDSetchange(i);">
                             <label class="custom-control-label" for="anncust{{i}}"><i class="fas fa-folder"
-                  *ngIf='data.open == false'></i><i class="fas fa-folder-open"
-                  *ngIf='data.open == true'></i>&nbsp;{{data.name}}
-                  <span class="delete" (click)="deleteAnnDataset(data)"><i class="fas fa-trash-alt"></i></span></label>
+                                    *ngIf='data.open == false'></i><i class="fas fa-folder-open"
+                                    *ngIf='data.open == true'></i>&nbsp;{{data.name}}
+                                <span class="delete" (click)="deleteAnnDataset(data)"><i
+                                        class="fas fa-trash-alt"></i></span></label>
                         </div>
                     </div>
                 </li>
@@ -360,8 +365,8 @@
                     <div class="custom-control custom-radio">
                         <input name="customRadio1" class="custom-control-input" id="cus{{e}}" type="radio" [value]="class.open" (change)="change1(e);">
                         <label class="custom-control-label" for="cus{{e}}"><i class="fas fa-folder"
-                *ngIf='class.open == false'></i><i class="fas fa-folder-open"
-                *ngIf='class.open == true'></i>&nbsp;{{class.name}}</label>
+                                *ngIf='class.open == false'></i><i class="fas fa-folder-open"
+                                *ngIf='class.open == true'></i>&nbsp;{{class.name}}</label>
                     </div>
                 </div>
             </li>

@@ -17,10 +17,10 @@ export class AddVideoComponent implements OnInit {
   load: boolean = false;
   up: boolean = false;
   finished: boolean = false;
-  progress:number = 0;
+  progress: number = 0;
 
   constructor(private router: Router, private facesService: FacesService) { }
-  
+
   @ViewChild('fileInput', { static: false }) fileInputVariable: any;
   public uploader: FileUploader = new FileUploader({
     url: URL,
@@ -30,7 +30,6 @@ export class AddVideoComponent implements OnInit {
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => {
-      //this.SpinnerService.show();
       file.withCredentials = false;
       const format = file.file.name.split('.')[1];
       const name = this.name.split(' ').join('_');
@@ -38,7 +37,6 @@ export class AddVideoComponent implements OnInit {
       file.file.name = newName;
     };
     this.uploader.onErrorItem = (item, response, status, headers) => {
-      //this.SpinnerService.hide();
       console.log(response);
     };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
@@ -47,23 +45,19 @@ export class AddVideoComponent implements OnInit {
       this.fileInputVariable.nativeElement.value = '';
       this.fileName = null;
       this.name = null;
-      this.facesService.doOneImage(JSON.parse(response).id).subscribe(
-        res => {
-          console.log(res)
-          this.router.navigate(['/cameras/algorithms/'+JSON.parse(response).id]);
-        },
-        err => {
-          console.log(err)
-        this.router.navigate(['/cameras/algorithms/'+JSON.parse(response).id]);
-        }
+      this.facesService.doOneImage(JSON.parse(response).id).subscribe(res => {
+        console.log(res)
+        this.router.navigate(['/cameras/algorithms/' + JSON.parse(response).id]);
+      }, err => {
+        console.log(err)
+        this.router.navigate(['/cameras/algorithms/' + JSON.parse(response).id]);
+      }
       )
     };
     this.uploader.onProgressItem = (progress: any) => {
-      this.progress = progress['progress']
-      // this.progress = this.messageBar
+      this.progress = progress['progress'];
       console.log(this.progress);
       if (progress['progress'] === 100) {
-        //this.SpinnerService.hide();
         this.finished = true;
         console.log('uploaded');
       }
@@ -71,13 +65,24 @@ export class AddVideoComponent implements OnInit {
   }
 
   change() {
-    this.fileName = null;
-    if (this.fileInputVariable.nativeElement.files.length !== 0) {
-      this.up = true;
-      this.fileName = this.fileInputVariable.nativeElement.files[0]['name'];
-      this.load = false;
-    } else {
+    console.log(this.fileInputVariable.nativeElement.files);
+    const format = this.fileInputVariable.nativeElement.files[0]['name'].split('.')[1];
+    const file = this.fileInputVariable.nativeElement.files[0]['type'].split('/')[0];
+    if (file !== 'video') {
       this.up = false;
+      alert('File format not supported');
+    } else if (format === 'avi') {
+      this.up = false;
+      alert('File format not supported');
+    } else {
+      this.fileName = null;
+      if (this.fileInputVariable.nativeElement.files.length !== 0) {
+        this.up = true;
+        this.fileName = this.fileInputVariable.nativeElement.files[0]['name'];
+        this.load = false;
+      } else {
+        this.up = false;
+      }
     }
   }
 

@@ -8,18 +8,18 @@ const Camera = require('../models/Camera');
 
 
 let Video = {
-    upload: function (req, res) {
+    upload: function(req, res) {
         const stor = multer.diskStorage({
             // multers disk storage settings
-            filename: function (req, file, cb) {
+            filename: function(req, file, cb) {
                 const format = file.originalname.split('.')[1]
                 const newName = file.originalname.split('.')[0] + '.' + format
                 cb(null, newName)
             },
-            destination: function (req, file, cb) {
+            destination: function(req, file, cb) {
                 const where = `${process.env.resources2}/stored_videos/`
                 if (!fs.existsSync(where)) {
-                        fs.mkdirSync(where)
+                    fs.mkdirSync(where)
                 }
                 cb(null, where)
             }
@@ -30,7 +30,7 @@ let Video = {
         }).single('file')
 
         const uuid = uuidv4();
-        upVideo(req, res, function (err) {
+        upVideo(req, res, function(err) {
             if (err) {
                 return res.status(500).json({
                     success: false,
@@ -61,7 +61,7 @@ let Video = {
                         vid_length: `${new Date(metadata.format.duration * 1000).toISOString().substr(11, 8)}`
                     }
                     Camera.create(data, function(err, result) {
-                        if(err) {
+                        if (err) {
                             console.log('Error adding video to camera table : ', err);
                             res.status(500).json(err);
                         } else {

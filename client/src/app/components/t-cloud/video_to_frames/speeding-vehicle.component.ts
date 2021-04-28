@@ -4,6 +4,7 @@ import { AnnotationsService } from '../../../services/annotations.service';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from 'src/app/services/faces.service';
 import JSMpeg from '@cycjimmy/jsmpeg-player';
+import { ip } from 'src/app/models/IpServer';
 
 @Component({
   selector: 'app-speeding-vehicle',
@@ -98,14 +99,18 @@ export class SpeedingVehicleComponent implements OnInit {
 
   loadLiveCam() {
     let cam = this.cameras.filter(element => element.name === this.cam_name);
+    console.log('selected file - ', cam[0]);
     if (cam[0].stored_vid === 'Yes') {
       this.stored_vid = true;
       this.start = '00:00:00';
       this.finish = cam[0].vid_length;
       this.maxTime = this.finish;
-      this.rtsp_in = cam[0].rtsp_out;//'/assets/' + cam[0].name + '.mp4';
-      this.availableTimeStart = this.generateTimeRange(this.start,this.finish);
-      this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
+      // http://3.211.144.140:4200/assets/shared-data/stored_videos/Abhra_vdo_avi.AVI
+      // this.rtsp_in = 'http://' + ip + ':3000' + cam[0].rtsp_in.split('..')[1];
+      // this.rtsp_in = cam[0].rtsp_out;
+      this.rtsp_in = 'http://' + ip + ':4200' + cam[0].rtsp_out;
+      this.availableTimeStart = this.generateTimeRange(this.start, this.finish);
+      this.availableTimeFinish = this.generateTimeRange(this.start, this.maxTime);
       this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
       this.calculate()
     } else {
@@ -132,6 +137,7 @@ export class SpeedingVehicleComponent implements OnInit {
         err => console.error(err)
       )
     }
+    console.log('this.rtsp_in - ', this.rtsp_in);
   }
 
   change(i, t) {

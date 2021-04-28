@@ -41,7 +41,7 @@
                 </div>
             </div>
             <h5>Fps:</h5>&nbsp;
-            <input type="number" [(ngModel)]="conf.fps" min="0" max="60" (ngModelChange)="calculate()" > &nbsp;
+            <input type="number" [(ngModel)]="conf.fps" min="0" max="60" (ngModelChange)="calculate()"> &nbsp;
             <h5>Dataset Name:</h5>&nbsp;
             <input type="text" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false"> &nbsp;
             <h5>Total images:</h5>&nbsp;
@@ -53,8 +53,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- Modal -->
