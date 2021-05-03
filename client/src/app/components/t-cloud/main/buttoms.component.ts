@@ -119,16 +119,13 @@ export class ButtomsComponent implements OnInit {
       const newName = name + '.' + format
       file.file.name = newName
     }
-    this.photoUploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
+    this.photoUploader.onCompleteItem = (item: any, response: any, status: any, headers: any
     ) => {
       if(status == 500) {
         this.uploadImage = false;
         alert('There is an error Processing you request. Please try again.');
       } else {
+        console.log('Image Upload Response - ', JSON.parse(response));
         this.router.navigate(
           ['/annotations/' + 'object' + '/' + 'image' + '/0'],
           { state: { data: JSON.parse(response) } }
