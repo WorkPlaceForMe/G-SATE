@@ -1,4 +1,5 @@
 const fs = require('fs');
+const junk = require('junk');
 const rp = require('request-promise');
 const {
     v4: uuidv4
@@ -264,7 +265,14 @@ let processByVista = (name) => {
     let directory = process.env.resources2 + 'datasets/' + name;
     return new Promise((resolve, reject) => {
         try {
-            let readDir = fs.readdirSync(directory);
+            /**
+             * Load all files from dataset resources
+             * Ignoring junk files
+             */
+            let readDir = fs.readdirSync(directory).filter(junk.not);
+
+            console.log('DIR_FILES', readDir);
+
             const promises = readDir.map(imageName => {
                 if (!/^\..*/.test(imageName)) {
                     let path = directory + '/' + imageName;
