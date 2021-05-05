@@ -21,6 +21,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "http-errors": "~1.6.2",
     "image-size": "^0.8.3",
+    "junk": "^3.1.0",
     "morgan": "~1.9.0",
     "move-file": "^1.2.0",
     "multer": "^1.4.1",

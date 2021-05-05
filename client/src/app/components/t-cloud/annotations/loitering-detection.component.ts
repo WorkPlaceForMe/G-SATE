@@ -163,6 +163,7 @@ export class LoiteringDetectionComponent implements OnInit {
         })
       }
     }
+    console.log('this.annotations - ', this.annotations);
     this.cacheAnnot = this.annotations;
     if(this.annCount === 0) {
       this.fixedSize = this.annotations.length;

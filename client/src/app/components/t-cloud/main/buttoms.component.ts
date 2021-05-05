@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { AnnotationsService } from '../../../services/annotations.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FileUploader, FileLikeObject } from 'ng2-file-upload'
@@ -21,7 +21,8 @@ export class ButtomsComponent implements OnInit {
     private annotationsServ: AnnotationsService,
     private facesservices: FacesService,
     private datepipe: DatePipe,
-    private pagerService: PagerService
+    private pagerService: PagerService,
+    private cdref: ChangeDetectorRef
   ) {}
 
   uploadFileNames: Array<string> = []
@@ -118,16 +119,13 @@ export class ButtomsComponent implements OnInit {
       const newName = name + '.' + format
       file.file.name = newName
     }
-    this.photoUploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
+    this.photoUploader.onCompleteItem = (item: any, response: any, status: any, headers: any
     ) => {
       if(status == 500) {
         this.uploadImage = false;
         alert('There is an error Processing you request. Please try again.');
       } else {
+        console.log('Image Upload Response - ', JSON.parse(response));
         this.router.navigate(
           ['/annotations/' + 'object' + '/' + 'image' + '/0'],
           { state: { data: JSON.parse(response) } }
@@ -155,6 +153,11 @@ export class ButtomsComponent implements OnInit {
       err => console.log(err)
     )
   }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+     }
+
   count = 0
   setPage (page: number) {
     if (page < 1 || page > this.pager.totalPages) {
