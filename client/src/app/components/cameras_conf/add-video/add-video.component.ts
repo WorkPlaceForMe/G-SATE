@@ -71,7 +71,7 @@ export class AddVideoComponent implements OnInit {
     if (file !== 'video') {
       this.up = false;
       alert('File format not supported');
-    } else if (format === 'avi') {
+    } else if (format === 'avi' || format === 'AVI') {
       this.up = false;
       alert('File format not supported');
     } else {
