@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router'; 
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router'; 
 import { FaceFormComponent } from './components/facial_recognition/face-form/face-form.component';
 import { ImagesFormComponent } from './components/facial_recognition/images-form/images-form.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
@@ -159,7 +159,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(
+      routes,
+      {
+        preloadingStrategy: PreloadAllModules
+      }
+    )
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
