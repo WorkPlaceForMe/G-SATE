@@ -78,11 +78,16 @@ export class AnnotationsService {
     return this.http.post(`${this.API_URL}/datasets/image/search/create`, data);
   }
 
+  processDatasetWithOutVista(data:any){
+    return this.http.post<any[]>(`${this.API_URL}/datasets/process-without-vista`, data);
+  }
+
+  processVistaSingle(data:any){
+    return this.http.post(`${this.API_URL}/datasets/process/vista/single`, data);
+  }
+
   processDataset(data:any) {
-    return this.http.post<any[]>(`${this.API_URL}/datasets/process/`, data)
-    .pipe(
-      catchError(this.handleError)
-  );;
+    return this.http.post<any[]>(`${this.API_URL}/datasets/process/`, data).pipe(catchError(this.handleError));
   }
 
   generalDetection(data:any) {
