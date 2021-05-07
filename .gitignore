@@ -1,2 +1,8 @@
 client/src/assets/sample.mp4
 resources/recordings/sample.mp4
+resources
+.DS_Store
+.vscode/
+*/package-lock.json
+client/package-lock.json
+server/package-lock.json
