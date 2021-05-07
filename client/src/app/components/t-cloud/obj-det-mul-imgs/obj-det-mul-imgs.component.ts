@@ -61,9 +61,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   @ViewChildren('polygon') polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
-  
+
   constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
-              private pagerService: PagerService) {}
+    private pagerService: PagerService) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -114,11 +114,11 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.data[index].res_height = this.data[index].height;
       this.data[index].width = rect.width;
       let resRelation = this.data[index].res_height / this.data[index].res_width;
-      this.data[index].height = this.data[index].width*resRelation;
+      this.data[index].height = this.data[index].width * resRelation;
     });
   }
 
-  setContext (ind) {
+  setContext(ind) {
     setTimeout(() => {
       this.polygon.forEach((c) => {
         let index = ind;
@@ -129,14 +129,15 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.data[index].res_height = this.data[index].height;
         this.data[index].width = rect.width;
         let resRelation = this.data[index].res_height / this.data[index].res_width;
-        this.data[index].height = this.data[index].width*resRelation;
+        this.data[index].height = this.data[index].width * resRelation;
         ++ind;
-    });
+      });
     }, 1000);
   }
 
   ngOnInit() {
-    this.processDataset();
+    // this.processDataset();
+    this.processDatasetWithOutVista();
     if (this.activatedRoute.snapshot.params.method == 'dataset') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
@@ -155,7 +156,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     }
     this.annotationsServ.processDataset(data).subscribe(res => {
       this.spin = false;
-      if(res.length == 0) {
+      if (res.length == 0) {
         alert('Zero detections happened.');
         this.router.navigate(['/annotations']);
       } else {
@@ -163,7 +164,36 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.datasetFlag = true;
         this.setPage(1);
       }
-    },error => {
+    }, error => {
+      this.spin = false;
+      alert(`There is an error processing your request. Please retry operation once or contact system administrator.`);
+      this.router.navigate(['/annotations']);
+    });
+  }
+
+  processDatasetWithOutVista() {
+    this.spin = true;
+    let data = {
+      name: this.activatedRoute.snapshot.params.folder,
+      method: this.activatedRoute.snapshot.params.image
+    }
+    console.log('req data -> ', data);
+    this.annotationsServ.processDatasetWithOutVista(data).subscribe(res => {
+      this.spin = false;
+      if (res.length == 0) {
+        alert('Zero detections happened.');
+        this.router.navigate(['/annotations']);
+      } else {
+        res.forEach((value, index) => {
+          value['imageUrl'] = 'http://' + ip + ':4200' + value.image;
+          value['id'] = index;
+        });
+        console.log('processDatasetWithOutVista -> ', res);
+        this.data = res;
+        this.datasetFlag = true;
+        this.setPage(1);
+      }
+    }, error => {
       this.spin = false;
       alert(`There is an error processing your request. Please retry operation once or contact system administrator.`);
       this.router.navigate(['/annotations']);
@@ -176,19 +206,19 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.labelsMessage = true;
     this.label = 'object';
     if (page < 1 || page > this.pager.totalPages) {
-        return;
+      return;
     }
     // get pager object from service
     this.pager = this.pagerService.getPager(this.data.length, page);
-    if(page > 1) {
+    if (page > 1) {
       this.setContext(this.pager.startIndex);
     } else {
       this.setContext(0);
     }
     // get current page of items
     this.pagedItems = this.data.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    
-}
+
+  }
 
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
@@ -259,7 +289,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   next() {
-    if(Object.keys(this.annObj).length == 0 || this.annObj == {}) {
+    if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
       this.annObj = this.data;
     }
     if (this.valueImage < this.total - 1) {
@@ -351,18 +381,18 @@ export class ObjDetMulImgsComponent implements OnInit {
         //this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
         //this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
       }
-      if(this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
-        this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4);
+      if (this.annotations[e][2]['general_detection'] == 'Yes') {
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
+        this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y']-2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4, this.annotations[e][0]['y']-4, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 4, this.annotations[e][0]['y'] - 4, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 2, 4, 4);
         this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-3, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-3, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 3, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 3, 4, 4);
         /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
         this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
         this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
@@ -386,7 +416,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e) {
     let x, y, rect;
-    if(this.datasetFlag) {
+    if (this.datasetFlag) {
       // console.log(e.clientX+','+e.clientY, this.click);
       rect = this.canvas.getBoundingClientRect();
       x = e.clientX - rect.left - 3;
@@ -405,7 +435,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.ctx.fillRect(x - 2, y - 2, 4, 4);
         this.ctx.lineWidth = 2.5;
         this.ctx.stroke();
-    }
+      }
     }
   }
 
@@ -424,10 +454,20 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   annotate(event, i) {
-    this.canvas = this.rd.selectRootElement(event.target);
-    this.ctx = this.canvas.getContext("2d");
-    this.labelsMessage = false;
-    //this.getLabels();
+    console.log('annotate called');
+
+    if (this.data[i].results) {
+      this.canvas = this.rd.selectRootElement(event.target);
+      this.ctx = this.canvas.getContext("2d");
+      this.labelsMessage = false;
+      //this.getLabels();
+      this.goAnnotate(event, i);
+    } else {
+      alert(`Please click on the Labels button first to get the detected annotations, then you can draw custom annotations`);
+    }
+  }
+
+  goAnnotate(event, i) {
     this.getAnn(i);
     this.getLabels(i);
     let x, y, rect;
@@ -466,7 +506,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           x = x - this.coords[0].x;
           y = y - this.coords[0].y;
           this.coords.push({ 'x': x, 'y': y });
-          this.coords.push({'general_detection': 'No'});
+          this.coords.push({ 'general_detection': 'No' });
           this.coords.push({ 'label': this.label });
           this.ctx.lineWidth = 2.5;
           this.ctx.stroke();
@@ -545,18 +585,18 @@ export class ObjDetMulImgsComponent implements OnInit {
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
-      if(this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
-        this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4);
+      if (this.annotations[e][2]['general_detection'] == 'Yes') {
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
+        this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y']-2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-4, this.annotations[e][0]['y']-4, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x']-2, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 4, this.annotations[e][0]['y'] - 4, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 2, 4, 4);
         this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x']-3, this.annotations[e][0]['y'] + this.annotations[e][1]['y']-3, 4, 4);
+        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 3, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 3, 4, 4);
         /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
         this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
         this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
@@ -573,8 +613,23 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
     this.labelsMessage = false;
-    this.getAnn(i);
-    this.getLabels(i);
+
+    const req = { "image_path": this.data[i].image };
+    this.annotationsServ.processVistaSingle(req).subscribe((res: any) => {
+      const response = JSON.parse(res);
+      console.log('processVistaSingle -> ', response);
+      this.spin = false;
+      if (!response) {
+        alert('Zero detections happened.');
+      } else {
+        this.data[i]['results'] = response.results;
+        this.getAnn(i);
+        this.getLabels(i);
+      }
+    }, error => {
+      this.spin = false;
+      alert(`There is an error processing your request. Please retry operation once or contact system administrator.`);
+    });
   }
 
   generalDetection(i) {
@@ -593,7 +648,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.annotations.splice(this.annObj[this.data[i].id].fixedSize, this.annotations.length);
       res.forEach(element => {
         this.annotations = [];
-        if(!this.annObj.hasOwnProperty(this.data[i].id)) {
+        if (!this.annObj.hasOwnProperty(this.data[i].id)) {
           this.annotations.push(element);
           this.annObj[this.data[i].id] = {
             image: this.data[i].image,

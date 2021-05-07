@@ -1,116 +1,113 @@
 <div class="card-group">
-  <div class="col-md-10">
-    <div class="card border-info" style="min-height: 600.6px;">
-      <div class="card-body" align='center'>
-        <div class="container">
-          <div class="d-flex justify-content-center" *ngIf="spin">
-            <div class="spinner-border spin" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-          <div class="row" *ngIf="datasetFlag">
-            <div class="col-md-6 mb-1" *ngFor="let item of pagedItems; let i = index">
-              <div class="card">
-                <img class="card-img-top" src="" alt="">
-                <div class="card-body">
-                  <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}'
-                    width='{{item.width}}'
-                    style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
-                    (click)='annotate($event, item.id)' [style.background-image]="'url(' + item.image + ')'"
-                    oncontextmenu="return false;">
+    <div class="col-md-10">
+        <div class="card border-info" style="min-height: 600.6px;">
+            <div class="card-body" align='center'>
+                <div class="container">
+                    <div class="d-flex justify-content-center" *ngIf="spin">
+                        <div class="spinner-border spin" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="datasetFlag">
+                        <div class="col-md-6 mb-1" *ngFor="let item of pagedItems; let i = index">
+                            <div class="card">
+                                <img class="card-img-top" src="" alt="">
+                                <div class="card-body">
+                                    <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, item.id)' [style.background-image]="'url(' + item.imageUrl + ')'"
+                                        oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>
-                </div>
-                <div class="card-footer" align='center'>
-                  <div class="input-group" style="margin-left: 7rem;">
-                    <button class="btn btn-outline-primary btn-sm mr-3" (click)="generalDetection(item.id)">
+                                </div>
+                                <div class="card-footer" align='center'>
+                                    <div class="input-group" style="margin-left: 7rem;">
+                                        <!-- <button class="btn btn-outline-primary btn-sm mr-3" (click)="generalDetection(item.id)">
                       Detect Objects
-                    </button>
+                    </button> -->
 
-                    <!-- <label class="checkbox-container">&nbsp;
+                                        <!-- <label class="checkbox-container">&nbsp;
                       <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked"
                       (change)="handleSelected(item, item.checked)" [checked]="item.checked">
                       <span class="checkmark"></span>
                     </label> -->
 
-                    <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
+                                        <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
                       Labels
                     </button>
-                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+            <div class="card-footer" align='center'>
+                <nav aria-label="Page navigation example">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                            <a class="page-link" (click)="setPage(1)">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+                            <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-      </div>
-      <div class="card-footer" align='center'>
-        <nav aria-label="Page navigation example">
-          <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
-            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-              <a class="page-link" (click)="setPage(1)">First</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-              <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
-            </li>
-            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
-              <a class="page-link" (click)="setPage(page)">{{page}}</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-              <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-              <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-2">
-    <div class="card border-info panel">
-      <div class="card-header" align='center' *ngIf='objDet == true'>List of areas</div>
-      <div class="card-header" align='center' *ngIf='objDet == false'>Labels Detected <span class="font-italic">{{annotations.length}}</span></div>
-      <ul *ngIf="!labelsMessage">
-        <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[3].label}}</li>
-      </ul>
-      <div class="card-body" *ngIf="labelsMessage">
-        <p>Click the object labels button to check the detected objects</p>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex justify-content-center" *ngIf="generalDetSpin">
-          <div class="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div class="card border-info panel" style='margin-top:2px;'>
-      <div class="card-header" align='center'>Instructions</div>
-      <div class="card-body">
-        <p><strong>Click the object to define it with the new label</strong> </p>
-      </div>
+    <div class="col-md-2">
+        <div class="card border-info panel">
+            <div class="card-header" align='center' *ngIf='objDet == true'>List of areas</div>
+            <div class="card-header" align='center' *ngIf='objDet == false'>Labels Detected <span class="font-italic">{{annotations.length}}</span></div>
+            <ul *ngIf="!labelsMessage">
+                <li *ngFor='let ann of annotations; index as i' (click)='get(i)'>{{ann[3].label}}</li>
+            </ul>
+            <div class="card-body" *ngIf="labelsMessage">
+                <p>Click the object labels button to check the detected objects</p>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center" *ngIf="generalDetSpin">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-info panel" style='margin-top:2px;'>
+            <div class="card-header" align='center'>Instructions</div>
+            <div class="card-body">
+                <p><strong>Click the object to define it with the new label</strong> </p>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="input-group mb-1 p-1" *ngIf='multiple == true'>
-  <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label">
-  <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
-  <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
-  <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
+    <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label">
+    <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
+    <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
+    <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
     <!-- <option value="undefined" disabled>Please choose a label</option> -->
     <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
   </select>
 </div>
 <div class='btn-group p-2' role="group">
-  <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
-  <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button>
-  <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
-  <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
+    <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
+    <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button>
+    <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
+    <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
 </div>
 
 
 <div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
-  <strong>Oops!</strong> Please choose a label to start.
+    <strong>Oops!</strong> Please choose a label to start.
 </div>
