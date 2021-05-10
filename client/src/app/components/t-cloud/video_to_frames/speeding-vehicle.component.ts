@@ -105,7 +105,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.start = '00:00:00';
       this.finish = cam[0].vid_length;
       this.maxTime = this.finish;
-      // http://3.211.144.140:4200/assets/shared-data/stored_videos/Abhra_vdo_avi.AVI
+      // http://40.112.52.108:4200/assets/shared-data/stored_videos/Abhra_vdo_avi.AVI
       // this.rtsp_in = 'http://' + ip + ':3000' + cam[0].rtsp_in.split('..')[1];
       // this.rtsp_in = cam[0].rtsp_out;
       this.rtsp_in = 'http://' + ip + ':4200' + cam[0].rtsp_out;
