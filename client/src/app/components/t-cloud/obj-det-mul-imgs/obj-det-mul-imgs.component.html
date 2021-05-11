@@ -15,8 +15,8 @@
                                 <div class="card-body">
                                     <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, item.id)' [style.background-image]="'url(' + item.imageUrl + ')'"
                                         oncontextmenu="return false;">
-                    Your browser does not support the HTML5 canvas tag.
-                  </canvas>
+                                        Your browser does not support the HTML5 canvas tag.
+                                    </canvas>
                                 </div>
                                 <div class="card-footer" align='center'>
                                     <div class="input-group" style="margin-left: 7rem;">
@@ -30,9 +30,12 @@
                       <span class="checkmark"></span>
                     </label> -->
 
-                                        <button class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
-                      Labels
-                    </button>
+                                        <button *ngIf="activatedRoute.snapshot.params.image === 'vista'" class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
+                                            Labels
+                                        </button>
+                                        <button *ngIf="activatedRoute.snapshot.params.image === 'analytics'" class="btn btn-outline-primary btn-sm" (click)="getAnayticsImgAnnotations(item.id)">
+                                            Labels
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -96,9 +99,9 @@
     <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
     <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
     <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
-    <!-- <option value="undefined" disabled>Please choose a label</option> -->
-    <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
-  </select>
+        <!-- <option value="undefined" disabled>Please choose a label</option> -->
+        <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
+    </select>
 </div>
 <div class='btn-group p-2' role="group">
     <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>

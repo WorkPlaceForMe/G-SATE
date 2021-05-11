@@ -136,8 +136,13 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.processDataset();
-    this.processDatasetWithOutVista();
+    console.log('this.activatedRoute.snapshot.params -> ', this.activatedRoute.snapshot.params);
+    if(this.activatedRoute.snapshot.params.image === 'vista') {
+      this.processDatasetWithOutVista();
+    } else {
+      this.processDataset();
+    }
+    
     if (this.activatedRoute.snapshot.params.method == 'dataset') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
@@ -160,6 +165,9 @@ export class ObjDetMulImgsComponent implements OnInit {
         alert('Zero detections happened.');
         this.router.navigate(['/annotations']);
       } else {
+        res.forEach((value, index) => {
+          value['imageUrl'] = 'http://' + ip + ':4200' + value.image;
+        });
         this.data = res;
         this.datasetFlag = true;
         this.setPage(1);
@@ -630,6 +638,14 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.spin = false;
       alert(`There is an error processing your request. Please retry operation once or contact system administrator.`);
     });
+  }
+
+  getAnayticsImgAnnotations(i) {
+    this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    this.getAnn(i);
+    this.getLabels(i);
   }
 
   generalDetection(i) {
