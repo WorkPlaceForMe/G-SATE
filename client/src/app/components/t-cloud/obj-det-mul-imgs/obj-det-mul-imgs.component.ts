@@ -424,7 +424,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e) {
     let x, y, rect;
-    if (this.datasetFlag) {
+    if (this.datasetFlag && this.canvas) {
       // console.log(e.clientX+','+e.clientY, this.click);
       rect = this.canvas.getBoundingClientRect();
       x = e.clientX - rect.left - 3;
