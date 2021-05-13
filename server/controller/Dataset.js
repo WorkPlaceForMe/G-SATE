@@ -252,11 +252,39 @@ let Dataset = {
           "/" +
           req.file.originalname;
         unZippedPath = process.env.resources2 + "datasets/" + pathName;
-        fs.createReadStream(pat).pipe(
-          unzipper.Extract({
-            path: unZippedPath,
-          })
-        );
+        fs.createReadStream(pat)
+          .pipe(
+            unzipper.Extract({
+              path: unZippedPath,
+            })
+          )
+          .promise()
+          .then(
+            () => {
+              /**
+               * File rename
+               */
+              fs.readdirSync(unZippedPath)
+                .filter(junk.not)
+                .forEach((file) => {
+                  if (file !== `${pathName}.zip`) {
+                    // console.log(file);
+                    fs.rename(
+                      unZippedPath + "/" + file,
+                      unZippedPath + "/" + file.split(" ").join("-"),
+                      (err) => {
+                        if (err) {
+                          logger.log("error", `${file}: ${err}`);
+                        }
+                        console.log("Rename complete!");
+                      }
+                    );
+                  }
+                });
+            },
+            (e) => console.log("error", e)
+          );
+
         let data = {
           cam_id: uuidv4(),
           clientId: uuidv4(),
