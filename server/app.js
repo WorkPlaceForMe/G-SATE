@@ -501,7 +501,7 @@ var processImage = (imgPath, path, res) => {
             'url': process.env.vista_server_ip + '/api/v1/sync',
             'strictSSL': false,
             'headers': {
-                'Authorization': 'Basic YWRtaW46YWRtaW4='//'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx'
+                'Authorization': 'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx' // 'Basic YWRtaW46YWRtaW4='
             },
             formData: {
                 'upload': {
