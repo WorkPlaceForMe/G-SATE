@@ -166,7 +166,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.router.navigate(['/annotations']);
       } else {
         res.forEach((value, index) => {
-          value['imageUrl'] = 'http://' + ip + ':4200' + value.image;
+          value['image'] = 'http://' + ip + ':4200' + value.image;
         });
         this.data = res;
         this.datasetFlag = true;
@@ -193,7 +193,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         this.router.navigate(['/annotations']);
       } else {
         res.forEach((value, index) => {
-          value['imageUrl'] = 'http://' + ip + ':4200' + value.image;
+          value['image'] = 'http://' + ip + ':4200' + value.image;
           value['id'] = index;
         });
         console.log('processDatasetWithOutVista -> ', res);
@@ -660,26 +660,31 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.annotationsServ.generalDetection(body).subscribe(res => {
       this.generalDetSpin = false;
       alert(`${res.length} objects detected.`);
-      this.annotations = this.annObj[this.data[i].id].results;
-      this.annotations.splice(this.annObj[this.data[i].id].fixedSize, this.annotations.length);
-      res.forEach(element => {
-        this.annotations = [];
-        if (!this.annObj.hasOwnProperty(this.data[i].id)) {
-          this.annotations.push(element);
-          this.annObj[this.data[i].id] = {
-            image: this.data[i].image,
-            width: this.data[i].res_width,
-            height: this.data[i].res_height,
-            results: this.annotations,
-            fixedSize: this.annotations.length
-          };
-        } else {
-          this.annotations = this.annObj[this.data[i].id].results;
-          this.annotations.push(element);
-          this.annObj[this.data[i].id].results = this.annotations;
+      if(res.length>0) {
+        if (this.annObj.hasOwnProperty(this.data[i].id)) {
+        this.annotations = this.annObj[this.data[i].id].results;
+        this.annotations.splice(this.annObj[this.data[i].id].fixedSize, this.annotations.length);
         }
-      });
-      this.re_draw();
+        res.forEach(element => {
+          this.annotations = [];
+          if (!this.annObj.hasOwnProperty(this.data[i].id)) {
+            this.annotations.push(element);
+            this.annObj[this.data[i].id] = {
+              image: this.data[i].image,
+              width: this.data[i].res_width,
+              height: this.data[i].res_height,
+              results: this.annotations,
+              fixedSize: this.annotations.length
+            };
+          } else {
+            this.annotations = this.annObj[this.data[i].id].results;
+            this.annotations.push(element);
+            this.annObj[this.data[i].id].results = this.annotations;
+          }
+        });
+        this.re_draw();
+      }
+      
     });
   }
 
