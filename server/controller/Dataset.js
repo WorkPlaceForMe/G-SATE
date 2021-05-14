@@ -61,7 +61,7 @@ let Dataset = {
   },
   processVistaSingleImage: async (req, res, next) => {
     const imgPath = req.body.image_path.replace(
-      "/assets/shared-data/",
+      `http://${process.env.my_ip}:4200/assets/shared-data/`,
       process.env.resources2
     );
 
