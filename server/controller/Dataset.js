@@ -60,12 +60,14 @@ let Dataset = {
     }
   },
   processVistaSingleImage: async (req, res, next) => {
-    /* const imgPath = req.body.image_path.replace(
+    const imgPath = req.body.image_path.replace(
       "/assets/shared-data/",
       process.env.resources2
-    ); */
+    );
 
-    const imgPath = req.body.image_path;
+    // const imgPath = req.body.image_path;
+
+    console.log(">>>>>>>>>>>>> " + imgPath);
 
     const options = {
       method: "POST",
