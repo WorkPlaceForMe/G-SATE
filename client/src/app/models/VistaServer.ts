@@ -1,1 +1,1 @@
-export var vistaIP: string = 'https://ec2-3-211-144-140.compute-1.amazonaws.com';
+export var vistaIP: string = 'https://ec2-54-210-219-113.compute-1.amazonaws.com';
