@@ -257,7 +257,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           })
         }
       }
-
+      // console.log(this.annotations)
       this.annObj[this.data[i].id] = {
         image: this.data[i].image,
         width: this.data[i].res_width,
@@ -610,6 +610,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   getImgAnnotations(i) {
+    this.spin=true
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
     this.labelsMessage = false;
@@ -632,8 +633,20 @@ export class ObjDetMulImgsComponent implements OnInit {
     });
   }
 
+  getAnayticsImgAnnotations(i) {
+    this.spin=true
+    this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    this.getAnn(i);
+    this.getLabels(i);
+     setTimeout(() => {
+       this.spin=false
+     },3000)
+  }
+
   generalDetection(i) {
-    this.generalDetSpin = true;
+    this.spin = true;
     let body = {
       type: this.activatedRoute.snapshot.params.image,
       details: this.data[i],
@@ -642,7 +655,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.canvas = this.rd.selectRootElement(`canvas#jPolygon${i}.card-img-top.img-fluid`);
     this.ctx = this.canvas.getContext("2d");
     this.annotationsServ.generalDetection(body).subscribe(res => {
-      this.generalDetSpin = false;
+      this.spin = false;
       alert(`${res.length} objects detected.`);
       this.annotations = this.annObj[this.data[i].id].results;
       this.annotations.splice(this.annObj[this.data[i].id].fixedSize, this.annotations.length);
