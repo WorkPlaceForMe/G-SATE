@@ -285,13 +285,19 @@ let Dataset = {
                 .filter(junk.not)
                 .forEach((file) => {
                   if (file !== `${pathName}.zip`) {
-                    // console.log(file);
+                    console.log(
+                      file,
+                      `${pathName}-${makeRandomString(14)}.${file
+                        .split(".")
+                        .pop()}`
+                    );
+
                     fs.rename(
                       unZippedPath + "/" + file,
                       // unZippedPath + "/" + file.split(" ").join("-"),
-                      `${pathName}-${makeRandomString(14)}.${file
-                        .split(".")
-                        .pop()}`,
+                      `${unZippedPath}/${pathName}-${makeRandomString(
+                        14
+                      )}.${file.split(".").pop()}`,
                       (err) => {
                         if (err) {
                           logger.log("error", `${file}: ${err}`);
