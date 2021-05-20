@@ -15,6 +15,19 @@ const Algorithms = require("../models/Algorithms");
 const requestImageSize = require("request-image-size");
 const logger = require("../helpers/logger");
 
+const makeRandomString = (length) => {
+  var result = [];
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result.push(
+      characters.charAt(Math.floor(Math.random() * charactersLength))
+    );
+  }
+  return result.join("");
+};
+
 let Dataset = {
   processWithoutVista: async (req, res, next) => {
     let body = req.body;
@@ -275,7 +288,10 @@ let Dataset = {
                     // console.log(file);
                     fs.rename(
                       unZippedPath + "/" + file,
-                      unZippedPath + "/" + file.split(" ").join("-"),
+                      // unZippedPath + "/" + file.split(" ").join("-"),
+                      `${pathName}-${makeRandomString(14)}.${file
+                        .split(".")
+                        .pop()}`,
                       (err) => {
                         if (err) {
                           logger.log("error", `${file}: ${err}`);
