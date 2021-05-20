@@ -13,7 +13,7 @@
                             <div class="card">
                                 <img class="card-img-top" src="" alt="">
                                 <div class="card-body">
-                                    <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, item.id)' [style.background-image]="'url(' + item.imageUrl + ')'"
+                                    <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}" height='{{item.height}}' width='{{item.width}}' style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event, item.id)' [style.background-image]="getBackground(item.imageUrl)"
                                         oncontextmenu="return false;">
                     Your browser does not support the HTML5 canvas tag.
                   </canvas>

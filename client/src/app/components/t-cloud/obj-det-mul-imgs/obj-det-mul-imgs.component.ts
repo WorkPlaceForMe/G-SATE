@@ -62,8 +62,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   private canvas;
   private ctx;
 
-  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
-    private pagerService: PagerService) { }
+  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router,
+    private pagerService: PagerService) {
+     }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -104,7 +105,9 @@ export class ObjDetMulImgsComponent implements OnInit {
       }
     }
   }
-
+  getBackground(image) {
+    return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  }
   ngAfterViewInit() {
     this.polygon.forEach((c, index) => {
       this.canvas = this.rd.selectRootElement(c["nativeElement"]);
