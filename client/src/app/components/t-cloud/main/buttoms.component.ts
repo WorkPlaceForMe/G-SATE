@@ -355,13 +355,13 @@ export class ButtomsComponent implements OnInit {
     this.images = []
     this.pager = {}
     this.spinner = true
-    this.annotationsServ.searchImages(this.searchKeyword,this.searchcount).subscribe(res => {
+    this.annotationsServ.searchImages(this.searchKeyword,this.searchcount).subscribe((res:any) => {
       this.spinner = false
-      this.images = res
+      this.images = res.value
       this.images = this.images.map(obj => ({ ...obj, checked: true }))
       this.setPage(1)
       this.searchFlag = true
-      this.isSearchDisabled = true
+      // this.isSearchDisabled = true
     })
     /* this.images = this.images.map(obj=> ({ ...obj, checked: true }))
         setTimeout(() => {
