@@ -95,13 +95,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" placeholder="Input the name of the dataset" [(ngModel)]='searchDatasetName'
+                        <input type="text" class="mr-1" placeholder="Input the name of the dataset" [(ngModel)]='searchDatasetName'
                             size="28" (ngModelChange)="detectChange()">
-                        <!-- <select name="label" class="custom-select" [(ngModel)]="datasetName" placeholder="Choose a label"
-              (ngModelChange)="detect()">
-              <option value="null" disabled>Or upload to an existing dataset</option>
-              <option *ngFor="let data of datasetsNames" [value]="data.name">{{data.name}}</option>
-            </select> -->
+                        <select name="label" class="custom-select mr-1" [(ngModel)]="searchcount" placeholder="Choose a label">
+                            <option  value="50">50</option>
+                            <option value="50">100</option>
+                            <option value="50">150</option>
+                            <option value="50">200</option>
+                      </select>
                         <input class="form-control amber-border" [(ngModel)]='searchKeyword' type="text"
                             placeholder="Search" aria-label="Search" (ngModelChange)="detectSearchChange()"
                             [disabled]="searchFlag">

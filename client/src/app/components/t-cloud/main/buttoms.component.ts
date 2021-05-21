@@ -38,6 +38,7 @@ export class ButtomsComponent implements OnInit {
   })
 
   fileName: string = ''
+  searchcount:number=50
   imgFileName: string = ''
   uploadName: string
   unAnnDatasetsNames: any = []
@@ -354,7 +355,7 @@ export class ButtomsComponent implements OnInit {
     this.images = []
     this.pager = {}
     this.spinner = true
-    this.annotationsServ.searchImages(this.searchKeyword).subscribe(res => {
+    this.annotationsServ.searchImages(this.searchKeyword,this.searchcount).subscribe(res => {
       this.spinner = false
       this.images = res
       this.images = this.images.map(obj => ({ ...obj, checked: true }))
