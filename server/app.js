@@ -557,7 +557,7 @@ app.get('/api/search/:keyword', async function(req, res) {
 })
 
 app.get("/api/search/:keyword/:count", async function (req, res) {
-  let count = req.params.keyword;
+  let count = req.params.count;
   let offset = 0;
   let keyword = req.params.keyword;
   try {
