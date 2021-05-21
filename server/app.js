@@ -556,6 +556,19 @@ app.get('/api/search/:keyword', async function(req, res) {
     }
 })
 
+app.get("/api/search/:keyword/:count", async function (req, res) {
+  let count = req.params.keyword;
+  let offset = 0;
+  let keyword = req.params.keyword;
+  try {
+    const response = await searchImages(keyword, count, offset);
+    res.status(200).json(response);
+  } catch (err) {
+    console.log("error>>>>>>>>>>>>.", err);
+    res.status(500).json(err.message);
+  }
+});
+
 function searchImages(keyword, count, offset) {
     let result = [];
     return new Promise(async(resolve, reject) => {

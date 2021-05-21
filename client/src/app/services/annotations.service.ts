@@ -98,8 +98,8 @@ export class AnnotationsService {
     return this.http.delete(`${this.API_URL}/datasets/${name}/${snippet_id}/${type}`);
   }
 
-  searchImages(keyword:any) {
-    return this.http.get(`${this.API_URL}/search/${keyword}`);
+  searchImages(keyword:any,count:number) {
+    return this.http.get(`${this.API_URL}/search/${keyword}/${count}`);
   }
   constructor(private http: HttpClient) { }
 
