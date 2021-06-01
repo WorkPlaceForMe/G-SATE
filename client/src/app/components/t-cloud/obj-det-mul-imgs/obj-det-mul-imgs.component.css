@@ -114,3 +114,9 @@ a {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.label-list li {
+  cursor: pointer;
+}
+.active-label {
+  color: yellow;
+}
