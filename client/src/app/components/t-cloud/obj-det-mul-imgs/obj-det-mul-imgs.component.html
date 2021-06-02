@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="card-footer" align='center'>
                                     <div class="input-group" style="margin-left: 7rem;">
-                                        <button class="btn btn-outline-primary btn-sm mr-3" (click)="generalDetection(item.id)">
+                                        <button class="btn btn-outline-primary btn-sm mr-3" (click)="generalDetection(item.id,$event)">
                       Detect Objects
                     </button>
 
@@ -30,10 +30,10 @@
                       <span class="checkmark"></span>
                     </label> -->
 
-                                        <button *ngIf="activatedRoute.snapshot.params.image === 'vista'" class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id)">
+                                        <button *ngIf="activatedRoute.snapshot.params.image === 'vista'" class="btn btn-outline-primary btn-sm" (click)="getImgAnnotations(item.id,$event)">
                                             Labels
                                         </button>
-                                        <button *ngIf="activatedRoute.snapshot.params.image === 'analytics'" class="btn btn-outline-primary btn-sm" (click)="getAnayticsImgAnnotations(item.id)">
+                                        <button *ngIf="activatedRoute.snapshot.params.image === 'analytics'" class="btn btn-outline-primary btn-sm" (click)="getAnayticsImgAnnotations(item.id,$event)">
                                             Labels
                                         </button>
                                     </div>
@@ -132,7 +132,7 @@
             <div class="dropdown-divider"></div>
             <div class="mt-2 mb-3" align='center'>
                 <button class="btn btn-primary mr-3" data-dismiss="modal" (click)='updateLabel()'>Okay</button>
-                <button class="btn btn-primary" data-dismiss="modal" (click)="close()">Close</button>
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
