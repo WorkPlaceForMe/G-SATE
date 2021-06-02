@@ -34,6 +34,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   total: number;
   width: number;
   height: number;
+  selectedID:any='';
   annWidth: number;
   annHeight: number;
   objDet: boolean = false;
@@ -319,6 +320,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   getLabels(i) {
+     this.labels = [];
     if (this.labelsObj.hasOwnProperty(this.data[i].id)) {
       this.labels = this.labelsObj[this.data[i].id];
       this.cacheAnnot = this.labels;
@@ -442,24 +444,32 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.id = undefined;
     this.clearAct = false;
   }
-
+  openlebelModal(id){
+    this.newLabel=this.annotations[id][3].label
+  }
   updateLabel() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (let e = 0; e < this.annotations.length; e++) {
-      if (e == this.id) {
-        this.annotations[e].pop();
-        this.annotations[e].push({ label: this.label });
+    console.log(this.newLabel)
+    if(this.newLabel) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      for (let e = 0; e < this.annotations.length; e++) {
+        if (e == this.id) {
+          this.annotations[e].pop();
+          this.annotations[e].push({ label: this.newLabel });
+        }
       }
+      this.re_draw();
+      this.on = false;
+      this.id = undefined;
+      this.selectedID= undefined;
     }
-    this.re_draw();
-    this.on = false;
-    this.id = undefined;
+    
   }
 
   get(i) {
     this.on = true;
     this.clearAct = true;
     this.id = i;
+    this.selectedID=i;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
@@ -611,17 +621,17 @@ export class ObjDetMulImgsComponent implements OnInit {
   annotate(event, i) {
     console.log("annotate called");
 
-    if (this.data[i].results) {
+    //if (this.data[i].results) {
       this.canvas = this.rd.selectRootElement(event.target);
       this.ctx = this.canvas.getContext("2d");
       this.labelsMessage = false;
       //this.getLabels();
       this.goAnnotate(event, i);
-    } else {
-      alert(
-        `Please click on the Labels button first to get the detected annotations, then you can draw custom annotations`
-      );
-    }
+    // } else {
+    //   alert(
+    //     `Please click on the Labels button first to get the detected annotations, then you can draw custom annotations`
+    //   );
+    // }
   }
 
   goAnnotate(event, i) {
@@ -629,6 +639,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.getLabels(i);
     let x, y, rect;
     if (this.objDet == false) {
+      console.log('here3',this.label)
       if (this.label != undefined) {
         this.count++;
         this.showMyMessage = false;
@@ -673,13 +684,13 @@ export class ObjDetMulImgsComponent implements OnInit {
           y = y - this.coords[0].y;
           this.coords.push({ x: x, y: y });
           this.coords.push({ general_detection: "No" });
-          this.coords.push({ label: this.label });
+          this.coords.push({ label: this.label+(this.annotations.length+1) });
           this.ctx.lineWidth = 2.5;
           this.ctx.stroke();
           this.annotations.push(this.coords);
           this.annObj[this.data[i].id].results = this.annotations;
           //this.annotations = this.annObj[this.data[i].id].results;
-          this.labels.push(this.label);
+          this.labels.push(this.label+(this.annotations.length+1));
           this.labelsObj[this.data[i].id] = this.labels;
           this.labels = this.labelsObj[this.data[i].id];
           this.re_draw();
@@ -692,6 +703,7 @@ export class ObjDetMulImgsComponent implements OnInit {
         }, 5000);
       }
     } else {
+      console.log('here4')
       if (this.label != undefined) {
         let inX, endX, inY, endY;
         rect = this.canvas.getBoundingClientRect();
@@ -855,8 +867,10 @@ export class ObjDetMulImgsComponent implements OnInit {
     }
   }
 
-  getImgAnnotations(i) {
+  getImgAnnotations(i,event) {
     this.spin = true;
+    this.activeButton(event)
+    this.selectedID=''
     this.canvas = this.rd.selectRootElement(
       `canvas#jPolygon${i}.card-img-top.img-fluid`
     );
@@ -886,8 +900,10 @@ export class ObjDetMulImgsComponent implements OnInit {
     );
   }
 
-  getAnayticsImgAnnotations(i) {
+  getAnayticsImgAnnotations(i,event) {
     this.spin = true;
+    this.activeButton(event)
+    this.selectedID=''
     this.canvas = this.rd.selectRootElement(
       `canvas#jPolygon${i}.card-img-top.img-fluid`
     );
@@ -899,8 +915,24 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.spin = false;
     }, 3000);
   }
+  activeButton(event){
+    let clickedElement = event.target || event.srcElement;
 
-  generalDetection(i) {
+    if( clickedElement.nodeName === "BUTTON" ) {
+
+      let isCertainButtonAlreadyActive = document.querySelector(".button-active");
+      // if a Button already has Class: .active
+      if( isCertainButtonAlreadyActive ) {
+        isCertainButtonAlreadyActive.classList.remove("button-active");
+      }
+
+      clickedElement.className += " button-active";
+    }
+  }
+
+  generalDetection(i,event) {
+    this.activeButton(event)
+    this.selectedID=''
     this.spin = true;
     let body = {
       type: this.activatedRoute.snapshot.params.image,
@@ -918,14 +950,16 @@ export class ObjDetMulImgsComponent implements OnInit {
       alert(`${res.length} objects detected.`);
       if (res.length > 0) {
         if (this.annObj.hasOwnProperty(this.data[i].id)) {
+          console.log('ddd')
           this.annotations = this.annObj[this.data[i].id].results;
           this.annotations.splice(
             this.annObj[this.data[i].id].fixedSize,
             this.annotations.length
           );
         }
+        console.log(res)
+        this.annotations = [];
         res.forEach((element) => {
-          this.annotations = [];
           if (!this.annObj.hasOwnProperty(this.data[i].id)) {
             this.annotations.push(element);
             this.annObj[this.data[i].id] = {
@@ -936,12 +970,22 @@ export class ObjDetMulImgsComponent implements OnInit {
               fixedSize: this.annotations.length,
             };
           } else {
-            this.annotations = this.annObj[this.data[i].id].results;
+             console.log('eee',this.annObj[this.data[i].id].results)
+            //this.annotations = this.annObj[this.data[i].id].results;
             this.annotations.push(element);
             this.annObj[this.data[i].id].results = this.annotations;
           }
         });
+        this.annotations.forEach((element,index )=> {
+          if(element[3].label==""){
+            element[3].label='object'+(index+1)
+          }
+        });
+        console.log(this.annotations)
+        this.labelsMessage = false;
         this.re_draw();
+      } else {
+        this.annotations = [];
       }
     });
   }
