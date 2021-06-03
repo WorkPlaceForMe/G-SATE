@@ -23,6 +23,7 @@ export class LoiteringDetectionComponent implements OnInit {
   height: number;
   annWidth: number;
   annHeight: number;
+  selectedID: any = "";
   objDet: boolean = false;
   card: any = {
     width: 0,
@@ -201,7 +202,7 @@ export class LoiteringDetectionComponent implements OnInit {
       }
     }
   }
-
+  
   send() {
     this.annotations.push({ 'width': this.annWidth, 'height': this.annHeight });
     this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.annotations).subscribe(
@@ -241,24 +242,30 @@ export class LoiteringDetectionComponent implements OnInit {
     this.id = undefined;
     this.clearAct = false;
   }
-
+  openlebelModal(id) {
+    this.newLabel = this.annotations[id][3].label;
+  }
   updateLabel() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (let e = 0; e < this.annotations.length; e++) {
-      if (e == this.id) {
-        this.annotations[e].pop();
-        this.annotations[e].push({label: this.label});
+    if (this.newLabel) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      for (let e = 0; e < this.annotations.length; e++) {
+        if (e == this.id) {
+          this.annotations[e].pop();
+          this.annotations[e].push({label: this.newLabel});
+        }
       }
+      this.re_draw();
+      this.on = false;
+      this.id = undefined;
+      this.selectedID = undefined;
     }
-    this.re_draw();
-    this.on = false;
-    this.id = undefined;
   }
 
   get(i) {
     this.on = true;
     this.clearAct = true;
     this.id = i;
+    this.selectedID = i;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     for (let e = 0; e < this.annotations.length; e++) {
       this.ctx.fillStyle = "lime";
@@ -459,8 +466,24 @@ export class LoiteringDetectionComponent implements OnInit {
       //return;
     }
   }
+  activeButton(event) {
+    let clickedElement = event.target || event.srcElement;
 
-  generalDetection() {
+    if (clickedElement.nodeName === "BUTTON") {
+      let isCertainButtonAlreadyActive = document.querySelector(
+        ".button-active"
+      );
+      // if a Button already has Class: .active
+      if (isCertainButtonAlreadyActive) {
+        isCertainButtonAlreadyActive.classList.remove("button-active");
+      }
+
+      clickedElement.className += " button-active";
+    }
+  }
+  generalDetection(event) {
+    this.activeButton(event);
+    this.selectedID = "";
     this.flag = true;
     this.spinflag = true;
     let body = {
