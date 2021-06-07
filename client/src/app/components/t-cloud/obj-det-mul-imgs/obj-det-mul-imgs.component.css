@@ -116,6 +116,11 @@ a {
 }
 .label-list li {
   cursor: pointer;
+  list-style-type: none;
+  font-size: 12px;
+}
+.lebel-button {
+  font-size: 10px;
 }
 .active-label {
   color: yellow;
@@ -124,4 +129,9 @@ a {
   color: #fff;
   background-color: #375a7f;
   border-color: #375a7f;
+}
+.annotation-height {
+  height: 350px !important;
+  overflow: hidden;
+  overflow-y: scroll;
 }

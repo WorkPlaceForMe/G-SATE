@@ -35,6 +35,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   width: number;
   height: number;
   selectedID: any = "";
+  selectedImageIndex: any;
   annWidth: number;
   annHeight: number;
   objDet: boolean = false;
@@ -65,6 +66,16 @@ export class ObjDetMulImgsComponent implements OnInit {
   labels: any = [];
   annObj = {};
   labelsObj = {};
+
+  count: number = 0;
+
+  id: number;
+  on: boolean = false;
+  coords = [];
+  annotations: any = [];
+  ann: any = [];
+  cacheAnnot: any = [];
+  label: string;
 
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
@@ -122,6 +133,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   getBackground(image) {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
+
   ngAfterViewInit() {
     this.polygon.forEach((c, index) => {
       this.canvas = this.rd.selectRootElement(c["nativeElement"]);
@@ -167,11 +179,9 @@ export class ObjDetMulImgsComponent implements OnInit {
 
     if (this.activatedRoute.snapshot.params.method == "dataset") {
       this.multiple = true;
-    } else if (
-      JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes(
-        "objectDetection"
-      )
+    } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes("objectDetection")
     ) {
+      debugger;
       this.multiple = true;
       this.objDet = true;
     } else {
@@ -192,12 +202,25 @@ export class ObjDetMulImgsComponent implements OnInit {
           alert("Zero detections happened.");
           this.router.navigate(["/annotations"]);
         } else {
-          res.forEach((value, index) => {
-            value["image"] = "http://" + ip + ":4200" + value.image;
-          });
           this.data = res;
-          this.datasetFlag = true;
           this.setPage(1);
+          this.datasetFlag = true;
+          setTimeout(() => {
+            this.data.forEach(async (value, index) => {
+              value["image"] = "http://" + ip + ":4200" + value.image;
+              const convertedResponse = await this.convertVistaResponseToXY(value.results, index);
+              value["results"] = convertedResponse;
+              this.annObj[value.id] = {
+                image: value.image,
+                width: value.res_width,
+                height: value.res_height,
+                results: value["results"],
+                fixedSize: value.length,
+              };
+            });
+            console.log('this.data - ', this.data);
+          }, 2000);
+
         }
       },
       (error) => {
@@ -227,6 +250,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           res.forEach((value, index) => {
             value["image"] = "http://" + ip + ":4200" + value.image;
             value["id"] = index;
+            value["results"] = [];
           });
           console.log("processDatasetWithOutVista -> ", res);
           this.data = res;
@@ -272,56 +296,7 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   getAnn(i) {
-    if (this.annObj.hasOwnProperty(this.data[i].id)) {
-      this.annotations = this.annObj[this.data[i].id].results;
-      this.cacheAnnot = this.annotations;
-    } else {
-      this.annotations = [];
-      for (let itm in this.data[i].results) {
-        if (Array.isArray(this.data[i].results[itm])) {
-          this.data[i].results[itm].forEach((element) => {
-            let obj1 = {
-              x:
-                (element.boundingBox.left * this.data[i].width) /
-                this.data[i].res_width,
-              y:
-                (element.boundingBox.top * this.data[i].height) /
-                this.data[i].res_height,
-            };
-            this.ann.push(obj1);
-            let obj2 = {
-              x:
-                (element.boundingBox.width * this.data[i].width) /
-                this.data[i].res_width,
-              y:
-                (element.boundingBox.height * this.data[i].height) /
-                this.data[i].res_height,
-            };
-            this.ann.push(obj2);
-            let obj3 = {
-              general_detection: "No",
-            };
-            this.ann.push(obj3);
-            let obj4 = {
-              label: element.class,
-            };
-            this.ann.push(obj4);
-            this.annotations.push(this.ann);
-            this.ann = [];
-          });
-        }
-      }
-      // console.log(this.annotations)
-      this.annObj[this.data[i].id] = {
-        image: this.data[i].image,
-        width: this.data[i].res_width,
-        height: this.data[i].res_height,
-        results: this.annotations,
-        fixedSize: this.annotations.length,
-      };
-      this.cacheAnnot = this.annotations;
-    }
-
+    this.selectedImageIndex = i;
     this.re_draw();
   }
 
@@ -343,8 +318,591 @@ export class ObjDetMulImgsComponent implements OnInit {
     }
   }
 
-  next() {
+  clear(lebelIndex, dataIndex) {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.data[dataIndex]["results"].splice(lebelIndex, 1);
+    this.selectedImageIndex = dataIndex;
+    this.re_draw();
+    this.on = false;
+    this.id = undefined;
+    this.selectedID = undefined;
+    this.clearAct = false;
+  }
+
+  openlebelModal(lebelIndex, dataIndex) {
+    this.newLabel = this.data[dataIndex]["results"][lebelIndex][3].label;
+    this.selectedImageIndex = dataIndex;
+    this.id = lebelIndex;
+  }
+
+  updateLabel() {
+    if (this.newLabel) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      for (let e = 0; e < this.data[this.selectedImageIndex]["results"].length; e++) {
+        if (e == this.id) {
+          this.data[this.selectedImageIndex]["results"][e][3].label = this.newLabel;
+        }
+      }
+      this.re_draw();
+      this.on = false;
+      this.id = undefined;
+      this.selectedID = undefined;
+    }
+  }
+
+  get(lebelIndex, dataIndex) {
     debugger;
+    this.on = true;
+    this.clearAct = true;
+    this.id = lebelIndex;
+    this.selectedID = lebelIndex;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let e = 0; e < this.data[dataIndex]["results"].length; e++) {
+      this.ctx.fillStyle = "lime";
+      this.ctx.strokeStyle = "lime";
+      if (lebelIndex == e) {
+        // this.label = this.data[dataIndex]["results"][e][3].label;
+        this.ctx.fillStyle = "yellow";
+        this.ctx.strokeStyle = "yellow";
+      }
+      if (this.data[dataIndex]["results"][e][2]["general_detection"] == "Yes") {
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] - 2,
+          this.data[dataIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] - 2,
+          this.data[dataIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][1]["x"] - 2,
+          this.data[dataIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.strokeRect(
+          this.data[dataIndex]["results"][e][0]["x"],
+          this.data[dataIndex]["results"][e][0]["y"],
+          this.data[dataIndex]["results"][e][1]["x"] - this.data[dataIndex]["results"][e][0]["x"],
+          this.data[dataIndex]["results"][e][1]["y"] - this.data[dataIndex]["results"][e][0]["y"]
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][1]["x"] - 2,
+          this.data[dataIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+      } else {
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] - 2,
+          this.data[dataIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] + this.data[dataIndex]["results"][e][1]["x"] - 4,
+          this.data[dataIndex]["results"][e][0]["y"] - 4,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] - 2,
+          this.data[dataIndex]["results"][e][0]["y"] + this.data[dataIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.strokeRect(
+          this.data[dataIndex]["results"][e][0]["x"],
+          this.data[dataIndex]["results"][e][0]["y"],
+          this.data[dataIndex]["results"][e][1]["x"],
+          this.data[dataIndex]["results"][e][1]["y"]
+        );
+        this.ctx.fillRect(
+          this.data[dataIndex]["results"][e][0]["x"] + this.data[dataIndex]["results"][e][1]["x"] - 3,
+          this.data[dataIndex]["results"][e][0]["y"] + this.data[dataIndex]["results"][e][1]["y"] - 3,
+          4,
+          4
+        );
+      }
+      this.ctx.lineWidth = 2.5;
+      this.ctx.stroke();
+    }
+  }
+
+  @HostListener("document:mousemove", ["$event"])
+  onMouseMove(e) {
+    let x, y, rect;
+    if (this.datasetFlag && this.canvas) {
+      // console.log(e.clientX+','+e.clientY, this.click);
+      rect = this.canvas.getBoundingClientRect();
+      x = e.clientX - rect.left - 3;
+      y = e.clientY - rect.top - 3;
+      if (this.count == 1) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.re_draw();
+        this.ctx.fillStyle = "white";
+        this.ctx.strokeStyle = "white";
+        this.ctx.fillRect(
+          this.coords[0]["x"] - 2,
+          this.coords[0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(this.coords[0]["x"] - 2, y - 2, 4, 4);
+        this.ctx.fillRect(x - 2, this.coords[0]["y"] - 2, 4, 4);
+        this.ctx.strokeRect(
+          this.coords[0]["x"],
+          this.coords[0]["y"],
+          x - this.coords[0]["x"],
+          y - this.coords[0]["y"]
+        );
+        this.ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+        this.ctx.fillRect(
+          this.coords[0]["x"],
+          this.coords[0]["y"],
+          x - this.coords[0]["x"],
+          y - this.coords[0]["y"]
+        );
+        this.ctx.fillRect(x - 2, y - 2, 4, 4);
+        this.ctx.lineWidth = 2.5;
+        this.ctx.stroke();
+      }
+    }
+  }
+
+  noMess() {
+    this.showMyMessage = false;
+  }
+
+  annotate(event, i) {
+    debugger;
+    this.selectedImageIndex = i;
+    this.canvas = this.rd.selectRootElement(event.target);
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    this.goAnnotate(event, i);
+  }
+
+  goAnnotate(event, i) {
+    this.getAnn(i);
+    this.getLabels(i);
+    let x, y, rect;
+    if (this.objDet == false) {
+      console.log("here3", this.label);
+      if (this.label != undefined) {
+        this.count++;
+        this.showMyMessage = false;
+        this.on = false;
+        this.id = undefined;
+        if (this.count == 1) {
+          this.ctx.beginPath();
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.re_draw();
+          rect = this.canvas.getBoundingClientRect();
+          x = event.clientX - rect.left;
+          y = event.clientY - rect.top;
+          this.coords.push({ x: x, y: y });
+          this.ctx.moveTo(x, y);
+          this.ctx.fillStyle = "white";
+          this.ctx.fillRect(x - 2, y - 2, 4, 4);
+        } else if (this.count == 2) {
+          this.count = 0;
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          rect = this.canvas.getBoundingClientRect();
+          x = event.clientX - rect.left;
+          y = event.clientY - rect.top;
+          this.ctx.fillStyle = "lime";
+          this.ctx.fillRect(
+            this.coords[0]["x"] - 2,
+            this.coords[0]["y"] - 2,
+            4,
+            4
+          );
+          this.ctx.fillRect(this.coords[0]["x"] - 2, y - 2, 4, 4);
+          this.ctx.fillRect(x - 2, this.coords[0]["y"] - 2, 4, 4);
+          this.ctx.strokeStyle = "lime";
+          this.ctx.strokeRect(
+            this.coords[0]["x"],
+            this.coords[0]["y"],
+            x - this.coords[0]["x"],
+            y - this.coords[0]["y"]
+          );
+          this.ctx.fillRect(x - 2, y - 2, 4, 4);
+          x = x - this.coords[0].x;
+          y = y - this.coords[0].y;
+          this.coords.push({ x: x, y: y });
+          this.coords.push({ general_detection: "No" });
+          this.coords.push({
+            label: this.label + ' ' + (this.data[i]["results"].length + 1),
+          });
+          this.ctx.lineWidth = 2.5;
+          this.ctx.stroke();
+          this.data[i]["results"].push(this.coords);
+          if (!this.annObj.hasOwnProperty(this.data[i].id)) {
+            this.annObj[this.data[i].id] = {
+              image: this.data[i].image,
+              width: this.data[i].res_width,
+              height: this.data[i].res_height,
+              results: this.data[i]["results"],
+              fixedSize: this.data[i]["results"].length,
+            };
+          } else {
+            this.annObj[this.data[i].id].results = this.data[i]["results"];
+          }
+          this.labels.push(this.label + (this.data[i]["results"].length + 1));
+          this.labelsObj[this.data[i].id] = this.labels;
+          this.labels = this.labelsObj[this.data[i].id];
+          this.re_draw();
+          this.coords = [];
+        }
+      } else {
+        this.showMyMessage = true;
+        setTimeout(() => {
+          this.showMyMessage = false;
+        }, 5000);
+      }
+    } else {
+      console.log("here4");
+      if (this.label != undefined) {
+        let inX, endX, inY, endY;
+        rect = this.canvas.getBoundingClientRect();
+        x = event.clientX - rect.left;
+        y = event.clientY - rect.top;
+        for (let i = 0; i < this.data[i]["results"].length; i++) {
+          if (this.data[i]["results"][i][0].x < this.data[i]["results"][i][1].x) {
+            inX = this.data[i]["results"][i][0].x;
+            endX = this.data[i]["results"][i][1].x;
+          } else {
+            inX = this.data[i]["results"][i][1].x;
+            endX = this.data[i]["results"][i][0].x;
+          }
+          if (this.data[i]["results"][i][0].y < this.data[i]["results"][i][1].y) {
+            inY = this.data[i]["results"][i][0].y;
+            endY = this.data[i]["results"][i][1].y;
+          } else {
+            inY = this.data[i]["results"][i][1].y;
+            endY = this.data[i]["results"][i][0].y;
+          }
+          if (x >= inX && x <= endX && y >= inY && y <= endY) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            for (let e = 0; e < this.data[i]["results"].length; e++) {
+              this.ctx.fillStyle = "lime";
+              this.ctx.strokeStyle = "lime";
+              if (i == e) {
+                this.data[i]["results"][e][3].label = this.label;
+                this.annObj[this.data[i].id].results = this.data[i]["results"];
+                this.labels.push(this.label);
+                this.labelsObj[this.data[i].id] = this.labels;
+                this.labels = this.labelsObj[this.data[i].id];
+                this.ctx.strokeStyle = "yellow";
+                this.ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
+                this.ctx.fillRect(
+                  this.data[i]["results"][e][0]["x"],
+                  this.data[i]["results"][e][0]["y"],
+                  this.data[i]["results"][e][1]["x"] - this.data[i]["results"][e][0]["x"],
+                  this.data[i]["results"][e][1]["y"] - this.data[i]["results"][e][0]["y"]
+                );
+              }
+              this.ctx.fillRect(
+                this.data[i]["results"][e][0]["x"],
+                this.data[i]["results"][e][0]["y"],
+                4,
+                4
+              );
+              this.ctx.fillRect(
+                this.data[i]["results"][e][0]["x"] + this.data[i]["results"][e][1]["x"],
+                this.data[i]["results"][e][0]["y"],
+                4,
+                4
+              );
+              this.ctx.fillRect(
+                this.data[i]["results"][e][0]["x"],
+                this.data[i]["results"][e][0]["y"] + this.data[i]["results"][e][1]["y"],
+                4,
+                4
+              );
+              this.ctx.strokeRect(
+                this.data[i]["results"][e][0]["x"],
+                this.data[i]["results"][e][0]["y"],
+                this.data[i]["results"][e][1]["x"],
+                this.data[i]["results"][e][1]["y"]
+              );
+              this.ctx.fillRect(
+                this.data[i]["results"][e][0]["x"] + this.data[i]["results"][e][1]["x"],
+                this.data[i]["results"][e][0]["y"] + this.data[i]["results"][e][1]["y"],
+                4,
+                4
+              );
+              this.ctx.lineWidth = 2.5;
+              this.ctx.stroke();
+            }
+          }
+        }
+      } else {
+        this.showMyMessage = true;
+        setTimeout(() => {
+          this.showMyMessage = false;
+        }, 5000);
+      }
+    }
+  }
+
+  re_draw() {
+    for (let e = 0; e < this.data[this.selectedImageIndex]["results"].length; e++) {
+      this.ctx.fillStyle = "lime";
+      this.ctx.strokeStyle = "lime";
+      if (this.data[this.selectedImageIndex]["results"][e][2]["general_detection"] == "Yes") {
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][1]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.strokeRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"],
+          this.data[this.selectedImageIndex]["results"][e][0]["y"],
+          this.data[this.selectedImageIndex]["results"][e][1]["x"] - this.data[this.selectedImageIndex]["results"][e][0]["x"],
+          this.data[this.selectedImageIndex]["results"][e][1]["y"] - this.data[this.selectedImageIndex]["results"][e][0]["y"]
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][1]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+      } else {
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] + this.data[this.selectedImageIndex]["results"][e][1]["x"] - 4,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] - 4,
+          4,
+          4
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] + this.data[this.selectedImageIndex]["results"][e][1]["y"] - 2,
+          4,
+          4
+        );
+        this.ctx.strokeRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"],
+          this.data[this.selectedImageIndex]["results"][e][0]["y"],
+          this.data[this.selectedImageIndex]["results"][e][1]["x"],
+          this.data[this.selectedImageIndex]["results"][e][1]["y"]
+        );
+        this.ctx.fillRect(
+          this.data[this.selectedImageIndex]["results"][e][0]["x"] + this.data[this.selectedImageIndex]["results"][e][1]["x"] - 3,
+          this.data[this.selectedImageIndex]["results"][e][0]["y"] + this.data[this.selectedImageIndex]["results"][e][1]["y"] - 3,
+          4,
+          4
+        );
+      }
+      this.ctx.lineWidth = 2.5;
+      this.ctx.stroke();
+    }
+  }
+
+  getImgAnnotations(i, event) {
+    this.spin = true;
+    this.activeButton(event);
+    this.selectedID = "";
+    this.canvas = this.rd.selectRootElement(
+      `canvas#jPolygon${i}.card-img-top.img-fluid`
+    );
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+
+    const req = { image_path: this.data[i].image };
+    this.annotationsServ.processVistaSingle(req).subscribe(
+      async (res: any) => {
+        debugger;
+        const response = JSON.parse(res);
+        console.log("processVistaSingle -> ", response);
+        this.spin = false;
+        if (!response) {
+          alert("Zero detections happened.");
+        } else {
+          console.log('this.data - ', this.data);
+          const convertedResponse = await this.convertVistaResponseToXY(response.results, i);
+          convertedResponse.forEach((element) => {
+            this.data[i]["results"].push(element)
+          });
+          this.annObj[this.data[i].id] = {
+            image: this.data[i].image,
+            width: this.data[i].res_width,
+            height: this.data[i].res_height,
+            results: this.data[i]["results"],
+            fixedSize: this.data[i]["results"].length,
+          };
+          this.cacheAnnot = this.data[i]["results"];
+          this.getAnn(i);
+          this.getLabels(i);
+        }
+      },
+      (error) => {
+        this.spin = false;
+        alert(
+          `There is an error processing your request. Please retry operation once or contact system administrator.`
+        );
+      }
+    );
+  }
+
+  convertVistaResponseToXY(res, i) {
+    let annotatedList = [];
+    for (let itm in res) {
+      if (Array.isArray(res[itm])) {
+        res[itm].forEach((element) => {
+          let obj1 = {
+            x:
+              (element.boundingBox.left * this.data[i].width) /
+              this.data[i].res_width,
+            y:
+              (element.boundingBox.top * this.data[i].height) /
+              this.data[i].res_height,
+          };
+          this.ann.push(obj1);
+          let obj2 = {
+            x:
+              (element.boundingBox.width * this.data[i].width) /
+              this.data[i].res_width,
+            y:
+              (element.boundingBox.height * this.data[i].height) /
+              this.data[i].res_height,
+          };
+          this.ann.push(obj2);
+          let obj3 = {
+            general_detection: "No",
+          };
+          this.ann.push(obj3);
+          let obj4 = {
+            label: element.class,
+          };
+          this.ann.push(obj4);
+          annotatedList.push(this.ann);
+          this.ann = [];
+        });
+      }
+    }
+    return annotatedList;
+  }
+
+  getAnayticsImgAnnotations(i, event) {
+    this.spin = true;
+    this.activeButton(event);
+    this.selectedID = "";
+    this.canvas = this.rd.selectRootElement(
+      `canvas#jPolygon${i}.card-img-top.img-fluid`
+    );
+    this.ctx = this.canvas.getContext("2d");
+    this.labelsMessage = false;
+    this.getAnn(i);
+    this.getLabels(i);
+    setTimeout(() => {
+      this.spin = false;
+    }, 3000);
+  }
+
+  activeButton(event) {
+    let clickedElement = event.target || event.srcElement;
+
+    if (clickedElement.nodeName === "BUTTON") {
+      let isCertainButtonAlreadyActive = document.querySelector(
+        ".button-active"
+      );
+      // if a Button already has Class: .active
+      if (isCertainButtonAlreadyActive) {
+        isCertainButtonAlreadyActive.classList.remove("button-active");
+      }
+
+      clickedElement.className += " button-active";
+    }
+  }
+
+  generalDetection(i, event) {
+    this.activeButton(event);
+    this.selectedID = "";
+    this.spin = true;
+    let body = {
+      type: this.activatedRoute.snapshot.params.image,
+      details: this.data[i],
+      img: !this.annObj.hasOwnProperty(this.data[i].id)
+        ? this.data[i].image
+        : this.annObj[this.data[i].id].image,
+    };
+    this.canvas = this.rd.selectRootElement(
+      `canvas#jPolygon${i}.card-img-top.img-fluid`
+    );
+    this.ctx = this.canvas.getContext("2d");
+    this.annotationsServ.generalDetection(body).subscribe((res) => {
+      this.spin = false;
+      alert(`${res.length} objects detected.`);
+      debugger
+      if (res.length > 0) {
+        res.forEach((element) => {
+          this.data[i]["results"].push(element);
+        });
+        console.log(res);
+        res.forEach((element) => {
+          if (!this.annObj.hasOwnProperty(this.data[i].id)) {
+            this.annObj[this.data[i].id] = {
+              image: this.data[i].image,
+              width: this.data[i].res_width,
+              height: this.data[i].res_height,
+              results: this.data[i]["results"],
+              fixedSize: this.data[i]["results"].length,
+            };
+          } else {
+            console.log("eee", this.annObj[this.data[i].id].results);
+            this.annObj[this.data[i].id].results = this.data[i]["results"];
+          }
+        });
+        this.data[i]["results"].forEach((element, index) => {
+          if (element[3].label == "") {
+            element[3].label = "object " + (index + 1);
+          }
+        });
+        console.log(this.data[i]);
+        this.labelsMessage = false;
+        this.selectedImageIndex = i;
+        this.re_draw();
+      }
+    });
+  }
+
+  handleSelected(img, checked) {
+    console.log("img : ", img);
+    console.log("checked : ", checked);
+  }
+
+  addLabel() {
+    this.labels.push(this.newLabel);
+    this.newLabel = null;
+  }
+
+  next() {
+    console.log('this.annObj -> ', JSON.stringify(this.annObj));
     if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
       this.annObj = this.data;
     }
@@ -393,32 +951,32 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   send() {
-    this.annotations.push({ width: this.annWidth, height: this.annHeight });
-    this.annotationsServ
-      .writeAnn(this.picture.split("/").join(" "), this.annotations)
-      .subscribe(
-        (res) => {
-          if (this.valueImage < this.total - 1) {
-            this.router
-              .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-              .then(() => {
-                this.router.navigate([
-                  "/annotations/dataset/" +
-                  this.activatedRoute.snapshot.params.method +
-                  "/" +
-                  this.activatedRoute.snapshot.params.folder +
-                  "/" +
-                  this.valueImage,
-                ]);
-              });
-          } else if (this.valueImage == this.total - 1) {
-            this.router.navigateByUrl("/annotations");
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    // this.annotations.push({ width: this.annWidth, height: this.annHeight });
+    // this.annotationsServ
+    //   .writeAnn(this.picture.split("/").join(" "), this.annotations)
+    //   .subscribe(
+    //     (res) => {
+    //       if (this.valueImage < this.total - 1) {
+    //         this.router
+    //           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+    //           .then(() => {
+    //             this.router.navigate([
+    //               "/annotations/dataset/" +
+    //               this.activatedRoute.snapshot.params.method +
+    //               "/" +
+    //               this.activatedRoute.snapshot.params.folder +
+    //               "/" +
+    //               this.valueImage,
+    //             ]);
+    //           });
+    //       } else if (this.valueImage == this.total - 1) {
+    //         this.router.navigateByUrl("/annotations");
+    //       }
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
   }
 
   prev() {
@@ -441,571 +999,5 @@ export class ObjDetMulImgsComponent implements OnInit {
           });
       }
     }
-  }
-
-  clear() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.annotations.splice(this.id, 1);
-    this.re_draw();
-    this.on = false;
-    this.id = undefined;
-    this.clearAct = false;
-  }
-  openlebelModal(id) {
-    this.newLabel = this.annotations[id][3].label;
-  }
-  updateLabel() {
-    console.log(this.newLabel);
-    if (this.newLabel) {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      for (let e = 0; e < this.annotations.length; e++) {
-        if (e == this.id) {
-          this.annotations[e].pop();
-          this.annotations[e].push({ label: this.newLabel });
-        }
-      }
-      this.re_draw();
-      this.on = false;
-      this.id = undefined;
-      this.selectedID = undefined;
-    }
-  }
-
-  get(i) {
-    this.on = true;
-    this.clearAct = true;
-    this.id = i;
-    this.selectedID = i;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (let e = 0; e < this.annotations.length; e++) {
-      this.ctx.fillStyle = "lime";
-      this.ctx.strokeStyle = "lime";
-      if (i == e) {
-        this.label = this.annotations[e][2].label;
-        this.ctx.fillStyle = "yellow";
-        this.ctx.strokeStyle = "yellow";
-        //this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        //this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-      }
-      if (this.annotations[e][2]["general_detection"] == "Yes") {
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][1]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.strokeRect(
-          this.annotations[e][0]["x"],
-          this.annotations[e][0]["y"],
-          this.annotations[e][1]["x"] - this.annotations[e][0]["x"],
-          this.annotations[e][1]["y"] - this.annotations[e][0]["y"]
-        );
-        this.ctx.fillRect(
-          this.annotations[e][1]["x"] - 2,
-          this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-      } else {
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] + this.annotations[e][1]["x"] - 4,
-          this.annotations[e][0]["y"] - 4,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] + this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.strokeRect(
-          this.annotations[e][0]["x"],
-          this.annotations[e][0]["y"],
-          this.annotations[e][1]["x"],
-          this.annotations[e][1]["y"]
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] + this.annotations[e][1]["x"] - 3,
-          this.annotations[e][0]["y"] + this.annotations[e][1]["y"] - 3,
-          4,
-          4
-        );
-        /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4); */
-      }
-      /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-      this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
-      this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-      this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4); */
-      this.ctx.lineWidth = 2.5;
-      this.ctx.stroke();
-    }
-  }
-
-  info() {
-    console.log(this.annotations, this.cacheAnnot);
-  }
-
-  @HostListener("document:mousemove", ["$event"])
-  onMouseMove(e) {
-    let x, y, rect;
-    if (this.datasetFlag && this.canvas) {
-      // console.log(e.clientX+','+e.clientY, this.click);
-      rect = this.canvas.getBoundingClientRect();
-      x = e.clientX - rect.left - 3;
-      y = e.clientY - rect.top - 3;
-      if (this.count == 1) {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.re_draw();
-        this.ctx.fillStyle = "white";
-        this.ctx.strokeStyle = "white";
-        this.ctx.fillRect(
-          this.coords[0]["x"] - 2,
-          this.coords[0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(this.coords[0]["x"] - 2, y - 2, 4, 4);
-        this.ctx.fillRect(x - 2, this.coords[0]["y"] - 2, 4, 4);
-        this.ctx.strokeRect(
-          this.coords[0]["x"],
-          this.coords[0]["y"],
-          x - this.coords[0]["x"],
-          y - this.coords[0]["y"]
-        );
-        this.ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-        this.ctx.fillRect(
-          this.coords[0]["x"],
-          this.coords[0]["y"],
-          x - this.coords[0]["x"],
-          y - this.coords[0]["y"]
-        );
-        this.ctx.fillRect(x - 2, y - 2, 4, 4);
-        this.ctx.lineWidth = 2.5;
-        this.ctx.stroke();
-      }
-    }
-  }
-
-  count: number = 0;
-
-  id: number;
-  on: boolean = false;
-  coords = [];
-  annotations: any = [];
-  ann: any = [];
-  cacheAnnot: any = [];
-  label: string;
-
-  noMess() {
-    this.showMyMessage = false;
-  }
-
-  annotate(event, i) {
-    console.log("annotate called");
-
-    //if (this.data[i].results) {
-    this.canvas = this.rd.selectRootElement(event.target);
-    this.ctx = this.canvas.getContext("2d");
-    this.labelsMessage = false;
-    //this.getLabels();
-    this.goAnnotate(event, i);
-    // } else {
-    //   alert(
-    //     `Please click on the Labels button first to get the detected annotations, then you can draw custom annotations`
-    //   );
-    // }
-  }
-
-  goAnnotate(event, i) {
-    this.getAnn(i);
-    this.getLabels(i);
-    let x, y, rect;
-    if (this.objDet == false) {
-      console.log("here3", this.label);
-      if (this.label != undefined) {
-        this.count++;
-        this.showMyMessage = false;
-        this.on = false;
-        this.id = undefined;
-        if (this.count == 1) {
-          this.ctx.beginPath();
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-          this.re_draw();
-          rect = this.canvas.getBoundingClientRect();
-          x = event.clientX - rect.left;
-          y = event.clientY - rect.top;
-          this.coords.push({ x: x, y: y });
-          this.ctx.moveTo(x, y);
-          this.ctx.fillStyle = "white";
-          this.ctx.fillRect(x - 2, y - 2, 4, 4);
-        } else if (this.count == 2) {
-          this.count = 0;
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-          // console.log(event.button) // types of clicks
-          rect = this.canvas.getBoundingClientRect();
-          x = event.clientX - rect.left;
-          y = event.clientY - rect.top;
-          this.ctx.fillStyle = "lime";
-          this.ctx.fillRect(
-            this.coords[0]["x"] - 2,
-            this.coords[0]["y"] - 2,
-            4,
-            4
-          );
-          this.ctx.fillRect(this.coords[0]["x"] - 2, y - 2, 4, 4);
-          this.ctx.fillRect(x - 2, this.coords[0]["y"] - 2, 4, 4);
-          this.ctx.strokeStyle = "lime";
-          this.ctx.strokeRect(
-            this.coords[0]["x"],
-            this.coords[0]["y"],
-            x - this.coords[0]["x"],
-            y - this.coords[0]["y"]
-          );
-          this.ctx.fillRect(x - 2, y - 2, 4, 4);
-          x = x - this.coords[0].x;
-          y = y - this.coords[0].y;
-          this.coords.push({ x: x, y: y });
-          this.coords.push({ general_detection: "No" });
-          this.coords.push({
-            label: this.label + (this.annotations.length + 1),
-          });
-          this.ctx.lineWidth = 2.5;
-          this.ctx.stroke();
-          this.annotations.push(this.coords);
-          this.annObj[this.data[i].id].results = this.annotations;
-          //this.annotations = this.annObj[this.data[i].id].results;
-          this.labels.push(this.label + (this.annotations.length + 1));
-          this.labelsObj[this.data[i].id] = this.labels;
-          this.labels = this.labelsObj[this.data[i].id];
-          this.re_draw();
-          this.coords = [];
-        }
-      } else {
-        this.showMyMessage = true;
-        setTimeout(() => {
-          this.showMyMessage = false;
-        }, 5000);
-      }
-    } else {
-      console.log("here4");
-      if (this.label != undefined) {
-        let inX, endX, inY, endY;
-        rect = this.canvas.getBoundingClientRect();
-        x = event.clientX - rect.left;
-        y = event.clientY - rect.top;
-        for (let i = 0; i < this.annotations.length; i++) {
-          if (this.annotations[i][0].x < this.annotations[i][1].x) {
-            inX = this.annotations[i][0].x;
-            endX = this.annotations[i][1].x;
-          } else {
-            inX = this.annotations[i][1].x;
-            endX = this.annotations[i][0].x;
-          }
-          if (this.annotations[i][0].y < this.annotations[i][1].y) {
-            inY = this.annotations[i][0].y;
-            endY = this.annotations[i][1].y;
-          } else {
-            inY = this.annotations[i][1].y;
-            endY = this.annotations[i][0].y;
-          }
-          if (x >= inX && x <= endX && y >= inY && y <= endY) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            for (let e = 0; e < this.annotations.length; e++) {
-              this.ctx.fillStyle = "lime";
-              this.ctx.strokeStyle = "lime";
-              if (i == e) {
-                this.annotations[e][2].label = this.label;
-                this.annObj[this.data[i].id].results = this.annotations;
-                //this.annotations = this.annObj[this.data[i].id];
-                this.labels.push(this.label);
-                this.labelsObj[this.data[i].id] = this.labels;
-                this.labels = this.labelsObj[this.data[i].id];
-                this.ctx.strokeStyle = "yellow";
-                this.ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
-                this.ctx.fillRect(
-                  this.annotations[e][0]["x"],
-                  this.annotations[e][0]["y"],
-                  this.annotations[e][1]["x"] - this.annotations[e][0]["x"],
-                  this.annotations[e][1]["y"] - this.annotations[e][0]["y"]
-                );
-              }
-              this.ctx.fillRect(
-                this.annotations[e][0]["x"],
-                this.annotations[e][0]["y"],
-                4,
-                4
-              );
-              this.ctx.fillRect(
-                this.annotations[e][0]["x"] + this.annotations[e][1]["x"],
-                this.annotations[e][0]["y"],
-                4,
-                4
-              );
-              this.ctx.fillRect(
-                this.annotations[e][0]["x"],
-                this.annotations[e][0]["y"] + this.annotations[e][1]["y"],
-                4,
-                4
-              );
-              this.ctx.strokeRect(
-                this.annotations[e][0]["x"],
-                this.annotations[e][0]["y"],
-                this.annotations[e][1]["x"],
-                this.annotations[e][1]["y"]
-              );
-              this.ctx.fillRect(
-                this.annotations[e][0]["x"] + this.annotations[e][1]["x"],
-                this.annotations[e][0]["y"] + this.annotations[e][1]["y"],
-                4,
-                4
-              );
-              this.ctx.lineWidth = 2.5;
-              this.ctx.stroke();
-            }
-          }
-        }
-      } else {
-        this.showMyMessage = true;
-        setTimeout(() => {
-          this.showMyMessage = false;
-        }, 5000);
-      }
-    }
-  }
-
-  re_draw() {
-    for (let e = 0; e < this.annotations.length; e++) {
-      this.ctx.fillStyle = "lime";
-      this.ctx.strokeStyle = "lime";
-      if (this.annotations[e][2]["general_detection"] == "Yes") {
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][1]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.strokeRect(
-          this.annotations[e][0]["x"],
-          this.annotations[e][0]["y"],
-          this.annotations[e][1]["x"] - this.annotations[e][0]["x"],
-          this.annotations[e][1]["y"] - this.annotations[e][0]["y"]
-        );
-        this.ctx.fillRect(
-          this.annotations[e][1]["x"] - 2,
-          this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-      } else {
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] + this.annotations[e][1]["x"] - 4,
-          this.annotations[e][0]["y"] - 4,
-          4,
-          4
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] - 2,
-          this.annotations[e][0]["y"] + this.annotations[e][1]["y"] - 2,
-          4,
-          4
-        );
-        this.ctx.strokeRect(
-          this.annotations[e][0]["x"],
-          this.annotations[e][0]["y"],
-          this.annotations[e][1]["x"],
-          this.annotations[e][1]["y"]
-        );
-        this.ctx.fillRect(
-          this.annotations[e][0]["x"] + this.annotations[e][1]["x"] - 3,
-          this.annotations[e][0]["y"] + this.annotations[e][1]["y"] - 3,
-          4,
-          4
-        );
-        /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4); */
-      }
-      this.ctx.lineWidth = 2.5;
-      this.ctx.stroke();
-      //return;
-    }
-  }
-
-  getImgAnnotations(i, event) {
-    this.spin = true;
-    this.activeButton(event);
-    this.selectedID = "";
-    this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
-    );
-    this.ctx = this.canvas.getContext("2d");
-    this.labelsMessage = false;
-
-    const req = { image_path: this.data[i].image };
-    this.annotationsServ.processVistaSingle(req).subscribe(
-      (res: any) => {
-        const response = JSON.parse(res);
-        console.log("processVistaSingle -> ", response);
-        this.spin = false;
-        if (!response) {
-          alert("Zero detections happened.");
-        } else {
-          this.data[i]["results"] = response.results;
-          this.getAnn(i);
-          this.getLabels(i);
-        }
-      },
-      (error) => {
-        this.spin = false;
-        alert(
-          `There is an error processing your request. Please retry operation once or contact system administrator.`
-        );
-      }
-    );
-  }
-
-  getAnayticsImgAnnotations(i, event) {
-    this.spin = true;
-    this.activeButton(event);
-    this.selectedID = "";
-    this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
-    );
-    this.ctx = this.canvas.getContext("2d");
-    this.labelsMessage = false;
-    this.getAnn(i);
-    this.getLabels(i);
-    setTimeout(() => {
-      this.spin = false;
-    }, 3000);
-  }
-  activeButton(event) {
-    let clickedElement = event.target || event.srcElement;
-
-    if (clickedElement.nodeName === "BUTTON") {
-      let isCertainButtonAlreadyActive = document.querySelector(
-        ".button-active"
-      );
-      // if a Button already has Class: .active
-      if (isCertainButtonAlreadyActive) {
-        isCertainButtonAlreadyActive.classList.remove("button-active");
-      }
-
-      clickedElement.className += " button-active";
-    }
-  }
-
-  generalDetection(i, event) {
-    this.activeButton(event);
-    this.selectedID = "";
-    this.spin = true;
-    let body = {
-      type: this.activatedRoute.snapshot.params.image,
-      details: this.data[i],
-      img: !this.annObj.hasOwnProperty(this.data[i].id)
-        ? this.data[i].image
-        : this.annObj[this.data[i].id].image,
-    };
-    this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
-    );
-    this.ctx = this.canvas.getContext("2d");
-    this.annotationsServ.generalDetection(body).subscribe((res) => {
-      this.spin = false;
-      alert(`${res.length} objects detected.`);
-      if (res.length > 0) {
-        if (this.annObj.hasOwnProperty(this.data[i].id)) {
-          console.log("ddd");
-          this.annotations = this.annObj[this.data[i].id].results;
-          this.annotations.splice(
-            this.annObj[this.data[i].id].fixedSize,
-            this.annotations.length
-          );
-        }
-        console.log(res);
-        this.annotations = [];
-        res.forEach((element) => {
-          if (!this.annObj.hasOwnProperty(this.data[i].id)) {
-            this.annotations.push(element);
-            this.annObj[this.data[i].id] = {
-              image: this.data[i].image,
-              width: this.data[i].res_width,
-              height: this.data[i].res_height,
-              results: this.annotations,
-              fixedSize: this.annotations.length,
-            };
-          } else {
-            console.log("eee", this.annObj[this.data[i].id].results);
-            //this.annotations = this.annObj[this.data[i].id].results;
-            this.annotations.push(element);
-            this.annObj[this.data[i].id].results = this.annotations;
-          }
-        });
-        this.annotations.forEach((element, index) => {
-          if (element[3].label == "") {
-            element[3].label = "object" + (index + 1);
-          }
-        });
-        console.log(this.annotations);
-        this.labelsMessage = false;
-        this.re_draw();
-      } else {
-        this.annotations = [];
-      }
-    });
-  }
-
-  handleSelected(img, checked) {
-    console.log("img : ", img);
-    console.log("checked : ", checked);
-  }
-
-  addLabel() {
-    this.labels.push(this.newLabel);
-    this.newLabel = null;
   }
 }

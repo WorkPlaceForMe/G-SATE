@@ -1,78 +1,80 @@
 <div class="row">
-    <div class="col-md-10">
-      <div class="offset-7" *ngIf="loading">
-        <mat-spinner diameter='40'></mat-spinner>
-      </div>
-<div [ngStyle]="newStyle()" *ngIf="!loading">
-<ng-scrollbar #scrollable 
-track="all" 
-invertY="true">
-
-    <div *ngIf='pred == false'>
-      <div class="row">
-  <div class="card text-center border-info" [ngClass]="image.status ? '' : 'bg-danger'" *ngFor = "let image of images | paginate: { itemsPerPage: 702, currentPage: p }" style="width: 125px;" (click)="image.status=!image.status">
-        <div class="card-body">
-    <img [src]="image.safeLink" height="{{image.showHeight}}" width="{{image.showWidth}}">
-<div class="p-1">
-    C:&nbsp;{{image.info[1]}}%
-    L:&nbsp;{{image.info[0]}}
-  </div>
-  </div>
-</div>
-</div>
-</div>
-
-<div *ngIf='pred == true'>
-  <div class="row">
-<div class="card text-center border-info" [ngClass]="image.status ? 'bg-success' : ''" *ngFor = "let image of images | paginate: { itemsPerPage: 702, currentPage: p }" style="width: 125px;" (click)="image.status=!image.status">
-    <div class="card-body">
-<img [src]="image.safeLink" height="{{image.showHeight}}" width="{{image.showWidth}}">
-<div class="p-1">
-C:&nbsp;{{image.info[1]}}%
-L:&nbsp;{{image.info[0]}}
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="card text-center border-info col-md-2"  style="width: 125px;" *ngIf="noImages == true">
-    <div class="card-body">
-<h6>No images to show</h6>
-</div>
-</div>
-
-
-  </ng-scrollbar>
-</div>
-</div>
-
-
-<div class="col-md-2">
-  <div class="card border-info panel text-center" style="width: 130px;" [ngStyle]="setMyStyle()">
-    <div class="card-header" align='center' *ngIf="pred == false">Properties</div>
-    <div class="card-header" align='center' *ngIf="pred == true">Prediction</div>
-    <div class="card-body">
-        <div align='center'>
-<i>C: Confidence <br>
-L: Label </i><br>
-<strong *ngIf='pred == false'>
-Click images to be excluded
-</strong>
-<strong *ngIf='pred == true'>
-  Click images to be included
-</strong>
-</div>
-<div class="dropdown-divider"></div>
-<div align="center">
-<button class="btn btn-success btn-sm" [routerLink]="['/annotations']">Back to the menu</button>
+  <div class="col-md-10">
+    <div class="offset-7" *ngIf="loading">
+      <mat-spinner diameter='40'></mat-spinner>
     </div>
-</div>
+    <div [ngStyle]="newStyle()" *ngIf="!loading">
+      <ng-scrollbar #scrollable track="all" invertY="true">
+
+        <div *ngIf='pred == false'>
+          <div class="row">
+            <div class="card text-center border-info" [ngClass]="image.status ? '' : 'bg-danger'"
+              *ngFor="let image of images | paginate: { itemsPerPage: 702, currentPage: p }" style="width: 125px;"
+              (click)="image.status=!image.status">
+              <div class="card-body">
+                <img [src]="image.safeLink" height="{{image.showHeight}}" width="{{image.showWidth}}">
+                <div class="p-1">
+                  C:&nbsp;{{image.info[1]}}%
+                  L:&nbsp;{{image.info[0]}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf='pred == true'>
+          <div class="row">
+            <div class="card text-center border-info" [ngClass]="image.status ? 'bg-success' : ''"
+              *ngFor="let image of images | paginate: { itemsPerPage: 702, currentPage: p }" style="width: 125px;"
+              (click)="image.status=!image.status">
+              <div class="card-body">
+                <img [src]="image.safeLink" height="{{image.showHeight}}" width="{{image.showWidth}}">
+                <div class="p-1">
+                  C:&nbsp;{{image.info[1]}}%
+                  L:&nbsp;{{image.info[0]}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card text-center border-info col-md-2" style="width: 125px;" *ngIf="noImages == true">
+          <div class="card-body">
+            <h6>No images to show</h6>
+          </div>
+        </div>
+
+
+      </ng-scrollbar>
+    </div>
   </div>
+
+
+  <div class="col-md-2">
+    <div class="card border-info panel text-center" style="width: 130px;" [ngStyle]="setMyStyle()">
+      <div class="card-header" align='center' *ngIf="pred == false">Properties</div>
+      <div class="card-header" align='center' *ngIf="pred == true">Prediction</div>
+      <div class="card-body">
+        <div align='center'>
+          <i>C: Confidence <br>
+            L: Label </i><br>
+          <strong *ngIf='pred == false'>
+            Click images to be excluded
+          </strong>
+          <strong *ngIf='pred == true'>
+            Click images to be included
+          </strong>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div align="center">
+          <button class="btn btn-success btn-sm" [routerLink]="['/annotations']">Back to the menu</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-  <div class="card bg-primary border-primary" style="margin-top:5px" *ngIf='noPages == false'>
-    <pagination-controls  class="my-pagination" align='center' (pageChange)="p = $event" autoHide='true'></pagination-controls>
-  </div>
-  
+<div class="card bg-primary border-primary" style="margin-top:5px" *ngIf='noPages == false'>
+  <pagination-controls class="my-pagination" align='center' (pageChange)="p = $event" autoHide='true'>
+  </pagination-controls>
+</div>
