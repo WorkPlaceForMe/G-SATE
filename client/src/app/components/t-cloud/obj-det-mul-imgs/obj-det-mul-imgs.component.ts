@@ -214,6 +214,8 @@ export class ObjDetMulImgsComponent implements OnInit {
                 image: value.image,
                 width: value.res_width,
                 height: value.res_height,
+                canvas_width: value.width,
+                canvas_height: value.height,
                 results: value["results"],
                 fixedSize: value.length,
               };
@@ -547,6 +549,8 @@ export class ObjDetMulImgsComponent implements OnInit {
               image: this.data[i].image,
               width: this.data[i].res_width,
               height: this.data[i].res_height,
+              canvas_width: this.data[i].width,
+              canvas_height: this.data[i].height,
               results: this.data[i]["results"],
               fixedSize: this.data[i]["results"].length,
             };
@@ -752,6 +756,8 @@ export class ObjDetMulImgsComponent implements OnInit {
             image: this.data[i].image,
             width: this.data[i].res_width,
             height: this.data[i].res_height,
+            canvas_width: this.data[i].width,
+            canvas_height: this.data[i].height,
             results: this.data[i]["results"],
             fixedSize: this.data[i]["results"].length,
           };
@@ -870,6 +876,8 @@ export class ObjDetMulImgsComponent implements OnInit {
               image: this.data[i].image,
               width: this.data[i].res_width,
               height: this.data[i].res_height,
+              canvas_width: this.data[i].width,
+              canvas_height: this.data[i].height,
               results: this.data[i]["results"],
               fixedSize: this.data[i]["results"].length,
             };
