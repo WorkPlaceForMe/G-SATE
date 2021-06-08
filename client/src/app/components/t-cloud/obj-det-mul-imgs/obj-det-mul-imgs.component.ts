@@ -14,8 +14,9 @@ import { FacesService } from "../../../services/faces.service";
 import { AnnotationsService } from "../../../services/annotations.service";
 import { PagerService } from "../../../services/pager.service";
 import { ip } from "../../../models/IpServer";
+import { vistaIP } from 'src/app/models/VistaServer';
 
-const baseURL = "http://ec2-54-152-186-179.compute-1.amazonaws.com";
+const baseURL = vistaIP;
 @Component({
   selector: "app-obj-det-mul-imgs",
   templateUrl: "./obj-det-mul-imgs.component.html",

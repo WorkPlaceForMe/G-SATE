@@ -6,7 +6,6 @@ import { AnnotationsService } from '../../../services/annotations.service';
 import { vistaIP } from '../../../models/VistaServer';
 import { ip } from '../../../models/IpServer'
 
-//const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 const baseURL = vistaIP;
 @Component({
   selector: 'app-loitering-detection',
