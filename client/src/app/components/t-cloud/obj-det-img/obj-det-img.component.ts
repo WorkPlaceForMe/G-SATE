@@ -6,7 +6,6 @@ import { AnnotationsService } from '../../../services/annotations.service';
 import { vistaIP } from '../../../models/VistaServer';
 import { ip } from '../../../models/IpServer'
 
-// const baseURL = 'http://ec2-54-152-186-179.compute-1.amazonaws.com';
 const baseURL = vistaIP;
 @Component({
   selector: 'app-obj-det-img',
@@ -18,16 +17,9 @@ export class ObjDetImgComponent implements OnInit {
   data: any;
 
   constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router) {
-    //console.log(this.router.getCurrentNavigation().extras.state.data);
     this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
-    //this.link = 'http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png';
-    //this.link = baseURL + this.data.image;
-    
-    //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-    //this.link = sanitizer.bypassSecurityTrustStyle('url(' + 'http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png' + ')');
-    
-    this.annWidth = 1920;//this.images[this.valueImage].width;
-    this.annHeight = 1080;//this.images[this.valueImage].height;
+    this.annWidth = 1920; //this.images[this.valueImage].width;
+    this.annHeight = 1080; //this.images[this.valueImage].height;
 
     if (window.innerWidth >= 1200) {
       this.width = 835;
@@ -65,94 +57,8 @@ export class ObjDetImgComponent implements OnInit {
         this.width = this.height * this.annWidth / this.annHeight;
       }
     }
-    
-    this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-    //this.re_draw();
-    //this.getAnn();
-    //this.re_draw();
-    //this.annotations = ['cup']
-    //this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-    //this.link = sanitizer.bypassSecurityTrustStyle("url(" + baseURL + this.data.image + ")");
-    //this.link = sanitizer.bypassSecurityTrustStyle("url(http://ec2-52-221-131-26.ap-southeast-1.compute.amazonaws.com/api/pictures/66a3f869-4f41-4227-b875-c288cb6f3d36/66a3f869-4f41-4227-b875-c288cb6f3d36/heatmap_pics/a7d6187c-9934-49ff-83df-e1aa013832c2_heatmap.png" +")");
-    /* const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
-    this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
-    console.log(this.valueImage)
-    this.link = sanitizer.bypassSecurityTrustStyle("url(https://ec2-54-152-186-179.compute-1.amazonaws.com/media/perumal/face_9Pzmh3H.jpg)") */
-    /* this.annotationsServ.getImages(string, 'data').subscribe(
-      res => {
-        this.images = res;
-        this.total = this.images[this.images.length - 1]['total'];
-        this.images.pop();
-        for (let i = 0; i < this.images.length; i++) {
-          if (this.images[i].name.includes('.jpg')) {
-            this.images[i].name = this.images[i].name.replace('.jpg', '');
-            this.images[i].format = '.jpg';
-          } else if (this.images[i].name.includes('.png')) {
-            this.images[i].name = this.images[i].name.replace('.png', '');
-            this.images[i].format = '.png';
-          } else if (this.images[i].name.includes('.jpeg')) {
-            this.images[i].name = this.images[i].name.replace('.jpeg', '');
-            this.images[i].format = '.jpeg';
-          } else if (this.images[i].name.includes('.JPG')) {
-            this.images[i].name = this.images[i].name.replace('.JPG', '');
-            this.images[i].format = '.JPG';
-          } if (this.images[i].name.includes('.PNG')) {
-            this.images[i].name = this.images[i].name.replace('.PNG', '');
-            this.images[i].format = '.PNG';
-          }
-        }
-        this.images.sort(function (a, b) { return a.name - b.name });
-        for (let i = 0; i < this.images.length; i++) {
-          this.images[i].name = this.images[i].name + this.images[i].format;
-        }
-        this.picture = string + '/' + this.images[this.valueImage].name;
-        if (this.images[this.valueImage].width)
-        this.annWidth = this.images[this.valueImage].width;
-        this.annHeight = this.images[this.valueImage].height;
 
-        if (window.innerWidth >= 1200) {
-          this.width = 835;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 1200 && window.innerWidth >= 992) {
-          this.width = 684;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 992 && window.innerWidth >= 768) {
-          this.width = 490;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 768 && window.innerWidth >= 576) {
-          this.width = 420;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        } else if (window.innerWidth < 576) {
-          this.width = window.innerWidth - 140;
-          this.height = this.width * this.annHeight / this.annWidth;
-          if (this.height >= 480) {
-            this.height = 480;
-            this.width = this.height * this.annWidth / this.annHeight;
-          }
-        }
-        
-        this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
-        //this.link = sanitizer.bypassSecurityTrustStyle("url(http://" + ip + ":6503/datasets/" + this.picture + ")");
-        //this.getAnn();
-      },
-      err => console.log(err)
-    ) */
+    this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
   }
 
   @HostListener('window:resize', ['$event'])
@@ -302,8 +208,8 @@ export class ObjDetImgComponent implements OnInit {
   }
 
   getLabels() {
-    for(let itm in this.data.results) {
-      if(Array.isArray(this.data.results[itm])) {
+    for (let itm in this.data.results) {
+      if (Array.isArray(this.data.results[itm])) {
         this.data.results[itm].forEach(element => {
           this.labels.push(element.class);
         })

@@ -31,7 +31,7 @@ export class SpeedingVehicleComponent implements OnInit {
   liveFeed: boolean = false;
   flag: boolean = true;
   isValidTime: boolean = true;
-  timeValidityMessage : string;
+  timeValidityMessage: string;
   cameras: any;
   cam_name: any;
   rtsp_in: any;
@@ -57,15 +57,15 @@ export class SpeedingVehicleComponent implements OnInit {
     this.cam_name = this.activatedRoute.snapshot.params.cam_name;
     this.getCameraList();
     this.title = this.cam_name + ' at ' + this.activatedRoute.snapshot.params.date;
-    
+
   }
 
   ngOnDestroy() {
     this.destroy();
   }
 
-  calculate(){
-    this.picturesNumber = ( ( parseInt(this.finish.split(":")[0]) * 3600 + parseInt(this.finish.split(":")[1]) * 60 + parseInt(this.finish.split(":")[2]) ) - ( parseInt(this.start.split(":")[0]) * 3600 + parseInt(this.start.split(":")[1]) * 60 + parseInt(this.start.split(":")[2]) ) ) * this.conf.fps
+  calculate() {
+    this.picturesNumber = ((parseInt(this.finish.split(":")[0]) * 3600 + parseInt(this.finish.split(":")[1]) * 60 + parseInt(this.finish.split(":")[2])) - (parseInt(this.start.split(":")[0]) * 3600 + parseInt(this.start.split(":")[1]) * 60 + parseInt(this.start.split(":")[2]))) * this.conf.fps
   }
 
   destroy() {
@@ -105,9 +105,6 @@ export class SpeedingVehicleComponent implements OnInit {
       this.start = '00:00:00';
       this.finish = cam[0].vid_length;
       this.maxTime = this.finish;
-      // http://40.112.52.108:4200/assets/shared-data/stored_videos/Abhra_vdo_avi.AVI
-      // this.rtsp_in = 'http://' + ip + ':3000' + cam[0].rtsp_in.split('..')[1];
-      // this.rtsp_in = cam[0].rtsp_out;
       this.rtsp_in = 'http://' + ip + ':4200' + cam[0].rtsp_out;
       this.availableTimeStart = this.generateTimeRange(this.start, this.finish);
       this.availableTimeFinish = this.generateTimeRange(this.start, this.maxTime);
@@ -152,42 +149,42 @@ export class SpeedingVehicleComponent implements OnInit {
     let secs;
     if (t == 's') {
       if (this.start.indexOf(':') == 0) { //Hours input is cleared
-        setTimeout(()=> {
+        setTimeout(() => {
           this.start = '00' + this.start;
-        },300)
+        }, 300)
       }
-      else if (this.start.lastIndexOf(':')==this.start.indexOf(':')+1 || this.start.indexOf(':') == 3 || this.start.indexOf(':') == 4) { //Minutes input is cleared or first colon deleted
-        hours = this.start.substring(0,2);
-        secs = this.start.substring(this.start.lastIndexOf(':')+1);
-        setTimeout(()=>{
-          this.start = hours+':00:' +secs;
-        },200)
+      else if (this.start.lastIndexOf(':') == this.start.indexOf(':') + 1 || this.start.indexOf(':') == 3 || this.start.indexOf(':') == 4) { //Minutes input is cleared or first colon deleted
+        hours = this.start.substring(0, 2);
+        secs = this.start.substring(this.start.lastIndexOf(':') + 1);
+        setTimeout(() => {
+          this.start = hours + ':00:' + secs;
+        }, 200)
       }
       else if (this.start.length >= 5 && this.start.length <= 7 && this.start.lastIndexOf(':') <= 2) { // Seconds is cleared or last colon deleted
-        hours = this.start.substring(0,2);
-        mins = this.start.substring(this.start.indexOf(':')+1,this.start.indexOf(':')+3);
-        this.start = new String( hours + ':' + mins + ':00');
+        hours = this.start.substring(0, 2);
+        mins = this.start.substring(this.start.indexOf(':') + 1, this.start.indexOf(':') + 3);
+        this.start = new String(hours + ':' + mins + ':00');
       }
       // this.ss = +time[0] * 60 * 60 + +time[1] * 60 + +time[2];
     } else if (t == 'f') {
       if (this.finish.indexOf(':') == 0) { //Hours input is cleared
-        setTimeout(()=> {
+        setTimeout(() => {
           this.finish = '00' + this.finish;
-        },300)
+        }, 300)
         console.log("Error here")
       }
-      else if (this.finish.lastIndexOf(':')==this.finish.indexOf(':')+1 || this.finish.indexOf(':') == 3 || this.finish.indexOf(':') == 4) { //Minutes input is cleared or first colon deleted
-        hours = this.finish.substring(0,2);
-        secs = this.finish.substring(this.start.lastIndexOf(':')+1);
-        setTimeout(()=>{
-          this.finish = hours+':00:' +secs;
-        },200)
-        
+      else if (this.finish.lastIndexOf(':') == this.finish.indexOf(':') + 1 || this.finish.indexOf(':') == 3 || this.finish.indexOf(':') == 4) { //Minutes input is cleared or first colon deleted
+        hours = this.finish.substring(0, 2);
+        secs = this.finish.substring(this.start.lastIndexOf(':') + 1);
+        setTimeout(() => {
+          this.finish = hours + ':00:' + secs;
+        }, 200)
+
       }
       else if (this.finish.length >= 5 && this.finish.length <= 7 && this.finish.lastIndexOf(':') <= 2) { // Seconds is cleared or last colon deleted
-        hours = this.finish.substring(0,2);
-        mins = this.finish.substring(this.finish.indexOf(':')+1,this.finish.indexOf(':')+3);
-        this.finish = new String( hours + ':' + mins + ':00');
+        hours = this.finish.substring(0, 2);
+        mins = this.finish.substring(this.finish.indexOf(':') + 1, this.finish.indexOf(':') + 3);
+        this.finish = new String(hours + ':' + mins + ':00');
       }
       // this.t = +time[0] * 60 * 60 + +time[1] * 60 + +time[2];
     }
@@ -197,13 +194,13 @@ export class SpeedingVehicleComponent implements OnInit {
       this.flag = true;
     }
     else {
-      this.flag=false;
+      this.flag = false;
     }
 
-        // Dropdown Selection
-        this.availableTimeStart = this.generateTimeRange(this.start,this.finish);
-        this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
-    
+    // Dropdown Selection
+    this.availableTimeStart = this.generateTimeRange(this.start, this.finish);
+    this.availableTimeFinish = this.generateTimeRange(this.start, this.maxTime);
+
   }
 
   detect() {
@@ -248,16 +245,16 @@ export class SpeedingVehicleComponent implements OnInit {
   generateTimeRange(min, max) {
     min = this.computeSeconds(min);
     max = this.computeSeconds(max);
-    let hours:any = 0;
-    let minutes: any= 0;
-    let seconds: any; 
+    let hours: any = 0;
+    let minutes: any = 0;
+    let seconds: any;
     const timeRange = [];
-    for (let i = min; i<= max; i++) {
+    for (let i = min; i <= max; i++) {
       seconds = i % 60;
       minutes = Math.floor((i % 3600) / 60);
-      hours = Math.floor(i /3600);
-      if (seconds < 10) seconds = '0'+ seconds;
-      if (minutes < 10) minutes = '0'+ minutes;
+      hours = Math.floor(i / 3600);
+      if (seconds < 10) seconds = '0' + seconds;
+      if (minutes < 10) minutes = '0' + minutes;
       if (hours < 10) hours = '0' + hours;
       timeRange.push(`${hours}:${minutes}:${seconds}`);
     }
@@ -266,26 +263,26 @@ export class SpeedingVehicleComponent implements OnInit {
 
   refreshTime() {
     this.calculate()
-    this.availableTimeFinish = this.generateTimeRange(this.start,this.maxTime);
-    this.availableTimeStart = this.generateTimeRange('00:00:00',this.finish);
+    this.availableTimeFinish = this.generateTimeRange(this.start, this.maxTime);
+    this.availableTimeStart = this.generateTimeRange('00:00:00', this.finish);
     this.waitingTime = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
   }
 
-  checkValidTime(inputTime:string) {
+  checkValidTime(inputTime: string) {
     let validTime = /^[0-9]{2}:[0-9]{2}:[0-9]{2}$/;
-    if (inputTime.length != 8 ) {
+    if (inputTime.length != 8) {
       this.timeValidityMessage = "Time format invalid.";
       this.isValidTime = false;
     }
-    else if (inputTime.match(validTime)){
+    else if (inputTime.match(validTime)) {
       this.isValidTime = true;
     }
     else {
       this.isValidTime = false;
     }
-  
+
   }
-  
+
 
 
 }
