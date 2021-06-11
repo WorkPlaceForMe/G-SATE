@@ -66,7 +66,7 @@ router.post("/object-detection/confirmed", function (req, res, next) {
   });
 });
 
-rooter.post("/time-slot/save", function (req, res) {
+router.post("/time-slot/save", function (req, res) {
   res.json({
     inferencing_time_slot: {
       start_time: req.body.start_time,
