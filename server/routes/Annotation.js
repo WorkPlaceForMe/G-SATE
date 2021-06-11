@@ -19,50 +19,19 @@ router.post("/confirmed", function (req, res, next) {
   let body = req.body;
 
   /**
-   * Parse body string to JSON
+   * Update ratio of (x, y) coordinates as per actual image width height
    */
-  // const data = JSON.parse(body);
-  // let modifiedRes = [];
-
-  // if (data.results) {
-  //   for (const i in data.result) {
-  //     if (Array.isArray(this.data.results[item])) {
-  //       this.data.results[j].forEach((element) => {
-  //         // First object
-  //         let obj1 = {
-  //           x:
-  //             (element.boundingBox.left * data.result[i].width) /
-  //             data.result[i].res_width,
-  //           y:
-  //             (element.boundingBox.top * data.result[i].height) /
-  //             data.result[i].res_height,
-  //         };
-  //         console.log(obj1);
-  //         // Second object
-  //         let obj2 = {
-  //           x:
-  //             (element.boundingBox.width * data.result[i].width) /
-  //             data.result[i].res_width,
-  //           y:
-  //             (element.boundingBox.height * data.result[i].height) /
-  //             data.result[i].res_height,
-  //         };
-  //         // Third object
-  //         let obj3 = {
-  //           general_detection: "No",
-  //         };
-  //         // Fourth object
-  //         let obj4 = {
-  //           label: element.class,
-  //         };
-
-  //         // modifiedRes.push([obj1, obj2, obj3, obj4]);
-  //       });
-  //     }
-  //     // console.log(modifiedRes);
-  //   }
-  //   // console.log(modifiedRes);
-  // }
+  for (const index in body.data) { 
+    const SET = body.data[index];
+    for (let i = 0; i < SET.results.length; i++) {
+      for (let j = 0; j < SET.results[i].length; j++) {
+        if (SET.results[i][j].x && SET.results[i][j].y) {
+          body.data[index].results[i][j].x = (SET.results[i][j].x / SET.canvas_width) * SET.width;
+          body.data[index].results[i][j].y = (SET.results[i][j].y / SET.canvas_height) * SET.height;
+        }
+      }
+    }
+  }
 
   let directory =
     process.env.resources2 + "training_details/" + body.datasetName + ".json";
@@ -93,6 +62,19 @@ router.post("/object-detection/confirmed", function (req, res, next) {
     } else {
       res.json(annotation);
       //res.redirect("/camerasList");
+    }
+  });
+});
+
+rooter.post("/time-slot/save", function (req, res) {
+  res.json({
+    inferencing_time_slot: {
+      start_time: req.body.start_time,
+      end_time: req.body.end_time
+    },
+    traning_time_slot: {
+      start_time: req.body.start_time,
+      end_time: req.body.end_time
     }
   });
 });
