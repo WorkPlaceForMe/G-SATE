@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -22,6 +22,7 @@ import { UrlPipe } from './pipes/url.pipe';
 import { AuthService } from "./shared/services/auth.service";
 import { NavigationService } from './shared/services/navigation.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { ScheduleComponent } from './components/facial_recognition/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -61,6 +62,7 @@ import { AddVideoComponent } from './components/cameras_conf/add-video/add-video
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
+import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -101,7 +103,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     AddVideoComponent,
     AnnotationsConfirmComponent,
     ObjectDetectionConfirmComponent,
-    ObjectDetectionDetailsComponent
+    ObjectDetectionDetailsComponent,
+    FederatedLearningComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     MatButtonModule,
     MatProgressSpinnerModule,
     DeviceDetectorModule.forRoot(),
+    TimepickerModule.forRoot(),
     MatVideoModule,
     MatPaginatorModule,
     NgxPaginationModule,

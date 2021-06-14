@@ -7,3 +7,4 @@ resources
 client/package-lock.json
 server/package-lock.json
 server/objdet
+client/package-lock.json
