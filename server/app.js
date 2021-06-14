@@ -249,7 +249,7 @@ app.post('/api/general/object/detection', function(req, res) {
         xx = image.split('/')[7];
         image = process.env.vista_server_ip + image;
     } else {
-        xx = image.split('/')[5];
+        xx = image.split('/')[7];
     }
     let imgName = xx;
     let dir = './objdet/darknet/data/' + imgName;
