@@ -256,6 +256,9 @@ app.post('/api/general/object/detection', function(req, res) {
     console.log('dir>>>>>>>>', dir);
     saveImg(image, dir, function(err, data) {
         cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`, function(err, data) {
+             
+             console.log('LOG BY INT: ', err, data);
+
             if (err) {
                 console.log('Error : ', err);
                 res.json(err);
