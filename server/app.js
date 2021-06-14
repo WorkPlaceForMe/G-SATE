@@ -249,7 +249,7 @@ app.post('/api/general/object/detection', function(req, res) {
         xx = image.split('/')[7];
         image = process.env.vista_server_ip + image;
     } else {
-        xx = image.split('/')[7];
+        xx = image.split('/')[5];
     }
     let imgName = xx;
     let dir = './objdet/darknet/data/' + imgName;
@@ -258,6 +258,7 @@ app.post('/api/general/object/detection', function(req, res) {
         cp.exec(`cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`, function(err, data) {
              
              console.log('LOG BY INT: ', err, data);
+
 
             if (err) {
                 console.log('Error : ', err);
