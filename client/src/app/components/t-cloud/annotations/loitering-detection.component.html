@@ -12,14 +12,18 @@
   </div>
 
   <div class=" col-md-2">
-    <div class="card border-info panel">
-      <div class="card-header" align='center' *ngIf='objDet == false'>Objects detected <span class="font-italic">{{annotations.length}}</span></div>
+    <div class="card border-info panel" style="max-height: 527.6px;">
+      <div class="card-header" align='center' *ngIf='objDet == false'>Objects detected <span
+          class="font-italic">{{data.results.length}}</span></div>
       <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
-      <ul class="label-list">
-        <li *ngFor='let ann of annotations; index as i' (click)='get(i)' [ngClass]="{'active-label' : selectedID === i}">
-          <span>{{ann[3].label}}</span>
-          <button class="btn" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal" (click)="openlebelModal(i)"><i
-              class="far fa-edit"></i></button>
+      <ul class="label-list annotation-height pr-0" *ngIf="data && data.results.length > 0">
+        <li *ngFor='let ann of data.results; index as i' [ngClass]="{'active-label' : selectedID === i}">
+          <span class="elipsis" (click)='get(i)'>{{ann[3].label}}</span>
+          <button class="btn px-1" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal"
+            (click)="openlebelModal(i)"><i class="far fa-edit"></i></button>
+          <button class="btn px-0" (click)="clear(i)">
+            <i class="far fa-times-circle"></i>
+          </button>
         </li>
       </ul>
     </div>
@@ -39,24 +43,16 @@
         </button>
         <div class="d-flex justify-content-center" *ngIf="spinflag">
           <div class="spinner-border spin" role="status">
-              <span class="sr-only">Loading...</span>
+            <span class="sr-only">Loading...</span>
           </div>
-      </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- <div class="input-group mb-1 p-1" *ngIf='multiple == true'>
-  <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label">
-  <button class="btn btn-primary" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
-  <button class="btn btn-primary" (click)='updateLabel()' [disabled]='on == false'>Update label</button>
-  <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='noMess()'>
-    <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
-  </select>
-</div> -->
 <div class='btn-group p-2' role="group">
   <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
-  <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button>
+  <!-- <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button> -->
   <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
   <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
 </div>

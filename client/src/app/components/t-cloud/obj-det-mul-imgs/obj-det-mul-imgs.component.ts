@@ -209,7 +209,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           setTimeout(() => {
             this.data.forEach(async (value, index) => {
               value["image"] = "http://" + ip + ":4200" + value.image;
-              const convertedResponse = await this.convertVistaResponseToXY(value.results, index);
+              const convertedResponse = await this.convertVistaResponseToXY(value.results, index, 'Analytics API');
               value["results"] = convertedResponse;
               this.annObj[value.id] = {
                 image: value.image,
@@ -538,7 +538,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           x = x - this.coords[0].x;
           y = y - this.coords[0].y;
           this.coords.push({ x: x, y: y });
-          this.coords.push({ general_detection: "No" });
+          this.coords.push({ general_detection: "No", detection_source: "Manual Drawn" });
           this.coords.push({
             label: this.label + ' ' + (this.data[i]["results"].length + 1),
           });
@@ -749,7 +749,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           alert("Zero detections happened.");
         } else {
           console.log('this.data - ', this.data);
-          const convertedResponse = await this.convertVistaResponseToXY(response.results, i);
+          const convertedResponse = await this.convertVistaResponseToXY(response.results, i, 'Vista API');
           convertedResponse.forEach((element) => {
             this.data[i]["results"].push(element)
           });
@@ -776,7 +776,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     );
   }
 
-  convertVistaResponseToXY(res, i) {
+  convertVistaResponseToXY(res, i, source) {
     let annotatedList = [];
     for (let itm in res) {
       if (Array.isArray(res[itm])) {
@@ -801,6 +801,7 @@ export class ObjDetMulImgsComponent implements OnInit {
           this.ann.push(obj2);
           let obj3 = {
             general_detection: "No",
+            detection_source: source
           };
           this.ann.push(obj3);
           let obj4 = {
@@ -868,6 +869,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       debugger
       if (res.length > 0) {
         res.forEach((element) => {
+          element["detection_source"] = "General Detection Script";
           this.data[i]["results"].push(element);
         });
         console.log(res);
