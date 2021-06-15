@@ -87,7 +87,12 @@ let Dataset = {
       url: process.env.vista_server_ip + "/api/v1/sync",
       strictSSL: false,
       headers: {
-        Authorization: process.env.authorization,
+        // Authorization: process.env.authorization,
+        'Content-Type': `multipart/form-data;`
+      },
+      auth: {
+        username: 'admin',
+        password: 'admin'
       },
       formData: {
         upload: {
