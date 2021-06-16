@@ -17,6 +17,23 @@ router.get("/models", function (req, res, next) {
 
 router.post("/confirmed", function (req, res, next) {
   let body = req.body;
+
+  /**
+   * Update ratio of (x, y) coordinates as per actual image width height
+   */
+  for (const index in body.data) { 
+    const SET = body.data[index];
+    for (let i = 0; i < SET.results.length; i++) {
+      for (let j = 0; j < SET.results[i].length; j++) {
+        if (SET.results[i][j].x && SET.results[i][j].y) {
+          body.data[index].results[i][j].x = (SET.results[i][j].x / SET.canvas_width) * SET.width;
+          body.data[index].results[i][j].y = (SET.results[i][j].y / SET.canvas_height) * SET.height;
+        }
+      }
+    }
+  }
+  /** ---------------- */
+  
   let directory =
     process.env.resources2 + "training_details/" + body.datasetName + ".json";
   fs.writeFileSync(directory, JSON.stringify(body.data));
@@ -26,7 +43,8 @@ router.post("/confirmed", function (req, res, next) {
     if (err) {
       res.json(err);
     } else {
-      res.json(annotation);
+      res.json(body);
+      // res.json(annotation);
       //res.redirect("/camerasList");
     }
   });

@@ -22,6 +22,13 @@ var Relations = {
         return db.query('DELETE FROM relations WHERE snippet_id = ?', [id], callback);
     },
 
+    /**
+     * Delete all the relations records by camera ID
+     */
+    deleteByCameraId: function(cameraId, callback) {
+      return db.query('DELETE FROM relations WHERE camera_id = ?', [id], callback);
+    },
+
     update: function (id, relation, callback) {
         return db.query("UPDATE relations set atributes=? where id=?", [relation.atributes, id], callback);
     }
