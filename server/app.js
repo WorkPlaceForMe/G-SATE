@@ -309,7 +309,7 @@ app.post("/api/general/object/detection", function (req, res) {
   let imgName = xx;
   let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
   console.log("dir>>>>>>>>", dir);
-  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
+  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data${imgName}`;
   //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights ${image}`;
   console.log("command - ", command);
   saveImg(image, dir, function (err, data) {
