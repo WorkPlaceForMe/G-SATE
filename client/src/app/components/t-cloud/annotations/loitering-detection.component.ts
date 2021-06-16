@@ -43,7 +43,6 @@ export class LoiteringDetectionComponent implements OnInit {
 
   newLabel: string = null;
   images: any = [];
-  labels: any = [];
   annotationsCount: number = 0;
 
   count: number = 0;
@@ -53,7 +52,6 @@ export class LoiteringDetectionComponent implements OnInit {
   id: number;
   on: boolean = false;
   coords = [];
-  annotations: any = [];
   ann: any = [];
   cacheAnnot: any = [];
   label: string;
@@ -111,11 +109,13 @@ export class LoiteringDetectionComponent implements OnInit {
   private canvas;
   private ctx;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
     this.ctx = this.canvas.getContext("2d");
+    const convertedData = await this.convertVistaResponseToXY();
+    this.data["results"] = convertedData;
     this.getAnn();
-    this.activatedRoute.params
+    // this.activatedRoute.params
     if (this.activatedRoute.snapshot.params.method == 'multiple') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
@@ -124,7 +124,6 @@ export class LoiteringDetectionComponent implements OnInit {
     } else {
       this.label = this.activatedRoute.snapshot.params.method;
     }
-    this.getLabels();
   }
 
   ngAfterViewChecked() {
@@ -136,7 +135,8 @@ export class LoiteringDetectionComponent implements OnInit {
     ++this.annotationsCount;
   }
 
-  getAnn() {
+  convertVistaResponseToXY() {
+    let annotatedList = [];
     for (let itm in this.data.results) {
       if (Array.isArray(this.data.results[itm])) {
         this.data.results[itm].forEach(element => {
@@ -151,43 +151,37 @@ export class LoiteringDetectionComponent implements OnInit {
           };
           this.ann.push(obj2);
           let obj3 = {
-            general_detection: 'No'
+            general_detection: 'No',
+            detection_source: 'Vista API'
           }
           this.ann.push(obj3);
           let obj4 = {
             label: element.class
           };
           this.ann.push(obj4);
-          this.annotations.push(this.ann);
+          annotatedList.push(this.ann);
           this.ann = [];
         })
       }
     }
-    console.log('this.annotations - ', this.annotations);
-    this.cacheAnnot = this.annotations;
+    return annotatedList;
+  }
+
+  getAnn() {
+    console.log('this.data.results - ', this.data.results);
+    this.cacheAnnot = this.data.results;
     if (this.annCount === 0) {
-      this.fixedSize = this.annotations.length;
+      this.fixedSize = this.data.results.length;
       ++this.annCount;
     }
     this.re_draw();
   }
 
-  getLabels() {
-    for (let itm in this.data.results) {
-      if (Array.isArray(this.data.results[itm])) {
-        this.data.results[itm].forEach(element => {
-          this.labels.push(element.class);
-        })
-      }
-    }
-  }
-
   next() {
-    debugger;
     this.router.navigate(['/annotations/' + 'object' + '/' + 'image' + '/0' + '/details'], { state: { data: this.data } });
     if (this.valueImage < this.total - 1) {
       this.valueImage++;
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
         this.send();
       } else {
         this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
@@ -195,7 +189,7 @@ export class LoiteringDetectionComponent implements OnInit {
         });
       }
     } else if (this.valueImage == this.total - 1) {
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
         this.send();
       } else {
         this.router.navigateByUrl('/annotations');
@@ -204,8 +198,8 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   send() {
-    this.annotations.push({ 'width': this.annWidth, 'height': this.annHeight });
-    this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.annotations).subscribe(
+    this.data.results.push({ 'width': this.annWidth, 'height': this.annHeight });
+    this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.data.results).subscribe(
       res => {
         if (this.valueImage < this.total - 1) {
           this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
@@ -224,7 +218,7 @@ export class LoiteringDetectionComponent implements OnInit {
   prev() {
     if (this.valueImage > 0) {
       this.valueImage--;
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
         this.send();
       } else {
         this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
@@ -234,24 +228,28 @@ export class LoiteringDetectionComponent implements OnInit {
     }
   }
 
-  clear() {
+  clear(lebelIndex) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.annotations.splice(this.id, 1);
+    this.data.results.splice(lebelIndex, 1);
     this.re_draw();
     this.on = false;
     this.id = undefined;
     this.clearAct = false;
   }
+
   openlebelModal(id) {
-    this.newLabel = this.annotations[id][3].label;
+    this.newLabel = this.data.results[id][3].label;
   }
+
   updateLabel() {
+    debugger;
     if (this.newLabel) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      for (let e = 0; e < this.annotations.length; e++) {
+      for (let e = 0; e < this.data.results.length; e++) {
         if (e == this.id) {
-          this.annotations[e].pop();
-          this.annotations[e].push({ label: this.newLabel });
+          this.data.results[e].pop();
+          this.data.results[e].push({ label: this.newLabel });
+          break;
         }
       }
       this.re_draw();
@@ -267,33 +265,26 @@ export class LoiteringDetectionComponent implements OnInit {
     this.id = i;
     this.selectedID = i;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (let e = 0; e < this.annotations.length; e++) {
+    for (let e = 0; e < this.data.results.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
       if (i == e) {
-        this.label = this.annotations[e][2].label;
+        // this.label = this.data.results[e][3].label;
         this.ctx.fillStyle = "yellow";
         this.ctx.strokeStyle = 'yellow';
-        //this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        //this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
       }
-      /* this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
-      this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4); */
-      if (this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][1]['y'] - 3, 4, 4);
-        this.ctx.fillRect(this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x'] - 3, this.annotations[e][1]['y'] - 3, 4, 4);
+      if (this.data.results[e][2]['general_detection'] == 'Yes') {
+        this.ctx.fillRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][1]['y'] - 3, 4, 4);
+        this.ctx.fillRect(this.data.results[e][1]['x'], this.data.results[e][0]['y'], 4, 4);
+        this.ctx.strokeRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'] - this.data.results[e][0]['x'], this.data.results[e][1]['y'] - this.data.results[e][0]['y']);
+        this.ctx.fillRect(this.data.results[e][1]['x'] - 3, this.data.results[e][1]['y'] - 3, 4, 4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 4, this.annotations[e][0]['y'] - 2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 4, 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 3, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 3, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] + this.data.results[e][1]['x'] - 4, this.data.results[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][0]['y'] + this.data.results[e][1]['y'] - 4, 4, 4);
+        this.ctx.strokeRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'], this.data.results[e][1]['y']);
+        this.ctx.fillRect(this.data.results[e][0]['x'] + this.data.results[e][1]['x'] - 3, this.data.results[e][0]['y'] + this.data.results[e][1]['y'] - 3, 4, 4);
       }
       this.ctx.lineWidth = 2.5;
       this.ctx.stroke();
@@ -301,7 +292,7 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   info() {
-    console.log(this.annotations, this.cacheAnnot);
+    console.log(this.data.results, this.cacheAnnot);
   }
 
   @HostListener('document:mousemove', ['$event'])
@@ -369,11 +360,11 @@ export class LoiteringDetectionComponent implements OnInit {
           x = x - this.coords[0].x;
           y = y - this.coords[0].y;
           this.coords.push({ 'x': x, 'y': y });
-          this.coords.push({ 'general_detection': 'No' });
+          this.coords.push({ 'general_detection': 'No', detection_source: "Manual Drawn" });
           this.coords.push({ 'label': this.label });
           this.ctx.lineWidth = 1;
           this.ctx.stroke();
-          this.annotations.push(this.coords);
+          this.data.results.push(this.coords);
           this.re_draw();
           this.coords = [];
         }
@@ -389,42 +380,37 @@ export class LoiteringDetectionComponent implements OnInit {
         rect = this.canvas.getBoundingClientRect();
         x = event.clientX - rect.left;
         y = event.clientY - rect.top;
-        for (let i = 0; i < this.annotations.length; i++) {
-          if (this.annotations[i][0].x < this.annotations[i][1].x) {
-            inX = this.annotations[i][0].x;
-            endX = this.annotations[i][1].x;
+        for (let i = 0; i < this.data.results.length; i++) {
+          if (this.data.results[i][0].x < this.data.results[i][1].x) {
+            inX = this.data.results[i][0].x;
+            endX = this.data.results[i][1].x;
           } else {
-            inX = this.annotations[i][1].x;
-            endX = this.annotations[i][0].x;
+            inX = this.data.results[i][1].x;
+            endX = this.data.results[i][0].x;
           }
-          if (this.annotations[i][0].y < this.annotations[i][1].y) {
-            inY = this.annotations[i][0].y;
-            endY = this.annotations[i][1].y;
+          if (this.data.results[i][0].y < this.data.results[i][1].y) {
+            inY = this.data.results[i][0].y;
+            endY = this.data.results[i][1].y;
           } else {
-            inY = this.annotations[i][1].y;
-            endY = this.annotations[i][0].y;
+            inY = this.data.results[i][1].y;
+            endY = this.data.results[i][0].y;
           }
           if (x >= inX && x <= endX && y >= inY && y <= endY) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            for (let e = 0; e < this.annotations.length; e++) {
+            for (let e = 0; e < this.data.results.length; e++) {
               this.ctx.fillStyle = "lime";
               this.ctx.strokeStyle = 'lime';
               if (i == e) {
-                this.annotations[e][2].label = this.label;
+                this.data.results[e][3].label = this.label;
                 this.ctx.strokeStyle = 'yellow';
                 this.ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
-                this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
+                this.ctx.fillRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'] - this.data.results[e][0]['x'], this.data.results[e][1]['y'] - this.data.results[e][0]['y']);
               }
-              this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
-              this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
-              this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
-              this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-              this.ctx.fillRect(this.annotations[e][1]['x'] - 2, this.annotations[e][1]['y'] - 2, 4, 4);
-              /* this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-              this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-              this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4);
-              this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-              this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'], this.annotations[e][0]['y'] + this.annotations[e][1]['y'], 4, 4); */
+              this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][0]['y'] - 2, 4, 4);
+              this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][1]['y'] - 2, 4, 4);
+              this.ctx.fillRect(this.data.results[e][1]['x'] - 2, this.data.results[e][0]['y'] - 2, 4, 4);
+              this.ctx.strokeRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'] - this.data.results[e][0]['x'], this.data.results[e][1]['y'] - this.data.results[e][0]['y']);
+              this.ctx.fillRect(this.data.results[e][1]['x'] - 2, this.data.results[e][1]['y'] - 2, 4, 4);
               this.ctx.lineWidth = 2;
               this.ctx.stroke();
             }
@@ -440,32 +426,27 @@ export class LoiteringDetectionComponent implements OnInit {
   }
 
   re_draw() {
-    for (let e = 0; e < this.annotations.length; e++) {
+    for (let e = 0; e < this.data.results.length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = 'lime';
-      if (this.annotations[e][2]['general_detection'] == 'Yes') {
-        this.ctx.fillRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][1]['y'] - 3, 4, 4);
-        this.ctx.fillRect(this.annotations[e][1]['x'], this.annotations[e][0]['y'], 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'] - this.annotations[e][0]['x'], this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-        this.ctx.fillRect(this.annotations[e][1]['x'] - 3, this.annotations[e][1]['y'] - 3, 4, 4);
+      if (this.data.results[e][2]['general_detection'] == 'Yes') {
+        this.ctx.fillRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][1]['y'] - 3, 4, 4);
+        this.ctx.fillRect(this.data.results[e][1]['x'], this.data.results[e][0]['y'], 4, 4);
+        this.ctx.strokeRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'] - this.data.results[e][0]['x'], this.data.results[e][1]['y'] - this.data.results[e][0]['y']);
+        this.ctx.fillRect(this.data.results[e][1]['x'] - 3, this.data.results[e][1]['y'] - 3, 4, 4);
       } else {
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] - 2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 4, this.annotations[e][0]['y'] - 2, 4, 4);
-        this.ctx.fillRect(this.annotations[e][0]['x'] - 2, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 4, 4, 4);
-        this.ctx.strokeRect(this.annotations[e][0]['x'], this.annotations[e][0]['y'], this.annotations[e][1]['x'], this.annotations[e][1]['y']);
-        this.ctx.fillRect(this.annotations[e][0]['x'] + this.annotations[e][1]['x'] - 3, this.annotations[e][0]['y'] + this.annotations[e][1]['y'] - 3, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] + this.data.results[e][1]['x'] - 4, this.data.results[e][0]['y'] - 2, 4, 4);
+        this.ctx.fillRect(this.data.results[e][0]['x'] - 2, this.data.results[e][0]['y'] + this.data.results[e][1]['y'] - 4, 4, 4);
+        this.ctx.strokeRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'], this.data.results[e][1]['y']);
+        this.ctx.fillRect(this.data.results[e][0]['x'] + this.data.results[e][1]['x'] - 3, this.data.results[e][0]['y'] + this.data.results[e][1]['y'] - 3, 4, 4);
       }
-      /* this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][0]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][0]['x']-2,this.annotations[e][1]['y']-2,4,4);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][0]['y']-2,4,4);    
-      this.ctx.strokeRect(this.annotations[e][0]['x'],this.annotations[e][0]['y'],this.annotations[e][1]['x'] - this.annotations[e][0]['x'],this.annotations[e][1]['y'] - this.annotations[e][0]['y']);
-      this.ctx.fillRect(this.annotations[e][1]['x']-2,this.annotations[e][1]['y']-2,4,4); */
       this.ctx.lineWidth = 2.5;
       this.ctx.stroke();
-      //return;
     }
   }
+
   activeButton(event) {
     let clickedElement = event.target || event.srcElement;
 
@@ -481,6 +462,7 @@ export class LoiteringDetectionComponent implements OnInit {
       clickedElement.className += " button-active";
     }
   }
+
   generalDetection(event) {
     this.activeButton(event);
     this.selectedID = "";
@@ -492,23 +474,18 @@ export class LoiteringDetectionComponent implements OnInit {
       singleImage: true
     };
     if (this.annCount > 1) {
-      this.annotations.splice(this.fixedSize, this.annotations.length);
+      this.data.results.splice(this.fixedSize, this.data.results.length);
     }
     this.annotationsServ.generalDetection(body).subscribe(res => {
       this.flag = false;
       this.spinflag = false;
       alert(`${res.length} objects detected.`);
       res.forEach(element => {
-        this.annotations.push(element);
+        this.data.results.push(element);
         ++this.annCount;
       });
       this.re_draw();
     });
-  }
-
-  addLabel() {
-    this.labels.push(this.newLabel);
-    this.newLabel = null;
   }
 
 }
