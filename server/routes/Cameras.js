@@ -2,6 +2,7 @@ const fs = require('fs');
 var express = require('express');
 var router = express.Router();
 var Camera = require('../models/Camera');
+const Relations = require('../models/Relations');
 
 
 router.get('/', function (req, res, next) {
@@ -45,15 +46,34 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/:id', function (req, res, next) {
+  /** 
+   * Remove the file if it's exist
+   */
   if(req.body.stored_vid == 'Yes') {
-    fs.unlinkSync(req.body.rtsp_in);
+    fs.access(req.body.rtsp_in, constants.F_OK, function(err) {
+      if(!err) {
+        fs.unlinkSync(req.body.rtsp_in);
+      }
+    });
   }
-  Camera.delete(req.params.id, function (err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
+  /**
+   * Remove all the relations
+   */
+  Relations.deleteByCameraId(req.params.id, function (rerr, count) {
+    if (rerr) {
+      res.json(rerr);
+      return;
     }
+    /**
+     * Remove camera
+     */
+    Camera.delete(req.params.id, function (err, count) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(count);
+      }
+    });
   });
 });
 
