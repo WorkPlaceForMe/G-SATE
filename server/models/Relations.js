@@ -26,7 +26,7 @@ var Relations = {
      * Delete all the relations records by camera ID
      */
     deleteByCameraId: function(cameraId, callback) {
-      return db.query('DELETE FROM relations WHERE camera_id = ?', [id], callback);
+      return db.query('DELETE FROM relations WHERE camera_id = ?', [cameraId], callback);
     },
 
     update: function (id, relation, callback) {
