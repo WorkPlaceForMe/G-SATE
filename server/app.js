@@ -303,9 +303,12 @@ app.post("/api/general/object/detection", function (req, res) {
     xx = image.split("/")[7];
     image = process.env.vista_server_ip + image;
   } else {
-    xx = image.split("/")[5];
+
+    xx = image.split("/")[7];
+    // xx = image.split("/shared-data")[1];
   }
   let imgName = xx;
+  // let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
   let dir = "./objdet/darknet/data/" + imgName;
   console.log("dir>>>>>>>>", dir);
   //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
