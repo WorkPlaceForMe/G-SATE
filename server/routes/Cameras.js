@@ -50,7 +50,7 @@ router.post('/:id', function (req, res, next) {
    * Remove the file if it's exist
    */
   if(req.body.stored_vid == 'Yes') {
-    fs.access(req.body.rtsp_in, constants.F_OK, function(err) {
+    fs.access(req.body.rtsp_in, fs.constants.F_OK, function(err) {
       if(!err) {
         fs.unlinkSync(req.body.rtsp_in);
       }
