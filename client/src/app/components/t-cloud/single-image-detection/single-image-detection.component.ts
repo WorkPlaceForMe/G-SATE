@@ -8,11 +8,11 @@ import { ip } from '../../../models/IpServer'
 
 const baseURL = vistaIP;
 @Component({
-  selector: 'app-loitering-detection',
-  templateUrl: './loitering-detection.component.html',
-  styleUrls: ['./loitering-detection.component.css']
+  selector: 'app-single-image-detection',
+  templateUrl: './single-image-detection.component.html',
+  styleUrls: ['./single-image-detection.component.css']
 })
-export class LoiteringDetectionComponent implements OnInit {
+export class SingleImageDetectionComponent implements OnInit {
 
   data: any;
   initPage: number = 0;
@@ -55,10 +55,21 @@ export class LoiteringDetectionComponent implements OnInit {
   ann: any = [];
   cacheAnnot: any = [];
   label: string;
+  annObj: any;
+  method: any;
+  folder: any;
 
-  constructor(private rd: Renderer2, private activatedRoute: ActivatedRoute, sanitizer: DomSanitizer, private facesService: FacesService, private annotationsServ: AnnotationsService, private router: Router) {
-
-    const string = this.activatedRoute.snapshot.params.folder.split(' ').join('_');
+  constructor(
+    private rd: Renderer2,
+    private activatedRoute: ActivatedRoute,
+    sanitizer: DomSanitizer,
+    private facesService: FacesService,
+    private annotationsServ: AnnotationsService,
+    private router: Router
+  ) {
+    this.method = this.activatedRoute.snapshot.params.method;
+    this.folder = this.activatedRoute.snapshot.params.folder;
+    const string = this.folder.split(' ').join('_');
     this.valueImage = parseInt(this.activatedRoute.snapshot.params.image, 10);
     this.data = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
     this.link = sanitizer.bypassSecurityTrustStyle('url(' + baseURL + this.data.image + ')');
@@ -116,13 +127,13 @@ export class LoiteringDetectionComponent implements OnInit {
     this.data["results"] = convertedData;
     this.getAnn();
     // this.activatedRoute.params
-    if (this.activatedRoute.snapshot.params.method == 'multiple') {
+    if (this.method == 'multiple') {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes('objectDetection')) {
       this.multiple = true;
       this.objDet = true;
     } else {
-      this.label = this.activatedRoute.snapshot.params.method;
+      this.label = this.method;
     }
   }
 
@@ -175,57 +186,6 @@ export class LoiteringDetectionComponent implements OnInit {
       ++this.annCount;
     }
     this.re_draw();
-  }
-
-  next() {
-    this.router.navigate(['/annotations/' + 'object' + '/' + 'image' + '/0' + '/details'], { state: { data: this.data } });
-    if (this.valueImage < this.total - 1) {
-      this.valueImage++;
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
-        this.send();
-      } else {
-        this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
-        });
-      }
-    } else if (this.valueImage == this.total - 1) {
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
-        this.send();
-      } else {
-        this.router.navigateByUrl('/annotations');
-      }
-    }
-  }
-
-  send() {
-    this.data.results.push({ 'width': this.annWidth, 'height': this.annHeight });
-    this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.data.results).subscribe(
-      res => {
-        if (this.valueImage < this.total - 1) {
-          this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
-          });
-        } else if (this.valueImage == this.total - 1) {
-          this.router.navigateByUrl('/annotations');
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    )
-  }
-
-  prev() {
-    if (this.valueImage > 0) {
-      this.valueImage--;
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
-        this.send();
-      } else {
-        this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/annotations/' + this.activatedRoute.snapshot.params.method + '/' + this.activatedRoute.snapshot.params.folder + '/' + this.valueImage]);
-        });
-      }
-    }
   }
 
   clear(lebelIndex) {
@@ -486,6 +446,84 @@ export class LoiteringDetectionComponent implements OnInit {
       });
       this.re_draw();
     });
+  }
+
+  // getImageDimenstion(imgUrl) {
+  //   let img = new Image();
+  //   img.src = imgUrl;
+  //   img.onload = function (event) {
+  //     let loadedImage = event.currentTarget;
+  //     let width = loadedImage.width;
+  //     let height = loadedImage.height;
+  //     console.log('height: ' + height);
+  //     console.log('width: ' + width);
+  //   }
+  // }
+
+  next() {
+    let rect = this.canvas.getBoundingClientRect();
+    // this.getImageDimenstion(baseURL + this.data.image);
+    console.log(rect);
+    console.log(this.data);
+    this.annObj = {
+      image: baseURL + this.data.image,
+      width: rect.width,
+      height: rect.width,
+      canvas_width: rect.width,
+      canvas_height: rect.height,
+      results: this.data["results"],
+      fixedSize: this.data["results"].length,
+      datasetName: this.data.image.split("admin/")[1]
+    };
+    // this.router.navigate(['/annotations/object/image/0/details'], { state: { data: this.data } });
+    this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
+    // if (this.valueImage < this.total - 1) {
+    //   this.valueImage++;
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+    //       this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
+    //     });
+    //   }
+    // } else if (this.valueImage == this.total - 1) {
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl('/annotations');
+    //   }
+    // }
+  }
+
+  send() {
+    this.data.results.push({ 'width': this.annWidth, 'height': this.annHeight });
+    this.annotationsServ.writeAnn(this.picture.split('/').join(' '), this.data.results).subscribe(
+      res => {
+        if (this.valueImage < this.total - 1) {
+          this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
+          });
+        } else if (this.valueImage == this.total - 1) {
+          this.router.navigateByUrl('/annotations');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  prev() {
+    if (this.valueImage > 0) {
+      this.valueImage--;
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
+        this.send();
+      } else {
+        this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
+        });
+      }
+    }
   }
 
 }

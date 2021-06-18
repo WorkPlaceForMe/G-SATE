@@ -18,11 +18,11 @@ import { vistaIP } from 'src/app/models/VistaServer';
 
 const baseURL = vistaIP;
 @Component({
-  selector: "app-obj-det-mul-imgs",
-  templateUrl: "./obj-det-mul-imgs.component.html",
-  styleUrls: ["./obj-det-mul-imgs.component.css"],
+  selector: "app-multiple-image-detection",
+  templateUrl: "./multiple-image-detection.component.html",
+  styleUrls: ["./multiple-image-detection.component.css"],
 })
-export class ObjDetMulImgsComponent implements OnInit {
+export class MultipleImageDetectionComponent implements OnInit {
   pager: any = {};
 
   // paged items
@@ -81,6 +81,9 @@ export class ObjDetMulImgsComponent implements OnInit {
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
+  method: any;
+  folder: any;
+  detectionOriginType: any;
 
   constructor(
     private rd: Renderer2,
@@ -90,7 +93,11 @@ export class ObjDetMulImgsComponent implements OnInit {
     private annotationsServ: AnnotationsService,
     private router: Router,
     private pagerService: PagerService
-  ) { }
+  ) {
+    this.method = this.activatedRoute.snapshot.params.method;
+    this.folder = this.activatedRoute.snapshot.params.folder;
+    this.detectionOriginType = this.activatedRoute.snapshot.params.image;
+  }
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -143,8 +150,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.data[index].res_width = this.data[index].width;
       this.data[index].res_height = this.data[index].height;
       this.data[index].width = rect.width;
-      let resRelation =
-        this.data[index].res_height / this.data[index].res_width;
+      let resRelation = this.data[index].res_height / this.data[index].res_width;
       this.data[index].height = this.data[index].width * resRelation;
     });
   }
@@ -168,17 +174,14 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(
-      "this.activatedRoute.snapshot.params -> ",
-      this.activatedRoute.snapshot.params
-    );
-    if (this.activatedRoute.snapshot.params.image === "vista") {
+    console.log("this.activatedRoute.snapshot.params -> ", this.activatedRoute.snapshot.params);
+    if (this.detectionOriginType === "vista") {
       this.processDatasetWithOutVista();
     } else {
       this.processDataset();
     }
 
-    if (this.activatedRoute.snapshot.params.method == "dataset") {
+    if (this.method == "dataset") {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes("objectDetection")
     ) {
@@ -186,15 +189,15 @@ export class ObjDetMulImgsComponent implements OnInit {
       this.multiple = true;
       this.objDet = true;
     } else {
-      this.label = this.activatedRoute.snapshot.params.method;
+      this.label = this.method;
     }
   }
 
   processDataset() {
     this.spin = true;
     let data = {
-      name: this.activatedRoute.snapshot.params.folder,
-      method: this.activatedRoute.snapshot.params.image,
+      name: this.folder,
+      method: this.detectionOriginType,
     };
     this.annotationsServ.processDataset(data).subscribe(
       (res) => {
@@ -239,8 +242,8 @@ export class ObjDetMulImgsComponent implements OnInit {
   processDatasetWithOutVista() {
     this.spin = true;
     let data = {
-      name: this.activatedRoute.snapshot.params.folder,
-      method: this.activatedRoute.snapshot.params.image,
+      name: this.folder,
+      method: this.detectionOriginType,
     };
     console.log("req data -> ", data);
     this.annotationsServ.processDatasetWithOutVista(data).subscribe(
@@ -853,7 +856,7 @@ export class ObjDetMulImgsComponent implements OnInit {
     this.selectedID = "";
     this.spin = true;
     let body = {
-      type: this.activatedRoute.snapshot.params.image,
+      type: this.detectionOriginType,
       details: this.data[i],
       img: !this.annObj.hasOwnProperty(this.data[i].id)
         ? this.data[i].image
@@ -869,7 +872,7 @@ export class ObjDetMulImgsComponent implements OnInit {
       debugger
       if (res.length > 0) {
         res.forEach((element) => {
-          element["detection_source"] = "General Detection Script";
+          element[2]["detection_source"] = "General Detection Script";
           this.data[i]["results"].push(element);
         });
         console.log(res);
@@ -913,52 +916,51 @@ export class ObjDetMulImgsComponent implements OnInit {
   }
 
   next() {
+    debugger;
+    this.annObj['datasetName'] = this.folder;
     console.log('this.annObj -> ', JSON.stringify(this.annObj));
-    if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
-      this.annObj = this.data;
-    }
-    if (this.valueImage < this.total - 1) {
-      this.valueImage++;
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
-        this.send();
-      } else {
-        this.router
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(
-              [
-                "/annotations/dataset/" +
-                this.activatedRoute.snapshot.params.method +
-                "/" +
-                this.activatedRoute.snapshot.params.folder +
-                "/" +
-                this.valueImage +
-                "/details",
-              ],
-              { state: { data: this.annObj } }
-            );
-          });
-      }
-    } else if (this.valueImage == this.total - 1) {
-      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
-        this.send();
-      } else {
-        this.router.navigateByUrl("/annotations");
-      }
-    } else {
-      this.router.navigate(
-        [
-          "/annotations/dataset/" +
-          this.activatedRoute.snapshot.params.method +
-          "/" +
-          this.activatedRoute.snapshot.params.folder +
-          "/" +
-          this.activatedRoute.snapshot.params.image +
-          "/details",
-        ],
-        { state: { data: this.annObj } }
-      );
-    }
+    this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
+    // if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
+    //   this.annObj = this.data;
+    // }
+    // if (this.valueImage < this.total - 1) {
+    //   this.valueImage++;
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl("/RefreshComponent", { skipLocationChange: true }).then(() => {
+    //       this.router.navigate(["/annotations/dataset/" +
+    //         this.method +
+    //         "/" +
+    //         this.folder +
+    //         "/" +
+    //         this.valueImage +
+    //         "/details",
+    //       ],
+    //         { state: { data: this.annObj } }
+    //       );
+    //     });
+    //   }
+    // } else if (this.valueImage == this.total - 1) {
+    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+    //     this.send();
+    //   } else {
+    //     this.router.navigateByUrl("/annotations");
+    //   }
+    // } else {
+    //   this.router.navigate(
+    //     [
+    //       "/annotations/dataset/" +
+    //       this.method +
+    //       "/" +
+    //       this.folder +
+    //       "/" +
+    //       this.detectionOriginType +
+    //       "/details",
+    //     ],
+    //     { state: { data: this.annObj } }
+    //   );
+    // }
   }
 
   send() {
@@ -973,9 +975,9 @@ export class ObjDetMulImgsComponent implements OnInit {
     //           .then(() => {
     //             this.router.navigate([
     //               "/annotations/dataset/" +
-    //               this.activatedRoute.snapshot.params.method +
+    //               this.method +
     //               "/" +
-    //               this.activatedRoute.snapshot.params.folder +
+    //               this.folder +
     //               "/" +
     //               this.valueImage,
     //             ]);
@@ -1001,9 +1003,9 @@ export class ObjDetMulImgsComponent implements OnInit {
           .then(() => {
             this.router.navigate([
               "/annotations/" +
-              this.activatedRoute.snapshot.params.method +
+              this.method +
               "/" +
-              this.activatedRoute.snapshot.params.folder +
+              this.folder +
               "/" +
               this.valueImage,
             ]);

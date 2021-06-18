@@ -6,7 +6,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { ButtomsComponent } from './components/t-cloud/main/buttoms.component';
+import { TCloudDashboardComponent } from './components/t-cloud/t-cloud-dashboard/t-cloud-dashboard.component';
 import { FacesService } from './services/faces.service';
 import { AnnotationsService } from './services/annotations.service';
 import { ColorsService } from './services/colors';
@@ -40,7 +40,7 @@ import { DocListComponent } from './components/others/doc-list/doc-list.componen
 import { DocComponent } from './components/others/doc/doc.component';
 import { ip } from './models/IpServer';
 import { ClimbingBarricadeComponent } from './components/others/main_docs/climbing-barricade.component';
-import { LoiteringDetectionComponent } from './components/t-cloud/annotations/loitering-detection.component';
+import { SingleImageDetectionComponent } from './components/t-cloud/single-image-detection/single-image-detection.component';
 import { SpeedingVehicleComponent } from './components/t-cloud/video_to_frames/speeding-vehicle.component';
 import { UnwantedVehicleComponent } from './components/t-cloud/images_classification/unwanted-vehicle.component';
 import { MatExpansionModule, MatButtonModule } from '@angular/material';
@@ -55,7 +55,7 @@ import { CamerasComponent } from './components/cameras_conf/main/cameras.compone
 import { ResumeComponent } from './components/facial_recognition/resume/resume.component';
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
-import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
+import { MultipleImageDetectionComponent } from './components/t-cloud/multiple-image-detection/multiple-image-detection.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { PagerService } from './services/pager.service';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
@@ -75,7 +75,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     UrlPipe,
     PagenotfoundComponent,
     FaceListComponent,
-    ButtomsComponent,
+    TCloudDashboardComponent,
     ScheduleComponent,
     SettingsComponent,
     LiveComponent,
@@ -90,7 +90,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     DocListComponent,
     DocComponent,
     ClimbingBarricadeComponent,
-    LoiteringDetectionComponent,
+    SingleImageDetectionComponent,
     SpeedingVehicleComponent,
     UnwantedVehicleComponent,
     SearchComponent,
@@ -98,7 +98,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ResumeComponent,
     ObjectDetectionComponent,
     ObjDetImgComponent,
-    ObjDetMulImgsComponent,
+    MultipleImageDetectionComponent,
     AnnotationsDetailsComponent,
     AddVideoComponent,
     AnnotationsConfirmComponent,
