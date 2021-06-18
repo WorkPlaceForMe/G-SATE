@@ -281,6 +281,8 @@ let saveImg = function (uri, filePath, callback) {
       strictSSL: false,
     };
     request.head(options, function (err, res, body) {
+      console.log('SAVE_IMAGE', err, res, body);
+
       request(options)
         .pipe(fs.createWriteStream(filePath))
         .on("close", function () {
