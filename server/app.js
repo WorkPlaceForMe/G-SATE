@@ -275,8 +275,6 @@ app.get("/api/send/", function (req, res, err) {
 });
 
 let saveImg = function (uri, filePath, callback) {
-  console.log("uri - ", uri);
-  console.log("filePath - ", filePath);
   try {
     let options = {
       url: uri,
@@ -305,89 +303,94 @@ app.post("/api/general/object/detection", function (req, res) {
     xx = image.split("/")[7];
     image = process.env.vista_server_ip + image;
   } else {
-    // xx = image.split("/")[5];
-    xx = image.split("/shared-data")[1];
+
+    xx = image.split("/")[7];
+    // xx = image.split("/shared-data")[1];
   }
   let imgName = xx;
-  let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
+  // let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
+  let dir = "./objdet/darknet/data/" + imgName;
   console.log("dir>>>>>>>>", dir);
-  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data${imgName}`;
-  //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights ${image}`;
+  //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
+  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${image}`;
   console.log("command - ", command);
   saveImg(image, dir, function (err, data) {
-    cp.exec(command, function (err, data) {
-      console.log("Err LOG BY INT: ", err);
-      console.log("Data LOG BY INT: ", data);
+    cp.exec(
+      command,
+      function (err, data) {
+        console.log("Err LOG BY INT: ", err);
+        console.log("Data LOG BY INT: ", data);
 
-      if (err) {
-        console.log("Error : ", err);
-        res.json(err);
-      } else {
-        console.log("type of data>>>>>>>>", typeof data);
-        console.log("data>>>>>>>>>>>>>>", data);
-        let result = [];
-        let single = [];
+        if (err) {
+          console.log("Error : ", err);
+          res.json(err);
+        } else {
+          console.log("type of data>>>>>>>>", typeof data);
+          console.log("data>>>>>>>>>>>>>>", data);
+          let result = [];
+          let single = [];
 
-        console.log("data splitted >>>>>>>>>>>", data.split("\n"));
-        data.split("\n").forEach((ele) => {
-          if (ele.includes("Predicted in") || ele == "") {
-            console.log("element >>>>>>>>>>>>", ele);
-          } else {
-            let itm = ele.trim().split(" ");
-            console.log("single image ? ", singleImage);
-            if (singleImage) {
-              console.log("in if");
-              let obj1 = {
-                x: itm[0],
-                y: itm[1],
-              };
-              single.push(obj1);
-              let obj2 = {
-                x: itm[2],
-                y: itm[3],
-              };
-              single.push(obj2);
-              let obj3 = {
-                general_detection: "Yes",
-              };
-              single.push(obj3);
-              let obj4 = {
-                label: "",
-              };
-              single.push(obj4);
-              result.push(single);
-              single = [];
+          console.log("data splitted >>>>>>>>>>>", data.split("\n"));
+          data.split("\n").forEach((ele) => {
+            if (ele.includes("Predicted in") || ele == "") {
+              console.log("element >>>>>>>>>>>>", ele);
             } else {
-              console.log("in else");
-              let obj1 = {
-                x: (itm[0] * details.width) / details.res_width,
-                y: (itm[1] * details.height) / details.res_height,
-              };
-              single.push(obj1);
-              let obj2 = {
-                x: (itm[2] * details.width) / details.res_width,
-                y: (itm[3] * details.height) / details.res_height,
-              };
-              single.push(obj2);
-              let obj3 = {
-                general_detection: "Yes",
-              };
-              single.push(obj3);
-              let obj4 = {
-                label: "",
-              };
-              single.push(obj4);
-              result.push(single);
-              single = [];
+              let itm = ele.trim().split(" ");
+              console.log("single image ? ", singleImage);
+              if (singleImage) {
+                console.log("in if");
+                let obj1 = {
+                  x: itm[0],
+                  y: itm[1],
+                };
+                single.push(obj1);
+                let obj2 = {
+                  x: itm[2],
+                  y: itm[3],
+                };
+                single.push(obj2);
+                let obj3 = {
+                  general_detection: "Yes",
+                };
+                single.push(obj3);
+                let obj4 = {
+                  label: "",
+                };
+                single.push(obj4);
+                result.push(single);
+                single = [];
+              } else {
+                console.log("in else");
+                let obj1 = {
+                  x: (itm[0] * details.width) / details.res_width,
+                  y: (itm[1] * details.height) / details.res_height,
+                };
+                single.push(obj1);
+                let obj2 = {
+                  x: (itm[2] * details.width) / details.res_width,
+                  y: (itm[3] * details.height) / details.res_height,
+                };
+                single.push(obj2);
+                let obj3 = {
+                  general_detection: "Yes",
+                };
+                single.push(obj3);
+                let obj4 = {
+                  label: "",
+                };
+                single.push(obj4);
+                result.push(single);
+                single = [];
+              }
             }
+          });
+          if (fs.existsSync(dir)) {
+            fs.unlinkSync(dir);
           }
-        });
-        if (fs.existsSync(dir)) {
-          fs.unlinkSync(dir);
+          res.json(result);
         }
-        res.json(result);
       }
-    });
+    );
   });
 });
 
