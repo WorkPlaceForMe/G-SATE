@@ -312,11 +312,11 @@ app.post("/api/general/object/detection", function (req, res) {
   let dir = "./objdet/darknet/data/" + imgName;
   console.log("dir>>>>>>>>", dir);
   //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
-  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights ${image}`;
+  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${image}`;
   console.log("command - ", command);
   saveImg(image, dir, function (err, data) {
     cp.exec(
-      `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights ${image}`,
+      command,
       function (err, data) {
         console.log("Err LOG BY INT: ", err);
         console.log("Data LOG BY INT: ", data);
