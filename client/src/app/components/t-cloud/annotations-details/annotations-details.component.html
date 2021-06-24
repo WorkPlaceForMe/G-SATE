@@ -2,7 +2,7 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
-            <h5>Image Annotations Training Details</h5>
+            <h5>Annotations Training Details</h5>
         </div>
         <div class="card-body">
             <input type="text" class="gsate-input" [(ngModel)]=datasetName [value]=datasetName
@@ -20,7 +20,7 @@
             <div class="example-wrapper">
                 <label class="example-input-wrapper gsate-input">
                     <input placeholder="Select date and time" class="gsate-input" [(ngModel)]="date"
-                        [owlDateTime]="date1" [max]="max" [selectMode]="'single'" id="dateSelector">
+                        [owlDateTime]="date1" [min]="min" [selectMode]="'single'" id="dateSelector">
                     <span [owlDateTimeTrigger]="date1">
                         &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
                     </span>
@@ -36,13 +36,6 @@
                     <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
                 </select>
             </div>
-            <div class='btn-group' role="group">
-                <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Version">
-                    <option value="undefined" disabled>Version</option>
-                    <option *ngFor="let mod of models" [value]="mod.version">Version: {{mod.version}}</option>
-                </select>
-            </div>
-
         </div>
 
 

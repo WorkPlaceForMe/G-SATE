@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ip } from '../models/IpServer';
+import { ip, tarinScriptIP } from '../models/IpServer';
 import { Customer } from '../models/Customer';
 import { vistaIP } from '../models/VistaServer';
 import { Observable, throwError } from 'rxjs';
@@ -15,22 +15,23 @@ export class AnnotationsService {
   contactName: string;
   emailAddress: string;
   date: any;
-  model:any;
+  model: any;
   models: any = [];
-  version:any;
+  version: any;
   versions: any = [];
-  API_URL = 'http://'+ ip +':3000/api';
+  API_URL = 'http://' + ip + ':3000/api';
+  TRAINING_SCRIPT_URL = 'http://' + tarinScriptIP + ':8080';
   VISTA_API_URL = vistaIP;
 
-  getImages(where:string,info:string){
+  getImages(where: string, info: string) {
     return this.http.get(`${this.API_URL}/getImages/${where}/${info}`);
   }
 
-  getUnAnnDatasets(which:string){
+  getUnAnnDatasets(which: string) {
     return this.http.get(`${this.API_URL}/datasets/unannotated/${which}`);
   }
 
-  getAnnDatasets(which:string){
+  getAnnDatasets(which: string) {
     return this.http.get(`${this.API_URL}/datasets/annotated/${which}`);
   }
 
@@ -38,27 +39,27 @@ export class AnnotationsService {
     return this.http.get(`${this.API_URL}/api/v1/operation/${id}`);
   }
 
-  readLabels(){
+  readLabels() {
     return this.http.get(`${this.API_URL}/readLabels`);
   }
 
-  writeLabel(label:string){
+  writeLabel(label: string) {
     return this.http.get(`${this.API_URL}/writeLabel/${label}`);
   }
 
-  writeAnn(path:string, annotation:any){
+  writeAnn(path: string, annotation: any) {
     return this.http.post(`${this.API_URL}/createAnn/${path}`, annotation);
   }
 
-  getAnn(path:string){
+  getAnn(path: string) {
     return this.http.get(`${this.API_URL}/readAnn/${path}`);
   }
 
-  cutVideo(conf: any){
+  cutVideo(conf: any) {
     return this.http.post(`${this.API_URL}/datasets/cortarFrames/`, conf);
   }
 
-  moveImage(path:string, name:string, dec:boolean){
+  moveImage(path: string, name: string, dec: boolean) {
     return this.http.get(`${this.API_URL}/classify/${path}/${name}/${dec}`);
   }
 
@@ -69,36 +70,40 @@ export class AnnotationsService {
   saveCustomerDetails(conf: Customer) {
     return this.http.post(`${this.API_URL}/annotations/confirmed`, conf);
   }
-  
+
   saveObjectDetectionDetails(conf: Customer) {
     return this.http.post(`${this.API_URL}/annotations/object-detection/confirmed`, conf);
   }
 
-  createDataset(data:any){
+  trainScript(data: any) {
+    return this.http.post(`${this.TRAINING_SCRIPT_URL}/preprocess`, data);
+  }
+
+  createDataset(data: any) {
     return this.http.post(`${this.API_URL}/datasets/image/search/create`, data);
   }
 
-  processDatasetWithOutVista(data:any){
+  processDatasetWithOutVista(data: any) {
     return this.http.post<any[]>(`${this.API_URL}/datasets/process-without-vista`, data);
   }
 
-  processVistaSingle(data:any){
+  processVistaSingle(data: any) {
     return this.http.post(`${this.API_URL}/datasets/process/vista/single`, data);
   }
 
-  processDataset(data:any) {
+  processDataset(data: any) {
     return this.http.post<any[]>(`${this.API_URL}/datasets/process/`, data).pipe(catchError(this.handleError));
   }
 
-  generalDetection(data:any) {
+  generalDetection(data: any) {
     return this.http.post<any[]>(`${this.API_URL}/general/object/detection`, data);
   }
 
-  deleteDataset(snippet_id:string, type:string,name:any) {
+  deleteDataset(snippet_id: string, type: string, name: any) {
     return this.http.delete(`${this.API_URL}/datasets/${name}/${snippet_id}/${type}`);
   }
 
-  searchImages(keyword:any,count:number) {
+  searchImages(keyword: any, count: number) {
     return this.http.get(`${this.API_URL}/search/${keyword}/${count}`);
   }
   constructor(private http: HttpClient) { }
@@ -106,13 +111,13 @@ export class AnnotationsService {
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-        // client-side error
-        errorMessage = `Error: ${error.error.message}`;
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
     } else {
-        // server-side error
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     // console.log(errorMessage);
     return throwError(errorMessage);
-}
+  }
 }

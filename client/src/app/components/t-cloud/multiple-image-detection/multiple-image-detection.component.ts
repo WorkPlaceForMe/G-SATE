@@ -15,6 +15,7 @@ import { AnnotationsService } from "../../../services/annotations.service";
 import { PagerService } from "../../../services/pager.service";
 import { ip } from "../../../models/IpServer";
 import { vistaIP } from 'src/app/models/VistaServer';
+import { Location } from '@angular/common';
 
 const baseURL = vistaIP;
 @Component({
@@ -92,7 +93,8 @@ export class MultipleImageDetectionComponent implements OnInit {
     private facesService: FacesService,
     private annotationsServ: AnnotationsService,
     private router: Router,
-    private pagerService: PagerService
+    private pagerService: PagerService,
+    private _location: Location
   ) {
     this.method = this.activatedRoute.snapshot.params.method;
     this.folder = this.activatedRoute.snapshot.params.folder;
@@ -185,7 +187,6 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.multiple = true;
     } else if (JSON.stringify(this.activatedRoute.snapshot.routeConfig).includes("objectDetection")
     ) {
-      debugger;
       this.multiple = true;
       this.objDet = true;
     } else {
@@ -357,7 +358,6 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   get(lebelIndex, dataIndex) {
-    debugger;
     this.on = true;
     this.clearAct = true;
     this.id = lebelIndex;
@@ -485,7 +485,6 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   annotate(event, i) {
-    debugger;
     this.selectedImageIndex = i;
     this.canvas = this.rd.selectRootElement(event.target);
     this.ctx = this.canvas.getContext("2d");
@@ -744,7 +743,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     const req = { image_path: this.data[i].image };
     this.annotationsServ.processVistaSingle(req).subscribe(
       async (res: any) => {
-        debugger;
         const response = JSON.parse(res);
         console.log("processVistaSingle -> ", response);
         this.spin = false;
@@ -916,80 +914,62 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   next() {
-    debugger;
     this.annObj['datasetName'] = this.folder;
+    this.annObj['payloadType'] = this.folder;
     console.log('this.annObj -> ', JSON.stringify(this.annObj));
-    this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
-    // if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
-    //   this.annObj = this.data;
-    // }
-    // if (this.valueImage < this.total - 1) {
-    //   this.valueImage++;
-    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
-    //     this.send();
-    //   } else {
-    //     this.router.navigateByUrl("/RefreshComponent", { skipLocationChange: true }).then(() => {
-    //       this.router.navigate(["/annotations/dataset/" +
-    //         this.method +
-    //         "/" +
-    //         this.folder +
-    //         "/" +
-    //         this.valueImage +
-    //         "/details",
-    //       ],
-    //         { state: { data: this.annObj } }
-    //       );
-    //     });
-    //   }
-    // } else if (this.valueImage == this.total - 1) {
-    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
-    //     this.send();
-    //   } else {
-    //     this.router.navigateByUrl("/annotations");
-    //   }
-    // } else {
-    //   this.router.navigate(
-    //     [
-    //       "/annotations/dataset/" +
-    //       this.method +
-    //       "/" +
-    //       this.folder +
-    //       "/" +
-    //       this.detectionOriginType +
-    //       "/details",
-    //     ],
-    //     { state: { data: this.annObj } }
-    //   );
-    // }
+    if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
+      this.annObj = this.data;
+    }
+    if (this.valueImage < this.total - 1) {
+      this.valueImage++;
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+        this.send();
+      } else {
+        this.router.navigateByUrl("/RefreshComponent", { skipLocationChange: true }).then(() => {
+          // this.router.navigate(["/annotations/dataset/" + this.method + "/" + this.folder + "/" + this.valueImage + "/details"
+          // ], { state: { data: this.annObj } });
+          this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
+        });
+      }
+    } else if (this.valueImage == this.total - 1) {
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.annotations)) {
+        this.send();
+      } else {
+        this.router.navigateByUrl("/annotations");
+      }
+    } else {
+      // this.router.navigate(["/annotations/dataset/" + this.method + "/" + this.folder + "/" + this.detectionOriginType + "/details"], { state: { data: this.annObj } });
+      this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
+    }
   }
 
   send() {
-    // this.annotations.push({ width: this.annWidth, height: this.annHeight });
-    // this.annotationsServ
-    //   .writeAnn(this.picture.split("/").join(" "), this.annotations)
-    //   .subscribe(
-    //     (res) => {
-    //       if (this.valueImage < this.total - 1) {
-    //         this.router
-    //           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-    //           .then(() => {
-    //             this.router.navigate([
-    //               "/annotations/dataset/" +
-    //               this.method +
-    //               "/" +
-    //               this.folder +
-    //               "/" +
-    //               this.valueImage,
-    //             ]);
-    //           });
-    //       } else if (this.valueImage == this.total - 1) {
-    //         this.router.navigateByUrl("/annotations");
-    //       }
-    //     },
-    //     (err) => {
-    //       console.log(err);
-    //     }
-    //   );
+    this.annotations.push({ width: this.annWidth, height: this.annHeight });
+    this.annotationsServ
+      .writeAnn(this.picture.split("/").join(" "), this.annotations)
+      .subscribe(
+        (res) => {
+          if (this.valueImage < this.total - 1) {
+            this.router
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate([
+                  "/annotations/dataset/" +
+                  this.method +
+                  "/" +
+                  this.folder +
+                  "/" +
+                  this.valueImage,
+                ]);
+              });
+          } else if (this.valueImage == this.total - 1) {
+            this.router.navigateByUrl("/annotations");
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   prev() {
@@ -1001,14 +981,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.router
           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
           .then(() => {
-            this.router.navigate([
-              "/annotations/" +
-              this.method +
-              "/" +
-              this.folder +
-              "/" +
-              this.valueImage,
-            ]);
+            // this.router.navigate([ "/annotations/" + this.method + "/" + this.folder + "/" + this.valueImage]);
+            this._location.back();
           });
       }
     }

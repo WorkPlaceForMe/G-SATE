@@ -10,11 +10,11 @@ export class FederatedLearningComponent implements OnInit, OnDestroy {
 
   isMeridian: boolean;
 
-  inferencing_start_time: Date;
-  inferencing_end_time: Date;
+  inferencing_start_time: any;
+  inferencing_end_time: any;
 
-  traning_start_time: Date;
-  traning_end_time: Date;
+  traning_start_time: any;
+  traning_end_time: any;
 
   federated_payload = {
     inferencing_time_slot: {
@@ -37,6 +37,10 @@ export class FederatedLearningComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+  }
+
+  inferencingStartTimeChanged() {
+    console.log('inferencing_start_time - ', this.inferencing_start_time);
   }
 
 

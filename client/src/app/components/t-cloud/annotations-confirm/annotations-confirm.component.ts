@@ -58,17 +58,4 @@ export class AnnotationsConfirmComponent implements OnInit {
 
   }
 
-  // send() {
-  //   this.customerData.id = uuid();
-  //   console.log('Req - ', JSON.stringify(this.customerData));
-  //   this.annotationsService.saveObjectDetectionDetails(this.customerData).subscribe(
-  //     (res) => {
-  //       console.log('Response - ', JSON.stringify(res));
-  //       this.router.navigate(['/annotations']);
-  //     },
-  //     err => console.log(err)
-  //   )
-
-  // }
-
 }

@@ -320,10 +320,7 @@ export class TCloudDashboardComponent implements OnInit {
   showPicInfo(event) {
     this.imgFileName = event.target.files[0].name
     console.log('imgFileName........', this.imgFileName)
-    if (
-      this.imgFileName.includes('.jpg') ||
-      this.imgFileName.includes('.png')
-    ) {
+    if (this.imgFileName.includes('.jpg') || this.imgFileName.includes('.png')) {
       this.badImgFile = false
       console.log(this.badImgFile)
       this.showMyMessage5 = true

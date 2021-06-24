@@ -4,7 +4,8 @@ import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from '../../../services/faces.service';
 import { AnnotationsService } from '../../../services/annotations.service';
 import { vistaIP } from '../../../models/VistaServer';
-import { ip } from '../../../models/IpServer'
+import { ip } from '../../../models/IpServer';
+import { Location } from '@angular/common';
 
 const baseURL = vistaIP;
 @Component({
@@ -55,7 +56,7 @@ export class SingleImageDetectionComponent implements OnInit {
   ann: any = [];
   cacheAnnot: any = [];
   label: string;
-  annObj: any;
+  annObj = {};
   method: any;
   folder: any;
 
@@ -65,7 +66,8 @@ export class SingleImageDetectionComponent implements OnInit {
     sanitizer: DomSanitizer,
     private facesService: FacesService,
     private annotationsServ: AnnotationsService,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {
     this.method = this.activatedRoute.snapshot.params.method;
     this.folder = this.activatedRoute.snapshot.params.folder;
@@ -202,7 +204,6 @@ export class SingleImageDetectionComponent implements OnInit {
   }
 
   updateLabel() {
-    debugger;
     if (this.newLabel) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       for (let e = 0; e < this.data.results.length; e++) {
@@ -448,51 +449,39 @@ export class SingleImageDetectionComponent implements OnInit {
     });
   }
 
-  // getImageDimenstion(imgUrl) {
-  //   let img = new Image();
-  //   img.src = imgUrl;
-  //   img.onload = function (event) {
-  //     let loadedImage = event.currentTarget;
-  //     let width = loadedImage.width;
-  //     let height = loadedImage.height;
-  //     console.log('height: ' + height);
-  //     console.log('width: ' + width);
-  //   }
-  // }
-
   next() {
     let rect = this.canvas.getBoundingClientRect();
-    // this.getImageDimenstion(baseURL + this.data.image);
     console.log(rect);
     console.log(this.data);
-    this.annObj = {
+    this.annObj[0] = {
       image: baseURL + this.data.image,
       width: rect.width,
       height: rect.width,
       canvas_width: rect.width,
       canvas_height: rect.height,
       results: this.data["results"],
-      fixedSize: this.data["results"].length,
-      datasetName: this.data.image.split("admin/")[1]
+      fixedSize: this.data["results"].length
     };
+    this.annObj['datasetName'] = this.data.image.split("admin/")[1];
+    this.annObj['payloadType'] = this.folder;
     // this.router.navigate(['/annotations/object/image/0/details'], { state: { data: this.data } });
     this.router.navigate(['annotations/save'], { state: { data: this.annObj } });
-    // if (this.valueImage < this.total - 1) {
-    //   this.valueImage++;
-    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
-    //     this.send();
-    //   } else {
-    //     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-    //       this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
-    //     });
-    //   }
-    // } else if (this.valueImage == this.total - 1) {
-    //   if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
-    //     this.send();
-    //   } else {
-    //     this.router.navigateByUrl('/annotations');
-    //   }
-    // }
+    if (this.valueImage < this.total - 1) {
+      this.valueImage++;
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
+        this.send();
+      } else {
+        this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
+        });
+      }
+    } else if (this.valueImage == this.total - 1) {
+      if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
+        this.send();
+      } else {
+        this.router.navigateByUrl('/annotations');
+      }
+    }
   }
 
   send() {
@@ -519,9 +508,10 @@ export class SingleImageDetectionComponent implements OnInit {
       if (JSON.stringify(this.cacheAnnot) != JSON.stringify(this.data.results)) {
         this.send();
       } else {
-        this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
-        });
+        // this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+        //   this.router.navigate(['/annotations/' + this.method + '/' + this.folder + '/' + this.valueImage]);
+        // });
+        this._location.back();
       }
     }
   }

@@ -8,7 +8,8 @@
           <div class="card">
             <div class="card-body text-center">
               <span>Start Time</span>
-              <timepicker [(ngModel)]="inferencing_start_time" [showMeridian]="isMeridian"></timepicker>
+              <timepicker [(ngModel)]="inferencing_start_time" [showMeridian]="isMeridian"
+                (ngModelChange)="inferencingStartTimeChanged()"></timepicker>
             </div>
           </div>
         </div>
@@ -16,7 +17,8 @@
           <div class="card">
             <div class="card-body text-center">
               <span>End Time</span>
-              <timepicker [(ngModel)]="inferencing_end_time" [min]="inferencing_start_time" [showMeridian]="isMeridian">
+              <timepicker [disabled]="!inferencing_start_time" [(ngModel)]="inferencing_end_time"
+                [min]="inferencing_start_time" [showMeridian]="isMeridian">
               </timepicker>
             </div>
           </div>
