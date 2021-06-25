@@ -8,7 +8,7 @@
           <div class="card">
             <div class="card-body text-center">
               <span>Start Time</span>
-              <timepicker [(ngModel)]="inferencing_start_time" [showMeridian]="isMeridian"
+              <timepicker [disabled]="true" [(ngModel)]="inferencing_start_time" [showMeridian]="isMeridian"
                 (ngModelChange)="inferencingStartTimeChanged()"></timepicker>
             </div>
           </div>
@@ -17,8 +17,8 @@
           <div class="card">
             <div class="card-body text-center">
               <span>End Time</span>
-              <timepicker [disabled]="!inferencing_start_time" [(ngModel)]="inferencing_end_time"
-                [min]="inferencing_start_time" [showMeridian]="isMeridian">
+              <timepicker [disabled]="true" [(ngModel)]="inferencing_end_time" [min]="inferencing_start_time"
+                [showMeridian]="isMeridian">
               </timepicker>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="card">
             <div class="card-body text-center">
               <span>Start Time</span>
-              <timepicker [(ngModel)]="traning_start_time" [showMeridian]="isMeridian"></timepicker>
+              <timepicker [disabled]="true" [(ngModel)]="traning_start_time" [showMeridian]="isMeridian"></timepicker>
             </div>
           </div>
         </div>
@@ -40,13 +40,14 @@
           <div class="card">
             <div class="card-body text-center">
               <span>End Time</span>
-              <timepicker [(ngModel)]="traning_end_time" [min]="traning_start_time" [showMeridian]="isMeridian">
+              <timepicker [disabled]="true" [(ngModel)]="traning_end_time" [min]="traning_start_time"
+                [showMeridian]="isMeridian">
               </timepicker>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <button class="btn btn-success px-4 mt-4">Save</button>
+    <button class="btn btn-success px-4 mt-4" (click)="saveFederatedTiming()">Save</button>
   </div>
 </div>
