@@ -38,7 +38,7 @@ export class TCloudDashboardComponent implements OnInit {
   })
 
   fileName: string = ''
-  searchcount: number = 50
+  searchcount: number = 20
   imgFileName: string = ''
   uploadName: string
   unAnnDatasetsNames: any = []
