@@ -12,18 +12,18 @@ const imgURL = 'http://' + ip + ':3000/api/upload/pic'
 
 @Component({
   selector: 'app-buttoms',
-  templateUrl: './buttoms.component.html',
-  styleUrls: ['./buttoms.component.css']
+  templateUrl: './t-cloud-dashboard.component.html',
+  styleUrls: ['./t-cloud-dashboard.component.css']
 })
-export class ButtomsComponent implements OnInit {
-  constructor (
+export class TCloudDashboardComponent implements OnInit {
+  constructor(
     private router: Router,
     private annotationsServ: AnnotationsService,
     private facesservices: FacesService,
     private datepipe: DatePipe,
     private pagerService: PagerService,
     private cdref: ChangeDetectorRef
-  ) {}
+  ) { }
 
   uploadFileNames: Array<string> = []
 
@@ -38,7 +38,7 @@ export class ButtomsComponent implements OnInit {
   })
 
   fileName: string = ''
-  searchcount:number=50
+  searchcount: number = 20
   imgFileName: string = ''
   uploadName: string
   unAnnDatasetsNames: any = []
@@ -75,7 +75,7 @@ export class ButtomsComponent implements OnInit {
   pagedImages: any = []
   selectedImages: any = []
   pager: any = {}
-  uploadImage:boolean = false;
+  uploadImage: boolean = false;
   showMyMessage: boolean = false
   newLabel: string
 
@@ -85,7 +85,7 @@ export class ButtomsComponent implements OnInit {
   public date_now = new Date(Date.now()).toString()
   public max = new Date(this.date_now)
 
-  ngOnInit () {
+  ngOnInit() {
     this.uploader.onAfterAddingFile = file => {
       file.withCredentials = false
       const newStuff = this.datasetName.split(' ').join('_')
@@ -122,7 +122,7 @@ export class ButtomsComponent implements OnInit {
     }
     this.photoUploader.onCompleteItem = (item: any, response: any, status: any, headers: any
     ) => {
-      if(status == 500) {
+      if (status == 500) {
         this.uploadImage = false;
         alert('There is an error Processing you request. Please try again.');
       } else {
@@ -157,10 +157,10 @@ export class ButtomsComponent implements OnInit {
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();
-     }
+  }
 
   count = 0
-  setPage (page: number) {
+  setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
       return
     }
@@ -174,7 +174,7 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  getUnAnnDsets (thing: string) {
+  getUnAnnDsets(thing: string) {
     this.annotationsServ.getUnAnnDatasets(thing).subscribe(
       res => {
         if (thing == 'data') {
@@ -182,7 +182,7 @@ export class ButtomsComponent implements OnInit {
           for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
             this.unAnnDatasetsNames[i]['open'] = false;
             this.unAnnDatasetsNames[i]['name'] = this.unAnnDatasetsNames[i]['name'];
-            this.unAnnDatasetsNames[i]['id'] = this.unAnnDatasetsNames[i]['id'];          
+            this.unAnnDatasetsNames[i]['id'] = this.unAnnDatasetsNames[i]['id'];
           }
         } else if (thing == 'class') {
           this.classNames = res
@@ -199,7 +199,7 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  getAnnDsets (thing: string) {
+  getAnnDsets(thing: string) {
     this.annotationsServ.getAnnDatasets(thing).subscribe(
       res => {
         if (thing == 'data') {
@@ -207,7 +207,7 @@ export class ButtomsComponent implements OnInit {
           for (let i = 0; i < this.annDatasetsNames.length; i++) {
             this.annDatasetsNames[i]['open'] = false;
             this.annDatasetsNames[i]['name'] = this.annDatasetsNames[i]['name'];
-            this.annDatasetsNames[i]['id'] = this.annDatasetsNames[i]['id'];          
+            this.annDatasetsNames[i]['id'] = this.annDatasetsNames[i]['id'];
           }
         } else if (thing == 'class') {
           this.classNames = res
@@ -224,7 +224,7 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  getLabels () {
+  getLabels() {
     this.annotationsServ.readLabels().subscribe(
       res => {
         this.labels = res
@@ -235,7 +235,7 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  addLabel () {
+  addLabel() {
     this.annotationsServ.writeLabel(this.newLabel).subscribe(
       res => {
         this.newLabel = null
@@ -245,17 +245,17 @@ export class ButtomsComponent implements OnInit {
     )
   }
 
-  go () {
+  go() {
     this.showMyMessage = true
   }
 
-  annotateByVista () {
+  annotateByVista() {
     this.router.navigate([
       '/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/vista'
     ])
   }
 
-  annotateByAnalytics () {
+  annotateByAnalytics() {
     this.router.navigate([
       '/annotations/dataset/' + 'object' + '/' + this.choosenDataset + '/analytics'
     ])
@@ -263,7 +263,7 @@ export class ButtomsComponent implements OnInit {
 
   @ViewChild('zip', { static: true }) myInputVariable: ElementRef
 
-  check () {
+  check() {
     this.uploader.uploadAll()
     this.myInputVariable.nativeElement.value = null
     this.fileName = ''
@@ -276,14 +276,14 @@ export class ButtomsComponent implements OnInit {
 
   @ViewChild('img', { static: true }) myImgInputVariable: ElementRef
 
-  checkImg () {
+  checkImg() {
     this.uploadImage = true;
     this.photoUploader.uploadAll()
     this.myImgInputVariable.nativeElement.value = null
     this.imgFileName = ''
   }
 
-  isCameraReady () {
+  isCameraReady() {
     this.date = this.datepipe.transform(this.selectedDate, 'yyyy-M-dd')
     if (this.camera != undefined && this.date != undefined) {
       return true
@@ -292,7 +292,7 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  unAnnRefresh () {
+  unAnnRefresh() {
     this.unAnnDatasetsNames = []
     this.unAnnSpin = true
     setTimeout(() => {
@@ -301,7 +301,7 @@ export class ButtomsComponent implements OnInit {
     }, 100)
   }
 
-  annRefresh () {
+  annRefresh() {
     this.annDatasetsNames = []
     this.annSpin = true
     setTimeout(() => {
@@ -310,20 +310,17 @@ export class ButtomsComponent implements OnInit {
     }, 100)
   }
 
-  detect () {
+  detect() {
     this.showMyMessage2 = true
     if (this.datasetName == '') {
       this.showMyMessage2 = false
     }
   }
 
-  showPicInfo (event) {
+  showPicInfo(event) {
     this.imgFileName = event.target.files[0].name
     console.log('imgFileName........', this.imgFileName)
-    if (
-      this.imgFileName.includes('.jpg') ||
-      this.imgFileName.includes('.png')
-    ) {
+    if (this.imgFileName.includes('.jpg') || this.imgFileName.includes('.png')) {
       this.badImgFile = false
       console.log(this.badImgFile)
       this.showMyMessage5 = true
@@ -332,7 +329,7 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  detectChange () {
+  detectChange() {
     this.searchFlag = false
     if (this.searchDatasetName == '') {
       this.searchFlag = true
@@ -343,19 +340,19 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  detectSearchChange () {
+  detectSearchChange() {
     this.isSearchDisabled = false
     if (this.searchKeyword == '' || this.searchDatasetName == '') {
       this.isSearchDisabled = true
     }
   }
 
-  search () {
+  search() {
     this.pagedImages = []
     this.images = []
     this.pager = {}
     this.spinner = true
-    this.annotationsServ.searchImages(this.searchKeyword,this.searchcount).subscribe((res:any) => {
+    this.annotationsServ.searchImages(this.searchKeyword, this.searchcount).subscribe((res: any) => {
       this.spinner = false
       this.images = res.value
       this.images = this.images.map(obj => ({ ...obj, checked: true }))
@@ -370,7 +367,7 @@ export class ButtomsComponent implements OnInit {
         }, 3000) */
   }
 
-  okay () {
+  okay() {
     let data = {
       images: this.images,
       name: this.searchDatasetName
@@ -384,16 +381,16 @@ export class ButtomsComponent implements OnInit {
     })
   }
 
-  close () {
+  close() {
     this.searchDatasetName = null
     this.searchKeyword = null
   }
 
-  info () {
+  info() {
     console.log(this.unAnnDatasetsNames)
   }
 
-  showInfo (event) {
+  showInfo(event) {
     this.fileName = event.target.files[0].name
     if (this.fileName.includes('.zip')) {
       this.badFile = false
@@ -402,7 +399,7 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  UnAnnDSetchange (e) {
+  UnAnnDSetchange(e) {
     for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
       if (e == i) {
         this.unAnnDatasetsNames[i]['open'] = true
@@ -415,7 +412,7 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  AnnDSetchange (e) {
+  AnnDSetchange(e) {
     for (let i = 0; i < this.annDatasetsNames.length; i++) {
       if (e == i) {
         this.annDatasetsNames[i]['open'] = true
@@ -428,7 +425,7 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  change1 (e) {
+  change1(e) {
     for (let i = 0; i < this.classNames.length; i++) {
       if (e == i) {
         this.classNames[i]['open'] = true
@@ -442,8 +439,8 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  deleteUnAnnDataset(dataset:any) {
-    if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
+  deleteUnAnnDataset(dataset: any) {
+    if (confirm('Are you sure you want to delete "' + dataset.name + '" ?')) {
       this.annotationsServ.deleteDataset(dataset.snippet_id, dataset.type, dataset.name).subscribe(
         res => {
           console.log(res);
@@ -455,8 +452,8 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  deleteAnnDataset(dataset:any) {
-    if (confirm('Are you sure you want to delete "' + dataset.name +'" ?') ) {
+  deleteAnnDataset(dataset: any) {
+    if (confirm('Are you sure you want to delete "' + dataset.name + '" ?')) {
       this.annotationsServ.deleteDataset(dataset.snippet_id, dataset.type, dataset.name).subscribe(
         res => {
           console.log(res);
@@ -468,17 +465,17 @@ export class ButtomsComponent implements OnInit {
     }
   }
 
-  handleSelected (data, isChecked) {
+  handleSelected(data, isChecked) {
     isChecked = isChecked === true ? false : true
     let index = this.images.findIndex(x => x.imageId === data.imageId)
     this.images[index].checked = isChecked
   }
 
-  confirm () {
+  confirm() {
     this.selectedImages = this.images.filter(itm => itm.checked === true)
   }
 
-  realGo () {
+  realGo() {
     if (this.label != undefined) {
       this.router.navigate([
         '/annotations/' + this.label + '/' + this.choosenDataset + '/0'

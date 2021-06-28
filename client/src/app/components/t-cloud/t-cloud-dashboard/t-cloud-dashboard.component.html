@@ -70,19 +70,6 @@
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </button>
                     </div>
-                    <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-              style="width: 100%;"></div>
-          </div>
-          <div class="progress" *ngIf='showMyMessage4 == true'>
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25"
-              aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-          <div class="progress" *ngIf='showMyMessage3 == true'>
-            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
-              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': uploader.progress + '%' }">
-            </div>
-          </div> -->
                 </div>
             </div>
         </div>
@@ -95,14 +82,16 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" class="mr-1" placeholder="Input the name of the dataset" [(ngModel)]='searchDatasetName'
-                            size="28" (ngModelChange)="detectChange()">
-                        <select name="label" class="custom-select mr-1" [(ngModel)]="searchcount" placeholder="Choose a label">
-                            <option  value="50">50</option>
+                        <input type="text" class="mr-1" placeholder="Input the name of the dataset"
+                            [(ngModel)]='searchDatasetName' size="28" (ngModelChange)="detectChange()">
+                        <select name="label" class="custom-select mr-1" [(ngModel)]="searchcount"
+                            placeholder="Choose a label">
+                            <option value="20">20</option>
+                            <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="150">150</option>
                             <option value="200">200</option>
-                      </select>
+                        </select>
                         <input class="form-control amber-border" [(ngModel)]='searchKeyword' type="text"
                             placeholder="Search" aria-label="Search" (ngModelChange)="detectSearchChange()"
                             [disabled]="searchFlag">
@@ -111,29 +100,7 @@
                                 data-target="#imagesModal" (click)="search()"><i class="fas fa-search text-grey"
                                     aria-hidden="true"></i></span>
                         </div>
-                        <!--  <div class="custom-file">
-              <input class="custom-file-input" id="inputGroupFile02" type="file" name='zip' (change)='showInfo($event)'
-                [uploader]="uploader" ng2FileSelect [disabled]='showMyMessage2 == false' #zip>
-              <label class="custom-file-label"
-                for="inputGroupFile02">{{fileName == '' ? 'Input Keyword' : fileName}}</label>
-            </div>
-            <button type="button" class="btn btn-success btn-s" (click)="check()"
-              [disabled]="!uploader.getNotUploadedItems().length ||showMyMessage2 == false || badFile == true">Search</button> -->
                     </div>
-
-                    <!-- <div class="progress" *ngIf='showMyMessage3 == false'>
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-              style="width: 100%;"></div>
-          </div>
-          <div class="progress" *ngIf='showMyMessage4 == true'>
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25"
-              aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-          <div class="progress" *ngIf='showMyMessage3 == true'>
-            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
-              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': uploader.progress + '%' }">
-            </div>
-          </div> -->
                 </div>
             </div>
         </div>
@@ -147,14 +114,6 @@
                 <h5 class="modal-title font-weight-bold w-100 text-center">{{searchKeyword | titlecase}} Images</h5>
                 <button class="close" data-dismiss="modal">&times;</button>
             </div>
-            <!-- <div class="modal-body" style="min-height: 440px;">
-        <div class="container">
-          <div class="row"> -->
-            <!-- <div>
-              <div class="spinner-grow spinner" role="status" *ngIf="spinner">
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div> -->
             <div class="modal-body" style="min-height: 440px;">
                 <div class="container">
                     <div class="row">
@@ -165,8 +124,6 @@
                         </div>
                         <div class="col-md-4 mb-1" *ngFor="let img of pagedImages; let i = index">
                             <div class="card" style="width: 12rem;">
-                                <!-- height: 11rem; -->
-                                <!-- <div class="card-header">Title {{i}} </div> -->
                                 <div class="card-body">
                                     <img class="card-img-top" [src]="img.contentUrl" alt="">
                                 </div>
@@ -178,9 +135,6 @@
                                                 [checked]="img.checked">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <!--  <input class="form-check-input" type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked" (change)="handleSelected(img, img.checked)" [checked]="img.checked">
-                    <label class="form-check-label" for="flexCheckChecked"> 
-                    </label>-->
                                     </div>
                                 </div>
                             </div>
@@ -208,26 +162,12 @@
                     </ul>
                 </nav>
             </div>
-            <!-- <div *ngFor="let img of images">
-          <div class="card">
-            <div class="card-header">Title</div>
-            <div class="card-body">Image</div>
-          </div>
-        </div> -->
             <div class="dropdown-divider"></div>
             <div class="mt-2 mb-3" align='center'>
                 <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal"
                     data-dismiss="modal" (click)="confirm()">Okay</button>
                 <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
-            <!-- <div class="modal-footer align-self-center">
-        <button class="btn btn-primary">Select All</button>
-        <button class="btn btn-primary">Okay</button>
-        <button class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div> -->
-            <!-- </div>
-        </div>
-      </div> -->
         </div>
     </div>
 </div>
@@ -289,27 +229,12 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-body">
-            <!-- <button class="btn btn-success btn-lg btn-block" (click)='go()' [disabled]='choosenDataset == undefined'><i
-          class="fas fa-user-plus"></i> Single annotation</button>
-
-            <div class="p-2" *ngIf='showMyMessage == true'>
-                <select name="label" class="custom-select" [(ngModel)]="label" (mouseup)='realGo()' placeholder="Choose a label">
-          <option value="undefined" disabled>Please choose a label</option>
-          <option *ngFor="let lab of labels" [value]="lab">{{lab}}</option>
-        </select>
-                <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="Or add a New Label">
-                <button class="btn btn-info btn-sm" (click)='addLabel()' [disabled]='newLabel == null '>Add label</button>
-            </div>
-
-            <button class="btn btn-success btn-lg btn-block" [routerLink]="['/annotations/', choosenDataset, 0]" [disabled]='choosenDataset == undefined'><i class="fas fa-user-plus"></i> Add multiple labels</button> -->
-
             <button class="btn btn-success btn-lg btn-block" (click)="annotateByVista()"
                 [disabled]='choosenDatasetForVista == undefined'><i class="fas fa-user-plus"></i> Vista object
                 detection</button>
             <button class="btn btn-success btn-lg btn-block" (click)="annotateByAnalytics()"
                 [disabled]='choosenDatasetForAnalytics == undefined'><i class="fas fa-user-plus"></i> Analytics object
                 detection</button>
-            <!-- [routerLink]="['/annotations/multiple/', choosenDataset, 0]" -->
         </div>
     </div>
 

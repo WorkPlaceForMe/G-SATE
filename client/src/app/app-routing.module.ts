@@ -13,15 +13,15 @@ import { ROIComponent } from './components/cameras_conf/roi/roi.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { AlgorithmsComponent } from './components/cameras_conf/algorithms/algorithms.component';
 import { SearchComponent } from './components/facial_recognition/search/search.component';
-import { ButtomsComponent } from './components/t-cloud/main/buttoms.component';
+import { TCloudDashboardComponent } from './components/t-cloud/t-cloud-dashboard/t-cloud-dashboard.component';
 import { ClimbingBarricadeComponent } from './components/others/main_docs/climbing-barricade.component';
-import { LoiteringDetectionComponent } from './components/t-cloud/annotations/loitering-detection.component';
+import { SingleImageDetectionComponent } from './components/t-cloud/single-image-detection/single-image-detection.component';
 import { SpeedingVehicleComponent } from './components/t-cloud/video_to_frames/speeding-vehicle.component';
 import { UnwantedVehicleComponent } from './components/t-cloud/images_classification/unwanted-vehicle.component';
 import { LivestreamComponent } from './components/cameras_conf/camera_list/livestream.component';
 import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
 import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
-import { ObjDetMulImgsComponent } from './components/t-cloud/obj-det-mul-imgs/obj-det-mul-imgs.component';
+import { MultipleImageDetectionComponent } from './components/t-cloud/multiple-image-detection/multiple-image-detection.component';
 import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
 import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
 import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
@@ -48,7 +48,7 @@ const routes: Routes = [
   },
   {
     path: 'annotations',
-    component: ButtomsComponent
+    component: TCloudDashboardComponent
   },
   {
     path: 'federated-learning',
@@ -92,7 +92,7 @@ const routes: Routes = [
   },
   {
     path: 'annotations/dataset/:method/:folder/:image',
-    component: ObjDetMulImgsComponent
+    component: MultipleImageDetectionComponent
   },
   {
     path: 'annotations/dataset/:method/:folder/:image/details',
@@ -104,10 +104,14 @@ const routes: Routes = [
   },
   {
     path: 'annotations/:method/:folder/:image',
-    component: LoiteringDetectionComponent
+    component: SingleImageDetectionComponent
   },
   {
     path: 'annotations/:method/:folder/:image/details',
+    component: AnnotationsDetailsComponent
+  },
+  {
+    path: 'annotations/save',
     component: AnnotationsDetailsComponent
   },
   {
@@ -116,7 +120,7 @@ const routes: Routes = [
   },
   /* {
     path: 'objectDetection/:folder/:image',
-    component: LoiteringDetectionComponent
+    component: SingleImageDetectionComponent
   }, */
   {
     path: 'annotation/video/:cam_name/:date',
@@ -152,7 +156,7 @@ const routes: Routes = [
   },
   {
     path: 'objectDetection/img/label',
-    component: LoiteringDetectionComponent
+    component: SingleImageDetectionComponent
   },
   {
     path: '',
