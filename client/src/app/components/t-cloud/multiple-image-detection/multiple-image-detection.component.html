@@ -1,0 +1,134 @@
+<div class="card-group">
+    <div class="col-md-12">
+        <div class="card border-info" style="min-height: 600.6px;">
+            <div class="card-body" align='center'>
+                <div class="container">
+                    <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+                        <div class="spinner-border spin" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="datasetFlag">
+                        <div class="col-md-6 mb-1" *ngFor="let item of pagedItems; let i = index">
+                            <div class="row mb-3">
+                                <div class="col-md-10 px-0">
+                                    <div class="card">
+                                        <img class="card-img-top" src="" alt="">
+                                        <div class="card-body">
+                                            <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}"
+                                                height='{{item.height}}' width='{{item.width}}'
+                                                style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
+                                                (click)='annotate($event, item.id)'
+                                                [style.background-image]="getBackground(item.image)"
+                                                oncontextmenu="return false;">
+                                                Your browser does not support the HTML5 canvas tag.
+                                            </canvas>
+                                        </div>
+                                        <div class="card-footer" align='center'>
+                                            <div class="input-group" style="margin-left: 7rem;">
+                                                <button class="btn btn-outline-primary btn-sm mr-3"
+                                                    (click)="generalDetection(item.id,$event)">
+                                                    Detect Objects
+                                                </button>
+                                                <button *ngIf="activatedRoute.snapshot.params.image === 'vista'"
+                                                    class="btn btn-outline-primary btn-sm"
+                                                    (click)="getImgAnnotations(item.id,$event)">
+                                                    Labels
+                                                </button>
+                                                <button *ngIf="activatedRoute.snapshot.params.image === 'analytics'"
+                                                    class="btn btn-outline-primary btn-sm"
+                                                    (click)="getAnayticsImgAnnotations(item.id,$event)">
+                                                    Labels
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 px-0">
+                                    <div class="card border-info panel">
+                                        <div class="card-header px-1" align='center' *ngIf='objDet == true'>List of
+                                            areas
+                                        </div>
+                                        <div class="card-header px-1" align='center' *ngIf='objDet == false'><span
+                                                class="font-italic">{{item.results.length}} </span>Labels
+                                            Detected</div>
+                                        <ul *ngIf="item.results.length > 0"
+                                            class="label-list annotation-height smooth-scroll px-1">
+                                            <li *ngFor='let ann of item.results; index as j'
+                                                [ngClass]="{'active-label' : selectedID === j}">
+                                                <span (click)='get(j, i)'>{{ann[3].label}}</span>
+                                                <button class="btn lebel-button" data-toggle="modal"
+                                                    data-target="#confirmModal" data-dismiss="modal"
+                                                    (click)="openlebelModal(j, i)">
+                                                    <i class="far fa-edit"></i>
+                                                </button>
+                                                <button class="btn px-0" (click)="clear(j, i)">
+                                                    <i class="far fa-times-circle"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <div class="card-body  px-1" *ngIf="item.results.length == 0">
+                                            <p>Click the object labels button to check the detected objects</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer" align='center'>
+                <nav aria-label="Page navigation example">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                            <a class="page-link" (click)="setPage(1)">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                            class="page-item">
+                            <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='btn-group p-2' role="group">
+    <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
+    <!-- <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button> -->
+    <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
+    <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
+</div>
+
+
+<div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
+    <strong>Oops!</strong> Please choose a label to start.
+</div>
+
+<div class="modal" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-center">Update Label</h5>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label" class="form-control">
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="mt-2 mb-3" align='center'>
+                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)='updateLabel()'>Okay</button>
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

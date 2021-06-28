@@ -1,0 +1,81 @@
+<div class="card-group">
+  <div class="col-md-10">
+    <div class="card border-info" style="min-height: 527.6px;">
+      <div class="card-body" align='center'>
+        <canvas #polygon id="jPolygon" height='480' width='710'
+          style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;" (click)='annotate($event)'
+          [style.background-image]="link" oncontextmenu="return false;">
+          Your browser does not support the HTML5 canvas tag.
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class=" col-md-2">
+    <div class="card border-info panel" style="max-height: 527.6px;">
+      <div class="card-header" align='center' *ngIf='objDet == false'>Objects detected <span
+          class="font-italic">{{data.results.length}}</span></div>
+      <div class="card-header" align='center' *ngIf='objDet == true'>Objects detected</div>
+      <ul class="label-list annotation-height pr-0" *ngIf="data && data.results.length > 0">
+        <li *ngFor='let ann of data.results; index as i' [ngClass]="{'active-label' : selectedID === i}">
+          <span class="elipsis" (click)='get(i)'>{{ann[3].label}}</span>
+          <button class="btn px-1" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal"
+            (click)="openlebelModal(i)"><i class="far fa-edit"></i></button>
+          <button class="btn px-0" (click)="clear(i)">
+            <i class="far fa-times-circle"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card border-info panel" style='margin-top:2px;'>
+      <div class="card-header" align='center'>Instructions</div>
+      <div class="card-body">
+        <p><strong>Click the object to define it with the new label</strong> </p>
+      </div>
+    </div>
+
+    <div class="card border-info panel" style='margin-top:2px;'>
+      <div class="card-header" align='center'>Detect Objects</div>
+      <div class="card-body" align='center'>
+        <button class="btn btn-outline-primary btn-sm" (click)="generalDetection($event)" *ngIf="!flag">
+          Click here
+        </button>
+        <div class="d-flex justify-content-center" *ngIf="spinflag">
+          <div class="spinner-border spin" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='btn-group p-2' role="group">
+  <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
+  <!-- <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button> -->
+  <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
+  <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
+</div>
+
+
+<div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
+  <strong>Oops!</strong> Please choose a label to start.
+</div>
+<div class="modal" id="confirmModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold text-center">Update Label</h5>
+        <button class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" [(ngModel)]=newLabel [value]=newLabel placeholder="New Label" class="form-control">
+      </div>
+      <div class="dropdown-divider"></div>
+      <div class="mt-2 mb-3" align='center'>
+        <button class="btn btn-primary mr-3" data-dismiss="modal" (click)='updateLabel()'>Okay</button>
+        <button class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

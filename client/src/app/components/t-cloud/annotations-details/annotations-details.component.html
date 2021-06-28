@@ -2,42 +2,40 @@
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
-            <h5>Image Annotations Training Details</h5>
+            <h5>Annotations Training Details</h5>
         </div>
         <div class="card-body">
-            <input type="text" class="gsate-input" [(ngModel)]=datasetName [value]=datasetName placeholder="Dataset Name" style="margin-left: 5px;">
+            <input type="text" class="gsate-input" [(ngModel)]=datasetName [value]=datasetName
+                placeholder="Dataset Name" style="margin-left: 5px;" readonly>
 
             <div class="dropdown-divider"></div>
 
-            <input type="text" class="gsate-input" [(ngModel)]=contactName [value]=contactName placeholder="Contact Name" style="margin-left: 5px;">
+            <input type="text" class="gsate-input" [(ngModel)]=contactName [value]=contactName
+                placeholder="Contact Name" style="margin-left: 5px;">
             <br>
-            <input type="text" class="gsate-input" [(ngModel)]=emailAddress [value]=emailAddress placeholder="Email Address" style="margin-left: 5px;">
+            <input type="text" class="gsate-input" [(ngModel)]=emailAddress [value]=emailAddress
+                placeholder="Email Address" style="margin-left: 5px;">
             <div class="dropdown-divider"></div>
 
             <div class="example-wrapper">
                 <label class="example-input-wrapper gsate-input">
-          <input placeholder="Select date and time" class  ="gsate-input" [(ngModel)]="date" [owlDateTime]="date1" [max]="max" [selectMode]="'single'" id="dateSelector" >
-          <span  [owlDateTimeTrigger]="date1">
-            &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
-          </span>
-          <owl-date-time #date1 firstDayOfWeek='1' pickerMode='dialog'></owl-date-time>
-        </label>
+                    <input placeholder="Select date and time" class="gsate-input" [(ngModel)]="date"
+                        [owlDateTime]="date1" [min]="min" [selectMode]="'single'" id="dateSelector">
+                    <span [owlDateTimeTrigger]="date1">
+                        &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <owl-date-time #date1 firstDayOfWeek='1' pickerMode='dialog'></owl-date-time>
+                </label>
 
             </div>
             <div class="dropdown-divider"></div>
             <div class='btn-group ' role="group">
-                <select name="model" [(ngModel)]="model" class="custom-select gsate-input" placeholder="Pick a training model">
-      <option value="undefined" disabled>Pick a training model</option>
-      <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
-    </select>
+                <select name="model" [(ngModel)]="model" class="custom-select gsate-input"
+                    placeholder="Pick a training model">
+                    <option value="undefined" disabled>Pick a training model</option>
+                    <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
+                </select>
             </div>
-            <div class='btn-group' role="group">
-                <select name="model" [(ngModel)]="version" class="custom-select" placeholder="Version">
-                    <option value="undefined" disabled>Version</option>
-                  <option *ngFor="let mod of models" [value]="mod.version">Version: {{mod.version}}</option>
-    </select>
-            </div>
-
         </div>
 
 
@@ -49,8 +47,9 @@
         </div>
         <div class="card-body">
             <div align="center">
-                <button type="button" (click)='train()' class="btn btn-success btn-s training" [disabled]="!isFormFilled()">Confirm 
-            </button>
+                <button type="button" (click)='train()' class="btn btn-success btn-s training"
+                    [disabled]="!isFormFilled()">Confirm
+                </button>
             </div>
         </div>
     </div>
