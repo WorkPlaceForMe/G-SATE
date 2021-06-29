@@ -191,6 +191,11 @@ let Dataset = {
         uploaded: "Yes",
         snippet_id: snippetId,
       };
+      //--------
+      fs.exists(absDir, (exists) => {
+        console.log(exists ? absDir + ' - Found' : absDir + ' - Not Found!');
+      });
+      //--------
       Datasets.add(data, function (err, row) {
         if (err) return res.status(500).json(err);
         Relations.getRels(cam_id, function (err, result) {
@@ -225,6 +230,11 @@ let Dataset = {
             uploaded: "Yes",
             snippet_id: uuidv4(),
           };
+          //--------
+          fs.exists(datasetDir, (exists) => {
+            console.log(exists ? datasetDir + ' - Found' : datasetDir + ' - Not Found!');
+          });
+          //--------
           Datasets.add(data, function (err, row) {
             if (err) return res.status(500).json(err);
             res.status(200).json("Dataset created successfully!");
