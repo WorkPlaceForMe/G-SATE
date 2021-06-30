@@ -150,7 +150,7 @@ let Dataset = {
         process.env.resources2 + "recordings/" + body.datasetName + ".mp4";
       let datasetDir = process.env.resources2 + "datasets/" + body.datasetName;
       let absDir =
-        process.env.resources3 + "recordings/" + body.datasetName + ".mp4";
+        process.env.resources2 + "recordings/" + body.datasetName + ".mp4";
       if (!fs.existsSync(datasetDir)) {
         fs.mkdirSync(datasetDir);
       }
