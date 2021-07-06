@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from "@angular/router";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { NavigationService } from '../../shared/services/navigation.service';
 import { ip } from '../../models/IpServer'
 
