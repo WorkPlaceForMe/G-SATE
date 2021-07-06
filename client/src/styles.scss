@@ -1,0 +1,12 @@
+// Import fonts
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import "scss/fonts";
+// Import custom variables
+@import "scss/variables";
+// Import package scss
+@import '~bootstrap/scss/bootstrap';
+// Import custom partial scss
+@import "scss/reboot";
+@import "scss/utilities";
+@import "scss/all";
