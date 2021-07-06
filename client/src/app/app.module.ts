@@ -63,12 +63,14 @@ import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-co
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
+    HomePageComponent,
     FaceFormComponent,
     ImagesFormComponent,
     TrustedUrlPipe,
