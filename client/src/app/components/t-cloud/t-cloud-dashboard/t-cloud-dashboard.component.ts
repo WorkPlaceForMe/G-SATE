@@ -113,6 +113,7 @@ export class TCloudDashboardComponent implements OnInit {
       }
     }
     this.photoUploader.onAfterAddingFile = file => {
+      debugger;
       console.log('****************************', file.file.name.split('.')[1])
       file.withCredentials = false
       const format = file.file.name.split('.')[1]
