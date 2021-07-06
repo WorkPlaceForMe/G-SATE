@@ -19,7 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UrlPipe } from './pipes/url.pipe';
-import { AuthService } from "./shared/services/auth.service";
 import { NavigationService } from './shared/services/navigation.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
@@ -133,7 +132,6 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
   providers: [
     FacesService,
     DatePipe,
-    AuthService,
     NavigationService,
     ColorsService,
     StrService,
