@@ -5,7 +5,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 @Component({
   selector: 'app-livestream',
   templateUrl: './livestream.component.html',
-  styleUrls: ['./livestream.component.css'],
+  styleUrls: ['./livestream.component.scss'],
   animations: [
     trigger('flyInOut', [
       transition('void => *', [

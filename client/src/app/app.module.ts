@@ -66,6 +66,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -133,7 +134,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     NgScrollbarModule,
     ScrollingModule,
     BsDatepickerModule.forRoot(),
-    AngularSvgIconModule.forRoot()
+    AngularSvgIconModule.forRoot(),
+    PerfectScrollbarModule,
   ],
   providers: [
     FacesService,

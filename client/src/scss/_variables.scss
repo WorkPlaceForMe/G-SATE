@@ -19,7 +19,7 @@ $headings-color                 : $grey-dark !default;
 $shadow-color                   : $grey-dark !default;
 
 // body bg
-$body-bg                        : $grey-light !default;
+$body-bg                        : $grey-lighter !default;
 
 // theme colors
 $theme-colors: ( 
@@ -100,9 +100,17 @@ $input-height-lg                : $spacer*3 !default;
 // $btn-border-radius-lg           : $spacer/2 !default;
 
 // pagination
-// $pagination-hover-color         : $white !default;
-// $pagination-hover-bg            : $primary !default;
-// $pagination-hover-border-color  : $primary !default;
+$pagination-color               : $grey-dark !default;
+$pagination-bg                  : $grey-light !default;
+$pagination-border-color        : $white !default;
+$pagination-hover-color         : $white !default;
+$pagination-hover-bg            : $primary !default;
+$pagination-hover-border-color  : $white !default;
+$pagination-focus-box-shadow    : 0 !default;
+$pagination-active-border-color : $white !default;
+$pagination-disabled-color      : $grey-medium !default;
+$pagination-disabled-bg         : $grey-lighter !default;
+$pagination-disabled-border-color: $white !default;
 
 // // modal
 // $modal-content-border-color     : $grey-medium !default;
