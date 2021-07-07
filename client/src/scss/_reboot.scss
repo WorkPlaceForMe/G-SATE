@@ -69,6 +69,17 @@ body {
 	color: $body-color;
 }
 
+// button style
+.btn{
+    height: $input-height;
+    &-sm{
+        height: $input-height-sm;
+    }
+    &-lg{
+        height: $input-height-lg;
+    }
+}
+
 
 // section-padding
 .section-padding{

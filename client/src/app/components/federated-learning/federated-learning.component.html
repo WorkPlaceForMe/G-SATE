@@ -1,4 +1,55 @@
-<div class="container p-4">
+<div class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75" [ngStyle]="{'background-image': 'url(/assets/images/federated-bg.jpg)'}">
+  <div class="container container-medium text-center z-index-1 text-white">
+      <h2 class="mb-4 text-uppercase text-white">Federated Learning</h2>
+      <p>Graymatics' federated learning solution makes maximal use of T4 hardware for efficiency and superior performance by splitting resource time between inferencing and training. Please select non-overlapping time slots for the same below.</p>
+      <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+              <div class="p-5 custom-card rounded">
+                  <h3 class="mb-3 text-primary">Inferencing Time Slot</h3>
+                  <div class="form-row text-left mb-3">
+                      <div class="col-12 col-md-6 form-group">
+                          <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start Time"
+                          class="form-control time-picker">
+                          <owl-date-time #dt1 pickerType="time"></owl-date-time>
+                      </div>
+                      <div class="col-12 col-md-6 form-group">
+                          <input [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="End Time"
+                          class="form-control time-picker">
+                          <owl-date-time #dt2 pickerType="time"></owl-date-time>
+                      </div>
+                  </div>
+                  <h3 class="mb-3 text-primary">Inferencing Time Slot</h3>
+                  <div class="form-row text-left mb-3">
+                      <div class="col-12 col-md-6 form-group">
+                          <input [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" placeholder="Start Time"
+                          class="form-control time-picker">
+                          <owl-date-time #dt3 pickerType="time"></owl-date-time>
+                      </div>
+                      <div class="col-12 col-md-6 form-group">
+                          <input [owlDateTime]="dt4" [owlDateTimeTrigger]="dt4" placeholder="End Time"
+                          class="form-control time-picker">
+                          <owl-date-time #dt4 pickerType="time"></owl-date-time>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-primary btn-min-w">Test Model</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container p-4">
   <h1>Federated Learning</h1>
   <div class="row">
     <div class="col-md-5 card p-4">
@@ -50,4 +101,4 @@
     </div>
     <button class="btn btn-success px-4 mt-4" (click)="saveFederatedTiming()">Save</button>
   </div>
-</div>
+</div> -->

@@ -1,7 +1,5 @@
-
 <!-- banner section start -->
-<section class="inner-banner bg-after bg-after-darken bg-after-75">
-    <img src="/assets/images/created-dataset-banner-bg.jpg" alt="" class="img-cover">
+<section class="section-padding header-padding inner-banner bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75" [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
     <div class="container text-center z-index-1 banner-caption">
         <h1 class="text-uppercase font-weight-bold text-white">Annotate datasets for training</h1>
     </div>
@@ -132,31 +130,32 @@
         <h2 class="mb-4 text-uppercase">Pick an Existing Dataset, Annotate & Train!</h2>
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
-                <div class="rounded bg-darken p-3 h-100">
+                <div class="rounded bg-darken p-3 h-100 position-relative">
+                    <button type="button" class="btn btn-primary btn-sm position-absolute top right mt-3 mr-3">
+                        <svg-icon src="/assets/icons/reload.svg" class="icon-white" [svgStyle]="{ 'width.px':16 }"></svg-icon>
+                    </button>
                     <div class="form d-flex flex-column h-100">
                         <svg-icon src="/assets/icons/existing-dataset.svg" class="icon-lg icon-white mb-3 mx-auto">
                         </svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Existing Dataset</h3>
                         <div class="form-group input-group">
-                            <div class="input-group-prepend w-75">
+                            <div class="input-group-prepend col-8 px-0">
                                 <select class="form-control form-control-transparent select-picker">
                                     <option value="Un-Annotated">Un-Annotated</option>
                                 </select>
                             </div>
-                            <div class="input-group-append w-25">
-                                <input type="submit" class="btn btn-primary font-weight-normal"
-                                    value="Annotate & Train">
+                            <div class="input-group-append col-4 px-0">
+                                <button type="submit" class="btn btn-primary btn-block font-weight-normal">Annotate & Train</button>
                             </div>
                         </div>
                         <div class="form-group input-group">
-                            <div class="input-group-prepend w-75">
+                            <div class="input-group-prepend col-8 px-0">
                                 <select class="form-control form-control-transparent select-picker">
                                     <option value="Un-Annotated">Un-Annotated</option>
                                 </select>
                             </div>
-                            <div class="input-group-append w-25">
-                                <input type="submit" class="btn btn-primary font-weight-normal"
-                                    value="Annotate & Train">
+                            <div class="input-group-append col-4 px-0">
+                                <button type="submit" class="btn btn-primary btn-block font-weight-normal">Annotate & Train</button>
                             </div>
                         </div>
                     </div>

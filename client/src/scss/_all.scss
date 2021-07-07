@@ -6,8 +6,12 @@
 // banner style
 .inner{
     &-banner{
-        height: 312px;
+        min-height: 312px;
         position: relative;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-attachment: fixed;
         &.bg-after{
             &:after{
                 width: 100%;
@@ -47,7 +51,7 @@
             transform: translateY(-50%);
         }
         &-full{
-            height: 100vh;
+            min-height: 100vh;
         }
     }
 }
@@ -56,11 +60,12 @@
 .form{
     &-control{
         background-color: $white;
-        border: 1px solid transparent;
+        border: 1px solid $grey-light;
         height: $input-height;
         box-shadow: none;
         color: $input-color;
         font-size: $font-size-sm;
+        line-height: 1.5;
         background-repeat: no-repeat;
         background-position: right $spacer/2 center;
         background-size: $spacer*1.25 $spacer*1.25;
@@ -78,7 +83,7 @@
             background-image: url('/assets/icons/time.svg');
         }
         &.date-time-picker{
-            background-image: url('/assets/icons/calendar-time.svg');
+            background-image: url('/assets/icons/date-time.svg');
         }
         &.select-picker{
             appearance: none;
@@ -98,6 +103,7 @@
         &-transparent{
             background-color: rgba($white, 0.1);
             color: $white;
+            border-color: transparent;
             &::placeholder{
                 color: $grey-light;
             }
@@ -113,7 +119,7 @@
                 background-image: url('/assets/icons/time-white.svg');
             }
             &.date-time-picker{
-                background-image: url('/assets/icons/calendar-time-white.svg');
+                background-image: url('/assets/icons/date-time-white.svg');
             }
             &.select-picker{
                 background-image: url('/assets/icons/arrow-down-white.svg');
@@ -163,6 +169,7 @@
                 height: $input-height;
                 color: $input-color;
                 font-size: $font-size-sm;
+                line-height: 1.7;
                 background-repeat: no-repeat;
                 background-position: right $spacer/2 center;
                 background-size: $spacer*1.25 $spacer*1.25;

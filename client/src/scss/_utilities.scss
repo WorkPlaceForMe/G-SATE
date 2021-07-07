@@ -46,10 +46,10 @@
 
 
 // // position
-// .top{ top: 0;}
-// .right{ right: 0; }
-// .bottom{ bottom: 0; }
-// .left{ left:  0; }
+.top{ top: 0;}
+.right{ right: 0; }
+.bottom{ bottom: 0; }
+.left{ left:  0; }
 
 .btn-min-w {
   min-width: 240px;
@@ -71,8 +71,16 @@
 // icon
 .icon{
 	&-lg{
-		width: 80px;
-		height: 80px;
+		width: $spacer*5;
+		height: $spacer*5;
+	}
+	&-sm{
+		width: $spacer*2;
+		height: $spacer*2;
+	}
+	&-xs{
+		width: $spacer;
+		height: $spacer;
 	}
 	&-white{
 		fill: $white;
