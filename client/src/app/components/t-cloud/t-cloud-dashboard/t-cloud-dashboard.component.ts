@@ -13,7 +13,7 @@ const imgURL = 'http://' + ip + ':3000/api/upload/pic'
 @Component({
   selector: 'app-buttoms',
   templateUrl: './t-cloud-dashboard.component.html',
-  styleUrls: ['./t-cloud-dashboard.component.css']
+  styleUrls: ['./t-cloud-dashboard.component.scss']
 })
 export class TCloudDashboardComponent implements OnInit {
   constructor(

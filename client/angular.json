@@ -24,6 +24,7 @@
               "src/Staticfile"
             ],
             "styles": [
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss",
               "src/styles.scss"
             ],
             "scripts": [

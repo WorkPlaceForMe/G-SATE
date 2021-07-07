@@ -1,0 +1,112 @@
+@import 'variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+// banner style
+.inner{
+    &-banner{
+        height: 312px;
+        position: relative;
+        &.bg-after{
+            &:after{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: '';
+                z-index: 0;
+            }
+        }
+        &.bg-after-25{
+            &:after{
+                opacity: .25;
+            }
+        }
+        &.bg-after-50{
+            &:after{
+                opacity: .50;
+            }
+        }
+        &.bg-after-75{
+            &:after{
+                opacity: .75;
+            }
+        }
+        &.bg-after-darken{
+            &:after{
+                background-color: $grey-darken;
+            }
+        }
+        .banner-caption{
+            position: absolute !important;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.form{
+    &-control{
+        background-repeat: no-repeat;
+        background-position: right $spacer/2 center;
+        background-size: $spacer*1.25 $spacer*1.25;
+        font-size: $font-size-sm;
+        &.date-picker{
+            background-image: url('/assets/icons/calendar.svg');
+        }
+        &.select-picker{
+            appearance: none;
+            background-image: url('/assets/icons/arrow-down.svg');
+        }
+        &.search-field{
+            background-image: url('/assets/icons/search.svg');
+        }
+        &-transparent{
+            background-color: rgba($white, 0.1);
+            border: none;
+            color: $white;
+            &::placeholder{
+                color: $grey-light;
+            }
+            &.date-picker{
+                background-image: url('/assets/icons/calendar-white.svg');
+            }
+            &.select-picker{
+                background-image: url('/assets/icons/arrow-down-white.svg');
+            }
+            &.search-field{
+                background-image: url('/assets/icons/search-white.svg');
+            }
+        }
+    }
+}
+
+.separator{
+    text-align: center;
+    overflow: hidden;
+    padding-top: $spacer*4;
+    padding-bottom: $spacer*4;
+    span{
+        position: relative;
+        font-size: $font-size-lg*2;
+        font-weight: 500;
+        color: $grey-light;
+        &:after,&:before{
+            content: "";
+            position: absolute;
+            left: calc(100% + #{$spacer / 2});
+            top: 50%;
+            width: 100vw;
+            transform: translateY(-50%);
+            border-bottom: 1px solid $grey-light;
+        }
+        &:before{
+            left: auto;
+            right: calc(100% + #{$spacer / 2});
+        }
+    }
+}

@@ -5,6 +5,7 @@ $success                        : #1bc47d !default;
 $info                           : #2a9cf7 !default;
 $warning                        : #fbbc05 !default;
 $danger                         : #f05636 !default;
+$grey-lighter                   : #ededec !default;
 $grey-light                     : #d2d2d2 !default;
 $grey-medium                    : #605e5e !default;
 $grey-dark                      : #2c2c2c !default;
@@ -28,6 +29,7 @@ $theme-colors: (
     "info"      : $info, 
     "warning"   : $warning,
     "danger"    : $danger, 
+    "lighter"   : $grey-lighter, 
     "light"     : $grey-light, 
     "medium"    : $grey-medium, 
     "dark"      : $grey-dark, 

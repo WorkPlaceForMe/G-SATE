@@ -63,6 +63,7 @@ import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-det
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -127,7 +128,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     MatPaginatorModule,
     NgxPaginationModule,
     NgScrollbarModule,
-    ScrollingModule
+    ScrollingModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [
     FacesService,

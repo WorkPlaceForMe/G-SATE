@@ -1,19 +1,171 @@
 <!-- banner section start -->
-<section class="inner-banner">
-    <img src="" alt="">
+<section class="inner-banner bg-after bg-after-darken bg-after-75">
+    <img src="/assets/images/created-dataset-banner-bg.jpg" alt="" class="img-cover">
+    <div class="container text-center z-index-1 banner-caption">
+        <h1 class="text-uppercase font-weight-bold text-white">Annotate datasets for training</h1>
+    </div>
 </section>
 <!-- banner section end -->
 
-<div class="section-padding d-flex align-items-center justify-content-center">
+<div class="section-padding d-flex align-items-center justify-content-center bg-lighter">
     <div class="container text-center z-index-1">
-        <h2 class="h3 mb-4 text-uppercase">Cameras</h2>
-        <p>Self-Organizing User-Friendly Federated Learning Environment</p>
-        <p>We provide a maximally automated annotation platform for instant results and ease of use.  We leverage our high-accuracy inference engine to provide you the insights you need from your datasets.</p>
-        <p class="mb-4">Coupled with the capability to execute decentralized, dynamic, federated learning with real-time CCTV footage and videos, this novel aspect of our solution makes it a powerful AI engine at your disposal.  As a one-stop-shop for working with your data, SOUFFLE allows you the option to Train and test your models too. So just load up your data and watch the magic happen! </p>
-        <p class="mb-5">Click the button below to learn more about us.</p>
-        <button type="button" class="btn btn-primary btn-lg btn-min-w">Graymatics Home</button>
+        <h2 class="mb-4 text-uppercase">Cameras</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <form class="d-flex flex-column h-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="icon-lg icon-white mb-2 mx-auto"><g id="MONITORING-2" data-name="MONITORING"><path d="M32,43A20,20,0,0,0,52,23C50.9-3.53,13.09-3.53,12,23A20,20,0,0,0,32,43ZM32,5A18,18,0,0,1,50,23c-1,23.88-35,23.87-36,0A18,18,0,0,1,32,5Z"/><path d="M32,10a1,1,0,0,0,0-2A15,15,0,0,0,17,23a1,1,0,0,0,2,0A13,13,0,0,1,32,10Z"/><path d="M27.11,30c.21,6.46,9.57,6.46,9.78,0C36.68,23.54,27.32,23.54,27.11,30Zm7.78,0a2.89,2.89,0,0,1-5.78,0A2.89,2.89,0,0,1,34.89,30Z"/><path d="M24,30a8,8,0,0,0,8,8c10.6-.4,10.6-15.6,0-16A8,8,0,0,0,24,30Zm14,0c-.25,7.93-11.75,7.93-12,0C26.25,22.07,37.75,22.07,38,30Z"/><path d="M43.92,42.62a1,1,0,0,0-1.84.76L46,52.9A4.44,4.44,0,0,1,41.91,59H30a1,1,0,0,0,0,2H41.91a6.46,6.46,0,0,0,5.94-8.86Z"/><path d="M27.71,59.29a1,1,0,0,0-1.42,1.42A1,1,0,0,0,27.71,59.29Z"/><path d="M24,59H22.09A4.44,4.44,0,0,1,18,52.9l3.92-9.52a1,1,0,0,0-1.84-.76l-3.93,9.52A6.46,6.46,0,0,0,22.09,61H24A1,1,0,0,0,24,59Z"/></g></svg>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">CCTV Footage</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Date(MM/DD/YYYY)" class="form-control form-control-transparent date-picker" bsDatepicker>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker">
+                                <option value="Cam_1">Cam_1</option>
+                                <option value="Cam_2">Cam_2</option>
+                            </select>
+                        </div>
+                        <div class="mt-auto">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Prepare Dataset">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <form class="d-flex flex-column h-100">
+                        <svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" class="icon-lg icon-white mb-2 mx-auto">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd" sketch:type="MSPage">
+                                <g id="icon-65-document-image" sketch:type="MSArtboardGroup">
+                                    <path d="M22,24.0457281 L22,18 L11,18 L11,25 L11,25 L13.5,23 L14.9579388,24.2496618 L18.5930302,21 L22,24.0457281 L22,24.0457281 L22,24.0457281 Z M19.5,3 L9.00276013,3 C7.89666625,3 7,3.89833832 7,5.00732994 L7,27.9926701 C7,29.1012878 7.89092539,30 8.99742191,30 L24.0025781,30 C25.1057238,30 26,29.1017876 26,28.0092049 L26,10.5 L26,10 L20,3 L19.5,3 L19.5,3 L19.5,3 Z M19,4 L8.9955775,4 C8.44573523,4 8,4.45526288 8,4.99545703 L8,28.004543 C8,28.5543187 8.45470893,29 8.9999602,29 L24.0000398,29 C24.5523026,29 25,28.5550537 25,28.0066023 L25,11 L20.9979131,11 C19.8944962,11 19,10.1134452 19,8.99408095 L19,4 L19,4 Z M20,4.5 L20,8.99121523 C20,9.54835167 20.4506511,10 20.9967388,10 L24.6999512,10 L20,4.5 L20,4.5 Z M10,17 L10,27 L23,27 L23,17 L10,17 L10,17 Z M14,21 C14.5522848,21 15,20.5522848 15,20 C15,19.4477152 14.5522848,19 14,19 C13.4477152,19 13,19.4477152 13,20 C13,20.5522848 13.4477152,21 14,21 L14,21 Z" id="document-image" sketch:type="MSShapeGroup"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">Image File</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker">
+                                <option value="Cam_1">Cam_1</option>
+                                <option value="Cam_2">Cam_2</option>
+                            </select>
+                        </div>
+                        <div class="mt-auto">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <form class="d-flex flex-column h-100">
+                        <svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" class="icon-lg icon-white mb-2 mx-auto">
+                            <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd" sketch:type="MSPage">
+                                <g id="icon-109-document-zip" sketch:type="MSArtboardGroup">
+                                    <path d="M13,18.04962 L13,17 L12,17 L12,16 L13,16 L13,15 L12,15 L12,14 L13,14 L13,13 L12,13 L12,12 L13,12 L13,11 L12,11 L12,10 L13,10 L13,9 L12,9 L12,8 L13,8 L13,7 L12,7 L12,6 L13,6 L13,5 L12,5 L12,4 L8.9955775,4 C8.44573523,4 8,4.45526288 8,4.99545703 L8,28.004543 C8,28.5543187 8.45470893,29 8.9999602,29 L24.0000398,29 C24.5523026,29 25,28.5550537 25,28.0066023 L25,11 L20.9979131,11 C19.8944962,11 19,10.1134452 19,8.99408095 L19,4 L14,4 L14,4 L14,5 L15,5 L15,6 L14,6 L14,7 L15,7 L15,8 L14,8 L14,9 L15,9 L15,10 L14,10 L14,11 L15,11 L15,12 L14,12 L14,13 L15,13 L15,14 L14,14 L14,15 L15,15 L15,16 L14,16 L14,17 L14,18.0494551 C15.1471448,18.2800315 16,19.2895542 16,20.5 C16,21.8903379 14.8807119,23 13.5,23 C12.109662,23 11,21.8807119 11,20.5 C11,19.2820888 11.8588798,18.2795527 13,18.04962 L13,18.04962 L13,18.04962 Z M26,10 L26,28.0092049 C26,29.1017876 25.1057238,30 24.0025781,30 L8.99742191,30 C7.89092539,30 7,29.1012878 7,27.9926701 L7,5.00732994 C7,3.89833832 7.89666625,3 9.00276013,3 L20,3 L26,10 L26,10 L26,10 Z M20,4.5 L20,8.99121523 C20,9.54835167 20.4506511,10 20.9967388,10 L24.6999512,10 L20,4.5 L20,4.5 Z M13.5,19 C12.6715729,19 12,19.6657972 12,20.5 C12,21.3284271 12.6657972,22 13.5,22 C14.3284271,22 15,21.3342028 15,20.5 C15,19.6715729 14.3342028,19 13.5,19 L13.5,19 Z" id="document-zip" sketch:type="MSShapeGroup"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">Zip Folder</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker">
+                                <option value="Cam_1">Cam_1</option>
+                                <option value="Cam_2">Cam_2</option>
+                            </select>
+                        </div>
+                        <div class="mt-auto">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <form class="d-flex flex-column h-100">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44.4" style="enable-background:new 0 0 44 44.4;" xml:space="preserve" class="icon-lg icon-white mb-2 mx-auto">
+                            <g>
+                                <path d="M16.2,4.7C17.4,3.1,20.1,2,23,2s5.8,1.2,6.9,2.9c0.2,0.3,0.5,0.5,0.8,0.5c0.2,0,0.4-0.1,0.5-0.2
+                                    c0.5-0.3,0.6-0.9,0.3-1.4C29.9,1.2,26,0,23,0c-3.6,0-6.9,1.4-8.4,3.6c-0.4,0.4-0.3,1,0.2,1.4C15.2,5.3,15.9,5.2,16.2,4.7z"/>
+                                <path d="M23.1,4.6C21,4.5,19,5.3,17.6,6.8c-0.4,0.4-0.3,1,0.1,1.4c0.4,0.4,1,0.3,1.4-0.1
+                                    c1-1.1,2.4-1.7,3.9-1.6c1.7,0,3.3,0.7,3.9,1.6c0.2,0.3,0.5,0.4,0.8,0.4c0.2,0,0.4-0.1,0.6-0.2c0.5-0.3,0.6-0.9,0.3-1.4
+                                    C27.4,5.3,25,4.6,23.1,4.6z"/>
+                                <path d="M41.1,12.7H20.7c-0.6,0-1,0.4-1,1v2.2h-1.3c-0.4-1.7-2-3-3.9-3H14h-0.1c-1.8,0-3.3,1.3-3.5,3h-1
+                                    c-0.2-1.7-1.6-3-3.4-3S2.8,14.2,2.6,16C1.1,16.2,0,17.4,0,18.9v21.4c0,1.7,1.3,3,3,3h18.2c1.6,0.7,3.3,1.1,5.2,1.1
+                                    c1.9,0,3.7-0.4,5.3-1.2c0.1,0,0.2,0.1,0.4,0.1h9.1c1.7,0,3-1.3,3-3V15.7C44.1,14,42.8,12.7,41.1,12.7z M13.7,14.9L13.7,14.9h0.8
+                                    c0.7,0,1.4,0.4,1.7,1h-3.9C12.6,15.3,13.1,14.9,13.7,14.9z M5.9,14.9c0.6,0,1.2,0.4,1.4,1H4.5C4.7,15.3,5.2,14.9,5.9,14.9z M3,41.2
+                                    v0.1c-0.6,0-1-0.4-1-1V21h17.5c-3.5,2.2-5.9,6.2-5.9,10.7c0,3.8,1.7,7.2,4.4,9.5H3z M26.3,42.4c-5.9,0-10.6-4.8-10.6-10.7
+                                    c0-5.9,4.8-10.7,10.7-10.7C32.3,21,37,25.8,37,31.7C37,37.6,32.2,42.4,26.3,42.4z M42.1,40.4c0,0.4-0.4,0.9-1,0.9h-6.5
+                                    c2.7-2.3,4.4-5.7,4.4-9.5c0-3.6-1.6-6.9-4-9.2h7.1V40.4z M42.1,20.5h-9.9c-1.7-0.9-3.7-1.4-5.8-1.4c0,0,0,0-0.1,0H2V19
+                                    c0-0.7,0.4-1.1,1-1.1h0.4h4.9h12.4c0.6,0,1-0.4,1-1v-2.2h19.4c0.6,0,1,0.4,1,1V20.5z"/>
+                                <path d="M26.3,22.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8c4.9,0,8.8-4,8.8-8.8
+                                    C35.1,26.8,31.2,22.9,26.3,22.9z M26.3,38.5c-3.8,0-6.8-3.1-6.8-6.8s3.1-6.8,6.8-6.8s6.8,3.1,6.8,6.8S30.1,38.5,26.3,38.5z"/>
+                                <path d="M38.8,15.5h-4.5c-0.6,0-1,0.4-1,1v2.6c0,0.5,0.4,1,1,1h4.5c0.6,0,1-0.4,1-1v-2.6
+                                    C39.8,15.9,39.4,15.5,38.8,15.5z M37.8,18.1h-2.5v-0.6h2.5V18.1z"/>
+                            </g>
+                            </svg>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">Image Web Search</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker">
+                                <option value="Results">Results</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Keyword" class="form-control form-control-transparent search-field">
+                        </div>
+                        <div class="mt-auto">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Prepare Dataset">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator">
+            <span>OR</span>
+        </div>
+
+        <h2 class="mb-4 text-uppercase">Pick an Existing Dataset, Annotate & Train!</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="rounded bg-darken p-3 h-100">
+                    <form class="d-flex flex-column h-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="icon-lg icon-white mb-2 mx-auto"><g id="CLOUD_SERVER-2" data-name="CLOUD SERVER"><path d="M31,15a8,8,0,1,0,8,8A8,8,0,0,0,31,15Zm0,14a6,6,0,1,1,6-6A6,6,0,0,1,31,29Z"/><path d="M35.53,20.38a1,1,0,0,0-1.42,0l-3.9,3.91L27.7,22.78a1,1,0,0,0-1.38.34,1,1,0,0,0,.35,1.37l3.18,1.91.09,0,.09,0a1,1,0,0,0,.33.07h0a1.3,1.3,0,0,0,.33-.07l.07,0a1,1,0,0,0,.29-.19h0l4.46-4.45A1,1,0,0,0,35.53,20.38Z"/><path d="M31.94,43.83a.56.56,0,0,0,.17.09.6.6,0,0,0,.19.06,1,1,0,1,0,0-2,.6.6,0,0,0-.19.06.56.56,0,0,0-.17.09l-.16.12a1,1,0,0,0,0,1.42Z"/><path d="M56.07,36.49A3.46,3.46,0,0,0,52.76,39H50.19V35h6.74a1,1,0,0,0,.42-.1c6.15-6.81,1-18.32-8-18.8a14.35,14.35,0,0,0-16.15-4.41C28.52.21,12.08,3.06,11.32,15.4A11.67,11.67,0,0,0,6.25,34.66,1,1,0,0,0,7,35h6.84v4H11.24a3.47,3.47,0,1,0,0,2h3.54a1,1,0,0,0,.73-.29,1,1,0,0,0,.29-.72V35h5.86V48H16.16a3.47,3.47,0,1,0,0,2h6.51a1,1,0,0,0,1-1V35h7.82v5a1,1,0,1,0,2,0V35h6.84s0,14,0,14a1,1,0,0,0,1,1H47.8a3.47,3.47,0,1,0,0-2H42.33V35h5.86v5a1,1,0,0,0,.29.72,1,1,0,0,0,.73.29h3.54a3.47,3.47,0,1,0,3.32-4.48Zm-48.14,5a1.48,1.48,0,0,1,0-3A1.48,1.48,0,0,1,7.93,41.48Zm4.91,9a1.48,1.48,0,0,1,0-3A1.48,1.48,0,0,1,12.84,50.47Zm38.27-3a1.48,1.48,0,0,1,0,3A1.48,1.48,0,0,1,51.11,47.51ZM5,26.56a9.56,9.56,0,0,1,7.51-9.39A1,1,0,0,0,13.3,16a9.36,9.36,0,0,1,18.38-2.71,1,1,0,0,0,.55.63,1,1,0,0,0,.84,0,12,12,0,0,1,5.19-1.16,12.31,12.31,0,0,1,9.83,4.9,1,1,0,0,0,.77.39c7.29.09,11.72,8.9,7.55,14.93h-49A9.57,9.57,0,0,1,5,26.56ZM56.07,41.45a1.48,1.48,0,0,1,0-3A1.48,1.48,0,0,1,56.07,41.45Z"/><path d="M42.62,51.52A3.47,3.47,0,0,0,39.3,54H33.49V46a1,1,0,0,0-2,0v8H26a3.47,3.47,0,1,0,0,2H39.31a3.47,3.47,0,1,0,3.31-4.48ZM22.67,56.47a1.48,1.48,0,0,1,0-2.95A1.48,1.48,0,0,1,22.67,56.47Zm19.95,0a1.48,1.48,0,0,1,0-2.95A1.48,1.48,0,0,1,42.62,56.47Z"/></g></svg>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">Existing Dataset</h3>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend w-75">
+                                <select class="form-control form-control-transparent select-picker">
+                                    <option value="Un-Annotated">Un-Annotated</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append w-25">
+                                <input type="submit" class="btn btn-primary font-weight-normal" value="Annotate & Train">
+                            </div>
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend w-75">
+                                <select class="form-control form-control-transparent select-picker">
+                                    <option value="Un-Annotated">Un-Annotated</option>
+                                </select>
+                            </div>
+                            <div class="input-group-append w-25">
+                                <input type="submit" class="btn btn-primary font-weight-normal" value="Annotate & Train">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
 
 
 
