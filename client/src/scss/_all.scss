@@ -6,7 +6,7 @@
 // banner style
 .inner{
     &-banner{
-        height: 312px;
+        min-height: 312px;
         position: relative;
         &.bg-after{
             &:after{
@@ -62,7 +62,7 @@
         background-position: right $spacer/2 center;
         background-size: $spacer*1.25 $spacer*1.25;
         &::placeholder{
-            color: $grey-light;
+            color: $grey-medium;
         }
         &:focus{
             box-shadow: none;
@@ -199,5 +199,12 @@
                 background-color: $primary;
             }
         }
+    }
+}
+
+// custom card
+.custom{
+    &-card{
+        background-color: rgba($grey-darken,0.95);
     }
 }
