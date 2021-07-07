@@ -77,8 +77,8 @@
                         <svg-icon src="/assets/icons/zip-folder.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Zip Folder</h3>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter Dataset Name" [(ngModel)]='datasetName' size="30"
-                                (ngModelChange)="detect()" class="form-control form-control-transparent">
+                            <input type="text" placeholder="Enter Dataset Name first" [(ngModel)]='datasetName'
+                                size="30" (ngModelChange)="detect()" class="form-control form-control-transparent">
                         </div>
                         <div class="form-group">
                             <div class="input-group mb-3">
@@ -92,8 +92,10 @@
                             </div>
                         </div>
                         <div class="mt-auto">
-                            <input type="submit" class="btn btn-primary btn-block font-weight-normal"
-                                value="Annotate & Train">
+                            <button type="submit" class="btn btn-primary btn-block font-weight-normal" (click)="check()"
+                                [disabled]="!uploader.getNotUploadedItems().length ||showMyMessage2 == false || badFile == true || showMyMessage3 == true">Upload
+                                Zip
+                                file</button>
                         </div>
                     </div>
                 </div>
