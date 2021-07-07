@@ -17,16 +17,21 @@
                         <svg-icon src="/assets/icons/cctv.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">CCTV Footage</h3>
                         <div class="form-group">
-                            <input type="text" placeholder="Date(MM/DD/YYYY)" class="form-control form-control-transparent date-picker" bsDatepicker [bsConfig]="{containerClass:'theme-default'}">
+                            <input type="text" placeholder="Date(MM/DD/YYYY)" [(ngModel)]="selectedDate" [maxDate]="max"
+                                class="form-control form-control-transparent date-picker" bsDatepicker
+                                [bsConfig]="{containerClass:'theme-default'}">
                         </div>
                         <div class="form-group">
-                            <select class="form-control form-control-transparent select-picker">
-                                <option value="Cam_1">Cam_1</option>
-                                <option value="Cam_2">Cam_2</option>
+                            <select class="form-control form-control-transparent select-picker" [(ngModel)]="camera"
+                                placeholder="Pick a camera">
+                                <option value="undefined" disabled>Pick a camera</option>
+                                <option *ngFor="let cam of cameras" [value]="cam.name">{{cam.name}}</option>
                             </select>
                         </div>
                         <div class="mt-auto">
-                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Prepare Dataset">
+                            <button class="btn btn-primary btn-block font-weight-normal"
+                                [routerLink]="['/annotation/video', camera, date]" [disabled]='!isCameraReady()'>Prepare
+                                Dataset</button>
                         </div>
                     </div>
                 </div>
@@ -36,19 +41,29 @@
                     <div class="form d-flex flex-column h-100">
                         <svg-icon src="/assets/icons/image-file.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Image File</h3>
-                        <div class="form-group">
-                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
-                        </div>
+                        <!-- <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name"
+                                class="form-control form-control-transparent">
+                        </div> -->
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="importFile" (change)="onFileChange($event.target.files)">
-                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImport for="importFile">Choose Image</label>
+                                    <input type="file" class="custom-file-input" id="inputGroupFile02"
+                                        (change)="showPicInfo($event)" [uploader]="photoUploader" ng2FileSelect #img>
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImport
+                                        for="inputGroupFile02">{{imgFileName == '' ? 'Choose a
+                                        image to upload' :
+                                        imgFileName}}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-auto">
-                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">
+                            <button *ngIf='!uploadImage' class="btn btn-primary btn-block font-weight-normal"
+                                (click)="checkImg()"
+                                [disabled]="!photoUploader.getNotUploadedItems().length ||showMyMessage5 == false || badImgFile == true">Annotate
+                                & Train</button>
+                            <button *ngIf='uploadImage' disabled class="btn btn-primary btn-block font-weight-normal"
+                                (click)="checkImg()">Loading...</button>
                         </div>
                     </div>
                 </div>
@@ -59,18 +74,22 @@
                         <svg-icon src="/assets/icons/zip-folder.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Zip Folder</h3>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
+                            <input type="text" placeholder="Enter Dataset Name"
+                                class="form-control form-control-transparent">
                         </div>
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="importFileZip" (change)="onFileChange($event.target.files)">
-                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImportZip for="importFileZip">Choose Image Zip Folder</label>
+                                    <input type="file" class="custom-file-input" id="importFileZip"
+                                        (change)="onFileChange($event.target.files)">
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImportZip
+                                        for="importFileZip">Choose Image Zip Folder</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-auto">
-                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal"
+                                value="Annotate & Train">
                         </div>
                     </div>
                 </div>
@@ -81,7 +100,8 @@
                         <svg-icon src="/assets/icons/camera.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Image Web Search</h3>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
+                            <input type="text" placeholder="Enter Dataset Name"
+                                class="form-control form-control-transparent">
                         </div>
                         <div class="form-group">
                             <select class="form-control form-control-transparent select-picker">
@@ -89,10 +109,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter Keyword" class="form-control form-control-transparent search-field">
+                            <input type="text" placeholder="Enter Keyword"
+                                class="form-control form-control-transparent search-field">
                         </div>
                         <div class="mt-auto">
-                            <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Prepare Dataset">
+                            <input type="submit" class="btn btn-primary btn-block font-weight-normal"
+                                value="Prepare Dataset">
                         </div>
                     </div>
                 </div>
@@ -108,7 +130,8 @@
             <div class="col-12 col-md-6">
                 <div class="rounded bg-darken p-3 h-100">
                     <div class="form d-flex flex-column h-100">
-                        <svg-icon src="/assets/icons/existing-dataset.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
+                        <svg-icon src="/assets/icons/existing-dataset.svg" class="icon-lg icon-white mb-3 mx-auto">
+                        </svg-icon>
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">Existing Dataset</h3>
                         <div class="form-group input-group">
                             <div class="input-group-prepend w-75">
@@ -117,7 +140,8 @@
                                 </select>
                             </div>
                             <div class="input-group-append w-25">
-                                <input type="submit" class="btn btn-primary font-weight-normal" value="Annotate & Train">
+                                <input type="submit" class="btn btn-primary font-weight-normal"
+                                    value="Annotate & Train">
                             </div>
                         </div>
                         <div class="form-group input-group">
@@ -127,7 +151,8 @@
                                 </select>
                             </div>
                             <div class="input-group-append w-25">
-                                <input type="submit" class="btn btn-primary font-weight-normal" value="Annotate & Train">
+                                <input type="submit" class="btn btn-primary font-weight-normal"
+                                    value="Annotate & Train">
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-annotations-details',
   templateUrl: './annotations-details.component.html',
-  styleUrls: ['./annotations-details.component.css']
+  styleUrls: ['./annotations-details.component.scss']
 })
 export class AnnotationsDetailsComponent implements OnInit {
   payloadType: string;
