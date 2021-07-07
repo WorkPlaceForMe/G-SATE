@@ -49,38 +49,92 @@
     }
 }
 
-.form{
-    &-control{
-        background-repeat: no-repeat;
-        background-position: right $spacer/2 center;
-        background-size: $spacer*1.25 $spacer*1.25;
-        font-size: $font-size-sm;
-        &.date-picker{
-            background-image: url('/assets/icons/calendar.svg');
-        }
-        &.select-picker{
-            appearance: none;
-            background-image: url('/assets/icons/arrow-down.svg');
-        }
-        &.search-field{
-            background-image: url('/assets/icons/search.svg');
-        }
-        &-transparent{
-            background-color: rgba($white, 0.1);
-            border: none;
-            color: $white;
+form{
+    .form{
+        &-control{
+            border: 1px solid transparent;
+            height: $input-height;
+            box-shadow: none;
+            color: $input-color;
+            font-size: $font-size-sm;
+            background-repeat: no-repeat;
+            background-position: right $spacer/2 center;
+            background-size: $spacer*1.25 $spacer*1.25;
             &::placeholder{
                 color: $grey-light;
             }
+            &:focus{
+                box-shadow: none;
+                border-color: $primary;
+            }
             &.date-picker{
-                background-image: url('/assets/icons/calendar-white.svg');
+                background-image: url('/assets/icons/calendar.svg');
             }
             &.select-picker{
-                background-image: url('/assets/icons/arrow-down-white.svg');
+                appearance: none;
+                background-image: url('/assets/icons/arrow-down.svg');
+                option{
+                    color: $dark;
+                }
+                &:focus{
+                    option{
+                        color: $dark;
+                    }
+                }
             }
             &.search-field{
-                background-image: url('/assets/icons/search-white.svg');
+                background-image: url('/assets/icons/search.svg');
             }
+            &-transparent{
+                background-color: rgba($white, 0.1);
+                color: $white;
+                &:focus{
+                    background-color: rgba($white, 0.1);
+                    color: $white;
+                    border-color: $grey-medium;
+                }
+                &.date-picker{
+                    background-image: url('/assets/icons/calendar-white.svg');
+                }
+                &.select-picker{
+                    background-image: url('/assets/icons/arrow-down-white.svg');
+                }
+                &.search-field{
+                    background-image: url('/assets/icons/search-white.svg');
+                }
+            }
+            &-sm{
+                height: $input-height-sm;
+                background-size: $spacer $spacer;
+            }
+            &-lg{
+                height: $input-height-lg;
+            }
+        }
+    }
+    textarea{
+        &.form{
+            &-control{
+                height: auto;
+            }
+        }
+    }
+    .btn{
+        padding: $input-btn-padding-y $input-btn-padding-x;
+        font-size: $input-btn-font-size;
+        font-weight: $btn-font-weight;
+        height: $input-height;
+        &-sm{
+            padding-top: $input-btn-padding-y-sm;
+            padding-bottom: $input-btn-padding-y-sm;
+            font-size: $input-btn-font-size-sm;
+            height: $input-height-sm;
+        }
+        &-lg{
+            padding-top: $input-btn-padding-y-lg;
+            padding-bottom: $input-btn-padding-y-lg;
+            font-size: $input-btn-font-size-lg;
+            height: $input-height-lg;
         }
     }
 }
@@ -107,6 +161,17 @@
         &:before{
             left: auto;
             right: calc(100% + #{$spacer / 2});
+        }
+    }
+}
+
+// datepicker
+.theme-default{
+    .bs{
+        &-datepicker{
+            &-head{
+                background-color: $primary;
+            }
         }
     }
 }

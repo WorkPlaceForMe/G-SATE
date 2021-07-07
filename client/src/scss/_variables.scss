@@ -71,9 +71,11 @@ $link-hover-decoration	        : none !default;
 
 // Buttons + Forms
 $input-btn-font-size            : $font-size-base !default;
+$input-btn-font-size-sm         : $font-size-sm !default;
 $input-btn-font-size-lg         : $font-size-lg !default;
 $btn-font-weight                : 500 !default;
 $input-btn-padding-y            : .469rem !default;
+$input-btn-padding-y-sm         : .312rem !default;
 $input-btn-padding-y-lg         : 0.688rem !default;
 $input-btn-padding-x            : $spacer !default;
 $input-btn-focus-width          : 0 !default;
@@ -87,6 +89,7 @@ $input-color			        : $grey-dark !default;
 $input-padding-x                : $spacer !default;
 
 $input-height                   : $spacer*2.25 !default;
+$input-height-sm                : $spacer*2 !default;
 $input-height-lg                : $spacer*3 !default;
 
 
