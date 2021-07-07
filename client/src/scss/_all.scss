@@ -49,9 +49,11 @@
     }
 }
 
+// form style
 form{
     .form{
         &-control{
+            background-color: $white;
             border: 1px solid transparent;
             height: $input-height;
             box-shadow: none;
@@ -135,6 +137,32 @@ form{
             padding-bottom: $input-btn-padding-y-lg;
             font-size: $input-btn-font-size-lg;
             height: $input-height-lg;
+        }
+    }
+    .custom{
+        &-file{
+            &-label{
+                background-color: $white;
+                border: 1px solid transparent;
+                height: $input-height;
+                color: $input-color;
+                font-size: $font-size-sm;
+                background-repeat: no-repeat;
+                background-position: right $spacer/2 center;
+                background-size: $spacer*1.25 $spacer*1.25;
+                text-align: left;
+                padding-right: $spacer*2;
+                    background-image: url('/assets/icons/upload.svg');
+                    &-transparent{
+                    background-color: rgba($white, 0.1);
+                    color: $white;
+                    height: $input-height;
+                    background-image: url('/assets/icons/upload-white.svg');
+                }
+                &:after{
+                    display: none;
+                }
+            }
         }
     }
 }

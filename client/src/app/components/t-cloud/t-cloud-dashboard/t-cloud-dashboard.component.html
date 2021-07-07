@@ -46,10 +46,12 @@
                             <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
                         </div>
                         <div class="form-group">
-                            <select class="form-control form-control-transparent select-picker">
-                                <option value="Cam_1">Cam_1</option>
-                                <option value="Cam_2">Cam_2</option>
-                            </select>
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="importFile" (change)="onFileChange($event.target.files)">
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImport for="importFile">Choose Image</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-auto">
                             <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">
@@ -72,10 +74,12 @@
                             <input type="text" placeholder="Enter Dataset Name" class="form-control form-control-transparent">
                         </div>
                         <div class="form-group">
-                            <select class="form-control form-control-transparent select-picker">
-                                <option value="Cam_1">Cam_1</option>
-                                <option value="Cam_2">Cam_2</option>
-                            </select>
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="importFileZip" (change)="onFileChange($event.target.files)">
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImportZip for="importFileZip">Choose Image Zip Folder</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-auto">
                             <input type="submit" class="btn btn-primary btn-block font-weight-normal" value="Annotate & Train">

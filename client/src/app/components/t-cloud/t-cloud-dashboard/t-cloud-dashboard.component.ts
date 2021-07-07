@@ -25,6 +25,9 @@ export class TCloudDashboardComponent implements OnInit {
     private cdref: ChangeDetectorRef
   ) { }
 
+  labelImport: ElementRef;
+  fileToUpload: File = null;
+
   uploadFileNames: Array<string> = []
 
   public uploader: FileUploader = new FileUploader({
@@ -481,5 +484,12 @@ export class TCloudDashboardComponent implements OnInit {
         '/annotations/' + this.label + '/' + this.choosenDataset + '/0'
       ])
     }
+  }
+  
+  onFileChange(files: FileList) {
+    this.labelImport.nativeElement.innerText = Array.from(files)
+      .map(f => f.name)
+      .join(', ');
+    this.fileToUpload = files.item(0);
   }
 }
