@@ -6,7 +6,7 @@
 // banner style
 .inner{
     &-banner{
-        min-height: 312px;
+        height: 312px;
         position: relative;
         &.bg-after{
             &:after{
@@ -46,6 +46,9 @@
             right: 0;
             transform: translateY(-50%);
         }
+        &-full{
+            height: 100vh;
+        }
     }
 }
 
@@ -71,6 +74,12 @@
         &.date-picker{
             background-image: url('/assets/icons/calendar.svg');
         }
+        &.time-picker{
+            background-image: url('/assets/icons/time.svg');
+        }
+        &.date-time-picker{
+            background-image: url('/assets/icons/calendar-time.svg');
+        }
         &.select-picker{
             appearance: none;
             background-image: url('/assets/icons/arrow-down.svg');
@@ -89,6 +98,9 @@
         &-transparent{
             background-color: rgba($white, 0.1);
             color: $white;
+            &::placeholder{
+                color: $grey-light;
+            }
             &:focus{
                 background-color: rgba($white, 0.1);
                 color: $white;
@@ -96,6 +108,12 @@
             }
             &.date-picker{
                 background-image: url('/assets/icons/calendar-white.svg');
+            }
+            &.time-picker{
+                background-image: url('/assets/icons/time-white.svg');
+            }
+            &.date-time-picker{
+                background-image: url('/assets/icons/calendar-time-white.svg');
             }
             &.select-picker{
                 background-image: url('/assets/icons/arrow-down-white.svg');
@@ -199,6 +217,20 @@
                 background-color: $primary;
             }
         }
+    }
+}
+.owl-dt-control{
+    &-button-content{
+        color: $primary;
+        &:hover{
+            background-color: $primary !important;
+            color: $white;
+        }
+    }
+}
+.owl-dt-calendar{
+    &-cell-selected{
+        background-color: $primary;
     }
 }
 
