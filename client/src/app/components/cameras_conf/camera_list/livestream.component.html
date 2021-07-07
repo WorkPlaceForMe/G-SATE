@@ -8,15 +8,42 @@
 <!-- banner section end -->
 <!-- <p>{{ dateMessage }}</p> -->
 
-<div class="section-padding"></div>
-<table class="table table-hover" frame='border' id="myTable">
+<div class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" *ngFor="let camera of cams">
+                <div class="bg-white rounded d-flex align-items-center p-3 h-100">
+                    <img src="/assets/images/thumbnail.jpg" class="rounded object-cover mr-3 flex-none" width="96" height="96" alt="{{camera.name}}" title="{{camera.name}}" />
+                    <div class="flex-fill">
+                        <h3 class="mb-3">{{camera.name}}</h3>
+                        <div class="d-flex justify-content-between">
+                            <button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning rounded-circle text-white">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button [routerLink]="['/cameras/edit', camera.id]" class="btn btn-primary rounded-circle">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </button>
+                            <button [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-success rounded-circle">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-danger rounded-circle" (click)="deleteCamera(camera)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <table class="table table-hover" frame='border' id="myTable">
     <thead align='center'>
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Play</th>
             <th scope="col">Edit</th>
             <th scope="col"><i class="far fa-dot-circle"></i>
-                <!-- <th scope="col" *ngIf='heatmap == true'><i class="far fa-map"></i> &nbsp;Heatmap</th> -->&nbsp;Algorithms</th>
             <th scope="col">Delete</th>
         </tr>
     </thead>
@@ -31,12 +58,9 @@
         <td><a [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-info btn-block">
         Algorithms
         </a></td>
-        <!-- <td *ngIf='heatmap == true'><button [routerLink]="['/cameras/heatmap', camera.id]" class= "btn btn-info btn-block" [disabled]= 'camera.hm == undefined'>
-          Heatmap
-        </button></td> -->
         <td><button class="btn btn-danger btn-block" (click)="deleteCamera(camera)">
         <i class="far fa-trash-alt"></i>
       </button></td>
     </tr>
-</table>
+</table> -->
 <!-- deleteCamera(camera.id) -->

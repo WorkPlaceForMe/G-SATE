@@ -1,10 +1,10 @@
 // colors
 $primary                        : #0067af !default;
 $secondary                      : #0e293c !default;
-$success                        : #1bc47d !default;
+$success                        : #6ac300 !default;
 $info                           : #2a9cf7 !default;
-$warning                        : #fbbc05 !default;
-$danger                         : #f05636 !default;
+$warning                        : #f39c12 !default;
+$danger                         : #e74c3c !default;
 $grey-lighter                   : #ededec !default;
 $grey-light                     : #d2d2d2 !default;
 $grey-medium                    : #605e5e !default;
@@ -74,7 +74,7 @@ $input-btn-font-size            : $font-size-base !default;
 $input-btn-font-size-sm         : $font-size-sm !default;
 $input-btn-font-size-lg         : $font-size-lg !default;
 $btn-font-weight                : 500 !default;
-$input-btn-padding-y            : .469rem !default;
+$input-btn-padding-y            : .5rem !default;
 $input-btn-padding-y-sm         : .312rem !default;
 $input-btn-padding-y-lg         : 0.688rem !default;
 $input-btn-padding-x            : $spacer !default;
@@ -88,7 +88,7 @@ $input-border-color             : $grey-medium !default;
 $input-color			        : $grey-dark !default;
 $input-padding-x                : $spacer !default;
 
-$input-height                   : $spacer*2.25 !default;
+$input-height                   : $spacer*2.5 !default;
 $input-height-sm                : $spacer*2 !default;
 $input-height-lg                : $spacer*3 !default;
 

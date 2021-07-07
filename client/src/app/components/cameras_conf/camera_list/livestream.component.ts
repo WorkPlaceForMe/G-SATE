@@ -42,6 +42,7 @@ export class LivestreamComponent implements OnInit, OnDestroy {
 
     // this.myFunction();
 
+
     this.facesService.getCameras().subscribe(
       res => {
         this.cams = res;
