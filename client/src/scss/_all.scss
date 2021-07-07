@@ -50,68 +50,66 @@
 }
 
 // form style
-form{
-    .form{
-        &-control{
-            background-color: $white;
-            border: 1px solid transparent;
-            height: $input-height;
+.form{
+    &-control{
+        background-color: $white;
+        border: 1px solid transparent;
+        height: $input-height;
+        box-shadow: none;
+        color: $input-color;
+        font-size: $font-size-sm;
+        background-repeat: no-repeat;
+        background-position: right $spacer/2 center;
+        background-size: $spacer*1.25 $spacer*1.25;
+        &::placeholder{
+            color: $grey-light;
+        }
+        &:focus{
             box-shadow: none;
-            color: $input-color;
-            font-size: $font-size-sm;
-            background-repeat: no-repeat;
-            background-position: right $spacer/2 center;
-            background-size: $spacer*1.25 $spacer*1.25;
-            &::placeholder{
-                color: $grey-light;
+            border-color: $primary;
+        }
+        &.date-picker{
+            background-image: url('/assets/icons/calendar.svg');
+        }
+        &.select-picker{
+            appearance: none;
+            background-image: url('/assets/icons/arrow-down.svg');
+            option{
+                color: $dark;
             }
             &:focus{
-                box-shadow: none;
-                border-color: $primary;
-            }
-            &.date-picker{
-                background-image: url('/assets/icons/calendar.svg');
-            }
-            &.select-picker{
-                appearance: none;
-                background-image: url('/assets/icons/arrow-down.svg');
                 option{
                     color: $dark;
                 }
-                &:focus{
-                    option{
-                        color: $dark;
-                    }
-                }
             }
-            &.search-field{
-                background-image: url('/assets/icons/search.svg');
-            }
-            &-transparent{
+        }
+        &.search-field{
+            background-image: url('/assets/icons/search.svg');
+        }
+        &-transparent{
+            background-color: rgba($white, 0.1);
+            color: $white;
+            &:focus{
                 background-color: rgba($white, 0.1);
                 color: $white;
-                &:focus{
-                    background-color: rgba($white, 0.1);
-                    color: $white;
-                    border-color: $grey-medium;
-                }
-                &.date-picker{
-                    background-image: url('/assets/icons/calendar-white.svg');
-                }
-                &.select-picker{
-                    background-image: url('/assets/icons/arrow-down-white.svg');
-                }
-                &.search-field{
-                    background-image: url('/assets/icons/search-white.svg');
-                }
+                border-color: $grey-medium;
             }
-            &-sm{
-                height: $input-height-sm;
-                background-size: $spacer $spacer;
+            &.date-picker{
+                background-image: url('/assets/icons/calendar-white.svg');
             }
-            &-lg{
-                height: $input-height-lg;
+            &.select-picker{
+                background-image: url('/assets/icons/arrow-down-white.svg');
             }
+            &.search-field{
+                background-image: url('/assets/icons/search-white.svg');
+            }
+        }
+        &-sm{
+            height: $input-height-sm;
+            background-size: $spacer $spacer;
+        }
+        &-lg{
+            height: $input-height-lg;
         }
     }
     textarea{
