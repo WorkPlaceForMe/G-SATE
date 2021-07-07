@@ -37,7 +37,27 @@
     }
     &.bg-after-darken{
         &:after{
-            background-color: $primary;
+            background-color: theme-color(darken);
         }
     }
+    &.bg-after-secondary{
+        &:after{
+            background-color: theme-color(secondary);
+        }
+    }
+    &.bg-after-white{
+        &:after{
+            background-color: $white;
+        }
+    }
+    &.bg-after-black{
+        &:after{
+            background-color: $black;
+        }
+    }
+}
+
+// banner
+.main-banner{
+    min-height: 100vh;
 }

@@ -21,7 +21,7 @@ const baseURL = vistaIP;
 @Component({
   selector: "app-multiple-image-detection",
   templateUrl: "./multiple-image-detection.component.html",
-  styleUrls: ["./multiple-image-detection.component.css"],
+  styleUrls: ["./multiple-image-detection.component.scss"],
 })
 export class MultipleImageDetectionComponent implements OnInit {
   pager: any = {};

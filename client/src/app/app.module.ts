@@ -64,6 +64,7 @@ import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-det
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { FooterComponent } from './components/footer/footer.component';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -106,7 +107,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     AnnotationsConfirmComponent,
     ObjectDetectionConfirmComponent,
     ObjectDetectionDetailsComponent,
-    FederatedLearningComponent
+    FederatedLearningComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
