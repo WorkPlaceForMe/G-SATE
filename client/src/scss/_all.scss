@@ -59,13 +59,13 @@
 // form style
 .form{
     &-control{
-        background-color: $white;
-        border: 1px solid $grey-light;
-        height: $input-height;
-        box-shadow: none;
-        color: $input-color;
-        font-size: $font-size-sm;
-        line-height: 1.5;
+        // background-color: $white;
+        // border: 1px solid $grey-light;
+        // height: $input-height;
+        // box-shadow: none;
+        // color: $input-color;
+        // font-size: $font-size-sm;
+        // line-height: 1.5;
         background-repeat: no-repeat;
         background-position: right $spacer/2 center;
         background-size: $spacer*1.25 $spacer*1.25;
@@ -105,12 +105,12 @@
             color: $white;
             border-color: transparent;
             &::placeholder{
-                color: $grey-light;
+                color: theme-color(light);
             }
             &:focus{
                 background-color: rgba($white, 0.1);
                 color: $white;
-                border-color: $grey-medium;
+                border-color: theme-color(medium);
             }
             &.date-picker{
                 background-image: url('/assets/icons/calendar-white.svg');
@@ -129,38 +129,38 @@
             }
         }
         &-sm{
-            height: $input-height-sm;
+            // height: $input-height-sm;
             background-size: $spacer $spacer;
         }
         &-lg{
-            height: $input-height-lg;
+            // height: $input-height-lg;
         }
     }
-    textarea{
-        &.form{
-            &-control{
-                height: auto;
-            }
-        }
-    }
-    .btn{
-        padding: $input-btn-padding-y $input-btn-padding-x;
-        font-size: $input-btn-font-size;
-        font-weight: $btn-font-weight;
-        height: $input-height;
-        &-sm{
-            padding-top: $input-btn-padding-y-sm;
-            padding-bottom: $input-btn-padding-y-sm;
-            font-size: $input-btn-font-size-sm;
-            height: $input-height-sm;
-        }
-        &-lg{
-            padding-top: $input-btn-padding-y-lg;
-            padding-bottom: $input-btn-padding-y-lg;
-            font-size: $input-btn-font-size-lg;
-            height: $input-height-lg;
-        }
-    }
+    // textarea{
+    //     &.form{
+    //         &-control{
+    //             height: auto;
+    //         }
+    //     }
+    // }
+    // .btn{
+    //     padding: $input-btn-padding-y $input-btn-padding-x;
+    //     font-size: $input-btn-font-size;
+    //     font-weight: $btn-font-weight;
+    //     height: $input-height;
+    //     &-sm{
+    //         padding-top: $input-btn-padding-y-sm;
+    //         padding-bottom: $input-btn-padding-y-sm;
+    //         font-size: $input-btn-font-size-sm;
+    //         height: $input-height-sm;
+    //     }
+    //     &-lg{
+    //         padding-top: $input-btn-padding-y-lg;
+    //         padding-bottom: $input-btn-padding-y-lg;
+    //         font-size: $input-btn-font-size-lg;
+    //         height: $input-height-lg;
+    //     }
+    // }
     .custom{
         &-file{
             &-label{

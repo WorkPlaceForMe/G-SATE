@@ -47,11 +47,11 @@ $font-family-base               : 'Roboto', sans-serif;
 $font-size-base                 : 0.875rem;
 $font-size-lg                   : 1rem !default;
 $font-size-sm                   : $font-size-base - .0625;
-$line-height-base               : 1.4 !default;
-$line-height-sm                 : 1.4 !default;
+$line-height-base               : 1.5 !default;
+$line-height-sm                 : 1.5 !default;
 $font-weight-base               : 400 !default;
 $headings-font-family           : 'Roboto', sans-serif;
-$headings-line-height           : 1.2;
+$headings-line-height           : 1.4;
 
 // heading
 $h1-font-size                   : 2rem !default;
@@ -78,13 +78,16 @@ $input-btn-padding-y            : .5rem !default;
 $input-btn-padding-y-sm         : .312rem !default;
 $input-btn-padding-y-lg         : 0.688rem !default;
 $input-btn-padding-x            : $spacer !default;
+$input-btn-padding-x-sm         : $spacer !default;
 $input-btn-focus-width          : 0 !default;
 $input-btn-focus-box-shadow     : 0 !default;
 $input-border-radius-lg         : $spacer/4 !default;
 $btn-border-radius-lg           : $spacer/4 !default;
+$btn-line-height                : 1.5 !default;
+$input-btn-line-height          : 1.5 !default;
 
 // input field
-$input-border-color             : $grey-medium !default;
+$input-border-color             : $grey-lighter !default;
 $input-color			        : $grey-dark !default;
 $input-padding-x                : $spacer !default;
 
