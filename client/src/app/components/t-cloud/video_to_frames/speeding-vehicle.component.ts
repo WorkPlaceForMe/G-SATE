@@ -9,7 +9,7 @@ import { ip } from 'src/app/models/IpServer';
 @Component({
   selector: 'app-speeding-vehicle',
   templateUrl: './speeding-vehicle.component.html',
-  styleUrls: ['./speeding-vehicle.component.css']
+  styleUrls: ['./speeding-vehicle.component.scss']
 })
 export class SpeedingVehicleComponent implements OnInit {
   availableTimeStart: string[] = [];

@@ -29,6 +29,7 @@ import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-det
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
 
 const routes: Routes = [
   {
@@ -162,6 +163,10 @@ const routes: Routes = [
   {
     path: 'objectDetection/img/label',
     component: SingleImageDetectionComponent
+  },
+  {
+    path: 'test-your-model',
+    component: TestYourModelComponent
   },
   {
     path: '',

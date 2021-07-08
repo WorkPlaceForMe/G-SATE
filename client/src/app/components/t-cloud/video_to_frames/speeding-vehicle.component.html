@@ -1,13 +1,76 @@
-<div class="card border-primary mb-3" *ngIf="stored_vid">
+<div class="section-padding header-padding pb-0 inner-banner inner-banner-full bg-white d-flex flex-column align-items-center justify-content-end bg-after bg-after-darken bg-after-75" [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
+    <div class="container text-center z-index-1 text-white">
+        <div class="custom-card" *ngIf="stored_vid">
+            <video controls (click)="toggleVideo()" #video [title]="title" [autoplay]="true" [preload]="true" [loop]="true" [muted]="true" class="d-block mx-auto">
+                <source [src]="rtsp_in" type="video/mp4" />
+                Browser not supported
+            </video>
+        </div>
+        
+        <div class="custom-card" *ngIf="liveFeed">
+            <canvas #streaming id="canvas" width="1102" height="480" style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
+        </div>
+    </div>
+    <div class="video-options py-4 z-index-1 text-white w-100">
+        <div class="container">
+            <div class="form form-row align-items-end">
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <label for="start_date">Start Date</label>
+                    <input [owlDateTime]="dt1" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt1" placeholder="MM/DD/YYYY"
+                    class="form-control form-control-sm date-picker">
+                    <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
+                </div>
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <label for="end_date">End Date</label>
+                    <input [owlDateTime]="dt2" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt2" placeholder="MM/DD/YYYY"
+                    class="form-control form-control-sm date-picker">
+                    <owl-date-time #dt2 pickerType="calendar"></owl-date-time>
+                </div>
+                <div class="form-group col-12 col-md-1 mb-md-0">
+                    <label for="end_date">FPS</label>
+                    <select class="form-control form-control-sm select-picker">
+                        <option value="1/1">1/1</option>
+                        <option value="1/2">1/2</option>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <label for="end_date">Dataset Name</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Input dataset name">
+                </div>
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <label for="end_date">Total Images</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="">
+                </div>
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <button type="submit" class="btn btn-primary btn-sm btn-block">Make Dataset</button>
+                </div>
+                <div class="form-group col-12 col-md-1 mb-md-0">
+                    <button type="submit" class="btn btn-medium btn-sm btn-block">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="card border-primary mb-3" *ngIf="stored_vid">
     <mat-video #video [title]="title" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true" color="accent" spinner="spin" [loop]="true" [muted]="true" [showFrameByFrame]="true" [src]="rtsp_in">
     </mat-video>
 </div>
 
 <div class="card border-primary mb-3" *ngIf="liveFeed">
     <canvas #streaming id="canvas" width="1102" height="480" style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
-</div>
+</div> -->
 
-<div class="card bg-primary border-primary mb-3">
+<!-- <div class="card bg-primary border-primary mb-3">
     <div class="card-body">
         <div class="row">
             <h5>Beginning:</h5>&nbsp;
@@ -16,7 +79,6 @@
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                     <i class="far fa-clock"></i>
                 </a>
-                <!-- Time Accordion with Virtual Scroll -->
                 <div class="collapse" id="collapse1">
                     <cdk-virtual-scroll-viewport itemSize="20" class="card card-body container">
                         <div *cdkVirtualFor="let singleTime of availableTimeStart" class="number" (click)="this.start = singleTime;refreshTime();" data-toggle="collapse" href="#collapse1">
@@ -31,7 +93,6 @@
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                     <i class="far fa-clock "></i>
                 </a>
-                <!-- Time Accordion with Virtual Scroll -->
                 <div class="collapse" id="collapse2">
                     <cdk-virtual-scroll-viewport itemSize="20" class="card card-body container">
                         <div *cdkVirtualFor="let singleTime of availableTimeFinish" class="number" (click)="this.finish = singleTime; refreshTime();" data-toggle="collapse" href="#collapse2">
@@ -52,11 +113,11 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <!-- Modal -->
-<div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,4 +138,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

@@ -69,6 +69,18 @@
         background-repeat: no-repeat;
         background-position: right $spacer/2 center;
         background-size: $spacer*1.25 $spacer*1.25;
+        &[disabled]{
+            background-color: rgba($white, 0.1);
+            color: rgba($white, 0.5);
+            opacity: 0.5;
+            &.form-control-transparent{
+                background-color: rgba($white, 0.1);
+                color: rgba($white, 0.5);
+                &::placeholder{
+                    color: rgba($white, 0.25);
+                }
+            }
+        }
         &::placeholder{
             color: $grey-medium;
         }
@@ -163,6 +175,19 @@
     // }
     .custom{
         &-file{
+            &-input{
+                &[disabled]{
+                    &+label{
+                        background-color: rgba($white, 0.1);
+                        color: rgba($white, 0.5);
+                        opacity: 0.5;
+                        &.custom-file-label-transparent{
+                            background-color: rgba($white, 0.1);
+                            color: rgba($white, 0.5);
+                        }
+                    }
+                }
+            }
             &-label{
                 background-color: $white;
                 border: 1px solid transparent;
@@ -175,8 +200,8 @@
                 background-size: $spacer*1.25 $spacer*1.25;
                 text-align: left;
                 padding-right: $spacer*2;
-                    background-image: url('/assets/icons/upload.svg');
-                    &-transparent{
+                background-image: url('/assets/icons/upload.svg');
+                &-transparent{
                     background-color: rgba($white, 0.1);
                     color: $white;
                     height: $input-height;

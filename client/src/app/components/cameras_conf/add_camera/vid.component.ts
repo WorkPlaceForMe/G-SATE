@@ -7,10 +7,10 @@ import { v4 as uuid } from 'uuid';
 @Component({
   selector: 'app-vid',
   templateUrl: './vid.component.html',
-  styleUrls: ['./vid.component.css']
+  styleUrls: ['./vid.component.scss']
 })
 export class VidComponent implements OnInit {
-  @HostBinding('class') classes ='row';
+  // @HostBinding('class') classes ='row';
 
   camera: Camera = {
     id: '',
