@@ -1,6 +1,6 @@
 <!-- banner section start -->
-<section class="inner-banner bg-after bg-after-darken bg-after-75">
-    <img src="/assets/images/camera-bg.jpg" alt="" class="img-cover">
+<section class="section-padding header-padding inner-banner bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+    [ngStyle]="{'background-image': 'url(/assets/images/camera-edit-bg.jpg)'}">
     <div class="container text-center z-index-1 banner-caption section-padding">
         <h1 class="text-uppercase font-weight-bold text-white mb-0">Cameras</h1>
     </div>
@@ -17,16 +17,16 @@
                     <div class="flex-fill">
                         <h3 class="mb-3">{{camera.name}}</h3>
                         <div class="d-flex justify-content-between">
-                            <button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning rounded-circle text-white">
+                            <button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning btn-icon p-1 rounded-circle text-white" tooltip="Play">
                                 <i class="fas fa-play"></i>
                             </button>
-                            <button [routerLink]="['/cameras/edit', camera.id]" class="btn btn-primary rounded-circle">
+                            <button [routerLink]="['/cameras/edit', camera.id]" class="btn btn-primary btn-icon p-1 rounded-circle" tooltip="Edit">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </button>
-                            <button [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-success rounded-circle">
+                            <button [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-success btn-icon p-1 rounded-circle" tooltip="Algorithms">
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             </button>
-                            <button class="btn btn-danger rounded-circle" (click)="deleteCamera(camera)">
+                            <button class="btn btn-danger btn-icon p-1 rounded-circle" (click)="deleteCamera(camera)" tooltip="Delete">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
                         </div>

@@ -16,6 +16,10 @@ canvas {
                 border-bottom: 0;
             }
             .alogrithm-row{
+                margin-bottom: $spacer*1.5;
+                &:last-child{
+                    margin-bottom: 0;
+                }
                 .item{
                     flex: 1 1 auto;
                     &.item-name{

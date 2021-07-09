@@ -65,6 +65,7 @@ import { FederatedLearningComponent } from './components/federated-learning/fede
 import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -137,6 +138,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ScrollingModule,
     BsDatepickerModule.forRoot(),
     AngularSvgIconModule.forRoot(),
+    TooltipModule.forRoot(),
     PerfectScrollbarModule,
   ],
   providers: [
