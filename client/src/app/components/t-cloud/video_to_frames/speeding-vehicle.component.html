@@ -20,8 +20,11 @@
                 <div class="form-group col-12 col-md-2 mb-md-0 time-select1">
                     <label>Start</label>
                     <div class="input-group">
-                        <input class="form-control form-control-sm" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [class.invalid-input]="!isValidTime">
-                        <a class="btn btn-primary btn-sm px-2 input-group-append d-flex align-items-center justify-content-center" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+                        <input class="form-control form-control-sm" [(ngModel)]="start"
+                            (ngModelChange)="change(start,'s')" required [class.invalid-input]="!isValidTime">
+                        <a class="btn btn-primary btn-sm px-2 input-group-append d-flex align-items-center justify-content-center"
+                            data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
+                            aria-controls="collapse1">
                             <i class="far fa-clock"></i>
                         </a>
                     </div>
@@ -36,8 +39,11 @@
                 <div class="form-group col-12 col-md-2 mb-md-0 time-select2">
                     <label>End</label>
                     <div class="input-group">
-                        <input class="form-control form-control-sm" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required>
-                        <a class="btn btn-primary btn-sm px-2 input-group-append d-flex align-items-center justify-content-center" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                        <input class="form-control form-control-sm" [(ngModel)]="finish"
+                            (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required>
+                        <a class="btn btn-primary btn-sm px-2 input-group-append d-flex align-items-center justify-content-center"
+                            data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+                            aria-controls="collapse2">
                             <i class="far fa-clock"></i>
                         </a>
                     </div>
@@ -51,25 +57,45 @@
                 </div>
                 <div class="form-group col-12 col-md-1 mb-md-0">
                     <label for="end_date">FPS</label>
-                    <select class="form-control form-control-sm select-picker">
-                        <option value="1/1">1/1</option>
-                        <option value="1/2">1/2</option>
-                    </select>
+                    <input class="form-control form-control-sm" type="number" [(ngModel)]="conf.fps" min="0" max="60" (ngModelChange)="calculate()">
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="end_date">Dataset Name</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Input dataset name">
+                    <input type="text" class="form-control form-control-sm" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false">
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="end_date">Total Images</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="">
+                    <input type="text" class="form-control form-control-sm" placeholder="" disabled [(ngModel)]='picturesNumber'>
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
-                    <button type="submit" class="btn btn-primary btn-sm btn-block">Make Dataset</button>
+                    <button type="submit" class="btn btn-primary btn-sm btn-block" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal">Make Dataset</button>
                 </div>
                 <div class="form-group col-12 col-md-1 mb-md-0">
-                    <button type="submit" class="btn btn-medium btn-sm btn-block">Back</button>
+                    <button type="button" class="btn btn-medium btn-sm btn-block" (click)="goBack()">Back</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold w-100 text-center">Confirmation Dialog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 class="text-center">Processing dataset will take some time.</h5>
+                <br>
+                <h5 class="text-center">Please refresh and check datasets section after {{waitingTime*2}} seconds.</h5>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="mt-2 mb-3" align='center'>
+                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="send()" style="max-height: 3em;">Okay</button>
+                <button class="btn btn-secondary" data-dismiss="modal" style="max-height: 3em;">Close</button>
             </div>
         </div>
     </div>
@@ -126,31 +152,6 @@
             <div class="btn-group">
                 <button class="btn btn-success btn-sm" [disabled]="act == false" data-toggle="modal" data-target="#confirmModal" style="max-height: 2.3em;">Make Dataset</button>
                 <button class="btn btn-info btn-sm" [routerLink]="['/annotations']" style="max-height: 2.3em;">Back</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-<!-- Modal -->
-<!-- <div class="modal fade mb-3" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold w-100 text-center">Confirmation Dialog</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 class="text-center">Processing dataset will take some time.</h5>
-                <br>
-                <h5 class="text-center">Please refresh and check datasets section after {{waitingTime*2}} seconds.</h5>
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="mt-2 mb-3" align='center'>
-                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="send()" style="max-height: 3em;">Okay</button>
-                <button class="btn btn-secondary" data-dismiss="modal" style="max-height: 3em;">Close</button>
             </div>
         </div>
     </div>
