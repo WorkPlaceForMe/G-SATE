@@ -90,3 +90,14 @@
 	max-width: 768px;
 }
 
+.btn-icon{
+    width: $spacer*2.5;
+    height: $spacer*2.5;
+    font-size: 1.125rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
