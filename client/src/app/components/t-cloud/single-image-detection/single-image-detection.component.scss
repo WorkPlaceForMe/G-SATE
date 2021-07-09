@@ -1,0 +1,46 @@
+@import '../../../../scss/variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+canvas{
+    cursor:crosshair;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.detect-label {
+    background-color: rgba($black, .45);
+    max-width: 360px;
+    .label-list {
+        li {
+            border-bottom: 1px solid theme-color(medium);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .btn {
+                width: $spacer*2.5;
+                height: $spacer*2.5;
+                font-size: $font-size-base + .375;
+            }
+        }
+    }
+}
+
+// .label-list li {
+//   cursor: pointer;
+// }
+// .active-label {
+//   color: yellow;
+// }
+// .button-active {
+//   color: #fff;
+//   background-color: #375a7f;
+//   border-color: #375a7f;
+// }
+// .annotation-height {
+//   overflow: hidden;
+//   overflow-y: scroll;
+// }

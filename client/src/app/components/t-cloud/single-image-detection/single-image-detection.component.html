@@ -1,4 +1,103 @@
-<div class="card-group">
+<!-- banner section start -->
+<section class="inner-banner bg-after bg-after-darken bg-after-75">
+    <img src="/assets/images/created-dataset-banner-bg.jpg" alt="" class="img-cover">
+    <div class="container text-center z-index-1 banner-caption section-padding">
+        <h1 class="text-uppercase font-weight-bold text-white mb-0">Single Image Annotation</h1>
+    </div>
+</section>
+<!-- banner section end -->
+
+<div class="section-padding">
+    <div class="container">
+        <div class="bg-darken rounded overflow-hidden">
+            <div class="row no-gutters">
+                <div class="col-md">
+                    <!-- canvas -->
+                    <div>
+                        <canvas #polygon id="jPolygon" height='480' width='710' class="mx-auto" (click)='annotate($event)'
+                        [style.background-image]="link" oncontextmenu="return false;">
+                        Your browser does not support the HTML5 canvas tag.
+                        </canvas>
+                    </div>
+
+                    <!-- form -->
+                    <form class="p-4">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 d-flex align-items-center">
+                                <div class="custom-control custom-checkbox custom-control-inline mr-5">
+                                    <input type="checkbox" class="custom-control-input" id="vista{{i}}">
+                                    <label class="custom-control-label text-white text-uppercase" for="vista{{i}}">Vista</label>
+                                </div>
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="generic{{i}}">
+                                    <label class="custom-control-label text-white text-uppercase" for="generic{{i}}">Generic</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control form-control-transparent" placeholder="Enter Label Name">
+                            </div>
+                            <div class="form-group col-md-12 mb-0 text-right">
+                                <button class="btn btn-primary" (click)="generalDetection($event)" *ngIf="!flag">Annotate</button>
+                                <button class="btn btn-medium ml-2">Add Label</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- right bar -->
+                <div class="col-md detect-label pt-4">
+                    <header class="px-4">
+                        <span class="d-block font-weight-bold text-primary text-uppercase mb-2" *ngIf='objDet == false'>{{data.results.length}} Labels Detected</span>
+                        <span class="d-block font-weight-bold text-primary text-uppercase mb-2" *ngIf='objDet == true'>Objects detected</span>
+                    </header>
+                    <perfect-scrollbar style="max-height: 570px">
+                        <ul class="label-list px-4 pb-4" *ngIf="data && data.results.length > 0">
+                            <li  class="d-flex align-items-center justify-content-between" *ngFor='let ann of data.results; index as i' [ngClass]="{'active-label' : selectedID === i}">
+                                <span class="d-block text-truncate text-white" (click)='get(i)'>{{ann[3].label}}</span>
+                                <div class="flex-none">
+                                    <button class="btn text-white p-1 ml-2" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal" (click)="openlebelModal(i)">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+                                    <button class="btn text-white p-1 ml-1" (click)="clear(i)">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </perfect-scrollbar>
+                </div>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <nav>
+            <ul class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
+                <li class="page-item">
+                    <a class="page-link" (click)="setPage(1)">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">Previous</a>
+                </li>
+                <!-- <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                    class="page-item">
+                    <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                </li> -->
+                <li class="page-item">
+                    <a class="page-link">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">Last</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-primary btn-lg btn-min-w" (click)='next()'>Train Model With Dataset</button>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card-group">
   <div class="col-md-10">
     <div class="card border-info" style="min-height: 527.6px;">
       <div class="card-body" align='center'>
@@ -52,15 +151,14 @@
 </div>
 <div class='btn-group p-2' role="group">
   <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
-  <!-- <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button> -->
   <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
   <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
-</div>
+</div> -->
 
 
-<div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
+<!-- <div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
   <strong>Oops!</strong> Please choose a label to start.
-</div>
+</div> -->
 <div class="modal" id="confirmModal">
   <div class="modal-dialog">
     <div class="modal-content">
