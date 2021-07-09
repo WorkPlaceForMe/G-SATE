@@ -57,159 +57,121 @@
 }
 
 // form style
-.form{
-    &-control{
-        // background-color: $white;
-        // border: 1px solid $grey-light;
-        // height: $input-height;
-        // box-shadow: none;
-        // color: $input-color;
-        // font-size: $font-size-sm;
-        // line-height: 1.5;
-        background-repeat: no-repeat;
-        background-position: right $spacer/2 center;
-        background-size: $spacer*1.25 $spacer*1.25;
-        &[disabled]{
+.form-control{
+    background-repeat: no-repeat;
+    background-position: right $spacer/2 center;
+    background-size: $spacer*1.25 $spacer*1.25;
+    &[disabled]{
+        background-color: rgba($white, 0.1);
+        color: rgba($white, 0.5);
+        opacity: 0.5;
+        &.form-control-transparent{
             background-color: rgba($white, 0.1);
             color: rgba($white, 0.5);
-            opacity: 0.5;
-            &.form-control-transparent{
-                background-color: rgba($white, 0.1);
-                color: rgba($white, 0.5);
-                &::placeholder{
-                    color: rgba($white, 0.25);
-                }
+            &::placeholder{
+                color: rgba($white, 0.25);
             }
         }
-        &::placeholder{
-            color: $grey-medium;
+    }
+    &::placeholder{
+        color: $grey-medium;
+    }
+    &:focus{
+        box-shadow: none;
+        border-color: $primary;
+    }
+    &.date-picker{
+        background-image: url('/assets/icons/calendar.svg');
+    }
+    &.time-picker{
+        background-image: url('/assets/icons/time.svg');
+    }
+    &.date-time-picker{
+        background-image: url('/assets/icons/date-time.svg');
+    }
+    &.select-picker{
+        appearance: none;
+        background-image: url('/assets/icons/arrow-down.svg');
+        option{
+            color: $dark;
         }
         &:focus{
-            box-shadow: none;
-            border-color: $primary;
-        }
-        &.date-picker{
-            background-image: url('/assets/icons/calendar.svg');
-        }
-        &.time-picker{
-            background-image: url('/assets/icons/time.svg');
-        }
-        &.date-time-picker{
-            background-image: url('/assets/icons/date-time.svg');
-        }
-        &.select-picker{
-            appearance: none;
-            background-image: url('/assets/icons/arrow-down.svg');
             option{
                 color: $dark;
             }
-            &:focus{
-                option{
-                    color: $dark;
-                }
-            }
-        }
-        &.search-field{
-            background-image: url('/assets/icons/search.svg');
-        }
-        &-transparent{
-            background-color: rgba($white, 0.1);
-            color: $white;
-            border-color: transparent;
-            &::placeholder{
-                color: theme-color(light);
-            }
-            &:focus{
-                background-color: rgba($white, 0.1);
-                color: $white;
-                border-color: theme-color(medium);
-            }
-            &.date-picker{
-                background-image: url('/assets/icons/calendar-white.svg');
-            }
-            &.time-picker{
-                background-image: url('/assets/icons/time-white.svg');
-            }
-            &.date-time-picker{
-                background-image: url('/assets/icons/date-time-white.svg');
-            }
-            &.select-picker{
-                background-image: url('/assets/icons/arrow-down-white.svg');
-            }
-            &.search-field{
-                background-image: url('/assets/icons/search-white.svg');
-            }
-        }
-        &-sm{
-            // height: $input-height-sm;
-            background-size: $spacer $spacer;
-        }
-        &-lg{
-            // height: $input-height-lg;
         }
     }
-    // textarea{
-    //     &.form{
-    //         &-control{
-    //             height: auto;
-    //         }
-    //     }
-    // }
-    // .btn{
-    //     padding: $input-btn-padding-y $input-btn-padding-x;
-    //     font-size: $input-btn-font-size;
-    //     font-weight: $btn-font-weight;
-    //     height: $input-height;
-    //     &-sm{
-    //         padding-top: $input-btn-padding-y-sm;
-    //         padding-bottom: $input-btn-padding-y-sm;
-    //         font-size: $input-btn-font-size-sm;
-    //         height: $input-height-sm;
-    //     }
-    //     &-lg{
-    //         padding-top: $input-btn-padding-y-lg;
-    //         padding-bottom: $input-btn-padding-y-lg;
-    //         font-size: $input-btn-font-size-lg;
-    //         height: $input-height-lg;
-    //     }
-    // }
-    .custom{
-        &-file{
-            &-input{
-                &[disabled]{
-                    &+label{
+    &.search-field{
+        background-image: url('/assets/icons/search.svg');
+    }
+    &-transparent{
+        background-color: rgba($white, 0.1);
+        color: $white;
+        border-color: transparent;
+        &::placeholder{
+            color: theme-color(light);
+        }
+        &:focus{
+            background-color: rgba($white, 0.1);
+            color: $white;
+            border-color: theme-color(medium);
+        }
+        &.date-picker{
+            background-image: url('/assets/icons/calendar-white.svg');
+        }
+        &.time-picker{
+            background-image: url('/assets/icons/time-white.svg');
+        }
+        &.date-time-picker{
+            background-image: url('/assets/icons/date-time-white.svg');
+        }
+        &.select-picker{
+            background-image: url('/assets/icons/arrow-down-white.svg');
+        }
+        &.search-field{
+            background-image: url('/assets/icons/search-white.svg');
+        }
+    }
+    &-sm{
+        background-size: $spacer $spacer;
+    }
+}
+.custom{
+    &-file{
+        &-input{
+            &[disabled]{
+                &+label{
+                    background-color: rgba($white, 0.1);
+                    color: rgba($white, 0.5);
+                    opacity: 0.5;
+                    &.custom-file-label-transparent{
                         background-color: rgba($white, 0.1);
                         color: rgba($white, 0.5);
-                        opacity: 0.5;
-                        &.custom-file-label-transparent{
-                            background-color: rgba($white, 0.1);
-                            color: rgba($white, 0.5);
-                        }
                     }
                 }
             }
-            &-label{
-                background-color: $white;
-                border: 1px solid transparent;
+        }
+        &-label{
+            background-color: $white;
+            border: 1px solid transparent;
+            height: $input-height;
+            color: $input-color;
+            font-size: $font-size-sm;
+            line-height: 1.7;
+            background-repeat: no-repeat;
+            background-position: right $spacer/2 center;
+            background-size: $spacer*1.25 $spacer*1.25;
+            text-align: left;
+            padding-right: $spacer*2;
+            background-image: url('/assets/icons/upload.svg');
+            &-transparent{
+                background-color: rgba($white, 0.1);
+                color: $white;
                 height: $input-height;
-                color: $input-color;
-                font-size: $font-size-sm;
-                line-height: 1.7;
-                background-repeat: no-repeat;
-                background-position: right $spacer/2 center;
-                background-size: $spacer*1.25 $spacer*1.25;
-                text-align: left;
-                padding-right: $spacer*2;
-                background-image: url('/assets/icons/upload.svg');
-                &-transparent{
-                    background-color: rgba($white, 0.1);
-                    color: $white;
-                    height: $input-height;
-                    background-image: url('/assets/icons/upload-white.svg');
-                }
-                &:after{
-                    display: none;
-                }
+                background-image: url('/assets/icons/upload-white.svg');
+            }
+            &:after{
+                display: none;
             }
         }
     }
@@ -270,5 +232,52 @@
 .custom{
     &-card{
         background-color: rgba($grey-darken,0.95);
+        &-image{
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+            border-radius: $spacer/4;
+            img{
+                position: relative;
+                z-index: 1;
+            }
+            &-checkbox{
+                position: absolute;
+                bottom: $spacer/2;
+                right: $spacer/2;
+                width: $spacer*2;
+                height: $spacer*2;
+                border-radius: $spacer/4;
+                background-color: $white;
+                z-index: 1;
+                transition: all 0.25s ease-in-out;
+                border: 2px solid $primary;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                svg{
+                    fill: $white;
+                    opacity: 0;
+                }
+            }
+            input[type="checkbox"]{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                opacity: 0;
+                cursor: pointer;
+                &:checked{
+                    &+span{
+                        background-color: $primary;
+                        svg{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ import JSMpeg from 'jsmpeg-player';
 @Component({
   selector: 'app-live',
   templateUrl: './live.component.html',
-  styleUrls: ['./live.component.css']
+  styleUrls: ['./live.component.scss']
 })
 export class LiveComponent implements OnInit {
 
