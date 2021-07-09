@@ -115,6 +115,7 @@ export class TCloudDashboardComponent implements OnInit {
       console.log("Uploaded:", status, response, headers);
       this.uploadImage = false;
       this.getUnAnnDsets("data");
+      alert('Dataset created successfully');
     };
     this.uploader.onProgressItem = (progress: any) => {
       console.log(progress["progress"]);
@@ -479,6 +480,7 @@ export class TCloudDashboardComponent implements OnInit {
             console.log(res);
             this.unAnnRefresh();
             this.choosenDatasetForVista = undefined;
+            this.selectedUnAnnotatedDataset = '';
           },
           (err) => console.error(err)
         );
@@ -494,6 +496,7 @@ export class TCloudDashboardComponent implements OnInit {
             console.log(res);
             this.annRefresh();
             this.choosenDatasetForAnalytics = undefined;
+            this.selectedAnnotatedDataset = '';
           },
           (err) => console.error(err)
         );

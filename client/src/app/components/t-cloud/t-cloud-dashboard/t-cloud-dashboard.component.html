@@ -220,7 +220,9 @@
                                     (click)="annotateByVista()" [disabled]='selectedUnAnnotatedDataset == ""'>
                                     Annotate & Train
                                 </button>
-                                <button type="button" class="btn btn-danger btn-icon" [disabled]='selectedUnAnnotatedDataset == ""'>
+                                <button type="button" class="btn btn-danger btn-icon"
+                                    [disabled]='selectedUnAnnotatedDataset == ""'
+                                    (click)="deleteUnAnnDataset(unAnnDatasetsNames[selectedUnAnnotatedDataset])">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -238,8 +240,8 @@
                                 <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
                                     (click)="annotateByAnalytics()"
                                     [disabled]='selectedAnnotatedDataset == ""'>Train</button>
-                                <button type="button" class="btn btn-danger btn-icon"
-                                [disabled]='selectedAnnotatedDataset == ""'>
+                                <button type="button" class="btn btn-danger btn-icon" [disabled]='selectedAnnotatedDataset == ""'
+                                    (click)="deleteAnnDataset(annDatasetsNames[selectedAnnotatedDataset])">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -271,16 +273,19 @@
                         <div class="col-md-4 mb-4" *ngFor="let img of pagedImages; let i = index">
                             <div class="custom-card-image">
                                 <img class="img-cover" [src]="img.contentUrl" alt="" />
-                                <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked" (change)="handleSelected(img, img.checked)" [checked]="img.checked" />
+                                <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked"
+                                    (change)="handleSelected(img, img.checked)" [checked]="img.checked" />
                                 <span class="custom-card-image-checkbox">
-                                    <svg-icon src="/assets/icons/check.svg" class="icon-white" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
+                                    <svg-icon src="/assets/icons/check.svg" class="icon-white"
+                                        [svgStyle]="{ 'width.px': 20 }"></svg-icon>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <nav>
-                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
+                    <ul *ngIf="pager.pages && pager.pages.length"
+                        class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
                         <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
                             <a class="page-link" (click)="setPage(1)">First</a>
                         </li>
@@ -302,7 +307,8 @@
             </div>
             <div class="dropdown-divider"></div>
             <div class="mt-2 mb-3 px-3 text-center">
-                <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal" (click)="confirm()">Okay</button>
+                <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal"
+                    data-dismiss="modal" (click)="confirm()">Okay</button>
                 <button class="btn btn-medium" data-dismiss="modal">Close</button>
             </div>
         </div>
