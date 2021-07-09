@@ -1,14 +1,17 @@
-<div class="section-padding header-padding pb-0 inner-banner inner-banner-full bg-white d-flex flex-column align-items-center justify-content-end bg-after bg-after-darken bg-after-75" [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
+<div class="section-padding header-padding pb-0 inner-banner inner-banner-full bg-white d-flex flex-column align-items-center justify-content-end bg-after bg-after-darken bg-after-75"
+    [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
     <div class="container text-center z-index-1 text-white">
         <div class="custom-card" *ngIf="stored_vid">
-            <video controls (click)="toggleVideo()" #video [title]="title" [autoplay]="true" [preload]="true" [loop]="true" [muted]="true" class="d-block mx-auto">
+            <video controls (click)="toggleVideo()" #video [title]="title" [autoplay]="true" [preload]="true"
+                [loop]="true" [muted]="true" class="d-block mx-auto">
                 <source [src]="rtsp_in" type="video/mp4" />
                 Browser not supported
             </video>
         </div>
-        
+
         <div class="custom-card" *ngIf="liveFeed">
-            <canvas #streaming id="canvas" width="1102" height="480" style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
+            <canvas #streaming id="canvas" width="1102" height="480"
+                style="display: block; width: 1102px !important; height: 480px !important;"></canvas>
         </div>
     </div>
     <div class="video-options py-4 z-index-1 text-white w-100">
@@ -16,14 +19,14 @@
             <div class="form form-row align-items-end">
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="start_date">Start Date</label>
-                    <input [owlDateTime]="dt1" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt1" placeholder="MM/DD/YYYY"
-                    class="form-control form-control-sm date-picker">
+                    <input [owlDateTime]="dt1" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt1"
+                        placeholder="MM/DD/YYYY" class="form-control form-control-sm date-picker">
                     <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="end_date">End Date</label>
-                    <input [owlDateTime]="dt2" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt2" placeholder="MM/DD/YYYY"
-                    class="form-control form-control-sm date-picker">
+                    <input [owlDateTime]="dt2" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt2"
+                        placeholder="MM/DD/YYYY" class="form-control form-control-sm date-picker">
                     <owl-date-time #dt2 pickerType="calendar"></owl-date-time>
                 </div>
                 <div class="form-group col-12 col-md-1 mb-md-0">
@@ -51,13 +54,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 
 
 
