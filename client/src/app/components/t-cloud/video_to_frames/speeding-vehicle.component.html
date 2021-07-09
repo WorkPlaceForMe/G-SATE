@@ -17,7 +17,7 @@
     <div class="video-options py-4 z-index-1 text-white w-100">
         <div class="container">
             <div class="form form-row align-items-end">
-                <div class="form-group col-12 col-md-2 mb-md-0">
+                <div class="form-group col-12 col-md-2 mb-md-0 time-select1">
                     <label>Start</label>
                     <div class="input-group">
                         <input class="form-control form-control-sm" [(ngModel)]="start" (ngModelChange)="change(start,'s')" required [class.invalid-input]="!isValidTime">
@@ -25,15 +25,15 @@
                             <i class="far fa-clock"></i>
                         </a>
                     </div>
-                    <div class="collapse position-absolute w-75 mt-1" id="collapse1">
-                        <cdk-virtual-scroll-viewport itemSize="20" class="card card-body">
+                    <div class="position-absolute mt-1 collapse bg-white text-dark pl-3 py-1 rounded" id="collapse1">
+                        <cdk-virtual-scroll-viewport itemSize="20" class="time-list">
                             <div *cdkVirtualFor="let singleTime of availableTimeStart" class="number" (click)="this.start = singleTime;refreshTime();" data-toggle="collapse" href="#collapse1">
                                 {{singleTime}}
                             </div>
                         </cdk-virtual-scroll-viewport>
                     </div>
                 </div>
-                <div class="form-group col-12 col-md-2 mb-md-0">
+                <div class="form-group col-12 col-md-2 mb-md-0 time-select2">
                     <label>End</label>
                     <div class="input-group">
                         <input class="form-control form-control-sm" [(ngModel)]="finish" (ngModelChange)="change(finish,'f')" [min]="start" [max]="maxTime" required>
@@ -41,8 +41,8 @@
                             <i class="far fa-clock"></i>
                         </a>
                     </div>
-                    <div class="collapse position-absolute w-75 mt-1" id="collapse2">
-                        <cdk-virtual-scroll-viewport itemSize="20" class="card card-body container">
+                    <div class="position-absolute mt-1 collapse bg-white text-dark pl-3 py-1 rounded" id="collapse2">
+                        <cdk-virtual-scroll-viewport itemSize="20" class="time-list">
                             <div *cdkVirtualFor="let singleTime of availableTimeFinish" class="number" (click)="this.finish = singleTime; refreshTime();" data-toggle="collapse" href="#collapse2">
                                 {{singleTime}}
                             </div>
