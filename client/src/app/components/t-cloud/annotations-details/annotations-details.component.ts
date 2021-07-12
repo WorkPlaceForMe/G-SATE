@@ -13,7 +13,6 @@ import * as moment from 'moment-timezone';
 export class AnnotationsDetailsComponent implements OnInit {
   payloadType: string;
   datasetName: string;
-  contactName: string;
   emailAddress: string;
   date: any;
   data: any;
@@ -23,7 +22,6 @@ export class AnnotationsDetailsComponent implements OnInit {
   customerData: Customer = {
     id: '',
     datasetName: null,
-    contactName: null,
     emailAddress: null,
     date: null,
     model: null,
@@ -55,11 +53,10 @@ export class AnnotationsDetailsComponent implements OnInit {
   }
 
   isFormFilled() {
-    let isContactFilled: boolean = this.contactName !== undefined && this.contactName !== "";
     let isEmailFilled: boolean = this.emailAddress !== undefined && this.emailAddress !== "" && this.ValidateEmail(this.emailAddress);
     let isDateTimeFilled: boolean = this.date !== undefined;
     let isModelFilled: boolean = this.model !== undefined;
-    return (isContactFilled && isDateTimeFilled && isEmailFilled && isModelFilled);
+    return (isDateTimeFilled && isEmailFilled && isModelFilled);
   }
 
   ValidateEmail(mail) {
@@ -71,7 +68,6 @@ export class AnnotationsDetailsComponent implements OnInit {
 
   train() {
     this.annotationsServ.datasetName = this.datasetName;
-    this.annotationsServ.contactName = this.contactName;
     this.annotationsServ.emailAddress = this.emailAddress;
     this.annotationsServ.date = new Date(this.date).toUTCString();
     this.annotationsServ.model = this.model;
@@ -91,7 +87,6 @@ export class AnnotationsDetailsComponent implements OnInit {
   prepareCustomerData() {
     this.customerData.data = this.data;
     this.customerData.datasetName = this.annotationsServ.datasetName;
-    this.customerData.contactName = this.annotationsServ.contactName;
     this.customerData.emailAddress = this.annotationsServ.emailAddress;
     this.customerData.date = this.annotationsServ.date;
     this.customerData.version = this.annotationsServ.version;

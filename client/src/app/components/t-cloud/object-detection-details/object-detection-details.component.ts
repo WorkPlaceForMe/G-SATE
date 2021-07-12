@@ -11,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ObjectDetectionDetailsComponent implements OnInit {
   datasetName: string;
-  contactName: string;
   emailAddress: string;
   date: any;
   data: any;
@@ -37,12 +36,11 @@ export class ObjectDetectionDetailsComponent implements OnInit {
   }
 
   isFormFilled() {
-    let isContactFilled: boolean = this.contactName !== undefined && this.contactName !== "";
     let isEmailFilled: boolean = this.emailAddress !== undefined && this.emailAddress !== "" && this.ValidateEmail(this.emailAddress);
     let isDateTimeFilled: boolean = this.date !== undefined;
     let isModelFilled: boolean = this.model !== undefined;
     let isVersionFilled: boolean = this.version !== undefined;
-    return (isContactFilled && isDateTimeFilled && isEmailFilled && isModelFilled && isVersionFilled);
+    return (isDateTimeFilled && isEmailFilled && isModelFilled && isVersionFilled);
   }
 
   ValidateEmail(mail) {
@@ -53,7 +51,6 @@ export class ObjectDetectionDetailsComponent implements OnInit {
   }
   train() {
     this.annotationsServ.datasetName = this.datasetName;
-    this.annotationsServ.contactName = this.contactName;
     this.annotationsServ.emailAddress = this.emailAddress;
     this.annotationsServ.date = this.date;
     this.annotationsServ.version = this.version;

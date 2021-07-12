@@ -1,23 +1,23 @@
-@import '../../../../scss/variables';
+@import "../../../../scss/variables";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/breakpoints";
 
 .detect-label {
-    background-color: rgba($black, .45);
-    .label-list{
-        li{
-            border-bottom: 1px solid theme-color(medium);
-            &:last-child{
-                border-bottom: none;
-            }
-            .btn{
-                width: $spacer*2.5;
-                height: $spacer*2.5;
-                font-size: $font-size-base + .375;
-            }
-        }
+  background-color: rgba($black, 0.45);
+  .label-list {
+    li {
+      border-bottom: 1px solid theme-color(medium);
+      &:last-child {
+        border-bottom: none;
+      }
+      .btn {
+        width: $spacer * 2.5;
+        height: $spacer * 2.5;
+        font-size: $font-size-base + 0.375;
+      }
     }
+  }
 }
 
 // .card-footer {
@@ -40,23 +40,22 @@
 //   background-color: #375a7f;
 // }
 
-
-// .spin {
-//   position: absolute;
-//   margin: auto;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-// }
-// .loader {
-//   width: 100vw;
-//   height: 100vh;
-//   left: 0;
-//   top: 0;
-//   z-index: 1;
-//   background-color: rgba(0, 0, 0, 0.5);
-// }
+.spin {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.loader {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 // .checkbox-container {
 //   display: block;

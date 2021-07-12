@@ -12,7 +12,6 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class AnnotationsService {
   datasetName: string;
-  contactName: string;
   emailAddress: string;
   date: any;
   model: any;
