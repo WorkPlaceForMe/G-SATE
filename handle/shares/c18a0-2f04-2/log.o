@@ -1,0 +1,72 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f31e0043668>
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1626141955.4749038
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1626141960.7149863
+is running: 1626141965.731851
+is running: 1626141970.929089
+is running: 1626141976.0804613
+is running: 1626141981.15653
+is running: 1626141986.1710851
+is running: 1626141991.2383957
+is running: 1626141996.3311067
+is running: 1626142001.3682575
+is running: 1626142006.412512
+is running: 1626142011.4351
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1626142016.5337305
+is running: 1626142021.5534003
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1626142026.6174216
+is running: 1626142031.779073
+is running: 1626142036.8168344
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1626142041.843859
+is running: 1626142046.9756196
+is running: 1626142052.159701
+is running: 1626142057.1608348
+is running: 1626142062.2371476
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+is running: 1626142067.5237956
+is running: 1626142072.61393
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1626142077.7068853
+['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
+is running: 1626142082.796625
+is running: 1626142088.0314174
+is running: 1626142093.1815455
+is running: 1626142098.4341803
+is running: 1626142103.6489694
+is running: 1626142108.723489
+is running: 1626142113.7885988
+is running: 1626142118.9105976
+is running: 1626142124.2233067
+is running: 1626142129.3427143
+is running: 1626142134.551832
+['long', 'Green', 'Long', 'Unknown', 'Unknown']
+is running: 1626142139.5952802
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+is running: 1626142144.6277616
+is running: 1626142149.874999
+is running: 1626142155.2949252
+is running: 1626142160.4074514
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 3.9803 minutes
+FPS -> 0.0000
