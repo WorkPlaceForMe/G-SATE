@@ -4,7 +4,7 @@ import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-federated-learning',
   templateUrl: './federated-learning.component.html',
-  styleUrls: ['./federated-learning.component.css']
+  styleUrls: ['./federated-learning.component.scss']
 })
 export class FederatedLearningComponent implements OnInit, OnDestroy {
 

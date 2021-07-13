@@ -8,7 +8,7 @@ import { FacesService } from './services/faces.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   animations: [
   trigger('flyInOut', [
     state('in', style({ transform: 'translateX(0)' })),

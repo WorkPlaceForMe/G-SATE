@@ -1,0 +1,13 @@
+@import '../../../scss/variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.social-list{
+    li{
+        a{
+            width: $spacer*2.25;
+            height: $spacer*2.25;
+        }
+    }
+}

@@ -8,7 +8,7 @@ const URL = 'http://' + ip + ':3000/api/video/upload';
 @Component({
   selector: 'app-add-video',
   templateUrl: './add-video.component.html',
-  styleUrls: ['./add-video.component.css']
+  styleUrls: ['./add-video.component.scss']
 })
 export class AddVideoComponent implements OnInit {
 

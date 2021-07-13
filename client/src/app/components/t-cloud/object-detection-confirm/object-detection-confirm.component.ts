@@ -14,7 +14,6 @@ export class ObjectDetectionConfirmComponent implements OnInit {
   customerData: Customer = {
     id: '',
     datasetName: null,
-    contactName: null,
     emailAddress: null,
     date: null,
     model: null,
@@ -32,7 +31,6 @@ export class ObjectDetectionConfirmComponent implements OnInit {
       this.folder = params['dataName'];
     });
     this.customerData.datasetName = this.annotationsService.datasetName;
-    this.customerData.contactName = this.annotationsService.contactName;
     this.customerData.emailAddress = this.annotationsService.emailAddress;
     this.customerData.date = this.annotationsService.date;
     this.customerData.version = this.annotationsService.version;

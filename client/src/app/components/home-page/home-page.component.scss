@@ -1,0 +1,63 @@
+@import '../../../scss/variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.home-section{
+    min-height: 510px;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    &.bg-after{
+        &:after{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            z-index: 0;
+        }
+    }
+    &.bg-after-25{
+        &:after{
+            opacity: .25;
+        }
+    }
+    &.bg-after-50{
+        &:after{
+            opacity: .50;
+        }
+    }
+    &.bg-after-75{
+        &:after{
+            opacity: .75;
+        }
+    }
+    &.bg-after-darken{
+        &:after{
+            background-color: theme-color(darken);
+        }
+    }
+    &.bg-after-secondary{
+        &:after{
+            background-color: theme-color(secondary);
+        }
+    }
+    &.bg-after-white{
+        &:after{
+            background-color: $white;
+        }
+    }
+    &.bg-after-black{
+        &:after{
+            background-color: $black;
+        }
+    }
+}
+
+// banner
+.main-banner{
+    min-height: 100vh;
+}

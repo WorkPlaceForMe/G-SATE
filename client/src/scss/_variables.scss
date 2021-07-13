@@ -1,0 +1,172 @@
+// colors
+$primary                        : #0067af !default;
+$secondary                      : #0e293c !default;
+$success                        : #6ac300 !default;
+$info                           : #2a9cf7 !default;
+$warning                        : #f39c12 !default;
+$danger                         : #e74c3c !default;
+$grey-lighter                   : #ededec !default;
+$grey-light                     : #d2d2d2 !default;
+$grey-medium                    : #605e5e !default;
+$grey-dark                      : #2c2c2c !default;
+$grey-darken                    : #131823 !default;
+$black                          : #000000 !default;
+$white                          : #ffffff !default;
+
+// body colors
+$body-color                     : $grey-dark !default;
+$headings-color                 : $grey-dark !default;
+$shadow-color                   : $grey-dark !default;
+
+// body bg
+$body-bg                        : $grey-lighter !default;
+
+// theme colors
+$theme-colors: ( 
+    "primary"   : $primary, 
+    "secondary" : $secondary, 
+    "success"   : $success, 
+    "info"      : $info, 
+    "warning"   : $warning,
+    "danger"    : $danger, 
+    "lighter"   : $grey-lighter, 
+    "light"     : $grey-light, 
+    "medium"    : $grey-medium, 
+    "dark"      : $grey-dark, 
+    "darken"    : $grey-darken,
+    "body-color": $body-color, 
+) !default;
+
+// spacing
+$spacer                         : 1rem;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+$font-family-base               : 'Roboto', sans-serif;
+$font-size-base                 : 0.875rem;
+$font-size-lg                   : 1rem !default;
+$font-size-sm                   : $font-size-base - .0625;
+$line-height-base               : 1.5 !default;
+$line-height-sm                 : 1.5 !default;
+$font-weight-base               : 400 !default;
+$headings-font-family           : 'Roboto', sans-serif;
+$headings-line-height           : 1.4;
+
+// heading
+$h1-font-size                   : 2rem !default;
+$h2-font-size                   : 1.5rem !default;
+$h3-font-size                   : 1.25rem !default;
+$h4-font-size                   : 1.125rem !default;
+$h5-font-size                   : 1rem!default;
+$h6-font-size                   : 0.875rem !default;
+
+// display
+$display1-size                  : 3rem !default;
+
+// Links
+$link-color				        : $primary !default;
+$link-decoration		        : none !default;
+$link-hover-decoration	        : none !default;
+
+// Buttons + Forms
+$input-btn-font-size            : $font-size-base !default;
+$input-btn-font-size-sm         : $font-size-sm !default;
+$input-btn-font-size-lg         : $font-size-lg !default;
+$btn-font-weight                : 500 !default;
+$input-btn-padding-y            : .5rem !default;
+$input-btn-padding-y-sm         : .312rem !default;
+$input-btn-padding-y-lg         : 0.688rem !default;
+$input-btn-padding-x            : $spacer !default;
+$input-btn-padding-x-sm         : $spacer !default;
+$input-btn-focus-width          : 0 !default;
+$input-btn-focus-box-shadow     : 0 !default;
+$input-border-radius-lg         : $spacer/4 !default;
+$btn-border-radius-lg           : $spacer/4 !default;
+$btn-line-height                : 1.5 !default;
+$input-btn-line-height          : 1.5 !default;
+
+// input field
+$input-border-color             : $grey-lighter !default;
+$input-color			        : $grey-dark !default;
+$input-padding-x                : $spacer !default;
+
+$input-height                   : $spacer*2.5 !default;
+$input-height-sm                : $spacer*2 !default;
+$input-height-lg                : $spacer*3 !default;
+
+
+// pagination
+// $pagination-padding-y-sm        : 0.375rem !default;
+
+// // radius
+// $btn-border-radius-lg           : $spacer/2 !default;
+
+// pagination
+$pagination-color               : $grey-dark !default;
+$pagination-bg                  : $grey-light !default;
+$pagination-border-color        : $white !default;
+$pagination-hover-color         : $white !default;
+$pagination-hover-bg            : $primary !default;
+$pagination-hover-border-color  : $white !default;
+$pagination-focus-box-shadow    : 0 !default;
+$pagination-active-border-color : $white !default;
+$pagination-disabled-color      : $grey-medium !default;
+$pagination-disabled-bg         : $grey-lighter !default;
+$pagination-disabled-border-color: $white !default;
+
+// // modal
+// $modal-content-border-color     : $grey-medium !default;
+// $modal-header-border-color      : $grey-medium !default;
+// $modal-footer-border-color      : $grey-medium !default;
+
+// // progress bar
+// $grid-gutter-width              : 2rem;
+
+// $container-max-widths           : ( xl: 1400px);
+
+// // transition
+// $transition                     : all .15s ease-in-out;
+
+// // alerts
+// $alert-color-level              : 3 !default;
+
+// // card
+// $card-spacer-x                  : $spacer !default;
+// $card-img-overlay-padding       : $spacer !default;
+
+// // navbar height
+// $navbarHt                       : $spacer * 3;
+
+// //shadow variables
+// $shadow1                        : 0px $spacer/8 $spacer 0 rgba($black, .10);
+// $shadow2                        : 0 $spacer/10 $spacer/5 0 rgba($black, .25);
+
+// // breakpoints
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1200px,
+    xxl: 1440px,
+) !default;
+
+// // modal
+// $modal-content-border-radius    :   0 !default;
+// $modal-content-inner-border-radius: 0 !default;
+
+$object-fits: cover, contain, inherit !default;
+$object-positions: left, top, right, bottom, center, initial, revert !default;
+$font-weights: (
+    medium: 500,
+    semibold: 600,
+) !default;
+$font-sizes: (
+    sm: $font-size-sm,
+    md: $font-size-base,
+    lg: $font-size-lg,
+) !default;
+
+
+

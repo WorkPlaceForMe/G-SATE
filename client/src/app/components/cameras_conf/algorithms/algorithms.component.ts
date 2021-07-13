@@ -21,9 +21,9 @@ import { Roi } from "src/app/models/Roi";
 import { ip } from 'src/app/models/IpServer';
 
 @Component({
-  selector: "app-algorithms",
-  templateUrl: "./algorithms.component.html",
-  styleUrls: ["./algorithms.component.css"],
+  selector: 'app-algorithms',
+  templateUrl: './algorithms.component.html',
+  styleUrls: ['./algorithms.component.scss']
 })
 export class AlgorithmsComponent implements OnInit {
   link: SafeResourceUrl;

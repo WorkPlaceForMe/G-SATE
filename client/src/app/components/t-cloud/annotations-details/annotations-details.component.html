@@ -1,4 +1,54 @@
-<div class="card-columns">
+<div class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+    [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
+    <div class="container container-medium text-center z-index-1 text-white">
+        <h2 class="mb-4 text-uppercase text-white">Training With Annotated Dataset</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="p-5 custom-card rounded text-left">
+                    <div class="form-row">
+                        <div class="col-12 col-md-6 form-group">
+                            <label for="">Dataset Name</label>
+                            <input type="text" class="form-control" [(ngModel)]=datasetName [value]=datasetName
+                                placeholder="Dataset Name" readonly>
+                        </div>
+                        <div class="col-12 col-md-6 form-group">
+                            <label for="">Email</label>
+                            <input type="email" class="form-control" placeholder="Enter your Email"
+                                [(ngModel)]=emailAddress [value]=emailAddress>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="col-12 col-md-6 form-group">
+                            <label for="">Date & Time</label>
+                            <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date(MM/DD/YYYY)"
+                                class="form-control date-time-picker" [(ngModel)]="date" [min]="min"
+                                [selectMode]="'single'" id="dateSelector">
+                            <owl-date-time #dt1 pickerType="both"></owl-date-time>
+                        </div>
+                        <div class="col-12 col-md-6 form-group">
+                            <label for="">Select a Model</label>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <select class="form-control select-picker" [(ngModel)]="model">
+                                        <option value="undefined" disabled>Pick a training model</option>
+                                        <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary btn-min-w" (click)='train()'
+                            [disabled]="!isFormFilled()">Save Training</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="card-columns">
 
     <div class="card bg-primary border-primary mb-3">
         <div class="card-header" align='center'>
@@ -52,7 +102,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
-    <!-- <button (click)='info()'>in</button> -->
+<!-- <button (click)='info()'>in</button> -->

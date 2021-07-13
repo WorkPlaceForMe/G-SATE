@@ -1,7 +1,6 @@
 export interface Customer{
     id: string;
     datasetName: string;
-    contactName: string;
     emailAddress: string;
     date: any;
     model:string;

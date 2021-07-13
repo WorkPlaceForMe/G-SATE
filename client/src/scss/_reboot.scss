@@ -1,0 +1,92 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+* {
+    touch-action: manipulation;
+}
+img,
+svg{
+	display: block;
+	max-width: 100%;
+}
+
+iframe{
+    display: block;
+    border: 0;
+}
+
+canvas{
+    display: block;
+}
+
+// typography
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    line-height: $headings-line-height;
+}
+h1, .h1{
+   @include media-breakpoint-down(xl) {
+   	font-size: $spacer*1.5;
+   }
+}
+h2, .h2{
+   @include media-breakpoint-down(xl) {
+   	font-size: $spacer*1.25;
+   }
+}
+.display-1{
+    @include media-breakpoint-down(xl) {
+        font-size: $spacer*2;
+    }
+}
+:focus{
+    outline: none;
+}
+a{
+    &:focus{
+        outline: none;
+    }
+    
+	&:hover{
+		text-decoration: none !important;
+    }
+}
+
+// list
+ul{
+    padding: 0;
+    margin: 0;
+    li{
+        list-style-type: none;
+    }
+}
+
+
+body {
+    font-family: $font-family-base;
+	font-size: $font-size-base;
+	font-weight: $font-weight-base;
+	line-height: $line-height-base;
+	color: $body-color;
+}
+
+// button style
+.btn{
+    height: $input-height;
+    &-sm{
+        height: $input-height-sm;
+    }
+    &-lg{
+        height: $input-height-lg;
+    }
+}
+
+
+// section-padding
+.section-padding{
+    padding-top: $spacer*6;
+    padding-bottom: $spacer*6;
+}
+
+.header-padding{
+    padding-top: $spacer*12;
+}

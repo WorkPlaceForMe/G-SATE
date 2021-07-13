@@ -21,7 +21,7 @@ const baseURL = vistaIP;
 @Component({
   selector: "app-multiple-image-detection",
   templateUrl: "./multiple-image-detection.component.html",
-  styleUrls: ["./multiple-image-detection.component.css"],
+  styleUrls: ["./multiple-image-detection.component.scss"],
 })
 export class MultipleImageDetectionComponent implements OnInit {
   pager: any = {};
@@ -780,6 +780,7 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.cacheAnnot = this.data[i]["results"];
           this.getAnn(i);
           this.getLabels(i);
+          this.data[i]['vistaResponseReceived'] = true;
         }
       },
       (error) => {
@@ -881,7 +882,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.annotationsServ.generalDetection(body).subscribe((res) => {
       this.spin = false;
       alert(`${res.length} objects detected.`);
-      debugger
       if (res.length > 0) {
         res.forEach((element) => {
           element[2]["detection_source"] = "General Detection Script";
@@ -913,6 +913,7 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.labelsMessage = false;
         this.selectedImageIndex = i;
         this.re_draw();
+        this.data[i]['generalDetectionResponseReceived'] = true;
       }
     });
   }

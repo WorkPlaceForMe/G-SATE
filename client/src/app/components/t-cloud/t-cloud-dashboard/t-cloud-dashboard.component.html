@@ -1,4 +1,350 @@
-<div class="card bg-primary border-primary mb-3">
+<!-- banner section start -->
+<section class="
+    section-padding
+    header-padding
+    inner-banner
+    bg-white
+    d-flex
+    align-items-center
+    justify-content-center
+    bg-after bg-after-darken bg-after-75
+  " [ngStyle]="{
+    'background-image': 'url(/assets/images/create-dataset-bg.jpg)'
+  }">
+    <div class="container text-center z-index-1 banner-caption">
+        <h1 class="text-uppercase font-weight-bold text-white">
+            Annotate datasets for training
+        </h1>
+    </div>
+</section>
+<!-- banner section end -->
+
+<div class="
+    section-padding
+    d-flex
+    align-items-center
+    justify-content-center
+    bg-lighter
+  ">
+    <div class="container text-center z-index-1">
+        <h2 class="mb-4 text-uppercase">Cameras</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <div class="form d-flex flex-column h-100">
+                        <svg-icon src="/assets/icons/cctv.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">
+                            CCTV Footage
+                        </h3>
+                        <div class="form-group">
+                            <input [owlDateTime]="dt1" [(ngModel)]="selectedDate" [max]="max" [owlDateTimeTrigger]="dt1"
+                                placeholder="Date(MM/DD/YYYY)"
+                                class="form-control form-control-transparent date-picker" />
+                            <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
+                            <!-- <input type="text" placeholder="Date(MM/DD/YYYY)" [(ngModel)]="selectedDate" [maxDate]="max"
+                                class="form-control form-control-transparent date-picker" bsDatepicker
+                                [bsConfig]="{containerClass:'theme-default'}"> -->
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker" [(ngModel)]="camera"
+                                placeholder="Pick a camera">
+                                <option value="undefined" disabled>Pick a camera</option>
+                                <option *ngFor="let cam of cameras" [value]="cam.name">
+                                    {{ cam.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="btn btn-primary btn-block font-weight-normal"
+                                [routerLink]="['/annotation/video', camera, date]" [disabled]="!isCameraReady()">
+                                Prepare Dataset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <div class="form d-flex flex-column h-100">
+                        <svg-icon src="/assets/icons/image-file.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">
+                            Image File
+                        </h3>
+                        <!-- <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name"
+                                class="form-control form-control-transparent">
+                        </div> -->
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile02"
+                                        (change)="showPicInfo($event)" [uploader]="photoUploader" ng2FileSelect #img />
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImport
+                                        for="inputGroupFile02">{{
+                                        imgFileName == ""
+                                        ? "Choose an image to upload"
+                                        : imgFileName
+                                        }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-auto">
+                            <button *ngIf="!uploadImage" class="btn btn-primary btn-block font-weight-normal"
+                                (click)="checkImg()" [disabled]="
+                  !photoUploader.getNotUploadedItems().length ||
+                  showMyMessage5 == false ||
+                  badImgFile == true
+                ">
+                                Annotate & Train
+                            </button>
+                            <button *ngIf="uploadImage" disabled class="btn btn-primary btn-block font-weight-normal"
+                                (click)="checkImg()">
+                                Loading...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <div class="form d-flex flex-column h-100">
+                        <svg-icon src="/assets/icons/zip-folder.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">
+                            Zip Folder
+                        </h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name first" [(ngModel)]="datasetName"
+                                size="30" (ngModelChange)="detect()" class="form-control form-control-transparent" />
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile02" name="zip"
+                                        (change)="showInfo($event)" [uploader]="uploader" ng2FileSelect
+                                        [disabled]="showMyMessage2 == false" #zip />
+                                    <label class="custom-file-label custom-file-label-transparent mb-0" #labelImportZip
+                                        for="inputGroupFile02">{{
+                                        fileName == "" ? "Choose a Zip File" : fileName
+                                        }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-auto">
+                            <button type="submit" class="btn btn-primary btn-block font-weight-normal" (click)="check()"
+                                [disabled]="
+                  !uploader.getNotUploadedItems().length ||
+                  showMyMessage2 == false ||
+                  badFile == true ||
+                  showMyMessage3 == true
+                ">
+                                Upload Zip file
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="rounded bg-darken p-3 h-100">
+                    <div class="form d-flex flex-column h-100">
+                        <svg-icon src="/assets/icons/camera.svg" class="icon-lg icon-white mb-3 mx-auto"></svg-icon>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">
+                            Image Web Search
+                        </h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Dataset Name"
+                                class="form-control form-control-transparent" [(ngModel)]="searchDatasetName" size="28"
+                                (ngModelChange)="detectChange()" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control form-control-transparent select-picker"
+                                [(ngModel)]="searchcount">
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter Keyword"
+                                class="form-control form-control-transparent search-field" [(ngModel)]="searchKeyword"
+                                aria-label="Search" (ngModelChange)="detectSearchChange()" [disabled]="searchFlag" />
+                        </div>
+                        <div class="mt-auto" [ngClass]="{ disableDiv: isSearchDisabled }">
+                            <span class="btn btn-primary btn-block font-weight-normal" id="basic-text1"
+                                data-toggle="modal" data-target="#imagesModal" (click)="search()">Prepare Dataset</span>
+                        </div>
+
+                        <!-- <div class="input-group-append" [ngClass]="{'disableDiv': isSearchDisabled}">
+                            <span class="input-group-text amber lighten-3" id="basic-text1" data-toggle="modal"
+                                data-target="#imagesModal" (click)="search()"><i class="fas fa-search text-grey"
+                                    aria-hidden="true"></i></span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator">
+            <span>OR</span>
+        </div>
+
+        <h2 class="mb-4 text-uppercase">
+            Pick an Existing Dataset, Annotate & Train!
+        </h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="rounded bg-darken p-3 h-100 position-relative">
+                    <button type="button" class="btn btn-primary btn-icon position-absolute top right mt-3 mr-3"
+                        (click)="refreshDataSets()">
+                        <svg-icon src="/assets/icons/reload.svg" class="icon-white" [svgStyle]="{ 'width.px': 16 }">
+                        </svg-icon>
+                    </button>
+                    <div class="form d-flex flex-column h-100">
+                        <svg-icon src="/assets/icons/existing-dataset.svg" class="icon-lg icon-white mb-3 mx-auto">
+                        </svg-icon>
+                        <h3 class="text-uppercase font-weight-bold text-white mb-3">
+                            Existing Dataset
+                        </h3>
+                        <div class="form-group form-row">
+                            <div class="col-7">
+                                <select class="form-control form-control-transparent select-picker"
+                                    [(ngModel)]="selectedUnAnnotatedDataset" (change)="UnAnnDSetchange()">
+                                    <option value="">Select Un-Annotated Dataset</option>
+                                    <option *ngFor="let data of unAnnDatasetsNames; index as i" [value]="i">
+                                        {{data.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-5 d-flex">
+                                <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
+                                    (click)="annotateByVista()" [disabled]='selectedUnAnnotatedDataset == ""'>
+                                    Annotate & Train
+                                </button>
+                                <button type="button" class="btn btn-danger btn-icon"
+                                    [disabled]='selectedUnAnnotatedDataset == ""'
+                                    (click)="deleteUnAnnDataset(unAnnDatasetsNames[selectedUnAnnotatedDataset])">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <div class="col-7">
+                                <select class="form-control form-control-transparent select-picker"
+                                    [(ngModel)]="selectedAnnotatedDataset" (change)="AnnDSetchange()">
+                                    <option value="">Select Annotated Dataset</option>
+                                    <option *ngFor="let data of annDatasetsNames; index as i" [value]="i">
+                                        {{data.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-5 d-flex">
+                                <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
+                                    (click)="annotateByAnalytics()"
+                                    [disabled]='selectedAnnotatedDataset == ""'>Train</button>
+                                <button type="button" class="btn btn-danger btn-icon" [disabled]='selectedAnnotatedDataset == ""'
+                                    (click)="deleteAnnDataset(annDatasetsNames[selectedAnnotatedDataset])">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="imagesModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold w-100 text-center">
+                    {{ searchKeyword | titlecase }} Images
+                </h5>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="min-height: 440px">
+                <div class="container">
+                    <div class="row">
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center position-absolute top left z-index-2" *ngIf="spinner">
+                            <div class="spinner-grow spinner" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" *ngFor="let img of pagedImages; let i = index">
+                            <div class="custom-card-image">
+                                <img class="img-cover" [src]="img.contentUrl" alt="" />
+                                <input type="checkbox" value="img.checked" name="flexCheckChecked" id="flexCheckChecked"
+                                    (change)="handleSelected(img, img.checked)" [checked]="img.checked" />
+                                <span class="custom-card-image-checkbox">
+                                    <svg-icon src="/assets/icons/check.svg" class="icon-white"
+                                        [svgStyle]="{ 'width.px': 20 }"></svg-icon>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav>
+                    <ul *ngIf="pager.pages && pager.pages.length"
+                        class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
+                        <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
+                            <a class="page-link" (click)="setPage(1)">First</a>
+                        </li>
+                        <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [ngClass]="{ active: pager.currentPage === page }"
+                            class="page-item">
+                            <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+                        </li>
+                        <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
+                            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="mt-2 mb-3 px-3 text-center">
+                <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal"
+                    data-dismiss="modal" (click)="confirm()">Okay</button>
+                <button class="btn btn-medium" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold w-100 text-center">
+                    Confirmation Dialog
+                </h5>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h5 class="text-center">{{ selectedImages.length }} Images Selected</h5>
+                <br />
+                <h6 class="text-center">
+                    Are you sure to create dataset with selected images ?
+                </h6>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="mt-2 mb-3">
+                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="okay()">
+                    Okay
+                </button>
+                <button class="btn btn-primary" data-dismiss="modal" (click)="close()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card bg-primary border-primary mb-3">
     <div class="card-header" align='center'>
         <h5>Import a zip file</h5>
     </div>
@@ -54,7 +400,6 @@
                         <div class="custom-file">
                             <input class="custom-file-input" id="inputGroupFile02" type="file" name='img'
                                 (change)='showPicInfo($event)' [uploader]="photoUploader" ng2FileSelect #img>
-                            <!-- [disabled]='showMyMessage2 == 'false' -->
                             <label class="custom-file-label" for="inputGroupFile02">{{imgFileName == '' ? 'Choose a
                                 image to upload' :
                                 imgFileName}}</label>
@@ -106,94 +451,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal" id="imagesModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold w-100 text-center">{{searchKeyword | titlecase}} Images</h5>
-                <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body" style="min-height: 440px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="img-responsive">
-                            <div class="spinner-grow spinner" role="status" *ngIf="spinner">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-1" *ngFor="let img of pagedImages; let i = index">
-                            <div class="card" style="width: 12rem;">
-                                <div class="card-body">
-                                    <img class="card-img-top" [src]="img.contentUrl" alt="">
-                                </div>
-                                <div class="modal-card-footer">
-                                    <div class="form-check" align='center'>
-                                        <label class="container">&nbsp;
-                                            <input type="checkbox" value="img.checked" name="flexCheckChecked"
-                                                id="flexCheckChecked" (change)="handleSelected(img, img.checked)"
-                                                [checked]="img.checked">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <nav aria-label="Page navigation example" class="mt-3">
-                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
-                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-                            <a class="page-link" (click)="setPage(1)">First</a>
-                        </li>
-                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-                            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
-                        </li>
-                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
-                            class="page-item">
-                            <a class="page-link" (click)="setPage(page)">{{page}}</a>
-                        </li>
-                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-                            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
-                        </li>
-                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-                            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="mt-2 mb-3" align='center'>
-                <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal"
-                    data-dismiss="modal" (click)="confirm()">Okay</button>
-                <button class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="confirmModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold w-100 text-center">Confirmation Dialog</h5>
-                <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h5 class="text-center">{{selectedImages.length}} Images Selected</h5>
-                <br>
-                <h6 class="text-center">Are you sure to create dataset with selected images ? </h6>
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="mt-2 mb-3" align='center'>
-                <button class="btn btn-primary mr-3" data-dismiss="modal" (click)="okay()">Okay</button>
-                <button class="btn btn-primary" data-dismiss="modal" (click)="close()">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 <div class="card-columns">
 
@@ -306,7 +563,6 @@
         <div class="card-header" align='center'>
             <h5>Classification for Retrain</h5>
         </div>
-        <!-- <div class="card-body"> -->
         <ul style="list-style-type:none; margin-top: 5px;" class="column">
             <li class="align-items-center" *ngFor="let class of classNames; index as e">
                 <div class="form-group">
@@ -331,7 +587,4 @@
         </div>
 
     </div>
-</div>
-
-
-<!-- <button (click)='info()'>in</button> -->
+</div> -->
