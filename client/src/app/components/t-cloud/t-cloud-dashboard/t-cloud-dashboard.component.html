@@ -170,9 +170,10 @@
                                 class="form-control form-control-transparent search-field" [(ngModel)]="searchKeyword"
                                 aria-label="Search" (ngModelChange)="detectSearchChange()" [disabled]="searchFlag" />
                         </div>
-                        <div class="mt-auto" [ngClass]="{ disableDiv: isSearchDisabled }">
-                            <span class="btn btn-primary btn-block font-weight-normal" id="basic-text1"
-                                data-toggle="modal" data-target="#imagesModal" (click)="search()">Prepare Dataset</span>
+                        <div class="mt-auto">
+                            <button class="btn btn-primary btn-block font-weight-normal" id="basic-text1"
+                                data-toggle="modal" data-target="#imagesModal" (click)="search()" [disabled]="!searchDatasetName || !searchKeyword">Prepare
+                                Dataset</button>
                         </div>
 
                         <!-- <div class="input-group-append" [ngClass]="{'disableDiv': isSearchDisabled}">
@@ -240,7 +241,8 @@
                                 <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
                                     (click)="annotateByAnalytics()"
                                     [disabled]='selectedAnnotatedDataset == ""'>Train</button>
-                                <button type="button" class="btn btn-danger btn-icon" [disabled]='selectedAnnotatedDataset == ""'
+                                <button type="button" class="btn btn-danger btn-icon"
+                                    [disabled]='selectedAnnotatedDataset == ""'
                                     (click)="deleteAnnDataset(annDatasetsNames[selectedAnnotatedDataset])">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
@@ -265,7 +267,8 @@
             <div class="modal-body" style="min-height: 440px">
                 <div class="container">
                     <div class="row">
-                        <div class="w-100 h-100 d-flex align-items-center justify-content-center position-absolute top left z-index-2" *ngIf="spinner">
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center position-absolute top left z-index-2"
+                            *ngIf="spinner">
                             <div class="spinner-grow spinner" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
