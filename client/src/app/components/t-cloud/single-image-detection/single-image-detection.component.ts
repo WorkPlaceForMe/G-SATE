@@ -201,6 +201,7 @@ export class SingleImageDetectionComponent implements OnInit {
 
   openlebelModal(id) {
     this.newLabel = this.data.results[id][3].label;
+    this.id = id;
   }
 
   updateLabel() {

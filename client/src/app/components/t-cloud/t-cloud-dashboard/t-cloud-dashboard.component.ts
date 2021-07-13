@@ -399,8 +399,9 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   okay() {
+    debugger;
     let data = {
-      images: this.images,
+      images: this.selectedImages,
       name: this.searchDatasetName,
     };
 
@@ -408,6 +409,7 @@ export class TCloudDashboardComponent implements OnInit {
       this.searchDatasetName = null;
       this.searchKeyword = null;
       this.images = [];
+      this.selectedImages = [];
       this.getUnAnnDsets("data");
     });
   }
@@ -431,7 +433,6 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   UnAnnDSetchange() {
-    debugger;
     for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
       if (this.selectedUnAnnotatedDataset == i) {
         this.unAnnDatasetsNames[i]["open"] = true;
