@@ -23,7 +23,7 @@
                     <!-- form -->
                     <form class="p-4">
                         <div class="form-row">
-                            <div class="form-group col-md-6 d-flex align-items-center">
+                            <!-- <div class="form-group col-md-6 d-flex align-items-center">
                                 <div class="custom-control custom-checkbox custom-control-inline mr-5">
                                     <input type="checkbox" class="custom-control-input" id="vista{{i}}">
                                     <label class="custom-control-label text-white text-uppercase" for="vista{{i}}">Vista</label>
@@ -32,7 +32,7 @@
                                     <input type="checkbox" class="custom-control-input" id="generic{{i}}">
                                     <label class="custom-control-label text-white text-uppercase" for="generic{{i}}">Generic</label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group col-md-6">
                                 <input type="text" class="form-control form-control-transparent" placeholder="Enter Label Name">
                             </div>
@@ -70,26 +70,6 @@
         </div>
 
         <!-- pagination -->
-        <nav>
-            <ul class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
-                <li class="page-item">
-                    <a class="page-link" (click)="setPage(1)">First</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link">Previous</a>
-                </li>
-                <!-- <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
-                    class="page-item">
-                    <a class="page-link" (click)="setPage(page)">{{page}}</a>
-                </li> -->
-                <li class="page-item">
-                    <a class="page-link">Next</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link">Last</a>
-                </li>
-            </ul>
-        </nav>
 
         <div class="text-center mt-5">
             <button class="btn btn-primary btn-lg btn-min-w" (click)='next()'>Train Model With Dataset</button>
