@@ -1,9 +1,155 @@
-<div class="card-group">
+<!-- banner section start -->
+<section
+    class="section-padding header-padding inner-banner bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+    [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
+    <div class="container text-center z-index-1 banner-caption section-padding">
+        <h1 class="text-uppercase font-weight-bold text-white mb-0">Customize Annotations - Images</h1>
+    </div>
+</section>
+<!-- banner section end -->
+
+
+<div class="section-padding">
+    <div class="container">
+        <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+            <div class="spinner-border spin" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- card start -->
+        <div class="row" *ngIf="datasetFlag">
+            <div class="col-md-4 mb-4" *ngFor="let item of pagedItems; let i = index">
+                <div class="bg-darken rounded overflow-hidden h-100 d-flex flex-column">
+                    <!-- canvas -->
+                    <div class="flex-none">
+                        <canvas class="card-img-top img-fluid" #polygon id="jPolygon{{item.id}}"
+                            height='{{item.height}}' width='{{item.width}}'
+                            style="cursor:crosshair; background-repeat: no-repeat; background-size: 100% 100%;"
+                            (click)='annotate($event, item.id)' [style.background-image]="getBackground(item.image)"
+                            oncontextmenu="return false;">
+                            Your browser does not support the HTML5 canvas tag.
+                        </canvas>
+                    </div>
+
+                    <!-- forms -->
+                    <div class="p-4 flex-none">
+                        <form>
+                            <!-- checkbox -->
+                            <!-- <div class="form-group">
+                                <div class="custom-control custom-checkbox custom-control-inline mr-5">
+                                    <input type="checkbox" class="custom-control-input" id="vista{{i}}"
+                                        [checked]="detectionOriginType === 'vista'" [disabled]="detectionOriginType === 'vista'">
+                                    <label class="custom-control-label text-white text-uppercase"
+                                        for="vista{{i}}">Vista</label>
+                                </div>
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="generic{{i}}">
+                                    <label class="custom-control-label text-white text-uppercase"
+                                        for="generic{{i}}">Generic</label>
+                                </div> 
+                            </div>-->
+                            <!-- label name -->
+                            <!-- <div class="form-group">
+                                <input type="text" class="form-control form-control-transparent"
+                                    placeholder="Enter Label Name">
+                            </div> -->
+                            <!-- btn -->
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button class="btn btn-primary" *ngIf="detectionOriginType === 'vista'"
+                                    (click)="getImgAnnotations(item.id,$event)" [disabled]="item.vistaResponseReceived">Vista Detection
+                                </button>
+                                <button class="btn btn-primary" *ngIf="detectionOriginType === 'analytics'"
+                                    (click)="getAnayticsImgAnnotations(item.id,$event)" disabled>Analytics Detection
+                                </button>
+                                <button class="btn btn-primary"
+                                    (click)="generalDetection(item.id,$event)" [disabled]="item.generalDetectionResponseReceived">General Detection
+                                </button>
+                                <!-- <button class="btn btn-primary"
+                                    (click)="generalDetection(item.id,$event)">Annotate
+                                </button>
+                                <button *ngIf="detectionOriginType === 'vista'" class="btn btn-medium"
+                                    (click)="getImgAnnotations(item.id,$event)">Add Label
+                                </button>
+                                <button *ngIf="detectionOriginType === 'analytics'"
+                                    class="btn btn-medium" (click)="getAnayticsImgAnnotations(item.id,$event)">Add
+                                    Label
+                                </button> -->
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- labels -->
+                    <div class="py-4 text-white flex-fill detect-label">
+                        <span class="d-block font-weight-bold text-primary text-uppercase mb-2 px-4"
+                            *ngIf='objDet == true'>List of areas</span>
+                        <span class="d-block font-weight-bold text-primary text-uppercase mb-2 px-4"
+                            *ngIf='objDet == false'>{{item.results.length}} Labels Detected</span>
+                        <div class="px-4" *ngIf="item.results.length == 0">
+                            <span class="d-block text-medium">Click the object labels button to check the detected
+                                objects</span>
+                        </div>
+                        <perfect-scrollbar style="max-height: 200px">
+                            <ul class="label-list px-4 pb-4" *ngIf="item.results.length > 0">
+                                <li class="d-flex align-items-center justify-content-between"
+                                    *ngFor='let ann of item.results; index as j'
+                                    [ngClass]="{'active-label' : selectedID === j}">
+                                    <span class="d-block text-truncate" role="button" (click)='get(j, i)'>{{ann[3].label}}</span>
+                                    <div class="flex-none">
+                                        <button class="btn text-white p-1 ml-2" data-toggle="modal"
+                                            data-target="#confirmModal" data-dismiss="modal"
+                                            (click)="openlebelModal(j, i)">
+                                            <i class="far fa-edit"></i>
+                                        </button>
+                                        <button class="btn text-white p-1 ml-1" (click)="clear(j, i)">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- card end -->
+
+        <!-- pagination -->
+        <nav>
+            <ul *ngIf="pager.pages && pager.pages.length"
+                class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
+                <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                    <a class="page-link" (click)="setPage(1)">First</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                    <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+                    <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                    <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                    <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-primary btn-lg btn-min-w" (click)='next()'>Train Model With Dataset</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="card border-info" style="min-height: 600.6px;">
             <div class="card-body" align='center'>
                 <div class="container">
-                    <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+                    <div class="d-flex justify-content-center position-fixed  loader" *ngIf="!spin">
                         <div class="spinner-border spin" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -101,18 +247,18 @@
             </div>
         </div>
     </div>
-</div>
-<div class='btn-group p-2' role="group">
+</div> -->
+<!-- <div class='btn-group p-2' role="group">
     <button class="btn btn-info" (click)='prev()'><i class="fas fa-caret-left"></i> &nbsp;Previous</button>
-    <!-- <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button> -->
+    <button class="btn btn-info" (click)='clear()' [disabled]='clearAct == false'>Clear Annotation</button>
     <button class="btn btn-info" [routerLink]="['/annotations']">Back to folders</button>
     <button class="btn btn-info" (click)='next()'>Next &nbsp;<i class="fas fa-caret-right"></i></button>
-</div>
+</div> -->
 
 
-<div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
+<!-- <div class="alert alert-warning col-md-4" *ngIf="showMyMessage == true">
     <strong>Oops!</strong> Please choose a label to start.
-</div>
+</div> -->
 
 <div class="modal" id="confirmModal">
     <div class="modal-dialog">

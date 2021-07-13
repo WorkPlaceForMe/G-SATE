@@ -21,7 +21,7 @@ const baseURL = vistaIP;
 @Component({
   selector: "app-multiple-image-detection",
   templateUrl: "./multiple-image-detection.component.html",
-  styleUrls: ["./multiple-image-detection.component.css"],
+  styleUrls: ["./multiple-image-detection.component.scss"],
 })
 export class MultipleImageDetectionComponent implements OnInit {
   pager: any = {};
@@ -326,6 +326,10 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   clear(lebelIndex, dataIndex) {
+    this.canvas = this.rd.selectRootElement(
+      `canvas#jPolygon${dataIndex}.card-img-top.img-fluid`
+    );
+    this.ctx = this.canvas.getContext("2d");
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.data[dataIndex]["results"].splice(lebelIndex, 1);
     this.selectedImageIndex = dataIndex;
@@ -344,6 +348,10 @@ export class MultipleImageDetectionComponent implements OnInit {
 
   updateLabel() {
     if (this.newLabel) {
+      this.canvas = this.rd.selectRootElement(
+        `canvas#jPolygon${this.selectedImageIndex}.card-img-top.img-fluid`
+      );
+      this.ctx = this.canvas.getContext("2d");
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       for (let e = 0; e < this.data[this.selectedImageIndex]["results"].length; e++) {
         if (e == this.id) {
@@ -358,10 +366,15 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   get(lebelIndex, dataIndex) {
+    debugger;
     this.on = true;
     this.clearAct = true;
     this.id = lebelIndex;
     this.selectedID = lebelIndex;
+    this.canvas = this.rd.selectRootElement(
+      `canvas#jPolygon${dataIndex}.card-img-top.img-fluid`
+    );
+    this.ctx = this.canvas.getContext("2d");
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     for (let e = 0; e < this.data[dataIndex]["results"].length; e++) {
       this.ctx.fillStyle = "lime";
@@ -485,6 +498,7 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   annotate(event, i) {
+    debugger;
     this.selectedImageIndex = i;
     this.canvas = this.rd.selectRootElement(event.target);
     this.ctx = this.canvas.getContext("2d");
@@ -766,6 +780,7 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.cacheAnnot = this.data[i]["results"];
           this.getAnn(i);
           this.getLabels(i);
+          this.data[i]['vistaResponseReceived'] = true;
         }
       },
       (error) => {
@@ -867,7 +882,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.annotationsServ.generalDetection(body).subscribe((res) => {
       this.spin = false;
       alert(`${res.length} objects detected.`);
-      debugger
       if (res.length > 0) {
         res.forEach((element) => {
           element[2]["detection_source"] = "General Detection Script";
@@ -899,6 +913,7 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.labelsMessage = false;
         this.selectedImageIndex = i;
         this.re_draw();
+        this.data[i]['generalDetectionResponseReceived'] = true;
       }
     });
   }

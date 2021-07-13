@@ -28,6 +28,8 @@ import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-co
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,10 @@ const routes: Routes = [
   {
     path: 'annotations',
     component: TCloudDashboardComponent
+  },
+  {
+    path: 'home',
+    component: HomePageComponent
   },
   {
     path: 'federated-learning',
@@ -159,8 +165,13 @@ const routes: Routes = [
     component: SingleImageDetectionComponent
   },
   {
+    path: 'test-your-model',
+    component: TestYourModelComponent
+  },
+  {
     path: '',
-    redirectTo: 'annotations',
+    // redirectTo: 'annotations',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -174,9 +185,11 @@ const routes: Routes = [
     RouterModule.forRoot(
       routes,
       {
-        preloadingStrategy: PreloadAllModules
-      }
+        preloadingStrategy: PreloadAllModules,
+        scrollPositionRestoration: 'enabled'
+      },
     )
+    
   ],
   exports: [RouterModule]
 })

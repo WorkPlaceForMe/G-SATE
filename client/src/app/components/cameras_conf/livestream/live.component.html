@@ -1,44 +1,37 @@
-<div class="card border-success mb-2">
-  <div class="card-header">{{live.name}}</div>
-  <div class="card-body">
-    <ul class="nav nav-tabs">
-      <!-- <li class="nav-item" *ngIf="message == true">
-    <a class="nav-link active" data-toggle="tab" href="#noLink">No livestream available</a>
-  </li> -->
-      <li class="nav-item">
-        <a class="nav-link" style="cursor:pointer" data-toggle="tab" (click)="changeView(0)">Livestream</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" style="cursor:pointer" data-toggle="tab" (click)="changeView(1)"
-          [ngClass]="live.rtsp_out ? '' : 'disabled'">Livestream with analytics</a>
-      </li>
-    </ul>
-
-    <div id="myTabContent" class="tab-content">
-      <div class="tab-pane fade" [ngClass]="nose == 0 ? 'active show' : ''" id="initialTab">
-        <h3 align='center'>Click any tab to start a streaming</h3>
-      </div>
-
-      <div class="tab-pane fade" id="home" [ngClass]="nose == 1 ? 'active show' : ''">
-        <div id="canvas-container">
-          <div class="card border-info">
-            <canvas #streaming id="canvas" [ngStyle]="resize()" oncontextmenu="return false;"></canvas>
+<div class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75" [ngStyle]="{'background-image': 'url(/assets/images/camera-edit-bg.jpg)'}">
+  <div class="container text-center z-index-1 text-white">
+      <div class="p-5 custom-card">
+        <h2 class="mb-4 text-uppercase text-white">{{live.name}}</h2>
+        <ul class="nav nav-tabs justify-content-center border-0 mb-4">
+          <li class="nav-item mr-1">
+            <a class="nav-link btn btn-primary border-0 rounded mb-0" data-toggle="tab" (click)="changeView(0)">Livestream</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary border-0 rounded mb-0" data-toggle="tab" (click)="changeView(1)" [ngClass]="live.rtsp_out ? '' : 'disabled'">Livestream with analytics</a>
+          </li>
+        </ul>
+        <div id="myTabContent" class="tab-content mb-4">
+          <div class="tab-pane fade" [ngClass]="nose == 0 ? 'active show' : ''" id="initialTab">
+            <p class="text-white text-center mb-0">Click any tab to start a streaming</p>
+          </div>
+    
+          <div class="tab-pane fade" id="home" [ngClass]="nose == 1 ? 'active show' : ''">
+            <div id="canvas-container">
+              <canvas #streaming id="canvas" [ngStyle]="resize()" oncontextmenu="return false;"></canvas>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="noLink" [ngClass]="nose == 2 ? 'active show' : ''">
+            <p class="text-white text-center mb-0">Please close another livestream to display this one.</p>
+          </div>
+          <div class="tab-pane fade" id="profile" [ngClass]="nose == 3 ? 'active show' : ''">
+            <div id="canvas-container">
+              <canvas #streaming2 id="canvas" [ngStyle]="resize()" oncontextmenu="return false;"></canvas>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="tab-pane fade" id="noLink" [ngClass]="nose == 2 ? 'active show' : ''">
-        <h3 align='center'>Please close another livestream to display this one.</h3>
-      </div>
-      <div class="tab-pane fade" id="profile" [ngClass]="nose == 3 ? 'active show' : ''">
-        <div id="canvas-container">
-          <div class="card border-info">
-            <canvas #streaming2 id="canvas" [ngStyle]="resize()" oncontextmenu="return false;"></canvas>
-          </div>
+        <div class="text-center">
+          <a class="btn btn-medium btn-sm" href="/camerasList" (click)="ngOnDestroy()">Back</a>
         </div>
       </div>
-    </div>
-    <div class="p-2">
-      <a class="btn btn-primary btn-block" href="/camerasList" (click)="ngOnDestroy()"><i
-          class="fas fa-arrow-circle-left"></i>&nbsp; Go Back</a></div>
   </div>
 </div>

@@ -19,7 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UrlPipe } from './pipes/url.pipe';
-import { AuthService } from "./shared/services/auth.service";
 import { NavigationService } from './shared/services/navigation.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
@@ -63,12 +62,20 @@ import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-co
 import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
 import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
+import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { FooterComponent } from './components/footer/footer.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
+    HomePageComponent,
     FaceFormComponent,
     ImagesFormComponent,
     TrustedUrlPipe,
@@ -104,7 +111,9 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     AnnotationsConfirmComponent,
     ObjectDetectionConfirmComponent,
     ObjectDetectionDetailsComponent,
-    FederatedLearningComponent
+    FederatedLearningComponent,
+    TestYourModelComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -126,12 +135,15 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     MatPaginatorModule,
     NgxPaginationModule,
     NgScrollbarModule,
-    ScrollingModule
+    ScrollingModule,
+    BsDatepickerModule.forRoot(),
+    AngularSvgIconModule.forRoot(),
+    TooltipModule.forRoot(),
+    PerfectScrollbarModule,
   ],
   providers: [
     FacesService,
     DatePipe,
-    AuthService,
     NavigationService,
     ColorsService,
     StrService,

@@ -5,7 +5,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 @Component({
   selector: 'app-livestream',
   templateUrl: './livestream.component.html',
-  styleUrls: ['./livestream.component.css'],
+  styleUrls: ['./livestream.component.scss'],
   animations: [
     trigger('flyInOut', [
       transition('void => *', [
@@ -41,6 +41,7 @@ export class LivestreamComponent implements OnInit, OnDestroy {
     }, 1000);
 
     // this.myFunction();
+
 
     this.facesService.getCameras().subscribe(
       res => {

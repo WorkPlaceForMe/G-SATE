@@ -11,7 +11,7 @@ const baseURL = vistaIP;
 @Component({
   selector: 'app-single-image-detection',
   templateUrl: './single-image-detection.component.html',
-  styleUrls: ['./single-image-detection.component.css']
+  styleUrls: ['./single-image-detection.component.scss']
 })
 export class SingleImageDetectionComponent implements OnInit {
 

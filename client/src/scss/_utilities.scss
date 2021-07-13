@@ -1,0 +1,103 @@
+@import 'variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+// font-weight
+@each $weight, $value in $font-weights {
+    .font-weight-#{$weight} {
+    	font-weight: $value !important;
+    }
+}
+
+// font-size
+@each $size, $value in $font-sizes {
+	.font-size-#{$size} {
+		font-size: $value !important;
+	}
+}
+
+// // container size
+// .container{
+// 	&-md{ max-width: 768px; margin-left: auto; margin-right: auto; }
+// 	&-lg{ max-width: 992px; margin-left: auto; margin-right: auto; }
+// }
+
+// object-fit
+@each $properties in $object-fits {
+	.object-#{$properties} {
+		object-fit: $properties !important;
+	}
+}
+
+// object position
+@each $position in $object-positions {
+	.object-position-#{$position} {
+		object-position: $position !important;
+	}
+}
+
+// flex
+.flex{
+	&-1{flex: 0 1 100% !important; }
+	&-none{ flex: none !important; }
+	&-auto{ flex-basis: auto !important; }
+}
+
+
+// // position
+.top{ top: 0;}
+.right{ right: 0; }
+.bottom{ bottom: 0; }
+.left{ left:  0; }
+
+.btn-min-w {
+  min-width: 240px;
+}
+
+// z-index
+@for $i from 0 through 5 {
+  .z-index-#{$i*1} {
+    z-index: $i !important;
+  }
+}
+
+// image
+.img{
+	&-cover{ width: 100%; height: 100%; object-fit: cover; }
+	&-contain{ width: 100%; height: 100%; object-fit: contain; }
+}
+
+// icon
+.icon{
+	&-lg{
+		width: $spacer*5;
+		height: $spacer*5;
+	}
+	&-sm{
+		width: $spacer*2;
+		height: $spacer*2;
+	}
+	&-xs{
+		width: $spacer;
+		height: $spacer;
+	}
+	&-white{
+		fill: $white;
+	}
+}
+.container-medium{
+	max-width: 768px;
+}
+
+.btn-icon{
+    width: $spacer*2.5;
+    height: $spacer*2.5;
+    font-size: 1.125rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}

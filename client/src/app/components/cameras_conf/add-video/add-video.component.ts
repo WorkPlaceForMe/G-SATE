@@ -8,7 +8,7 @@ const URL = 'http://' + ip + ':3000/api/video/upload';
 @Component({
   selector: 'app-add-video',
   templateUrl: './add-video.component.html',
-  styleUrls: ['./add-video.component.css']
+  styleUrls: ['./add-video.component.scss']
 })
 export class AddVideoComponent implements OnInit {
 
@@ -40,15 +40,18 @@ export class AddVideoComponent implements OnInit {
       console.log(response);
     };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      debugger;
       this.up = false;
       // this.load = false;
       this.fileInputVariable.nativeElement.value = '';
       this.fileName = null;
       this.name = null;
       this.facesService.doOneImage(JSON.parse(response).id).subscribe(res => {
+        debugger;
         console.log(res)
         this.router.navigate(['/cameras/algorithms/' + JSON.parse(response).id]);
       }, err => {
+        debugger;
         console.log(err)
         this.router.navigate(['/cameras/algorithms/' + JSON.parse(response).id]);
       }

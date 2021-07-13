@@ -1,59 +1,75 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a class="logo" href="/management"><img class="responsive" src="/assets/logo.png"></a>
-    <a class="navbar-brand" href="/management">Graymatics Analytics Platform</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
-      aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown" style="cursor:pointer">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false" routerLinkActive="active"><i class="far fa-id-card"></i> &nbsp;FR Users</a>
-          <div class="dropdown-menu" x-placement="bottom-start"
-            style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-            <a class="dropdown-item" routerLink="/management" routerLinkActive="active"><i class="far fa-id-card"></i>
-              &nbsp;List</a>
-            <a class="dropdown-item" routerLink="/user/add" routerLinkActive="active"><i
-                class="fas fa-user-plus"></i>&nbsp;Add User</a>
-            <a class="dropdown-item" routerLink="/user/search" routerLinkActive="active"><i
-                class="fas fa-search"></i>&nbsp;Search Users</a>
-          </div>
-        </li>
-        <!--  <li class="nav-item">
-          <a class="nav-link" id="object-detection" data-toggle="tab" routerLink="/objectDetection"
-            routerLinkActive="active"><i class="fab fa-connectdevelop"></i>&nbsp;Object Detection</a></li> -->
-        <li class="nav-item">
-          <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/annotations" routerLinkActive="active">
-            <i class="fab fa-connectdevelop"></i>&nbsp;T-cloud
-          </a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" id="analytics" data-toggle="tab" (click)='goToLink()' style="cursor:pointer"><i
-              class="fas fa-chart-area"></i>&nbsp;Analytics</a></li> -->
-        <li class="nav-item dropdown" style="cursor:pointer">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false" routerLinkActive="active"><i class="fas fa-video"></i> &nbsp;Cameras</a>
-          <div class="dropdown-menu" x-placement="bottom-start"
-            style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-            <a class="dropdown-item" routerLink="/camerasList" routerLinkActive="active"><i
-                class="fas fa-video"></i>&nbsp;Cameras List</a>
-            <a class="dropdown-item" routerLink="/cameras/add_camera" routerLinkActive="active"><i
-                class="fas fa-plus-circle"></i>&nbsp;Add Camera</a>
-            <a class="dropdown-item" routerLink="/cameras/add_video" routerLinkActive="active"><i
-                class="fas fa-plus-circle"></i>&nbsp;Add Video</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="settings" data-toggle="tab" routerLink="/settings" routerLinkActive="active"><i
-              class="fas fa-cogs"></i>&nbsp;Algorithm controls</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="settings" data-toggle="tab" routerLink="/federated-learning"
-            routerLinkActive="active"><i class="fas fa-clock"></i>&nbsp;Federated Learning</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-light position-absolute z-index-2 w-100 py-3">
+    <div class="container">
+        <a class="logo" href="/management"><img class="responsive" src="/assets/images/logo.png"></a>
+        <!-- <a class="navbar-brand" href="/management">Graymatics Analytics Platform</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+            aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav ml-auto main-menu">
+                <!-- <li class="nav-item dropdown" style="cursor:pointer">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" routerLinkActive="active"><i class="far fa-id-card"></i> &nbsp;FR Users</a>
+                    <div class="dropdown-menu" x-placement="bottom-start"
+                        style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a class="dropdown-item" routerLink="/management" routerLinkActive="active"><i class="far fa-id-card"></i>
+                        &nbsp;List</a>
+                        <a class="dropdown-item" routerLink="/user/add" routerLinkActive="active"><i
+                            class="fas fa-user-plus"></i>&nbsp;Add User</a>
+                        <a class="dropdown-item" routerLink="/user/search" routerLinkActive="active"><i
+                            class="fas fa-search"></i>&nbsp;Search Users</a>
+                    </div>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/home"
+                        routerLinkActive="active">Home</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/home" routerLinkActive="active">About</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/annotations" routerLinkActive="active">
+                        <i class="fab fa-connectdevelop"></i>&nbsp;T-cloud
+                    </a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" routerLinkActive="active">Cameras</a>
+                    <div class="dropdown-menu" x-placement="bottom-start">
+                        <a class="dropdown-item" routerLink="/camerasList" routerLinkActive="active">
+                            <i class="fas fa-video mr-2"></i>Cameras List
+                        </a>
+                        <a class="dropdown-item" routerLink="/cameras/add_camera" routerLinkActive="active">
+                            <i class="fas fa-plus-circle mr-2"></i>Add Camera
+                        </a>
+                        <a class="dropdown-item" routerLink="/cameras/add_video" routerLinkActive="active">
+                            <i class="fas fa-plus-circle mr-2"></i>Add Video
+                        </a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="settings" data-toggle="tab" routerLink="/settings" routerLinkActive="active"><i
+                    class="fas fa-cogs"></i>&nbsp;Algorithm controls</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/home" routerLinkActive="active">CREATE & TRAIN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="t-cloud" data-toggle="tab" routerLink="/home" routerLinkActive="active">Test Model</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" id="settings" data-toggle="tab" routerLink="/federated-learning"
+                        routerLinkActive="active">Federated Learning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="settings" data-toggle="tab" routerLink="/annotations"
+                        routerLinkActive="active">Create Dataset</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="settings" data-toggle="tab" routerLink="/home" routerLinkActive="active">Contact</a>
+                </li> -->
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

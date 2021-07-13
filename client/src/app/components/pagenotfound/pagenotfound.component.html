@@ -1,11 +1,27 @@
-<div class="container p-4">
-  <div class="card text-white bg-warning mb-3" align="center">
-    <div class="card-header">
-      <h3>Error 404</h3>
-</div>
-<br>
-<p>Oops, there is no path here!</p>
-<p>You could go back to the first page by clicking this button</p>
-<a class="btn btn-primary" href="/camerasList"><i class="fas fa-arrow-circle-left"></i>&nbsp; Go Home</a>
-  </div>
+<!-- banner section start -->
+<section class="
+    section-padding
+    header-padding
+    inner-banner
+    bg-white
+    d-flex
+    align-items-center
+    justify-content-center
+    bg-after bg-after-darken bg-after-75
+  " [ngStyle]="{
+    'background-image': 'url(/assets/images/camera-edit-bg.jpg)'
+  }">
+    <div class="container text-center z-index-1 banner-caption">
+        <h1 class="text-uppercase font-weight-bold text-white">
+          Error 404
+        </h1>
+    </div>
+</section>
+<!-- banner section end -->
+
+<div class="container section-padding text-center">
+  <svg-icon src="/assets/icons/error.svg" class="mb-4 d-flex justify-content-center" [svgStyle]="{ 'width.px': 100 }"></svg-icon>
+  <p class="mb-2">Oops, there is no path here!</p>
+  <p class="mb-4">You could go back to the first page by clicking this button</p>
+  <a class="btn btn-primary btn-lg" href="/home">Go Home</a>
 </div>

@@ -1,0 +1,13 @@
+@import '../../../scss/variables';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.main-menu{
+    > li{
+        text-transform: uppercase;
+        > a{
+            color: $white;
+        }
+    }
+}

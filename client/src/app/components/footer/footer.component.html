@@ -1,0 +1,35 @@
+<!-- footer start -->
+<footer class="bg-secondary">
+    <div class="container">
+        <div class="row section-padding">
+            <div class="col-md-12 mb-4">
+                <a href="#"><img src="/assets/images/logo.png" width="196" /></a>
+            </div>
+            <div class="col-md-6">
+                <span class="text-white d-block">Founded in the year 2011, Graymatics takes its roots from Silicon Valley with the vision and commitment to make innovative technology usable for every industry. The company is now based in Singapore along with an incorporation in India.</span>
+            </div>
+            <div class="col-md-4 offset-2">
+                <span class="d-block text-white mb-3">SINGAPORE | #02-01, The Ascent, 2 Science Park Dr, Singapore 118222</span>
+                <span class="d-block text-white mb-3">INDIA | 2nd Floor, 780, 19th Main Rd, Sector 1, HSR Layout, Bengaluru, Karnataka 560102</span>
+                <span class="d-block text-white">USA | 4555 Great America Parkway, 3rd Floor, Santa Clara, CA 95054</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-darken py-2">
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex align-items-center">
+                    <span class="d-block text-light">2020 © Graymatics All rights reserved</span>
+                </div>
+                <div class="col d-flex justify-content-end">
+                    <ul class="d-flex social-list">
+                        <li *ngFor="let item of socialIocns" class="ml-2">
+                          <a href="#" class="d-flex align-items-center justify-content-center p-2"><img src="/assets/images/icons/{{item.icon}}" height="20" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
