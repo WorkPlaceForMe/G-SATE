@@ -138,7 +138,7 @@ export class TCloudDashboardComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      if (status == 500) {
+      if (status == 500 || response == "\"<h1>Server Error (500)</h1>\"") {
         this.uploadImage = false;
         alert("There is an error Processing you request. Please try again.");
       } else {
