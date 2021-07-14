@@ -11,62 +11,8 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7fe0145e3470>
-['long', 'White', 'Long', 'Blue', 'Unknown']
-is running: 1626141955.5730062
-['long', 'White', 'Long', 'Blue', 'Unknown']
-is running: 1626141960.7588606
-is running: 1626141965.870315
-is running: 1626141970.8732674
-is running: 1626141975.9186432
-is running: 1626141981.0867922
-is running: 1626141986.1931472
-is running: 1626141991.343454
-is running: 1626141996.4110606
-is running: 1626142001.4669719
-is running: 1626142006.5191264
-is running: 1626142011.5514822
-['long', 'White', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1626142016.6644926
-is running: 1626142021.8180623
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1626142027.023142
-is running: 1626142032.0700178
-is running: 1626142037.1280758
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1626142042.2180066
-is running: 1626142047.372463
-is running: 1626142052.395879
-is running: 1626142057.4799786
-is running: 1626142062.5831492
-['long', 'White', 'Long', 'Unknown', 'Unknown']
-is running: 1626142067.583528
-is running: 1626142072.770336
-['long', 'White', 'Long', 'Black', 'Unknown']
-is running: 1626142077.87889
-['long', 'White', 'Long', 'Black', 'Unknown']
-['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
-is running: 1626142082.911225
-is running: 1626142088.0272682
-is running: 1626142093.1210792
-is running: 1626142098.2361581
-is running: 1626142103.328662
-is running: 1626142108.423805
-is running: 1626142113.4824212
-is running: 1626142118.6562994
-is running: 1626142123.8930814
-is running: 1626142128.9518278
-is running: 1626142134.2343616
-['long', 'Green', 'Long', 'Unknown', 'Unknown']
-is running: 1626142139.534892
-['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
-is running: 1626142144.5431266
-is running: 1626142149.8510914
-is running: 1626142155.0861666
-is running: 1626142160.2156272
+<tensorflow.python.keras.engine.functional.Functional object at 0x7fca7434b5c0>
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 3.9905 minutes
+Total time is 0.2477 minutes
 FPS -> 0.0000

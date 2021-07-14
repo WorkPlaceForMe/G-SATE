@@ -1,0 +1,46 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7ff1045234e0>
+['long', 'White', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1626262634.8256338
+is running: 1626262639.853506
+is running: 1626262644.8703659
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1626262649.9331613
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1626262655.0051174
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1626262660.0213592
+is running: 1626262665.0479398
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+is running: 1626262670.072401
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1626262675.1179633
+['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
+is running: 1626262680.1982758
+is running: 1626262685.232443
+is running: 1626262690.3494473
+is running: 1626262695.4710355
+['long', 'Green', 'Long', 'Unknown', 'Unknown']
+is running: 1626262700.5921474
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+is running: 1626262705.601575
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 1.4150 minutes
+FPS -> 0.0000
