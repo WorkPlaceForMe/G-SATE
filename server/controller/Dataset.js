@@ -558,7 +558,7 @@ let processByAnalytics = (name) => {
   let count = 0;
   return new Promise(async (resolve, reject) => {
     try {
-      Datasets.listOne(name, function (err, dataset) {
+      Datasets.listOneByTypeVideo(name, function (err, dataset) {
         if (err) reject(err);
 
         if (dataset.length === 0) resolve("Dataset does not exists.");
