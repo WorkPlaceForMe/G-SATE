@@ -47,7 +47,7 @@ export class TCloudDashboardComponent implements OnInit {
   });
 
   fileName: string = "";
-  searchcount: number = 20;
+  searchcount: number;
   imgFileName: string = "";
   uploadName: string;
   unAnnDatasetsNames: any = [];
@@ -367,6 +367,18 @@ export class TCloudDashboardComponent implements OnInit {
     if (this.searchKeyword != "" && this.searchDatasetName != "") {
       this.isSearchDisabled = false;
     }
+  }
+
+  validateWhite(event: number) {
+    let max;
+    if (event > 150) {
+      max = 150;
+    } else if (event < 0) {
+      max = 0;
+    } else {
+      max = event;
+    }
+    setTimeout(() => {this.searchcount = max;});
   }
 
   detectSearchChange() {

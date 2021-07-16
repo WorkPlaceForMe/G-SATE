@@ -53,6 +53,7 @@ export class MultipleImageDetectionComponent implements OnInit {
   showMyMessage: boolean = false;
   clearAct: boolean = false;
   valueImage: number;
+  gotoPageNo: number;
   fakeValueImage: number;
   picture: string;
   labelsMessage: boolean = true;
@@ -192,6 +193,18 @@ export class MultipleImageDetectionComponent implements OnInit {
     } else {
       this.label = this.method;
     }
+  }
+
+  validateWhite(event: number) {
+    let max;
+    if (event > this.pager.totalPages) {
+      max = this.pager.totalPages;
+    } else if (event < 0) {
+      max = 0;
+    } else {
+      max = event;
+    }
+    setTimeout(() => {this.gotoPageNo = max;});
   }
 
   processDataset() {

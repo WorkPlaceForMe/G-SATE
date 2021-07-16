@@ -27,7 +27,7 @@
     bg-lighter
   ">
     <div class="container text-center z-index-1">
-        <h2 class="mb-4 text-uppercase">Cameras</h2>
+        <h2 class="mb-4 text-uppercase">Create Dataset Options</h2>
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="rounded bg-darken p-3 h-100">
@@ -87,6 +87,7 @@
                                         }}</label>
                                 </div>
                             </div>
+                            <p class="text-white">Supported formats: JPG and PNG only</p>
                         </div>
                         <div class="mt-auto">
                             <button *ngIf="!uploadImage" class="btn btn-primary btn-block font-weight-normal"
@@ -156,6 +157,11 @@
                                 (ngModelChange)="detectChange()" />
                         </div>
                         <div class="form-group">
+                            <input type="number" placeholder="No of images (Max 150)"
+                                class="form-control form-control-transparent" [(ngModel)]="searchcount"
+                                (ngModelChange)="validateWhite($event)" min="1" max="150"/>
+                        </div>
+                        <!-- <div class="form-group">
                             <select class="form-control form-control-transparent select-picker"
                                 [(ngModel)]="searchcount">
                                 <option value="20">20</option>
@@ -164,7 +170,7 @@
                                 <option value="150">150</option>
                                 <option value="200">200</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <input type="text" placeholder="Enter Keyword"
                                 class="form-control form-control-transparent search-field" [(ngModel)]="searchKeyword"
@@ -172,8 +178,10 @@
                         </div>
                         <div class="mt-auto">
                             <button class="btn btn-primary btn-block font-weight-normal" id="basic-text1"
-                                data-toggle="modal" data-target="#imagesModal" (click)="search()" [disabled]="!searchDatasetName || !searchKeyword">Prepare
-                                Dataset</button>
+                                data-toggle="modal" data-target="#imagesModal" (click)="search()"
+                                [disabled]="!searchDatasetName || !searchKeyword || !searchcount">
+                                Prepare Dataset
+                            </button>
                         </div>
 
                         <!-- <div class="input-group-append" [ngClass]="{'disableDiv': isSearchDisabled}">
@@ -196,8 +204,14 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
                 <div class="rounded bg-darken p-3 h-100 position-relative">
-                    <button type="button" class="btn btn-primary btn-icon position-absolute top right mt-3 mr-3"
-                        (click)="refreshDataSets()">
+                    <button type="button" class="
+              btn btn-primary btn-icon
+              position-absolute
+              top
+              right
+              mt-3
+              mr-3
+            " (click)="refreshDataSets()">
                         <svg-icon src="/assets/icons/reload.svg" class="icon-white" [svgStyle]="{ 'width.px': 16 }">
                         </svg-icon>
                     </button>
@@ -213,17 +227,21 @@
                                     [(ngModel)]="selectedUnAnnotatedDataset" (change)="UnAnnDSetchange()">
                                     <option value="">Select Un-Annotated Dataset</option>
                                     <option *ngFor="let data of unAnnDatasetsNames; index as i" [value]="i">
-                                        {{data.name}}</option>
+                                        {{ data.name }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-5 d-flex">
                                 <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
-                                    (click)="annotateByVista()" [disabled]='selectedUnAnnotatedDataset == ""'>
+                                    (click)="annotateByVista()" [disabled]="selectedUnAnnotatedDataset == ''">
                                     Annotate & Train
                                 </button>
                                 <button type="button" class="btn btn-danger btn-icon"
-                                    [disabled]='selectedUnAnnotatedDataset == ""'
-                                    (click)="deleteUnAnnDataset(unAnnDatasetsNames[selectedUnAnnotatedDataset])">
+                                    [disabled]="selectedUnAnnotatedDataset == ''" (click)="
+                    deleteUnAnnDataset(
+                      unAnnDatasetsNames[selectedUnAnnotatedDataset]
+                    )
+                  ">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -234,16 +252,19 @@
                                     [(ngModel)]="selectedAnnotatedDataset" (change)="AnnDSetchange()">
                                     <option value="">Select Annotated Dataset</option>
                                     <option *ngFor="let data of annDatasetsNames; index as i" [value]="i">
-                                        {{data.name}}</option>
+                                        {{ data.name }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-5 d-flex">
                                 <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2"
-                                    (click)="annotateByAnalytics()"
-                                    [disabled]='selectedAnnotatedDataset == ""'>Train</button>
+                                    (click)="annotateByAnalytics()" [disabled]="selectedAnnotatedDataset == ''">
+                                    Train
+                                </button>
                                 <button type="button" class="btn btn-danger btn-icon"
-                                    [disabled]='selectedAnnotatedDataset == ""'
-                                    (click)="deleteAnnDataset(annDatasetsNames[selectedAnnotatedDataset])">
+                                    [disabled]="selectedAnnotatedDataset == ''" (click)="
+                    deleteAnnDataset(annDatasetsNames[selectedAnnotatedDataset])
+                  ">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -267,8 +288,17 @@
             <div class="modal-body" style="min-height: 440px">
                 <div class="container">
                     <div class="row">
-                        <div class="w-100 h-100 d-flex align-items-center justify-content-center position-absolute top left z-index-2"
-                            *ngIf="spinner">
+                        <div class="
+                w-100
+                h-100
+                d-flex
+                align-items-center
+                justify-content-center
+                position-absolute
+                top
+                left
+                z-index-2
+              " *ngIf="spinner">
                             <div class="spinner-grow spinner" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
@@ -287,8 +317,13 @@
                     </div>
                 </div>
                 <nav>
-                    <ul *ngIf="pager.pages && pager.pages.length"
-                        class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="
+              pagination
+              justify-content-center
+              mt-4
+              text-uppercase
+              font-weight-medium
+            ">
                         <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
                             <a class="page-link" (click)="setPage(1)">First</a>
                         </li>
@@ -311,7 +346,9 @@
             <div class="dropdown-divider"></div>
             <div class="mt-2 mb-3 px-3 text-center">
                 <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#confirmModal"
-                    data-dismiss="modal" (click)="confirm()">Okay</button>
+                    data-dismiss="modal" (click)="confirm()">
+                    Okay
+                </button>
                 <button class="btn btn-medium" data-dismiss="modal">Close</button>
             </div>
         </div>

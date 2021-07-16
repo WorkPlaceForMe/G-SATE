@@ -56,13 +56,14 @@
                             <!-- btn -->
                             <div class="d-flex align-items-center justify-content-between">
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'vista'"
-                                    (click)="getImgAnnotations(item.id,$event)" [disabled]="item.vistaResponseReceived">Vista Detection
+                                    (click)="getImgAnnotations(item.id,$event)"
+                                    [disabled]="item.vistaResponseReceived">Vista Detection
                                 </button>
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'analytics'"
                                     (click)="getAnayticsImgAnnotations(item.id,$event)" disabled>Analytics Detection
                                 </button>
-                                <button class="btn btn-primary"
-                                    (click)="generalDetection(item.id,$event)" [disabled]="item.generalDetectionResponseReceived">General Detection
+                                <button class="btn btn-primary" (click)="generalDetection(item.id,$event)"
+                                    [disabled]="item.generalDetectionResponseReceived">General Detection
                                 </button>
                                 <!-- <button class="btn btn-primary"
                                     (click)="generalDetection(item.id,$event)">Annotate
@@ -93,15 +94,17 @@
                                 <li class="d-flex align-items-center justify-content-between"
                                     *ngFor='let ann of item.results; index as j'
                                     [ngClass]="{'active-label' : selectedID === j}">
-                                    <span class="d-block text-truncate" role="button" (click)='get(j, i)'>{{ann[3].label}}</span>
+                                    <span class="d-block text-truncate" role="button"
+                                        (click)='get(j, i)'>{{ann[3].label}}</span>
                                     <div class="flex-none">
                                         <button class="btn text-white p-1 ml-2" data-toggle="modal"
                                             data-target="#confirmModal" data-dismiss="modal"
                                             (click)="openlebelModal(j, i)">
-                                            <i class="far fa-edit"></i>
+                                            <!-- <i class="far fa-edit"></i> -->
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </button>
                                         <button class="btn text-white p-1 ml-1" (click)="clear(j, i)">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
                                     </div>
                                 </li>
@@ -133,6 +136,18 @@
                     <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
                 </li>
             </ul>
+            <div class="form form-row justify-content-center mt-4" *ngIf="pager.pages && pager.pages.length">
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <input type="number" placeholder="Go to page number" class="form-control form-control-sm"
+                        [(ngModel)]="gotoPageNo" (ngModelChange)="validateWhite($event)" min="1"
+                        [max]="pager.totalPages" />
+                </div>
+                <div class="form-group col-12 col-md-2 mb-md-0">
+                    <button [disabled]="!gotoPageNo" type="button"
+                        class="btn btn-sm btn-block btn-primary ml-3"
+                        (click)="setPage(gotoPageNo)">Go</button>
+                </div>
+            </div>
         </nav>
 
         <div class="text-center mt-5">
