@@ -1,3 +1,20 @@
+.spin {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.loader {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 // .column {
 //     column-count: 2;
 // }
@@ -58,7 +75,6 @@
 //     user-select: none;
 // }
 
-
 // /* Hide the browser's default checkbox */
 
 // .container input {
@@ -68,7 +84,6 @@
 //     height: 0;
 //     width: 0;
 // }
-
 
 // /* Create a custom checkbox */
 
@@ -81,21 +96,17 @@
 //     background-color: #eeeeee14;
 // }
 
-
 // /* On mouse-over, add a grey background color */
-
 
 // /* .container:hover input ~ .checkmark {
 //   background-color: #ccc;
 // } */
-
 
 // /* When the checkbox is checked, add a blue background */
 
 // .container input:checked~.checkmark {
 //     background-color: #375a7f;
 // }
-
 
 // /* Create the checkmark/indicator (hidden when not checked) */
 
@@ -105,13 +116,11 @@
 //     display: none;
 // }
 
-
 // /* Show the checkmark when checked */
 
 // .container input:checked~.checkmark:after {
 //     display: block;
 // }
-
 
 // /* Style the checkmark/indicator */
 

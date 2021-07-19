@@ -22,15 +22,6 @@ const imgURL = "http://" + ip + ":3000/api/upload/pic";
   styleUrls: ["./t-cloud-dashboard.component.scss"],
 })
 export class TCloudDashboardComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private annotationsServ: AnnotationsService,
-    private facesservices: FacesService,
-    private datepipe: DatePipe,
-    private pagerService: PagerService,
-    private cdref: ChangeDetectorRef
-  ) {}
-
   labelImport: ElementRef;
   fileToUpload: File = null;
 
@@ -68,6 +59,7 @@ export class TCloudDashboardComponent implements OnInit {
   public badImgFile = true;
   public open = false;
   spinner: boolean = false;
+  spin: boolean = false;
   unAnnSpin: boolean = false;
   annSpin: boolean = false;
   choosenDataset: string;
@@ -90,11 +82,20 @@ export class TCloudDashboardComponent implements OnInit {
 
   label: string;
   labels: any = [];
-  selectedUnAnnotatedDataset: any = '';
-  selectedAnnotatedDataset: any = '';
+  selectedUnAnnotatedDataset: any = "";
+  selectedAnnotatedDataset: any = "";
 
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
+
+  constructor(
+    private router: Router,
+    private annotationsServ: AnnotationsService,
+    private facesservices: FacesService,
+    private datepipe: DatePipe,
+    private pagerService: PagerService,
+    private cdref: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => {
@@ -115,15 +116,19 @@ export class TCloudDashboardComponent implements OnInit {
       console.log("Uploaded:", status, response, headers);
       this.uploadImage = false;
       this.getUnAnnDsets("data");
-      alert('Dataset created successfully');
+      alert("Dataset created successfully");
     };
     this.uploader.onProgressItem = (progress: any) => {
+      this.spin = true;
       console.log(progress["progress"]);
       if (progress["progress"] == 100) {
         this.showMyMessage3 = undefined;
         this.showMyMessage4 = true;
+        this.spin = false;
       }
     };
+
+
     this.photoUploader.onAfterAddingFile = (file) => {
       console.log("****************************", file.file.name.split(".")[1]);
       file.withCredentials = false;
@@ -138,7 +143,7 @@ export class TCloudDashboardComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      if (status == 500 || response == "\"<h1>Server Error (500)</h1>\"") {
+      if (status == 500 || response == '"<h1>Server Error (500)</h1>"') {
         this.uploadImage = false;
         alert("There is an error Processing you request. Please try again.");
       } else {
@@ -191,8 +196,10 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   getUnAnnDsets(thing: string) {
+    this.spin = true;
     this.annotationsServ.getUnAnnDatasets(thing).subscribe(
       (res) => {
+        this.spin = false;
         if (thing == "data") {
           this.unAnnDatasetsNames = res;
           for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
@@ -212,13 +219,18 @@ export class TCloudDashboardComponent implements OnInit {
           }
         }
       },
-      (err) => console.log(err)
+      (err) => {
+        this.spin = false;
+        console.log(err);
+      }
     );
   }
 
   getAnnDsets(thing: string) {
+    this.spin = true;
     this.annotationsServ.getAnnDatasets(thing).subscribe(
       (res) => {
+        this.spin = false;
         if (thing == "data") {
           this.annDatasetsNames = res;
           for (let i = 0; i < this.annDatasetsNames.length; i++) {
@@ -237,7 +249,10 @@ export class TCloudDashboardComponent implements OnInit {
           }
         }
       },
-      (err) => console.log(err)
+      (err) => {
+        this.spin = false;
+        console.log(err);
+      }
     );
   }
 
@@ -289,7 +304,8 @@ export class TCloudDashboardComponent implements OnInit {
     this.myInputVariable.nativeElement.value = null;
     this.fileName = "";
     setTimeout(() => {
-      this.getUnAnnDsets("data");
+      // this.getUnAnnDsets("data");
+      this.refreshDataSets();
     }, 2000);
     this.showMyMessage4 = false;
     this.showMyMessage3 = true;
@@ -378,7 +394,9 @@ export class TCloudDashboardComponent implements OnInit {
     } else {
       max = event;
     }
-    setTimeout(() => {this.searchcount = max;});
+    setTimeout(() => {
+      this.searchcount = max;
+    });
   }
 
   detectSearchChange() {
@@ -411,7 +429,6 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   okay() {
-    debugger;
     let data = {
       images: this.selectedImages,
       name: this.searchDatasetName,
@@ -422,7 +439,8 @@ export class TCloudDashboardComponent implements OnInit {
       this.searchKeyword = null;
       this.images = [];
       this.selectedImages = [];
-      this.getUnAnnDsets("data");
+      // this.getUnAnnDsets("data");
+      this.refreshDataSets();
     });
   }
 
@@ -493,7 +511,7 @@ export class TCloudDashboardComponent implements OnInit {
             console.log(res);
             this.unAnnRefresh();
             this.choosenDatasetForVista = undefined;
-            this.selectedUnAnnotatedDataset = '';
+            this.selectedUnAnnotatedDataset = "";
           },
           (err) => console.error(err)
         );
@@ -509,7 +527,7 @@ export class TCloudDashboardComponent implements OnInit {
             console.log(res);
             this.annRefresh();
             this.choosenDatasetForAnalytics = undefined;
-            this.selectedAnnotatedDataset = '';
+            this.selectedAnnotatedDataset = "";
           },
           (err) => console.error(err)
         );

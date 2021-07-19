@@ -27,6 +27,11 @@
     bg-lighter
   ">
     <div class="container text-center z-index-1">
+        <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+            <div class="spinner-border spin" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <h2 class="mb-4 text-uppercase">Create Dataset Options</h2>
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-3">
