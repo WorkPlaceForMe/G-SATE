@@ -12,7 +12,7 @@ docker run  \
     -e RESOURCES=/home/ubuntu/G-SATE/resources \
     -e SHARE=/home/ubuntu/G-SATE/handle/shares \
     -e NETWORK=ubuntu_default \
-    -ti \
+    -d \
     --name $container \
     --network ubuntu_default \
     -w /home/src/ \

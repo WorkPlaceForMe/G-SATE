@@ -1,6 +1,6 @@
 {
     "result":["mysql"],
-    "image":[],
+    "image":["local"],
     "es":{
         "url":"https://search-graymatics-dev-fc6j24xphhun5xcinuusz2yfjm.ap-southeast-1.es.amazonaws.com",
         "user":"admin",

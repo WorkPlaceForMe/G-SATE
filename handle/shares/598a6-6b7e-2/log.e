@@ -1,8 +1,12 @@
-2021-07-16 08:49:55.740461: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-21 08:31:52.668705: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
 /home/Quantela/ClothingAttributes/use/mysql.py:17: Warning: (1007, "Can't create database 'gsate'; database exists")
   self.cursor.execute('create database if not exists {}'.format(self.table.split('.')[0]))
 /home/Quantela/ClothingAttributes/use/mysql.py:20: Warning: (1050, "Table 'clothing_gsate' already exists")
   self.cursor.execute('create table if not exists {} {}'.format(self.table, self.get_all(columns)))
+
+(python3:8): GStreamer-CRITICAL **: 08:31:55.973: gst_element_make_from_uri: assertion 'gst_uri_is_valid (uri)' failed
+[ WARN:0] global /home/opencv-4.2.0/modules/videoio/src/cap_gstreamer.cpp (713) open OpenCV | GStreamer warning: Error opening bin: no source element for URI "/home/resources/recordings/saima_test.mp4"
+[ WARN:0] global /home/opencv-4.2.0/modules/videoio/src/cap_gstreamer.cpp (480) isPipelinePlaying OpenCV | GStreamer warning: GStreamer: pipeline have not been created
  0 : compute_capability = 750, cudnn_half = 1, GPU: Tesla T4 
    layer   filters  size/strd(dil)      input                output
    0 conv     32       3 x 3/ 1    416 x 416 x   3 ->  416 x 416 x  32 0.299 BF
@@ -119,38 +123,58 @@ Total BFLOPS 65.879
 avg_outputs = 532444 
  Allocate additional workspace_size = 52.43 MB 
 Loading weights from ./darknet/backup/yolov3.weights...Done! Loaded 107 layers from weights-file 
-2021-07-16 08:49:59.726425: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
-2021-07-16 08:49:59.727070: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+2021-07-21 08:32:01.359627: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2021-07-21 08:32:01.360355: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
 pciBusID: 0001:00:00.0 name: Tesla T4 computeCapability: 7.5
 coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 15.75GiB deviceMemoryBandwidth: 298.08GiB/s
-2021-07-16 08:49:59.727107: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-2021-07-16 08:49:59.727192: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-2021-07-16 08:49:59.727223: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-2021-07-16 08:49:59.727255: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-2021-07-16 08:49:59.728575: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-2021-07-16 08:49:59.729249: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-2021-07-16 08:49:59.729297: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-2021-07-16 08:49:59.730238: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-2021-07-16 08:49:59.747453: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2021-07-21 08:32:01.360389: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-21 08:32:01.360479: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-21 08:32:01.360510: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-21 08:32:01.360543: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-21 08:32:01.361823: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-21 08:32:01.363069: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-21 08:32:01.363161: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-21 08:32:01.364579: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-21 08:32:01.452309: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2021-07-16 08:49:59.752933: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2445400000 Hz
-2021-07-16 08:49:59.753091: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x1e01c1a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2021-07-16 08:49:59.753102: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-2021-07-16 08:49:59.755165: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x1e01bff0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
-2021-07-16 08:49:59.755182: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
-2021-07-16 08:49:59.755672: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+2021-07-21 08:32:01.463083: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2445415000 Hz
+2021-07-21 08:32:01.463231: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x31c6c5e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-07-21 08:32:01.463241: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-07-21 08:32:01.475500: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x49b14190 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-07-21 08:32:01.475559: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
+2021-07-21 08:32:01.476366: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
 pciBusID: 0001:00:00.0 name: Tesla T4 computeCapability: 7.5
 coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 15.75GiB deviceMemoryBandwidth: 298.08GiB/s
-2021-07-16 08:49:59.755774: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-2021-07-16 08:49:59.755804: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-2021-07-16 08:49:59.755815: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-2021-07-16 08:49:59.755831: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-2021-07-16 08:49:59.755901: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-2021-07-16 08:49:59.755931: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-2021-07-16 08:49:59.755944: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-2021-07-16 08:49:59.756779: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-2021-07-16 08:49:59.756815: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
-2021-07-16 08:49:59.756820: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
-2021-07-16 08:49:59.756826: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
-2021-07-16 08:49:59.758055: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 4742 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0001:00:00.0, compute capability: 7.5)
-2021-07-16 08:50:06.787738: W tensorflow/core/common_runtime/bfc_allocator.cc:312] Garbage collection: deallocate free memory regions (i.e., allocations) so that we can re-allocate a larger region to avoid OOM due to memory fragmentation. If you see this message frequently, you are running near the threshold of the available device memory and re-allocation may incur great performance overhead. You may try smaller batch sizes to observe the performance impact. Set TF_ENABLE_GPU_GARBAGE_COLLECTION=false if you'd like to disable this feature.
+2021-07-21 08:32:01.476459: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-21 08:32:01.476474: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-21 08:32:01.476485: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-21 08:32:01.476501: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-21 08:32:01.476566: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-21 08:32:01.476596: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-21 08:32:01.476609: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-21 08:32:01.477637: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-21 08:32:01.477663: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-07-21 08:32:01.477669: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
+2021-07-21 08:32:01.477675: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
+2021-07-21 08:32:01.478765: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 8250 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0001:00:00.0, compute capability: 7.5)
+2021-07-21 08:32:06.329696: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 64.00M (67108864 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.330459: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 57.60M (60398080 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.331296: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 51.84M (54358272 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.332022: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 46.66M (48922624 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.332731: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 41.99M (44030464 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.333441: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 37.79M (39627520 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.334154: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 34.01M (35664896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.334967: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 30.61M (32098560 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.336009: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 27.55M (28888832 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.352939: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 24.79M (26000128 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.353773: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 22.32M (23400192 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.354530: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 20.08M (21060352 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.363700: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 18.08M (18954496 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.364505: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 16.27M (17059072 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.365288: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 14.64M (15353344 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.366142: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 13.18M (13818112 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.380695: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 11.86M (12436480 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.381615: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 10.67M (11192832 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.382415: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 9.61M (10073600 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.383246: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 8.65M (9066240 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-21 08:32:06.383959: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 64.00M (67108864 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory

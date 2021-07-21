@@ -11,66 +11,8 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7f1780100668>
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['unknown', 'White', 'Long', 'Blue', 'Black']
-['long', 'Green', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1626425408.3736322
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1626425413.5284503
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1626425418.668731
-['long', 'Mixed', 'Long', 'Unknown', 'Black']
-['long', 'White', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1626425423.794066
-['long', 'Black', 'Long', 'White', 'Unknown']
-['sleeveless', 'Grey', 'Unknown', 'Unknown', 'Black']
-['sleeveless', 'Grey', 'Short', 'Black', 'Black']
-['long', 'Grey', 'Long', 'Black', 'Black']
-is running: 1626425429.0413394
-['long', 'Grey', 'Long', 'Black', 'Black']
-['unknown', 'Unknown', 'Long', 'White', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-['unknown', 'White', 'Long', 'White', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1626425434.0428977
-['long', 'Green', 'Long', 'Black', 'White']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Black']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Black']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1626425439.0542204
-['long', 'Black', 'Long', 'White', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1626425444.0762014
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-is running: 1626425449.119424
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'White', 'Long', 'Black', 'Black']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1626425454.1716497
-['long', 'Green', 'Long', 'Unknown', 'Unknown']
-['long', 'Green', 'Long', 'Unknown', 'Unknown']
-['sleeveless', 'White', 'Unknown', 'Unknown', 'Unknown']
-['sleeveless', 'White', 'Unknown', 'Unknown', 'Unknown']
+<tensorflow.python.keras.engine.functional.Functional object at 0x7fbea81c44e0>
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 1.0310 minutes
+Total time is 0.3734 minutes
 FPS -> 0.0000
