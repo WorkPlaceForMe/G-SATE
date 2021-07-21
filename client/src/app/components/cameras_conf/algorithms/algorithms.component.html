@@ -6,7 +6,7 @@
     </div>
 </section>
 <!-- banner section end -->
-<div class="section-padding">
+<div class="section-padding" *ngIf="algos && algos.length > 0">
     <div class="container">
         <div class="bg-darken">
             <div class="row no-gutters">
@@ -14,7 +14,7 @@
                 <div class="col-md-5">
                     <canvas #polygon id="jPolygon" width='{{width}}' height='{{height}}' [style.background-image]="link">Your browser does not support the HTML5 canvas tag.</canvas>
                     <!-- form -->
-                    <form class="p-4">
+                    <div class="p-4">
                         <div class="form-row">
                             <div class="form-group col-md-6" *ngIf="algos[1]['activated']==true">
                                 <label class="d-block text-white">Climbing of barricade</label>
@@ -45,7 +45,7 @@
                                 <button class="btn btn-medium ml-2" (click)="info()">Info</button>
                             </div>
                         </div>
-                    </form>
+                      </div>
                 </div>
                 <!-- left side content end -->
 

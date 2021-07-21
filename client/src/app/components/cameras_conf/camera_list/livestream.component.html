@@ -17,11 +17,11 @@
                     <div class="flex-fill">
                         <h3 class="mb-3">{{camera.name}}</h3>
                         <div class="d-flex justify-content-between">
-                            <button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning btn-icon p-1 rounded-circle text-white" tooltip="Play">
+                            <!-- <button [routerLink]="['/cameras/live/', camera.id]" class="btn btn-warning btn-icon p-1 rounded-circle text-white" tooltip="Play">
                                 <i class="fas fa-play"></i>
-                            </button>
+                            </button> -->
                             <button [routerLink]="['/cameras/edit', camera.id]" class="btn btn-primary btn-icon p-1 rounded-circle" tooltip="Edit">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <i class="fa fa-edit" aria-hidden="true"></i>
                             </button>
                             <button [routerLink]="['/cameras/algorithms', camera.id]" class="btn btn-success btn-icon p-1 rounded-circle" tooltip="Algorithms">
                                 <i class="fa fa-star" aria-hidden="true"></i>
