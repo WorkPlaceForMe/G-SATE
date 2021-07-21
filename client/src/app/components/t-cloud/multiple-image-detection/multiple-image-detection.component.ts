@@ -394,8 +394,8 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.ctx.strokeStyle = "lime";
       if (lebelIndex == e) {
         // this.label = this.data[dataIndex]["results"][e][3].label;
-        this.ctx.fillStyle = "yellow";
-        this.ctx.strokeStyle = "yellow";
+        this.ctx.fillStyle = "red";
+        this.ctx.strokeStyle = "red";
       }
       if (this.data[dataIndex]["results"][e][2]["general_detection"] == "Yes") {
         this.ctx.fillRect(
@@ -632,7 +632,7 @@ export class MultipleImageDetectionComponent implements OnInit {
                 this.labels.push(this.label);
                 this.labelsObj[this.data[i].id] = this.labels;
                 this.labels = this.labelsObj[this.data[i].id];
-                this.ctx.strokeStyle = "yellow";
+                this.ctx.strokeStyle = "red";
                 this.ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
                 this.ctx.fillRect(
                   this.data[i]["results"][e][0]["x"],

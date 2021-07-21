@@ -232,8 +232,8 @@ export class SingleImageDetectionComponent implements OnInit {
       this.ctx.strokeStyle = 'lime';
       if (i == e) {
         // this.label = this.data.results[e][3].label;
-        this.ctx.fillStyle = "yellow";
-        this.ctx.strokeStyle = 'yellow';
+        this.ctx.fillStyle = "red";
+        this.ctx.strokeStyle = 'red';
       }
       if (this.data.results[e][2]['general_detection'] == 'Yes') {
         this.ctx.fillRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], 4, 4);
@@ -364,7 +364,7 @@ export class SingleImageDetectionComponent implements OnInit {
               this.ctx.strokeStyle = 'lime';
               if (i == e) {
                 this.data.results[e][3].label = this.label;
-                this.ctx.strokeStyle = 'yellow';
+                this.ctx.strokeStyle = 'red';
                 this.ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
                 this.ctx.fillRect(this.data.results[e][0]['x'], this.data.results[e][0]['y'], this.data.results[e][1]['x'] - this.data.results[e][0]['x'], this.data.results[e][1]['y'] - this.data.results[e][0]['y']);
               }

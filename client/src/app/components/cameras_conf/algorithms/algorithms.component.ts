@@ -18,17 +18,62 @@ import { ActivatedRoute, Router, RoutesRecognized } from "@angular/router";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Camera } from "src/app/models/Camera";
 import { Roi } from "src/app/models/Roi";
-import { ip } from 'src/app/models/IpServer';
+import { ip } from "src/app/models/IpServer";
 
 @Component({
-  selector: 'app-algorithms',
-  templateUrl: './algorithms.component.html',
-  styleUrls: ['./algorithms.component.scss']
+  selector: "app-algorithms",
+  templateUrl: "./algorithms.component.html",
+  styleUrls: ["./algorithms.component.scss"],
 })
 export class AlgorithmsComponent implements OnInit {
+  @Input() private src: string;
+  @Output() private created = new EventEmitter();
+  @ViewChild("polygon", { static: true }) private polygon: ElementRef;
+
+  public innerWidth: any;
+  public innerHeight: any;
+
   link: SafeResourceUrl;
   previousUrl: string;
-
+  width: number;
+  height: number;
+  resRelation: number;
+  camera: Camera;
+  polygons = [];
+  perimeter = [];
+  relations: any = [];
+  algos: any = [];
+  Aalgos: any = [];
+  Balgos: any = [];
+  Calgos: any = [];
+  colour: string = "";
+  fill: string = "";
+  roi: Roi = {
+    id: "",
+    coords: "",
+    camera_id: "",
+  };
+  rois: any = [];
+  complete = false;
+  param = this.activatedRoute.snapshot.params.uuid;
+  actA: number;
+  actB: number;
+  actC: number;
+  climb: any = {};
+  loiteringTime: any = {};
+  speed: any = {};
+  unwanted: any = {};
+  dac: any = {};
+  quantity: any = {};
+  showL: boolean;
+  showS: boolean;
+  showU0: boolean;
+  showU1: boolean;
+  showU2: boolean;
+  res_width: number;
+  res_height: number;
+  private canvas;
+  private ctx;
   constructor(
     private rd: Renderer2,
     private facesService: FacesService,
@@ -128,7 +173,7 @@ export class AlgorithmsComponent implements OnInit {
     this.facesService.getCamera(params.uuid).subscribe(
       (res) => {
         this.camera = res;
-        console.log('this.camera - ', this.camera);
+        console.log("this.camera - ", this.camera);
         this.res_width = this.camera.cam_width;
         this.res_height = this.camera.cam_height;
         this.resRelation = this.res_height / this.res_width;
@@ -164,13 +209,6 @@ export class AlgorithmsComponent implements OnInit {
     id: null,
   };
 
-  @Input() private src: string;
-  @Output() private created = new EventEmitter();
-  @ViewChild("polygon", { static: true }) private polygon: ElementRef;
-
-  public innerWidth: any;
-  public innerHeight: any;
-
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.innerWidth = window.innerWidth;
@@ -191,48 +229,7 @@ export class AlgorithmsComponent implements OnInit {
     }
   }
 
-  width: number;
-  height: number;
-  resRelation: number;
-  camera: Camera;
-  polygons = [];
-  perimeter = [];
-  relations: any = [];
-  algos: any = [];
-  Aalgos: any = [];
-  Balgos: any = [];
-  Calgos: any = [];
-  colour: string = "";
-  fill: string = "";
-  roi: Roi = {
-    id: "",
-    coords: "",
-    camera_id: "",
-  };
-  rois: any = [];
-  complete = false;
-  param = this.activatedRoute.snapshot.params.uuid;
-  actA: number;
-  actB: number;
-  actC: number;
-  climb: any = {};
-  loiteringTime: any = {};
-  speed: any = {};
-  unwanted: any = {};
-  dac: any = {};
-  quantity: any = {};
-  showL: boolean;
-  showS: boolean;
-  showU0: boolean;
-  showU1: boolean;
-  showU2: boolean;
-  res_width: number;
-  res_height: number;
-  private canvas;
-  private ctx;
-
   ngOnInit() {
-    debugger;
     this.setBcg();
     this.complete = true;
   }
