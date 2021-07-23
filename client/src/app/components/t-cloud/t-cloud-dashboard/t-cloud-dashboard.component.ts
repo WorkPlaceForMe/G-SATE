@@ -22,6 +22,9 @@ const imgURL = "http://" + ip + ":3000/api/upload/pic";
   styleUrls: ["./t-cloud-dashboard.component.scss"],
 })
 export class TCloudDashboardComponent implements OnInit {
+  @ViewChild("img", { static: true }) myImgInputVariable: ElementRef;
+  @ViewChild("zip", { static: true }) myInputVariable: ElementRef;
+
   labelImport: ElementRef;
   fileToUpload: File = null;
 
@@ -38,7 +41,7 @@ export class TCloudDashboardComponent implements OnInit {
   });
 
   fileName: string = "";
-  searchcount: number;
+  searchcount: number = 20;
   imgFileName: string = "";
   uploadName: string;
   unAnnDatasetsNames: any = [];
@@ -52,11 +55,9 @@ export class TCloudDashboardComponent implements OnInit {
   public showMyMessage2 = false;
   public showMyMessage3 = false;
   public showMyMessage4 = false;
-  public showMyMessage5 = false;
   public showMyWatch = false;
   public showClass = false;
   public badFile = true;
-  public badImgFile = true;
   public open = false;
   spinner: boolean = false;
   spin: boolean = false;
@@ -84,6 +85,7 @@ export class TCloudDashboardComponent implements OnInit {
   labels: any = [];
   selectedUnAnnotatedDataset: any = "";
   selectedAnnotatedDataset: any = "";
+  count = 0;
 
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
@@ -128,14 +130,28 @@ export class TCloudDashboardComponent implements OnInit {
       }
     };
 
-
     this.photoUploader.onAfterAddingFile = (file) => {
-      console.log("****************************", file.file.name.split(".")[1]);
-      file.withCredentials = false;
-      const format = file.file.name.split(".")[1];
-      const name = this.imgFileName.split(" ").join("_");
-      const newName = name + "." + format;
-      file.file.name = newName;
+      console.log("****************************", file._file);
+      this.imgFileName = file._file.name;
+      console.log("imgFileName........", this.imgFileName);
+
+      if (
+        file._file.type === "image/png" ||
+        file._file.type === "image/jpeg" ||
+        file._file.type === "image/jpg"
+      ) {
+        file.withCredentials = false;
+        const format = file.file.name.split(".")[1];
+        const name = this.imgFileName.split(" ").join("_");
+        const newName = name + "." + format;
+        file.file.name = newName;
+      } else {
+        file = null;
+        this.myImgInputVariable.nativeElement.value = null;
+        this.imgFileName = "";
+        alert("Unsupported file format");
+        this.clearImageStack();
+      }
     };
     this.photoUploader.onCompleteItem = (
       item: any,
@@ -180,7 +196,11 @@ export class TCloudDashboardComponent implements OnInit {
     this.cdref.detectChanges();
   }
 
-  count = 0;
+  clearImageStack() {
+    this.photoUploader.cancelAll();
+    this.photoUploader.clearQueue();
+  }
+
   setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
       return;
@@ -297,8 +317,6 @@ export class TCloudDashboardComponent implements OnInit {
     ]);
   }
 
-  @ViewChild("zip", { static: true }) myInputVariable: ElementRef;
-
   check() {
     this.uploader.uploadAll();
     this.myInputVariable.nativeElement.value = null;
@@ -310,8 +328,6 @@ export class TCloudDashboardComponent implements OnInit {
     this.showMyMessage4 = false;
     this.showMyMessage3 = true;
   }
-
-  @ViewChild("img", { static: true }) myImgInputVariable: ElementRef;
 
   checkImg() {
     this.uploadImage = true;
@@ -360,18 +376,7 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   showPicInfo(event) {
-    this.imgFileName = event.target.files[0].name;
-    console.log("imgFileName........", this.imgFileName);
-    if (
-      this.imgFileName.includes(".jpg") ||
-      this.imgFileName.includes(".png")
-    ) {
-      this.badImgFile = false;
-      console.log(this.badImgFile);
-      this.showMyMessage5 = true;
-    } else {
-      this.badImgFile = true;
-    }
+    console.log(event);
   }
 
   detectChange() {

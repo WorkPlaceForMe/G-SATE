@@ -85,26 +85,19 @@
                                     <input type="file" class="custom-file-input" id="inputGroupFile02"
                                         (change)="showPicInfo($event)" [uploader]="photoUploader" ng2FileSelect #img />
                                     <label class="custom-file-label custom-file-label-transparent mb-0" #labelImport
-                                        for="inputGroupFile02">{{
-                                        imgFileName == ""
-                                        ? "Choose an image to upload"
-                                        : imgFileName
-                                        }}</label>
+                                        for="inputGroupFile02">{{ imgFileName == "" ? "Choose an image to upload" :
+                                        imgFileName }}</label>
                                 </div>
                             </div>
-                            <p class="text-white">Supported formats: JPG and PNG only</p>
+                            <p class="text-white">Supported formats: JPG, JPEG and PNG.</p>
                         </div>
                         <div class="mt-auto">
                             <button *ngIf="!uploadImage" class="btn btn-primary btn-block font-weight-normal"
-                                (click)="checkImg()" [disabled]="
-                  !photoUploader.getNotUploadedItems().length ||
-                  showMyMessage5 == false ||
-                  badImgFile == true
-                ">
+                                (click)="checkImg()"
+                                [disabled]=" !photoUploader.getNotUploadedItems().length">
                                 Annotate & Train
                             </button>
-                            <button *ngIf="uploadImage" disabled class="btn btn-primary btn-block font-weight-normal"
-                                (click)="checkImg()">
+                            <button *ngIf="uploadImage" disabled class="btn btn-primary btn-block font-weight-normal">
                                 Loading...
                             </button>
                         </div>
@@ -164,7 +157,7 @@
                         <div class="form-group">
                             <input type="number" placeholder="No of images (Max 150)"
                                 class="form-control form-control-transparent" [(ngModel)]="searchcount"
-                                (ngModelChange)="validateWhite($event)" min="1" max="150"/>
+                                (ngModelChange)="validateWhite($event)" min="1" max="150" />
                         </div>
                         <!-- <div class="form-group">
                             <select class="form-control form-control-transparent select-picker"
