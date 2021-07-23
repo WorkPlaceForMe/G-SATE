@@ -21,6 +21,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.router.navigate([page]);
   }
 
+  openTab(url) {
+    window.open(url, "_blank");
+  }
+
   ngOnDestroy() {
   }
 
