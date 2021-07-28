@@ -78,6 +78,14 @@ export class AnnotationsService {
     return this.http.post(`${this.TRAINING_SCRIPT_URL}/preprocess`, data);
   }
 
+  getTestList() {
+    return this.http.get(`${this.TRAINING_SCRIPT_URL}/trainingID`);
+  }
+
+  getGraph(data) {
+    return this.http.get(`${this.TRAINING_SCRIPT_URL}/trainingData?training_id=` + data.dataset_id + `&dataset_name=` + data.dataset_name );
+  }
+
   createDataset(data: any) {
     return this.http.post(`${this.API_URL}/datasets/image/search/create`, data);
   }

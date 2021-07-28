@@ -69,6 +69,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ChartsModule } from 'ng2-charts';
+import { TestResultComponent } from './components/test-results/test-results.component';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
 @NgModule({
@@ -113,7 +115,8 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     ObjectDetectionDetailsComponent,
     FederatedLearningComponent,
     TestYourModelComponent,
-    FooterComponent
+    FooterComponent,
+    TestResultComponent
   ],
   imports: [
     BrowserModule,
@@ -140,6 +143,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     AngularSvgIconModule.forRoot(),
     TooltipModule.forRoot(),
     PerfectScrollbarModule,
+    ChartsModule,
   ],
   providers: [
     FacesService,
