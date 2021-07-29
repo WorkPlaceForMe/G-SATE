@@ -69,7 +69,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule, ThemeService } from 'ng2-charts';
 import { TestResultComponent } from './components/test-results/test-results.component';
 const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
 
@@ -153,6 +153,7 @@ const config: SocketIoConfig = { url: 'http://' + ip + ':4444', options: {} };
     StrService,
     AnnotationsService,
     PagerService,
+    ThemeService
   ],
   bootstrap: [
     AppComponent

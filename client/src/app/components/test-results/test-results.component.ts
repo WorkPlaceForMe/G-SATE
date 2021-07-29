@@ -14,22 +14,45 @@ import { PagerService } from "src/app/services/pager.service";
 })
 export class TestResultComponent implements OnInit, OnDestroy {
   spin: boolean = false;
+  showGraphs: boolean = false;
   testList: Array<any>;
   selectedDataset: any;
   graphData: any;
 
-  public lineChartData: ChartDataSets[] = [];
-  public lineChartLabels: Label[] = [];
-  public lineChartOptions: ChartOptions = {};
-  public lineChartColors: Color[] = [
+  public accuracyLineChartData: ChartDataSets[] = [
     {
-      borderColor: "black",
-      backgroundColor: "rgba(255,0,0,0.3)",
+      data: [],
+      label: "Training Accuracy",
+      lineTension: 0,
+      fill: false,
     },
+    {
+      data: [],
+      label: "Validation Accuracy",
+      lineTension: 0,
+      fill: false,
+    }
   ];
+  public lossLineChartData: ChartDataSets[] = [
+    {
+      data: [],
+      label: "Training Loss",
+      lineTension: 0,
+      fill: false,
+    },
+    {
+      data: [],
+      label: "Validation Loss",
+      lineTension: 0,
+      fill: false,
+    }
+  ];
+
+  public accuracyLineChartLabels: Label[] = [];
+  public lossLineChartLabels: Label[] = [];
+
   public lineChartLegend = true;
   public lineChartType = "line";
-  public lineChartPlugins = [];
 
   constructor(
     private router: Router,
@@ -62,45 +85,28 @@ export class TestResultComponent implements OnInit, OnDestroy {
   }
 
   getGraphData() {
+    this.accuracyLineChartLabels = [];
+    this.lossLineChartLabels = [];
     this.spin = true;
     this.annotationsServ
       .getGraph(this.testList[this.selectedDataset])
       .subscribe(
         (res: any) => {
+          debugger;
           this.spin = false;
           this.graphData = res;
           console.log("this.graphData - ", this.graphData);
-          this.lineChartLabels.push(this.graphData.epoch);
-          let training_acc = {
-            data: this.graphData.training_acc,
-            label: "Training Accuracy",
-            lineTension: 0,
-            fill: false,
-          }
-          let training_loss = {
-            data: this.graphData.training_loss,
-            label: "Training Loss",
-            lineTension: 0,
-            fill: false,
-          }
-          this.lineChartData.push(training_acc);
-          this.lineChartData.push(training_loss);
-
-          let validation_acc = {
-            data: this.graphData.validation_acc,
-            label: "Validation Accuracy",
-            lineTension: 0,
-            fill: false,
-          }
-          let validation_loss = {
-            data: this.graphData.validation_loss,
-            label: "Validation Loss",
-            lineTension: 0,
-            fill: false,
-          }
+          this.accuracyLineChartLabels = this.graphData.epoch;
+          this.lossLineChartLabels = this.graphData.epoch;
+          this.accuracyLineChartData[0].data = this.graphData.training_acc;
+          this.accuracyLineChartData[1].data = this.graphData.validation_acc;
+          this.lossLineChartData[0].data = this.graphData.training_loss;
+          this.lossLineChartData[1].data = this.graphData.validation_loss;
+          this.showGraphs = true;
         },
         (err) => {
           this.spin = false;
+          this.showGraphs = false;
           console.log(err);
         }
       );
