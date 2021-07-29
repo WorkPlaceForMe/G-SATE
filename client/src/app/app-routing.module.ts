@@ -30,6 +30,7 @@ import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-det
 import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
+import { TestResultComponent } from './components/test-results/test-results.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
   {
     path: 'federated-learning',
     component: FederatedLearningComponent
+  },
+  {
+    path: 'test-results',
+    component: TestResultComponent
   },
   {
     path: 'user/images/:id',

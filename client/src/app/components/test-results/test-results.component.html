@@ -1,0 +1,46 @@
+<div
+  class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{'background-image': 'url(/assets/images/camera-edit-bg.jpg)'}">
+
+  <div class="container container-large text-center z-index-1 text-white">
+    <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <h2 class="mb-4 text-uppercase text-white">Select a Trained Model</h2>
+    <div class="form-group form-row">
+      <div class="col-7">
+        <select class="form-control form-control-transparent select-picker" [(ngModel)]="selectedDataset">
+          <option value="">Select a Trained Dataset</option>
+          <option *ngFor="let data of testList; index as i" [value]="i">
+            {{ data.dataset_name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-5 d-flex">
+        <button type="button" class="btn btn-primary btn-block font-weight-normal mr-2" (click)="getGraphData()"
+          [disabled]="!selectedDataset">
+          Get Results
+        </button>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="showGraphs">
+      <div class="col-6 col-md-10 col-lg-8 col-xl-6">
+        <div class="bg-white rounded">
+          <canvas baseChart [datasets]="accuracyLineChartData" [labels]="accuracyLineChartLabels"
+            [legend]="lineChartLegend" [chartType]="lineChartType">
+          </canvas>
+        </div>
+      </div>
+      <div class="col-6 col-md-10 col-lg-8 col-xl-6">
+        <div class="bg-white rounded">
+          <canvas baseChart [datasets]="lossLineChartData" [labels]="lossLineChartLabels" [legend]="lineChartLegend"
+            [chartType]="lineChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
