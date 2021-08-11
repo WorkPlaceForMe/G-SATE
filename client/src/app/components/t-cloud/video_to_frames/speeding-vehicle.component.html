@@ -61,7 +61,14 @@
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="end_date">Dataset Name</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false">
+                    <!-- <input type="text" class="form-control form-control-sm" placeholder="Input dataset name" [(ngModel)]='datasetName' size="20" (ngModelChange)="detect()" [disabled]="flag == false"> -->
+                    <!-- Select 2  -->
+                    <select class="createDatasetSelect2" name="state" style="width: 150px;" size="30"
+                        [(ngModel)]="datasetName" (ngModelChange)="detect()" [disabled]="flag == false">
+                        <option *ngFor="let data of unAnnDatasetsNames; index as i" [value]="i">
+                            {{ data.name }}
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
                     <label for="end_date">Total Images</label>

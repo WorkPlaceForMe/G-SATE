@@ -146,6 +146,7 @@ let Dataset = {
       body.format = ".mov";
     }
     try {
+      let pathExist = false;
       let directory =
         process.env.resources2 + "recordings/" + body.datasetName + ".mp4";
       let datasetDir = process.env.resources2 + "datasets/" + body.datasetName;
@@ -153,6 +154,8 @@ let Dataset = {
         process.env.resources2 + "recordings/" + body.datasetName + ".mp4";
       if (!fs.existsSync(datasetDir)) {
         fs.mkdirSync(datasetDir);
+      } else {
+        pathExist = true;
       }
       let snippetId = uuidv4();
       let accId = uuidv4();
@@ -174,7 +177,7 @@ let Dataset = {
           .seekInput("00:00:00")
           .outputOptions([`-vf fps=${body.fps}`])
           .duration(`${body.t}`)
-          .saveToFile(datasetDir + "/image%d.jpg")
+          .saveToFile(datasetDir + "/" + Date.now() +  "-image%d.jpg")
           .on("end", function (stdout, stderr) {
             resolve("Done!!");
           });
@@ -196,65 +199,70 @@ let Dataset = {
         console.log(exists ? absDir + ' - Found' : absDir + ' - Not Found!');
       });
       //--------
-      Datasets.add(data, function (err, row) {
-        if (err) return res.status(500).json(err);
-        Relations.getRels(cam_id, function (err, result) {
+      if(!pathExist) {
+        Datasets.add(data, function (err, row) {
           if (err) return res.status(500).json(err);
-          for (const itm of result) {
-            let d = {
-              id: uuidv4(),
-              camera_id: cam_id,
-              algo_id: itm.algo_id,
-              snippet_id: snippetId,
-              roi_id: null,
-              atributes: `[{"conf": 10, "save": true, "time": 0, "fps":${body.fps}}]`,
-              id_account: accId,
-              id_branch: accId,
-              stream: null,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              http_out: null,
-            };
-            Relations.create(d, function (err, r) {
-              if (err) console.log("err>>>>>>>>>>>>>>>>", err);
-            });
-          }
-          let data = {
-            cam_id: cam_id,
-            clientId: uuidv4(),
-            name: datasetName,
-            path: datasetDir,
-            processed: "Yes",
-            class: "data",
-            type: "zip",
-            uploaded: "Yes",
-            snippet_id: uuidv4(),
-          };
-          //--------
-          fs.exists(datasetDir, (exists) => {
-            console.log(exists ? datasetDir + ' - Found' : datasetDir + ' - Not Found!');
-          });
-          //--------
-          Datasets.add(data, function (err, row) {
+          Relations.getRels(cam_id, function (err, result) {
             if (err) return res.status(500).json(err);
-            res.status(200).json("Dataset created successfully!");
+            for (const itm of result) {
+              let d = {
+                id: uuidv4(),
+                camera_id: cam_id,
+                algo_id: itm.algo_id,
+                snippet_id: snippetId,
+                roi_id: null,
+                atributes: `[{"conf": 10, "save": true, "time": 0, "fps":${body.fps}}]`,
+                id_account: accId,
+                id_branch: accId,
+                stream: null,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                http_out: null,
+              };
+              Relations.create(d, function (err, r) {
+                if (err) console.log("err>>>>>>>>>>>>>>>>", err);
+              });
+            }
+            let data = {
+              cam_id: cam_id,
+              clientId: uuidv4(),
+              name: datasetName,
+              path: datasetDir,
+              processed: "Yes",
+              class: "data",
+              type: "zip",
+              uploaded: "Yes",
+              snippet_id: uuidv4(),
+            };
+            //--------
+            fs.exists(datasetDir, (exists) => {
+              console.log(exists ? datasetDir + ' - Found' : datasetDir + ' - Not Found!');
+            });
+            //--------
+            Datasets.add(data, function (err, row) {
+              if (err) return res.status(500).json(err);
+              res.status(200).json("Dataset created successfully!");
+            });
           });
         });
-      });
+      }
     } catch (e) {
       console.log("error>>>>>>>>>>", e);
     }
   },
-  unzipDataset: (req, res) => {
+  unzipDataset: async (req, res) => {
+    const pathName = file.originalname.toString().replace(".zip", "");
+    const pathExist = fs.existsSync(pathName);
+
     let stor = multer.diskStorage({
       //multers disk storage settings
-      filename: function (req, file, cb) {
+      filename: (req, file, cb) => {
         var newName = file.originalname.toString();
         cb(null, newName);
         //file.originalname
       },
-      destination: function (req, file, cb) {
-        const pathName = file.originalname.toString().replace(".zip", "");
+      destination: (req, file, cb) => {
+        
         var lugar = process.env.resources2 + "datasets/" + pathName;
         if (!fs.existsSync(lugar)) {
           fs.mkdirSync(lugar);
@@ -326,22 +334,27 @@ let Dataset = {
             (e) => console.log("error", e)
           );
 
-        let data = {
-          cam_id: uuidv4(),
-          clientId: uuidv4(),
-          name: pathName,
-          path: unZippedPath,
-          processed: "Yes",
-          class: "data",
-          type: "zip",
-          uploaded: "Yes",
-          snippet_id: uuidv4(),
-        };
-        Datasets.add(data, function (err, row) {
-          if (err) return res.status(500).json(err);
-          fs.unlinkSync(pat);
-          res.status(200).json("Uploaded");
-        });
+        /**
+         * Store in the DB if path is not exist
+         */
+        if(!pathExist) {
+          let data = {
+            cam_id: uuidv4(),
+            clientId: uuidv4(),
+            name: pathName,
+            path: unZippedPath,
+            processed: "Yes",
+            class: "data",
+            type: "zip",
+            uploaded: "Yes",
+            snippet_id: uuidv4(),
+          };
+          Datasets.add(data, function (err, row) {
+            if (err) return res.status(500).json(err);
+            fs.unlinkSync(pat);
+            res.status(200).json("Uploaded");
+          });
+        }
       }
     });
   },

@@ -15247,3 +15247,6 @@ Using port 3000 for server and 4444 for socket.
 Server started at: Mon Jun 14 2021 14:16:13 GMT+0530 (India Standard Time)
 From: localhost
 Using port 3000 for server and 4444 for socket. 
+Date: Wed, 11 Aug 2021 21:58:22 GMT // Url: ::1 // Method: GET/ // Status:404 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36
+Date: Wed, 11 Aug 2021 21:58:22 GMT // Url: ::1 // Method: GET/favicon.ico // Status:404 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36
+Date: Wed, 11 Aug 2021 21:58:25 GMT // Url: ::1 // Method: GET/ // Status:404 // User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36
