@@ -267,7 +267,7 @@ let Dataset = {
         var lugar = process.env.resources2 + "datasets/" + pathName;
         pathExist = fs.existsSync(lugar);
 
-        console.log(lugar, pathExist);
+        console.log('lugar', lugar, pathExist);
 
         if (!fs.existsSync(lugar)) {
           fs.mkdirSync(lugar);
@@ -298,7 +298,7 @@ let Dataset = {
           req.file.originalname;
         unZippedPath = process.env.resources2 + "datasets/" + pathName;
 
-        console.log(unZippedPath, pathExist);
+        console.log('unZippedPath', unZippedPath, pathExist, fs.existsSync(pat));
 
         fs.createReadStream(pat)
           .pipe(
