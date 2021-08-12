@@ -1,0 +1,39 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f0b503ee550>
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1628734059.570271
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1628734064.6262727
+is running: 1628734069.8094614
+is running: 1628734074.9020636
+is running: 1628734080.009005
+is running: 1628734085.1754096
+is running: 1628734090.2502792
+is running: 1628734095.3202167
+is running: 1628734100.4054596
+is running: 1628734105.456662
+is running: 1628734110.4831386
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1628734115.5642893
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1628734120.6013792
+is running: 1628734125.6918957
+['long', 'Black', 'Long', 'Green', 'Unknown']
+is running: 1628734130.9015543
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 2.1053 minutes
+FPS -> 0.0000

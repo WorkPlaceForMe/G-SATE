@@ -11,209 +11,34 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7f42b6329668>
-['long', 'White', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['unknown', 'White', 'Long', 'Blue', 'Black']
-is running: 1627524330.0576956
-['long', 'Green', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'White']
-is running: 1627524335.2147543
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524340.5031629
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524345.8383641
-['long', 'Black', 'Long', 'Unknown', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524350.8792138
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-is running: 1627524355.953631
-is running: 1627524361.1730397
-is running: 1627524366.6392207
-['long', 'Black', 'Long', 'Mixed', 'Black']
-is running: 1627524371.8174994
-['long', 'Grey', 'Unknown', 'Unknown', 'Black']
-is running: 1627524377.2355726
-['sleeveless', 'Grey', 'Short', 'Black', 'Black']
-is running: 1627524382.334274
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'White', 'Long', 'White', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-['unknown', 'White', 'Long', 'White', 'Unknown']
-is running: 1627524387.7321274
-['long', 'Green', 'Long', 'Green', 'Unknown']
-['long', 'Black', 'Long', 'White', 'Black']
-['long', 'Black', 'Long', 'Blue', 'Black']
-is running: 1627524392.8336847
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524397.9287052
-['long', 'Black', 'Long', 'White', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Green', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524403.2048235
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Green', 'Long', 'Black', 'Black']
-['long', 'Black', 'Short', 'White', 'Unknown']
-['long', 'Black', 'Short', 'Blue', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524408.7193756
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524413.8313675
-is running: 1627524419.0492036
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524424.2532687
-['long', 'White', 'Long', 'Unknown', 'Black']
-['long', 'Green', 'Unknown', 'Unknown', 'Black']
-is running: 1627524429.4674933
-['long', 'Green', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['unknown', 'White', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524434.634469
-['sleeveless', 'White', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Green', 'Long', 'Black', 'Black']
-is running: 1627524439.904613
-is running: 1627524445.2139328
-is running: 1627524450.3697755
-is running: 1627524455.445256
-is running: 1627524460.4996228
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524465.5253015
-is running: 1627524470.5739853
-['long', 'Black', 'Long', 'Unknown', 'Black']
-is running: 1627524475.617664
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524480.6340272
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524485.6705031
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524490.8166113
-['long', 'Grey', 'Long', 'White', 'Unknown']
-['sleeveless', 'Grey', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'White']
-is running: 1627524495.8519914
-is running: 1627524500.8566241
-['long', 'White', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524505.9456997
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Blue', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Blue', 'Long', 'Black', 'Black']
-is running: 1627524511.0744617
-is running: 1627524516.12504
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524521.3096282
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Short', 'Black', 'Unknown']
-is running: 1627524526.3580856
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524531.382693
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524536.513759
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524541.5218804
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524546.5805364
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524551.6180592
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524556.8098755
-is running: 1627524561.920376
-['long', 'White', 'Unknown', 'Black', 'Black']
-['long', 'Black', 'Unknown', 'Black', 'Unknown']
-['long', 'Mixed', 'Unknown', 'Yellow', 'Unknown']
-['long', 'Blue', 'Long', 'Blue', 'Unknown']
-['long', 'Blue', 'Long', 'Blue', 'Unknown']
-['long', 'Mixed', 'Long', 'White', 'Black']
-is running: 1627524566.9811704
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524571.9843943
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524577.0059638
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1627524582.0623705
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
-is running: 1627524587.0932128
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Short', 'White', 'Black']
-['long', 'Black', 'Long', 'Black', 'White']
-is running: 1627524592.148658
-['long', 'Black', 'Short', 'White', 'Black']
-['long', 'Black', 'Long', 'Black', 'White']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524597.1495476
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524602.2422636
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Unknown', 'Black', 'Unknown']
-is running: 1627524607.3456788
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
-['long', 'Blue', 'Long', 'Black', 'Unknown']
-['long', 'Blue', 'Long', 'Black', 'Unknown']
-['long', 'White', 'Long', 'Blue', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-is running: 1627524612.4275641
-['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
-['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
-['long', 'Black', 'Long', 'Blue', 'Unknown']
-['sleeveless', 'Blue', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524617.4722068
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Black']
-is running: 1627524622.5238328
-['long', 'Blue', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Blue', 'Long', 'Blue', 'Unknown']
-['long', 'Black', 'Short', 'Unknown', 'Unknown']
-['long', 'Blue', 'Long', 'Black', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
-is running: 1627524627.6955445
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Black', 'Unknown']
-is running: 1627524632.7317228
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f957d5a96a0>
+['long', 'Blue', 'Long', 'Blue', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+is running: 1628734059.6699646
+['long', 'Blue', 'Short', 'Blue', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Black', 'White']
+is running: 1628734064.686231
+is running: 1628734069.7162313
+['short', 'Pink', 'Long', 'Black', 'Black']
+is running: 1628734074.85657
+['short', 'Pink', 'Long', 'Unknown', 'Black']
+is running: 1628734079.905596
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'White']
+is running: 1628734085.1103754
+['long', 'Blue', 'Short', 'Blue', 'Black']
+is running: 1628734090.1471198
+is running: 1628734095.3395646
+is running: 1628734100.4606578
+['long', 'Blue', 'Short', 'Unknown', 'White']
+['long', 'Blue', 'Short', 'White', 'White']
+['short', 'Purple', 'Short', 'Unknown', 'Black']
+is running: 1628734105.489163
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 5.7215 minutes
+Total time is 1.7004 minutes
 FPS -> 0.0000

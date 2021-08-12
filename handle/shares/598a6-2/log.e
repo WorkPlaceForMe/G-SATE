@@ -1,4 +1,4 @@
-2021-07-29 02:04:43.499853: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-08-12 02:06:34.509851: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
 /home/Quantela/ClothingAttributes/use/mysql.py:17: Warning: (1007, "Can't create database 'gsate'; database exists")
   self.cursor.execute('create database if not exists {}'.format(self.table.split('.')[0]))
 /home/Quantela/ClothingAttributes/use/mysql.py:20: Warning: (1050, "Table 'clothing_gsate' already exists")
@@ -131,63 +131,90 @@ Total BFLOPS 65.879
 avg_outputs = 532444 
  Allocate additional workspace_size = 52.43 MB 
 Loading weights from ./darknet/backup/yolov3.weights...Done! Loaded 107 layers from weights-file 
-2021-07-29 02:05:06.286733: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
-2021-07-29 02:05:06.294488: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+2021-08-12 02:07:03.399063: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2021-08-12 02:07:03.399676: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
 pciBusID: 0001:00:00.0 name: Tesla T4 computeCapability: 7.5
 coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 15.75GiB deviceMemoryBandwidth: 298.08GiB/s
-2021-07-29 02:05:06.294603: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-2021-07-29 02:05:06.294697: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-2021-07-29 02:05:06.294728: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-2021-07-29 02:05:06.294760: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-2021-07-29 02:05:06.701043: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-2021-07-29 02:05:06.737977: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-2021-07-29 02:05:06.738130: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-2021-07-29 02:05:06.747709: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-2021-07-29 02:05:06.826225: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+2021-08-12 02:07:03.399710: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-08-12 02:07:03.399813: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-08-12 02:07:03.399845: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-08-12 02:07:03.399876: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-08-12 02:07:03.790807: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-08-12 02:07:03.823626: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-08-12 02:07:03.823765: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-08-12 02:07:03.838590: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-08-12 02:07:03.933186: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2021-07-29 02:05:06.912507: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2445410000 Hz
-2021-07-29 02:05:06.912881: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x49ecdde0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2021-07-29 02:05:06.912898: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-2021-07-29 02:05:06.930538: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x49f52060 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
-2021-07-29 02:05:06.930561: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
-2021-07-29 02:05:06.940296: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+2021-08-12 02:07:04.006474: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2445415000 Hz
+2021-08-12 02:07:04.006602: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x49a90e80 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-08-12 02:07:04.006611: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-08-12 02:07:04.026740: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x49b151c0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-08-12 02:07:04.026759: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Tesla T4, Compute Capability 7.5
+2021-08-12 02:07:04.039309: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
 pciBusID: 0001:00:00.0 name: Tesla T4 computeCapability: 7.5
 coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 15.75GiB deviceMemoryBandwidth: 298.08GiB/s
-2021-07-29 02:05:06.940414: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
-2021-07-29 02:05:06.940429: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
-2021-07-29 02:05:06.940438: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
-2021-07-29 02:05:06.940452: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
-2021-07-29 02:05:06.940510: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
-2021-07-29 02:05:06.940531: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
-2021-07-29 02:05:06.940542: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
-2021-07-29 02:05:06.948231: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
-2021-07-29 02:05:06.948277: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
-2021-07-29 02:05:06.948285: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
-2021-07-29 02:05:06.948291: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
-2021-07-29 02:05:06.960227: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 8776 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0001:00:00.0, compute capability: 7.5)
-2021-07-29 02:05:29.237808: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 2.00G (2147483648 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.238642: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.80G (1932735232 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.239398: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.62G (1739461632 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.240133: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.46G (1565515520 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.241450: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.31G (1408964096 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.243650: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.18G (1268067840 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.243698: W tensorflow/core/common_runtime/bfc_allocator.cc:312] Garbage collection: deallocate free memory regions (i.e., allocations) so that we can re-allocate a larger region to avoid OOM due to memory fragmentation. If you see this message frequently, you are running near the threshold of the available device memory and re-allocation may incur great performance overhead. You may try smaller batch sizes to observe the performance impact. Set TF_ENABLE_GPU_GARBAGE_COLLECTION=false if you'd like to disable this feature.
-2021-07-29 02:05:29.281389: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 2.00G (2147483648 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.281461: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.08GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.336727: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.336772: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.27GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.337619: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.337641: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 154.32MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.343560: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.343628: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.27GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.345770: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.345817: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 154.32MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.379527: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.379579: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 605.50MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
-2021-07-29 02:05:29.393636: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 4.00G (4294967296 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-2021-07-29 02:05:29.393700: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.09GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:04.039413: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-08-12 02:07:04.039426: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-08-12 02:07:04.039435: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-08-12 02:07:04.039447: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-08-12 02:07:04.039501: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-08-12 02:07:04.039523: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-08-12 02:07:04.039534: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-08-12 02:07:04.048978: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-08-12 02:07:04.049034: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-08-12 02:07:04.049242: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
+2021-08-12 02:07:04.049248: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
+2021-08-12 02:07:04.062247: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 4222 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0001:00:00.0, compute capability: 7.5)
+2021-08-12 02:07:15.415949: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 256.00M (268435456 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.445973: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 230.40M (241592064 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.448971: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 207.36M (217433088 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.451884: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 186.62M (195689984 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.455046: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 167.96M (176121088 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.469912: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 151.17M (158509056 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.473415: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 136.05M (142658304 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.485064: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 122.44M (128392704 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.487826: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 110.20M (115553536 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.490353: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 99.18M (103998208 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.493472: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 89.26M (93598464 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.496953: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 80.34M (84238848 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.500058: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 72.30M (75815168 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.503140: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 65.07M (68233728 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.506431: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 58.57M (61410560 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.509851: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 52.71M (55269632 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:15.513011: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 256.00M (268435456 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.372558: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.376528: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 546.16MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.384025: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.384092: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 150.16MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.425286: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.425373: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 150.20MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.471970: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.472021: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 552.34MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.645277: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.645333: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 153.62MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.704877: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.704913: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 561.31MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.741512: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.741561: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 564.50MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.874005: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.874044: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 162.81MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.898026: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.898062: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 290.15MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.947332: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:38.947374: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 593.56MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2021-08-12 02:07:38.979534: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.025260: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 1.00G (1073741824 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.038064: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 2.00G (2147483648 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.056816: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.057570: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.065162: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.065971: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.181329: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-08-12 02:07:39.192321: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 3.62G (3891920896 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+[h264 @ 0x62e0ea0] Invalid NAL unit size (9237 > 6603).
+[h264 @ 0x62e0ea0] Error splitting the input into NAL units.
 Input #0, rawvideo, from 'pipe:':
   Duration: N/A, bitrate: 184320 kb/s
     Stream #0:0: Video: rawvideo (BGR[24] / 0x18524742), bgr24, 640x480, 184320 kb/s, 25 tbr, 25 tbn, 25 tbc
-[tcp @ 0x5625b634b960] Failed to resolve hostname broadcast: Temporary failure in name resolution
-http://broadcast:8090/feed6.ffm: Input/output error
+[tcp @ 0x55a5ae091960] Failed to resolve hostname broadcast: Temporary failure in name resolution
+http://broadcast:8090/feed4.ffm: Input/output error
