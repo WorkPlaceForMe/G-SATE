@@ -68,7 +68,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.cam_name + " at " + this.activatedRoute.snapshot.params.date;
 
     // Select2
-    if(typeof jQuery('.createDatasetSelect2').select2 == 'function') {
+    if(jQuery('.createDatasetSelect2').select2 && typeof jQuery('.createDatasetSelect2').select2 == 'function') {
       jQuery('.createDatasetSelect2').select2({
         placeholder: "Enter Dataset Name",
         tags: true
