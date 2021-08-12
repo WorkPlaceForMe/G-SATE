@@ -253,7 +253,7 @@ let Dataset = {
   unzipDataset: async (req, res) => {
     let pathExist;
 
-    let stor = multer.diskStorage({
+    let stor = await multer.diskStorage({
       //multers disk storage settings
       filename: (req, file, cb) => {
         var newName = file.originalname.toString();
@@ -276,7 +276,7 @@ let Dataset = {
       },
     });
 
-    let upZip = multer({
+    let upZip = await multer({
       //multer settings
       storage: stor,
     }).single("zip");
