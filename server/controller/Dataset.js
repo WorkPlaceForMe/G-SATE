@@ -281,7 +281,7 @@ let Dataset = {
       storage: stor,
     }).single("zip");
 
-    upZip(req, res, (err) => {
+    upZip(req, res, async (err) => {
       if (err) {
         res.json({
           error_code: 1,
