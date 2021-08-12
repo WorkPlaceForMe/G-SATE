@@ -298,7 +298,7 @@ let Dataset = {
           req.file.originalname;
         unZippedPath = process.env.resources2 + "datasets/" + pathName;
 
-        console.log('unZippedPath', unZippedPath, pathExist, fs.existsSync(pat));
+        console.log('unZippedPath', unZippedPath, pathExist, fs.existsSync(pat), pat);
 
         fs.createReadStream(pat)
           .pipe(
@@ -363,7 +363,7 @@ let Dataset = {
             res.status(200).json("Uploaded");
           });
         } else {
-          fs.unlinkSync(pat);
+          // fs.unlinkSync(pat);
           res.status(200).json("Uploaded");
         }
       }
