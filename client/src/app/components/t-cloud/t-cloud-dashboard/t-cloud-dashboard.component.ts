@@ -194,7 +194,9 @@ export class TCloudDashboardComponent implements OnInit {
     );
 
     // Select2
+    // @ts-ignore
     if(jQuery('.createDatasetSelect2').select2 && typeof jQuery('.createDatasetSelect2').select2 == 'function') {
+      // @ts-ignore
       jQuery('.createDatasetSelect2').select2({
         placeholder: "Enter Dataset Name",
         tags: true
