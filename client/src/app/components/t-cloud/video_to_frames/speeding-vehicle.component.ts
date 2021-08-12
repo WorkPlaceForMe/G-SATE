@@ -68,7 +68,7 @@ export class SpeedingVehicleComponent implements OnInit {
       this.cam_name + " at " + this.activatedRoute.snapshot.params.date;
 
     // Select2
-    if(typeof jQuery('.createDatasetSelect2').select2) {
+    if(typeof jQuery('.createDatasetSelect2').select2 == 'function') {
       jQuery('.createDatasetSelect2').select2({
         placeholder: "Enter Dataset Name",
         tags: true
@@ -84,7 +84,7 @@ export class SpeedingVehicleComponent implements OnInit {
           //   };
           // }
 
-          this.datasetName = e.params.args.data.text;
+          this.datasetName = e.params.args.data.text.trim();
 
 
           this.detect();

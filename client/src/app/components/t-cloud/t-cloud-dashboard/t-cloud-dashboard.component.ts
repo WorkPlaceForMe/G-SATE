@@ -194,7 +194,7 @@ export class TCloudDashboardComponent implements OnInit {
     );
 
     // Select2
-    if(typeof jQuery('.createDatasetSelect2').select2) {
+    if(typeof jQuery('.createDatasetSelect2').select2 == 'function') {
       jQuery('.createDatasetSelect2').select2({
         placeholder: "Enter Dataset Name",
         tags: true
@@ -210,7 +210,9 @@ export class TCloudDashboardComponent implements OnInit {
           //   };
           // }
 
-          this.datasetName = e.params.args.data.text;
+          this.datasetName = e.params.args.data.text.trim();
+
+          console.log(e.params.args.data.text.trim());
 
 
           this.detect();
