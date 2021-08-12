@@ -251,7 +251,6 @@ let Dataset = {
     }
   },
   unzipDataset: async (req, res) => {
-    let pathName;
     let pathExist;
 
     let stor = multer.diskStorage({
@@ -259,13 +258,17 @@ let Dataset = {
       filename: (req, file, cb) => {
         var newName = file.originalname.toString();
         cb(null, newName);
+        console.log(newName);
         //file.originalname
-         pathName = file.originalname.toString().replace(".zip", "");
-         pathExist = fs.existsSync(pathName);
       },
       destination: (req, file, cb) => {
-        
+        const pathName = file.originalname.toString().replace(".zip", "");
+        console.log(pathName);
         var lugar = process.env.resources2 + "datasets/" + pathName;
+        pathExist = fs.existsSync(lugar);
+
+        console.log(lugar, pathExist);
+
         if (!fs.existsSync(lugar)) {
           fs.mkdirSync(lugar);
         }
@@ -278,7 +281,7 @@ let Dataset = {
       storage: stor,
     }).single("zip");
 
-    upZip(req, res, function (err) {
+    upZip(req, res, (err) => {
       if (err) {
         res.json({
           error_code: 1,
@@ -294,6 +297,9 @@ let Dataset = {
           "/" +
           req.file.originalname;
         unZippedPath = process.env.resources2 + "datasets/" + pathName;
+
+        console.log(unZippedPath, pathExist);
+
         fs.createReadStream(pat)
           .pipe(
             unzipper.Extract({
@@ -356,6 +362,9 @@ let Dataset = {
             fs.unlinkSync(pat);
             res.status(200).json("Uploaded");
           });
+        } else {
+          fs.unlinkSync(pat);
+          res.status(200).json("Uploaded");
         }
       }
     });
