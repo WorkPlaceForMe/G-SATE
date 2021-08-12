@@ -80,6 +80,8 @@ export class MultipleImageDetectionComponent implements OnInit {
   cacheAnnot: any = [];
   label: string;
 
+  isChecked:boolean = false;
+
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
@@ -141,6 +143,13 @@ export class MultipleImageDetectionComponent implements OnInit {
       }
     }
   }
+
+
+  checked(event: any){
+    let checkbox = event.target;
+    this.isChecked = checkbox.checked;
+  }
+
   getBackground(image) {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
