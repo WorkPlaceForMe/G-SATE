@@ -68,26 +68,28 @@ export class SpeedingVehicleComponent implements OnInit {
       this.cam_name + " at " + this.activatedRoute.snapshot.params.date;
 
     // Select2
-    jQuery('.createDatasetSelect2').select2({
-      placeholder: "Enter Dataset Name",
-      tags: true
-    })
-      .on('select2:selecting', (e: any) => {
-        // console.log('Selecting: ', e.params.args.data);
-        // if (e.params.args.data.text == e.params.args.data.id) {
-        //   this.datasetName = e.params.args.data.text
-        // } else {
-        //   this.datasetName = {
-        //     name: e.params.args.data.text,
-        //     id: e.params.args.data.id
-        //   };
-        // }
+    if(typeof jQuery('.createDatasetSelect2').select2) {
+      jQuery('.createDatasetSelect2').select2({
+        placeholder: "Enter Dataset Name",
+        tags: true
+      })
+        .on('select2:selecting', (e: any) => {
+          // console.log('Selecting: ', e.params.args.data);
+          // if (e.params.args.data.text == e.params.args.data.id) {
+          //   this.datasetName = e.params.args.data.text
+          // } else {
+          //   this.datasetName = {
+          //     name: e.params.args.data.text,
+          //     id: e.params.args.data.id
+          //   };
+          // }
 
-        this.datasetName = e.params.args.data.text;
+          this.datasetName = e.params.args.data.text;
 
 
-        this.detect();
-      });
+          this.detect();
+        });
+    }
   }
 
   ngOnDestroy() {

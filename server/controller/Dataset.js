@@ -251,8 +251,8 @@ let Dataset = {
     }
   },
   unzipDataset: async (req, res) => {
-    const pathName = file.originalname.toString().replace(".zip", "");
-    const pathExist = fs.existsSync(pathName);
+    let pathName;
+    let pathExist;
 
     let stor = multer.diskStorage({
       //multers disk storage settings
@@ -260,6 +260,8 @@ let Dataset = {
         var newName = file.originalname.toString();
         cb(null, newName);
         //file.originalname
+         pathName = file.originalname.toString().replace(".zip", "");
+         pathExist = fs.existsSync(pathName);
       },
       destination: (req, file, cb) => {
         
