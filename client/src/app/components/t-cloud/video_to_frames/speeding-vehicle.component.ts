@@ -43,6 +43,7 @@ export class SpeedingVehicleComponent implements OnInit {
   datasetName: string;
   link: SafeResourceUrl;
   picturesNumber: number;
+  unAnnDatasetsNames: any = [];
 
   @ViewChild("streaming", { static: false }) streamingcanvas: ElementRef;
 
@@ -67,8 +68,12 @@ export class SpeedingVehicleComponent implements OnInit {
     this.title =
       this.cam_name + " at " + this.activatedRoute.snapshot.params.date;
 
+    this.getUnAnnDsets("data");
+
     // Select2
+    // @ts-ignore
     if(jQuery('.createDatasetSelect2').select2 && typeof jQuery('.createDatasetSelect2').select2 == 'function') {
+      // @ts-ignore
       jQuery('.createDatasetSelect2').select2({
         placeholder: "Enter Dataset Name",
         tags: true
@@ -94,6 +99,25 @@ export class SpeedingVehicleComponent implements OnInit {
 
   ngOnDestroy() {
     this.destroy();
+  }
+
+  getUnAnnDsets(thing: string) {
+    this.annotationservice.getUnAnnDatasets(thing).subscribe(
+      (res) => {
+        if (thing == "data") {
+          this.unAnnDatasetsNames = res;
+          for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
+            this.unAnnDatasetsNames[i]["open"] = false;
+            this.unAnnDatasetsNames[i]["name"] =
+              this.unAnnDatasetsNames[i]["name"];
+            this.unAnnDatasetsNames[i]["id"] = this.unAnnDatasetsNames[i]["id"];
+          }
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   calculate() {
