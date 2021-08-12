@@ -300,7 +300,7 @@ let Dataset = {
 
         console.log('unZippedPath', unZippedPath, pathExist, fs.existsSync(pat), pat);
 
-        fs.createReadStream(pat)
+        await fs.createReadStream(pat)
           .pipe(
             unzipper.Extract({
               path: unZippedPath,
@@ -363,7 +363,7 @@ let Dataset = {
             res.status(200).json("Uploaded");
           });
         } else {
-          // fs.unlinkSync(pat);
+          fs.unlinkSync(pat);
           res.status(200).json("Uploaded");
         }
       }
