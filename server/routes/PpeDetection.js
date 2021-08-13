@@ -5,6 +5,7 @@ const cp = require("child_process");
 router.post('/object/detection', function (req, res, next) {
   if(!req.body.image) {
   	res.status(400).send('Image is required');
+    return;
   }
 
   const image = req.body.image;
