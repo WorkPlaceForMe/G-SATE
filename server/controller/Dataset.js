@@ -117,6 +117,52 @@ let Dataset = {
         return res.status(500).json(error);
       });
   },
+  processVistaBatchImages: async (req, res, next) => {
+    console.log('IMAGES: ', req.body.images);
+
+    rq({
+      method: 'POST',
+      url: process.env.vista_server_ip + '/api/v1/urlasync',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic YWRtaW46YWRtaW4='
+      },
+      body: {
+        upload: req.body.images,
+        subscriptions: 'Object,themes,food,tags,face,fashion'
+      }
+    })
+      .then((objectIds) => {
+        console.log('objectIds', objectIds);
+        let ids = [];
+
+        for(const i in objectIds) {
+          ids[i] = objectIds[i].id;
+        }
+
+        rq({
+          method: 'POST',
+          url: process.env.vista_server_ip + '/api/v1/operationlist',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic YWRtaW46YWRtaW4='
+          },
+          body: {
+            id: ids
+          }
+        })
+          .then((vistaDetections) => {
+            console.log('vistaDetections', vistaDetections);
+            res.json(vistaDetections);
+          })
+          .catch((error) => {
+            return res.status(500).json(error);
+          });
+      })
+      .catch((error) => {
+        return res.status(500).json(error);
+      });
+  },
   process: (req, res, next) => {
     let body = req.body;
     let dName = body.name;
