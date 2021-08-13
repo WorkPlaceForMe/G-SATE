@@ -118,7 +118,14 @@ let Dataset = {
       });
   },
   processVistaBatchImages: async (req, res, next) => {
+
+    if(!req.body.images) {
+      res.status(400).send("Images are required!");
+      return;
+    }
+
     console.log('IMAGES: ', req.body.images);
+    const images = req.body.images;
 
     rq({
       method: 'POST',
@@ -128,7 +135,7 @@ let Dataset = {
         'Authorization': 'Basic YWRtaW46YWRtaW4='
       },
       body: {
-        upload: req.body.images,
+        upload: images,
         subscriptions: 'Object,themes,food,tags,face,fashion'
       }
     })
