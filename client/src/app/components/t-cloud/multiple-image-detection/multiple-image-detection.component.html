@@ -60,6 +60,9 @@
                             </div> -->
                             <!-- btn -->
                             <div class="d-flex align-items-center justify-content-between">
+                                <input type="number" class="form-control mb-2 form-control-transparent" placeholder="Enter the max number of annotation" [(ngModel)]="item.maxKnobAnnotation" [ngModelOptions]="{standalone: true}" />
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'vista'"
                                     (click)="getImgAnnotations(item.id,$event)"
                                     [disabled]="item.vistaResponseReceived">Vista Detection

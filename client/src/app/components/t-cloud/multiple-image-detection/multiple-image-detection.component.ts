@@ -695,7 +695,13 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   re_draw() {
-    for (let e = 0; e < this.data[this.selectedImageIndex]["results"].length; e++) {
+    let len = this.data[this.selectedImageIndex]["results"].length;
+
+    if(this.data[this.selectedImageIndex].maxKnobAnnotation) {
+      len = this.data[this.selectedImageIndex].maxKnobAnnotation;
+    }
+
+    for (let e = 0; e < len; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = "lime";
       if (this.data[this.selectedImageIndex]["results"][e][2]["general_detection"] == "Yes") {
