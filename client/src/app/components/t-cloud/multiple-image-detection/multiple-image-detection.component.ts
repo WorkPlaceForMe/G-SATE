@@ -80,6 +80,8 @@ export class MultipleImageDetectionComponent implements OnInit {
   cacheAnnot: any = [];
   label: string;
 
+  isChecked:boolean = false;
+
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
   private ctx;
@@ -141,6 +143,13 @@ export class MultipleImageDetectionComponent implements OnInit {
       }
     }
   }
+
+
+  checked(event: any){
+    let checkbox = event.target;
+    this.isChecked = checkbox.checked;
+  }
+
   getBackground(image) {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
@@ -686,6 +695,14 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   re_draw() {
+    let len = this.data[this.selectedImageIndex]["results"].length;
+
+    if(this.data[this.selectedImageIndex].maxKnobAnnotation) {
+      len = this.data[this.selectedImageIndex].maxKnobAnnotation;
+    }
+
+    console.log(len);
+
     for (let e = 0; e < this.data[this.selectedImageIndex]["results"].length; e++) {
       this.ctx.fillStyle = "lime";
       this.ctx.strokeStyle = "lime";
