@@ -107,3 +107,5 @@ let saveImg = function (uri, filePath, callback) {
     console.log("Error>>>>>>>>>", err);
   }
 };
+
+module.exports = router;
