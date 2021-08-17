@@ -1,4 +1,12 @@
-/home/src/client/use/mysql.py:17: Warning: (1007, "Can't create database 'gsate'; database exists")
-  self.cursor.execute('create database if not exists {}'.format(self.table.split('.')[0]))
-/home/src/client/use/mysql.py:20: Warning: (1050, "Table 'person_gsate' already exists")
-  self.cursor.execute('create table if not exists {} {}'.format(self.table, self.get_all(columns)))
+Traceback (most recent call last):
+  File "person.py", line 271, in <module>
+    main()
+  File "person.py", line 130, in main
+    db = MySQLdb.connect(mysql_ip, mysql_user, mysql_pwd, db=mysql_db)
+  File "/usr/lib/python3/dist-packages/MySQLdb/__init__.py", line 86, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (2005, "Unknown MySQL server host 'ubuntu_db_1' (11)")
+FATAL: exception not rethrown
+/home/src/client/run.sh: line 2:     8 Aborted                 (core dumped) python3 -u person.py

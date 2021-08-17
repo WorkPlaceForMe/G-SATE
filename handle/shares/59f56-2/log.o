@@ -11,10 +11,10 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7f6ab15e95f8>
-is running: 1628734052.6604674
-is running: 1628734057.67117
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f6571229668>
+is running: 1629080157.9517548
+is running: 1629080162.9688625
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 0.8846 minutes
+Total time is 9.4994 minutes
 FPS -> 0.0000
