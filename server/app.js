@@ -38,6 +38,7 @@ const command = ffmpeg();
 const Stream = require("node-rtsp-stream");
 const sharp = require("sharp");
 const Annotation = require("./routes/Annotation");
+const PpeDetection = require("./routes/PpeDetection");
 
 app.use(
   express.json({
@@ -126,6 +127,7 @@ app.use("/api/video", Video);
 app.use("/api/relations", Relations);
 app.use("/api/rel", Rel);
 app.use("/api/annotations", Annotation);
+app.use("/api/ppe/detection", PpeDetection);
 
 /** Serving from the same express Server
 No cors required */
