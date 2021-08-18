@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cp = require("child_process");
 const request = require("request");
+const fs = require("fs");
 
 router.post('/object/detection', function (req, res, next) {
   if(!req.body.image) {
@@ -71,7 +72,7 @@ let saveImg = function (uri, filePath, callback) {
       strictSSL: false,
     };
     request.head(options, function (err, res, body) {
-      console.log('SAVE_IMAGE', err, res, body);
+      // console.log('SAVE_IMAGE', err, res, body);
 
       request(options)
         .pipe(fs.createWriteStream(filePath))
