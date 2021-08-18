@@ -16,6 +16,7 @@ router.post('/object/detection', function (req, res, next) {
 
   saveImg(image, dir, function (err, data) {
     cp.exec(command, (err, data) => {
+      console.log("Command LOG BY INT: ", command);
       console.log("Err LOG BY INT: ", err);
       console.log("Data LOG BY INT: ", data);
       
