@@ -12,7 +12,7 @@ router.post('/object/detection', function (req, res, next) {
 
   const image = req.body.image;
   let dir = "./objdet/darknet/data/" + image.split("/")[7];
-  const command = `cd ./objdet/darknet && ./darknet detector test ../../../../kartik/graymatics.data ../../../../kartik/yolov3_deploy.cfg ../../../../kartik/yolov3_deploy.weights ${image} -ext_output`;
+  const command = `cd ./objdet/darknet && ./darknet detector test ../../../../kartik/graymatics.data ../../../../kartik/yolov3_deploy.cfg ../../../../kartik/yolov3_deploy.weights data/${image.split("/")[7]} -ext_output`;
 
   saveImg(image, dir, function (err, data) {
     cp.exec(command, (err, data) => {
