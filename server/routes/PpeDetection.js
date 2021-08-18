@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cp = require("child_process");
+const request = require("request");
 
 router.post('/object/detection', function (req, res, next) {
   if(!req.body.image) {
@@ -32,52 +33,27 @@ router.post('/object/detection', function (req, res, next) {
           console.log("element >>>>>>>>>>>>", ele);
         } else {
           let itm = ele.trim().split(" ");
-          console.log("single image ? ", singleImage);
-          if (singleImage) {
-            console.log("in if");
-            let obj1 = {
-              x: itm[0],
-              y: itm[1],
-            };
-            single.push(obj1);
-            let obj2 = {
-              x: itm[2],
-              y: itm[3],
-            };
-            single.push(obj2);
-            let obj3 = {
-              general_detection: "Yes",
-            };
-            single.push(obj3);
-            let obj4 = {
-              label: "",
-            };
-            single.push(obj4);
-            result.push(single);
-            single = [];
-          } else {
-            console.log("in else");
-            let obj1 = {
-              x: (itm[0] * details.width) / details.res_width,
-              y: (itm[1] * details.height) / details.res_height,
-            };
-            single.push(obj1);
-            let obj2 = {
-              x: (itm[2] * details.width) / details.res_width,
-              y: (itm[3] * details.height) / details.res_height,
-            };
-            single.push(obj2);
-            let obj3 = {
-              general_detection: "Yes",
-            };
-            single.push(obj3);
-            let obj4 = {
-              label: "",
-            };
-            single.push(obj4);
-            result.push(single);
-            single = [];
-          }
+
+          let obj1 = {
+            x: itm[0],
+            y: itm[1],
+          };
+          single.push(obj1);
+          let obj2 = {
+            x: itm[2],
+            y: itm[3],
+          };
+          single.push(obj2);
+          let obj3 = {
+            general_detection: "Yes",
+          };
+          single.push(obj3);
+          let obj4 = {
+            label: "",
+          };
+          single.push(obj4);
+          result.push(single);
+          single = [];
         }
       });
       if (fs.existsSync(dir)) {
