@@ -1,7 +1,6 @@
  Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
 net.optimized_memory = 0 
 mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+CUDA status Error: file: ./src/dark_cuda.c : () : line: 373 : build time: Jan 26 2021 - 03:07:57 
 
- cuDNN status Error in: file: ./src/dark_cuda.c : () : line: 171 : build time: Jan 26 2021 - 03:07:57 
-
- cuDNN Error: CUDNN_STATUS_BAD_PARAM
+ CUDA Error: out of memory

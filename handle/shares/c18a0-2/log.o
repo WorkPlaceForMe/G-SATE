@@ -1,7 +1,196 @@
  Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
 net.optimized_memory = 0 
 mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
 
- cuDNN status Error in: file: ./src/dark_cuda.c : () : line: 171 : build time: Jan 26 2021 - 03:07:57 
-
- cuDNN Error: CUDNN_STATUS_BAD_PARAM
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f6ca032e668>
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1629252335.5062704
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1629252340.60342
+is running: 1629252345.6328478
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'White', 'Unknown']
+is running: 1629252350.938045
+is running: 1629252356.3534997
+is running: 1629252361.5185487
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+is running: 1629252366.630368
+is running: 1629252371.8701963
+is running: 1629252377.279277
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+is running: 1629252382.4955914
+is running: 1629252387.8774662
+is running: 1629252393.1049693
+is running: 1629252398.154251
+is running: 1629252403.535349
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+is running: 1629252408.8215535
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+is running: 1629252414.0371666
+is running: 1629252419.1550014
+['long', 'Mixed', 'Unknown', 'Unknown', 'Unknown']
+['long', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1629252424.2028651
+is running: 1629252429.2638912
+is running: 1629252434.3622077
+['long', 'White', 'Unknown', 'White', 'Unknown']
+['long', 'White', 'Unknown', 'White', 'Unknown']
+is running: 1629252439.566655
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252444.6186268
+['long', 'White', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252449.6651602
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+is running: 1629252454.6914852
+['sleeveless', 'Black', 'Long', 'Unknown', 'Unknown']
+['sleeveless', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Short', 'White', 'Unknown']
+['long', 'Black', 'Short', 'White', 'Unknown']
+is running: 1629252459.7059078
+['long', 'White', 'Long', 'White', 'Black']
+is running: 1629252464.791164
+is running: 1629252469.7914364
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1629252474.839446
+['long', 'Black', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'Green', 'Unknown']
+['long', 'Black', 'Long', 'White', 'Unknown']
+['long', 'Black', 'Unknown', 'Blue', 'Unknown']
+['long', 'White', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252480.3126004
+['long', 'White', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+is running: 1629252485.3187263
+is running: 1629252490.407587
+['long', 'Blue', 'Long', 'Black', 'Black']
+is running: 1629252495.448929
+['unknown', 'White', 'Long', 'Blue', 'Unknown']
+['unknown', 'White', 'Long', 'Blue', 'Unknown']
+is running: 1629252500.5175974
+['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252505.5713255
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1629252510.5960767
+['long', 'Purple', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Purple', 'Unknown', 'Blue', 'Unknown']
+['long', 'Purple', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Purple', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252515.6581626
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Grey', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Grey', 'Long', 'White', 'Unknown']
+['long', 'Grey', 'Short', 'White', 'Unknown']
+['long', 'Purple', 'Long', 'Unknown', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'Black', 'Long', 'Brown', 'Unknown']
+['long', 'Black', 'Long', 'Brown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Green', 'Unknown']
+['long', 'Purple', 'Long', 'Blue', 'Unknown']
+is running: 1629252520.696756
+['long', 'Black', 'Long', 'Green', 'White']
+is running: 1629252525.762034
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+is running: 1629252530.8782544
+['long', 'White', 'Long', 'White', 'Unknown']
+is running: 1629252535.8984253
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'White', 'Unknown', 'White', 'Unknown']
+is running: 1629252540.9073133
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252545.965652
+['long', 'Blue', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Green', 'Long', 'Unknown', 'Unknown']
+['long', 'White', 'Unknown', 'Blue', 'Unknown']
+is running: 1629252551.0346496
+['long', 'White', 'Long', 'Green', 'Unknown']
+['long', 'White', 'Long', 'Green', 'Unknown']
+['long', 'Black', 'Long', 'Mixed', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1629252556.1656318
+is running: 1629252561.329532
+['long', 'White', 'Long', 'Unknown', 'Black']
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1629252566.3874636
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1629252571.476292
+['long', 'Blue', 'Long', 'Green', 'Unknown']
+['long', 'Black', 'Long', 'White', 'Unknown']
+is running: 1629252576.4971373
+['unknown', 'Black', 'Unknown', 'Blue', 'Unknown']
+['long', 'Black', 'Unknown', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Black']
+['long', 'Black', 'Long', 'Unknown', 'Black']
+is running: 1629252581.5177412
+['long', 'Blue', 'Long', 'Blue', 'Unknown']
+['unknown', 'White', 'Short', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Green', 'Unknown']
+is running: 1629252586.580823
+['long', 'Black', 'Long', 'White', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Long', 'Green', 'Unknown']
+is running: 1629252591.5876367
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Unknown', 'Unknown', 'Unknown']
+is running: 1629252596.6809726
+['unknown', 'White', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+is running: 1629252601.7799203
+['long', 'White', 'Long', 'White', 'Unknown']
+['long', 'White', 'Long', 'White', 'Unknown']
+is running: 1629252606.8848412
+['long', 'Black', 'Long', 'White', 'Unknown']
+is running: 1629252612.0459714
+['long', 'White', 'Long', 'Blue', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1629252617.0615807
+['long', 'Purple', 'Long', 'White', 'Unknown']
+is running: 1629252622.1210792
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 7.2402 minutes
+FPS -> 0.0000
