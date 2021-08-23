@@ -24,60 +24,35 @@ router.post('/object/detection', function (req, res, next) {
       console.log("type of data>>>>>>>>", typeof data);
       console.log("data>>>>>>>>>>>>>>", data);
       let result = [];
-      let single = [];
 
       console.log("data splitted >>>>>>>>>>>", data.split("\n"));
-      data.split("\n").forEach((ele) => {
-        if (ele.includes("Predicted in") || ele == "") {
-          console.log("element >>>>>>>>>>>>", ele);
-        } else {
-          let itm = ele.trim().split(" ");
-          console.log("single image ? ", singleImage);
-          if (singleImage) {
-            console.log("in if");
-            let obj1 = {
-              x: itm[0],
-              y: itm[1],
-            };
-            single.push(obj1);
-            let obj2 = {
-              x: itm[2],
-              y: itm[3],
-            };
-            single.push(obj2);
-            let obj3 = {
-              general_detection: "Yes",
-            };
-            single.push(obj3);
-            let obj4 = {
-              label: "",
-            };
-            single.push(obj4);
-            result.push(single);
-            single = [];
-          } else {
-            console.log("in else");
-            let obj1 = {
-              x: (itm[0] * details.width) / details.res_width,
-              y: (itm[1] * details.height) / details.res_height,
-            };
-            single.push(obj1);
-            let obj2 = {
-              x: (itm[2] * details.width) / details.res_width,
-              y: (itm[3] * details.height) / details.res_height,
-            };
-            single.push(obj2);
-            let obj3 = {
-              general_detection: "Yes",
-            };
-            single.push(obj3);
-            let obj4 = {
-              label: "",
-            };
-            single.push(obj4);
-            result.push(single);
-            single = [];
+      data.split("\n").forEach((item) => {
+        const NUMERIC_REGEXP = /[-]{0,1}[\d]*[.]{0,1}[\d]+/g;
+        const itemMatched = item.match(/\(([^)]+)\)/);
+        let className = '';
+        
+        if(item.includes('people')) {
+          className = 'people';
+        }
+
+        if(itemMatched && Array.isArray(itemMatched)) {
+          const numbers = itemMatched[1].match(NUMERIC_REGEXP);
+
+          if(numbers && numbers.length > 0) {
+            result.push({
+              left: numbers[0],
+              top: numbers[1],
+              width: numbers[1],
+              height: numbers[1],
+              className: className,
+            });
           }
+        } else {
+          console.log("element >>>>>>>>>>>>", ele);
+          res.status(400).json({
+            message: 'Invalid response from internal command!',
+            commandRes: data
+          });
         }
       });
       if (fs.existsSync(dir)) {
