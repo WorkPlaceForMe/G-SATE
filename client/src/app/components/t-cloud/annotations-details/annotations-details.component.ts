@@ -17,6 +17,7 @@ export class AnnotationsDetailsComponent implements OnInit {
   date: any;
   data: any;
   model: string;
+  overfit_mode: string;
   models: any = [];
   versions: any = [];
   customerData: Customer = {
@@ -25,6 +26,7 @@ export class AnnotationsDetailsComponent implements OnInit {
     emailAddress: null,
     date: null,
     model: null,
+    overfit_mode: null,
     version: null,
     data: null
   }
@@ -56,7 +58,8 @@ export class AnnotationsDetailsComponent implements OnInit {
     let isEmailFilled: boolean = this.emailAddress !== undefined && this.emailAddress !== "" && this.ValidateEmail(this.emailAddress);
     let isDateTimeFilled: boolean = this.date !== undefined;
     let isModelFilled: boolean = this.model !== undefined;
-    return (isDateTimeFilled && isEmailFilled && isModelFilled);
+    let isOverfitModeFilled: boolean = this.overfit_mode !== undefined;
+    return (isDateTimeFilled && isEmailFilled && isModelFilled && isOverfitModeFilled);
   }
 
   ValidateEmail(mail) {
@@ -71,6 +74,7 @@ export class AnnotationsDetailsComponent implements OnInit {
     this.annotationsServ.emailAddress = this.emailAddress;
     this.annotationsServ.date = new Date(this.date).toUTCString();
     this.annotationsServ.model = this.model;
+    this.annotationsServ.overfit_mode = this.overfit_mode;
     console.log('this.annotationsServ - ', this.annotationsServ);
     console.log('this.data - ', this.data);
     console.log('this.payloadType - ', this.payloadType);
@@ -91,6 +95,7 @@ export class AnnotationsDetailsComponent implements OnInit {
     this.customerData.date = this.annotationsServ.date;
     this.customerData.version = this.annotationsServ.version;
     this.customerData.model = this.annotationsServ.model;
+    this.customerData.overfit_mode = this.annotationsServ.overfit_mode;
     this.customerData.id = uuid();
   }
 

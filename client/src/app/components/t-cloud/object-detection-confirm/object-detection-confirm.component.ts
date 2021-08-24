@@ -17,6 +17,7 @@ export class ObjectDetectionConfirmComponent implements OnInit {
     emailAddress: null,
     date: null,
     model: null,
+    overfit_mode: null,
     version: null,
     data: null
   }
