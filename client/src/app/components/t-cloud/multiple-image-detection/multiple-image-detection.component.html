@@ -60,7 +60,7 @@
                             </div> -->
                             <!-- btn -->
                             <div class="d-flex align-items-center justify-content-between">
-                                <input type="number" class="form-control mb-2 form-control-transparent" placeholder="Enter the max number of annotation" [(ngModel)]="item.maxKnobAnnotation" [ngModelOptions]="{standalone: true}" />
+                                <input type="number" class="form-control pr-0 font-size-sm mb-2 form-control-transparent" placeholder="Max number of annotations you want (Optional)" [(ngModel)]="item.maxKnobAnnotation" [ngModelOptions]="{standalone: true}" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'vista'"
@@ -73,16 +73,15 @@
                                 <button class="btn btn-primary" (click)="generalDetection(item.id,$event)"
                                     [disabled]="item.generalDetectionResponseReceived">General Detection
                                 </button>
-                                <!-- <button class="btn btn-primary"
-                                    (click)="generalDetection(item.id,$event)">Annotate
+                            </div>
+                            <div class="d-flex mt-2 align-items-center justify-content-between">
+                                <button class="btn btn-primary" (click)="ppeDetection(item.id,$event)"
+                                    [disabled]="item.ppeDetectionResponseReceived">PPE Detection
                                 </button>
-                                <button *ngIf="detectionOriginType === 'vista'" class="btn btn-medium"
-                                    (click)="getImgAnnotations(item.id,$event)">Add Label
+                                <!-- [disabled]="item.defectDetectionResponseReceived" -->
+                                <button class="btn btn-primary" (click)="ppeDetection(item.id,$event)"
+                                    disabled>Defect Detection
                                 </button>
-                                <button *ngIf="detectionOriginType === 'analytics'"
-                                    class="btn btn-medium" (click)="getAnayticsImgAnnotations(item.id,$event)">Add
-                                    Label
-                                </button> -->
                             </div>
                         </form>
                     </div>

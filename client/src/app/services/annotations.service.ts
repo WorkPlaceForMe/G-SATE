@@ -106,6 +106,10 @@ export class AnnotationsService {
     return this.http.post<any[]>(`${this.API_URL}/general/object/detection`, data);
   }
 
+  getPPEDetection(data: any) {
+    return this.http.post<any[]>(`${this.API_URL}/ppe/detection/object/detection`, data);
+  }
+
   deleteDataset(snippet_id: string, type: string, name: any) {
     return this.http.delete(`${this.API_URL}/datasets/${name}/${snippet_id}/${type}`);
   }
