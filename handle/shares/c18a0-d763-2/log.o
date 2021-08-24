@@ -1,40 +1,7 @@
  Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
 net.optimized_memory = 0 
 mini_batch = 1, batch = 1, time_steps = 1, train = 0 
- Try to load weights: ./darknet/backup/yolov3.weights 
 
- seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
-Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
-Starting the YOLO loop...
-Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
-Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
-Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
-Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
-Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7f57b0661550>
-['long', 'White', 'Long', 'Blue', 'Unknown']
-is running: 1629252335.4543118
-['long', 'White', 'Long', 'Blue', 'Unknown']
-is running: 1629252340.5410368
-is running: 1629252345.6723163
-is running: 1629252350.690449
-is running: 1629252355.9579234
-is running: 1629252360.9707353
-is running: 1629252366.118514
-is running: 1629252371.202944
-is running: 1629252376.2580137
-is running: 1629252381.303915
-is running: 1629252386.3465474
-['long', 'White', 'Long', 'Black', 'Unknown']
-is running: 1629252391.4537432
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-['long', 'Black', 'Long', 'Unknown', 'Unknown']
-is running: 1629252396.6624198
-is running: 1629252401.7710896
-is running: 1629252406.836829
-['long', 'Black', 'Long', 'Green', 'Unknown']
-is running: 1629252411.9911675
-EMPTY FRAME ENCOUNTERED
-Finished processing video.
-Total time is 3.7302 minutes
-FPS -> 0.0000
+ cuDNN status Error in: file: ./src/dark_cuda.c : () : line: 171 : build time: Jan 26 2021 - 03:07:57 
+
+ cuDNN Error: CUDNN_STATUS_BAD_PARAM
