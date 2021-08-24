@@ -15,6 +15,7 @@ export class AnnotationsService {
   emailAddress: string;
   date: any;
   model: any;
+  overfit_mode: any;
   models: any = [];
   version: any;
   versions: any = [];
