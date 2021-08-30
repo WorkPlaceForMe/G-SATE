@@ -102,7 +102,7 @@ router.get("/image/:key", function (req, res, next) {
         console.log(err);
         res.status(500).send(err);
       } else {
-        res.status(200).send(result.hits.hits);
+        res.status(200).send(data.hits.hits);
       }
     });
 });
