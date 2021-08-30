@@ -10,7 +10,7 @@ require("dotenv").config({
 });
 //Unsure
 const client = elastic.Client({
-  node: `${process.env.host}/${process.env.server}`,
+  node: `${process.env.my_ip}/${process.env.server}`,
 });
 
 router.get("/models", function (req, res, next) {
