@@ -10,7 +10,7 @@ require("dotenv").config({
 });
 //Unsure
 const client = elastic.Client({
-  node: `${process.env.host}/${process.env.server}`
+  node: `${process.env.host}/${process.env.server}`,
 });
 
 router.get("/models", function (req, res, next) {
@@ -55,16 +55,21 @@ router.post("/confirmed", function (req, res, next) {
       );
     }
   }
-  /** ---------------- */ 
-  
-  try {
-    await client.bulk({
+  /** ---------------- */
+
+  client.bulk(
+    {
       body: elasticData,
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send(err);
-  }
+    },
+    function (err, data) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      } else {
+        console.log("Uploaded on elastic search...");
+      }
+    }
+  );
 
   let directory =
     process.env.resources2 + "training_details/" + body.datasetName + ".json";
@@ -84,23 +89,21 @@ router.post("/confirmed", function (req, res, next) {
 
 router.get("/image/:key", function (req, res, next) {
   const { key } = req.params;
-  if (!key) return res.status(400).send('Search key is required');
+  if (!key) return res.status(400).send("Search key is required");
 
-  try {
-    const result = await client.search({
+    client.search({
       index: elasticIndex,
       pretty: true,
       filter_path: "hits.hits._source*",
       q: `data.label:${key}`,
+    }, function (err, data) {
+      if (err) {
+        console.log(err);
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(result.hits.hits);
+      }
     });
-    const result = await client.bulk({
-      body: data,
-    });
-    res.status(200).send(result.hits.hits);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
 });
 
 router.post("/object-detection/confirmed", function (req, res, next) {
