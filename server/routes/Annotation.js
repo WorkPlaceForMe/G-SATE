@@ -10,7 +10,7 @@ require("dotenv").config({
 });
 //Unsure
 const client = elastic.Client({
-  node: `${process.env.my_ip}/${process.env.server}`,
+  node: `${process.env.my_ip}:${process.env.server}`,
 });
 
 router.get("/models", function (req, res, next) {
@@ -88,6 +88,8 @@ router.post("/confirmed", function (req, res, next) {
 });
 
 router.get("/image/:key", function (req, res, next) {
+  console.log(1111111111111111111111111111111111)
+  console.log(`${process.env.my_ip}:${process.env.server}`);
   const { key } = req.params;
   if (!key) return res.status(400).send("Search key is required");
 
