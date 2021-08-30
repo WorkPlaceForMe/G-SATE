@@ -82,7 +82,7 @@ router.post("/confirmed", function (req, res, next) {
   });
 });
 
-router.get("image/:key", function (req, res, next) {
+router.get("/image/:key", function (req, res, next) {
   const { key } = req.params;
   if (!key) return res.status(400).send('Search key is required');
 
