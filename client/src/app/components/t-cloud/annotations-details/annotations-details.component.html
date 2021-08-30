@@ -36,6 +36,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-12 col-md-6 form-group">
+                            <label for="">Overfit Mode</label>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <select class="form-control select-picker" [(ngModel)]="overfit_mode">
+                                        <option value="undefined" disabled>Select a Overfit mode</option>
+                                        <option value="Generalized Overfit (Low)">Generalized Overfit (Low)</option>
+                                        <option value="Moderate Overfit">Moderate Overfit</option>
+                                        <option value="Custom Overfit (High)">Custom Overfit (High)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-primary btn-min-w" (click)='train()'

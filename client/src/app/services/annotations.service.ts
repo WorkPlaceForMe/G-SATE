@@ -15,6 +15,7 @@ export class AnnotationsService {
   emailAddress: string;
   date: any;
   model: any;
+  overfit_mode: any;
   models: any = [];
   version: any;
   versions: any = [];
@@ -104,6 +105,10 @@ export class AnnotationsService {
 
   generalDetection(data: any) {
     return this.http.post<any[]>(`${this.API_URL}/general/object/detection`, data);
+  }
+
+  getPPEDetection(data: any) {
+    return this.http.post<any[]>(`${this.API_URL}/ppe/detection/object/detection`, data);
   }
 
   deleteDataset(snippet_id: string, type: string, name: any) {
