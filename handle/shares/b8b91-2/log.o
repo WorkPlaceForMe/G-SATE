@@ -11,43 +11,34 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7ff01c29d780>
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f79917e97f0>
 ['short', 'Black', 'Long', 'Green', 'Black']
 ['short', 'Black', 'Long', 'Green', 'Black']
-is running: 1630290347.0950992
-is running: 1630290352.1016128
-is running: 1630290357.185295
-is running: 1630290362.3094096
-is running: 1630290367.3573854
-is running: 1630290372.4010422
-is running: 1630290377.540999
-is running: 1630290382.629557
-is running: 1630290387.8111537
-is running: 1630290392.9399703
-is running: 1630290398.0319564
-is running: 1630290403.0556757
-is running: 1630290408.0923197
-is running: 1630290413.1247325
-is running: 1630290418.1567702
-is running: 1630290423.2188852
-is running: 1630290428.2923212
-is running: 1630290433.3050616
-is running: 1630290438.3165503
-is running: 1630290443.365355
-is running: 1630290448.626642
-is running: 1630290453.7172058
-is running: 1630290458.7769508
-is running: 1630290463.8373306
-is running: 1630290468.874104
-is running: 1630290473.957398
-is running: 1630290478.964601
-is running: 1630290483.990273
-is running: 1630290489.0867016
-is running: 1630290494.1765985
-is running: 1630290499.3030732
-is running: 1630290504.392258
-is running: 1630290509.4686224
+is running: 1630386528.157075
+is running: 1630386533.1973445
+is running: 1630386538.2738066
+is running: 1630386543.3531163
+is running: 1630386548.4071102
+is running: 1630386553.4550428
+is running: 1630386558.6050355
+is running: 1630386563.6400902
+is running: 1630386568.7009983
+is running: 1630386573.7925038
+is running: 1630386578.8752122
+is running: 1630386583.9550765
+is running: 1630386589.0536985
+is running: 1630386594.0957916
+is running: 1630386599.1764734
+is running: 1630386604.182672
+is running: 1630386609.233523
+is running: 1630386614.2366335
+is running: 1630386619.360963
+is running: 1630386624.3711696
+is running: 1630386629.4021513
+is running: 1630386634.4149818
+is running: 1630386639.4843462
+is running: 1630386644.5695226
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 3.3332 minutes
+Total time is 2.2671 minutes
 FPS -> 0.0000

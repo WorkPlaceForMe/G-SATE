@@ -1,6 +1,6 @@
 VIDEOIO ERROR: V4L: device /home/resources/recordings/demo_1.mp4: Unable to query number of channels
 
-(python3:8): GStreamer-CRITICAL **: 02:03:33.386: gst_element_make_from_uri: assertion 'gst_uri_is_valid (uri)' failed
+(python3:8): GStreamer-CRITICAL **: 02:02:35.854: gst_element_make_from_uri: assertion 'gst_uri_is_valid (uri)' failed
 GStreamer: Error opening bin: no source element for URI "/home/resources/recordings/demo_1.mp4"
 /home/src/client/use/mysql.py:17: Warning: (1007, "Can't create database 'gsate'; database exists")
   self.cursor.execute('create database if not exists {}'.format(self.table.split('.')[0]))
