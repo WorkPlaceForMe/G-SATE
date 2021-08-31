@@ -94,9 +94,11 @@ router.get("/image/:key", function (req, res, next) {
 
     client.search({
       index: elasticIndex,
+      type: elasticType,
       pretty: true,
       filter_path: "hits.hits._source*",
       q: `data.label:${key}`,
+      size: 10000,
     }, function (err, data) {
       if (err) {
         console.log(err);
