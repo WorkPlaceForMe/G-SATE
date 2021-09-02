@@ -4,6 +4,24 @@
     [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
     <div class="container text-center z-index-1 banner-caption section-padding">
         <h1 class="text-uppercase font-weight-bold text-white mb-0">Customize Annotations - Images</h1>
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <h6 class="font-weight-bold text-white">
+                    Elastic Search: You can search for particular annotations
+                    for all the saved images in our DB. You can search by key words like 'person', 'cycle' etc. in the below box and click on Search button to get the results.</h6>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control pr-0 font-size-sm mb-2 form-control-transparent"
+                    placeholder="Search by key words like 'person', 'cycle'" [(ngModel)]="elasticSearchKeyWord" />
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary w-100" (click)="getElasticSearchDate()"
+                    [disabled]="elasticSearchKeyWord == ''">Search
+                </button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
     </div>
 </section>
 <!-- banner section end -->
@@ -19,10 +37,12 @@
         <!-- card start -->
         <div class="row" *ngIf="datasetFlag">
             <div class="col-md-4 mb-4" *ngFor="let item of pagedItems; let i = index">
-                
-                <div class="bg-darken rounded overflow-hidden h-100 d-flex flex-column position-relative border" [ngClass]="isChecked ? 'border-info' : 'border-light'">
+
+                <div class="bg-darken rounded overflow-hidden h-100 d-flex flex-column position-relative border"
+                    [ngClass]="isChecked ? 'border-info' : 'border-light'">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="datasetFlag-{{i}}" (change)="checked($event)">
+                        <input type="checkbox" class="custom-control-input" id="datasetFlag-{{i}}"
+                            (change)="checked($event)">
                         <label class="custom-control-label" for="datasetFlag-{{i}}"></label>
                     </div>
                     <!-- canvas -->
@@ -60,7 +80,10 @@
                             </div> -->
                             <!-- btn -->
                             <div class="d-flex align-items-center justify-content-between">
-                                <input type="number" class="form-control pr-0 font-size-sm mb-2 form-control-transparent" placeholder="Max number of annotations you want (Optional)" [(ngModel)]="item.maxKnobAnnotation" [ngModelOptions]="{standalone: true}" />
+                                <input type="number"
+                                    class="form-control pr-0 font-size-sm mb-2 form-control-transparent"
+                                    placeholder="Max number of annotations you want (Optional)"
+                                    [(ngModel)]="item.maxKnobAnnotation" [ngModelOptions]="{standalone: true}" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'vista'"
@@ -68,7 +91,7 @@
                                     [disabled]="item.vistaResponseReceived">Vista Detection
                                 </button>
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'analytics'"
-                                    (click)="getAnayticsImgAnnotations(item.id,$event)" disabled>Analytics Detection
+                                    (click)="getAnayticsImgAnnotations(item.id,$event)">Analytics API
                                 </button>
                                 <button class="btn btn-primary" (click)="generalDetection(item.id,$event)"
                                     [disabled]="item.generalDetectionResponseReceived">General Detection
@@ -91,13 +114,13 @@
                         <span class="d-block font-weight-bold text-primary text-uppercase mb-2 px-4"
                             *ngIf='objDet == true'>List of areas</span>
                         <span class="d-block font-weight-bold text-primary text-uppercase mb-2 px-4"
-                            *ngIf='objDet == false'>{{item.results.length}} Labels Detected</span>
-                        <div class="px-4" *ngIf="item.results.length == 0">
+                            *ngIf='objDet == false && item.results'>{{item.results.length}} Labels Detected</span>
+                        <div class="px-4" *ngIf="item.results && item.results.length == 0">
                             <span class="d-block text-medium">Click the object labels button to check the detected
                                 objects</span>
                         </div>
                         <perfect-scrollbar style="max-height: 200px">
-                            <ul class="label-list px-4 pb-4" *ngIf="item.results.length > 0">
+                            <ul class="label-list px-4 pb-4" *ngIf="item.results && item.results.length > 0">
                                 <li class="d-flex align-items-center justify-content-between"
                                     *ngFor='let ann of item.results; index as j'
                                     [ngClass]="{'active-label' : selectedID === j}">
@@ -150,8 +173,7 @@
                         [max]="pager.totalPages" />
                 </div>
                 <div class="form-group col-12 col-md-2 mb-md-0">
-                    <button [disabled]="!gotoPageNo" type="button"
-                        class="btn btn-sm btn-block btn-primary ml-3"
+                    <button [disabled]="!gotoPageNo" type="button" class="btn btn-sm btn-block btn-primary ml-3"
                         (click)="setPage(gotoPageNo)">Go</button>
                 </div>
             </div>

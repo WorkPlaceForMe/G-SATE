@@ -37,6 +37,7 @@ export class MultipleImageDetectionComponent implements OnInit {
   width: number;
   height: number;
   selectedID: any = "";
+  elasticSearchKeyWord: any = "";
   selectedImageIndex: any;
   annWidth: number;
   annHeight: number;
@@ -186,10 +187,6 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(
-      "this.activatedRoute.snapshot.params -> ",
-      this.activatedRoute.snapshot.params
-    );
     if (this.detectionOriginType === "vista") {
       this.processDatasetWithOutVista();
     } else {
@@ -308,6 +305,56 @@ export class MultipleImageDetectionComponent implements OnInit {
     );
   }
 
+  getElasticSearchDate() {
+    this.spin = true;
+    this.annotationsServ.getElasticSearchResults(this.elasticSearchKeyWord).subscribe(
+      (res) => {
+        this.spin = false;
+        this.annObj = {};
+        this.pagedItems = [];
+        this.data = [];
+        res.forEach((value, index) => {
+          this.data.push(value._source);
+        });
+        this.setPage(1);
+        this.datasetFlag = true;
+        this.data.forEach((value, index) => {
+          let dumArr = [];
+          dumArr.push(value.data);
+          delete value.data;
+          value["results"] = dumArr;
+          value["id"] = index;
+          this.annObj[index] = {
+            image: value.image,
+            width: value.width,
+            height: value.height,
+            canvas_width: value.canvas_width,
+            canvas_height: value.canvas_height,
+            results: value["results"],
+            fixedSize: value.results.length,
+          };
+          this.getAnn(index);
+          this.getLabels(index);
+          // value["vistaResponseReceived"] = true;
+        });
+        console.log("this.data - ", this.data);
+        setTimeout(() => {
+          this.data.forEach((value, index) => {
+            this.getAnn(index);
+            this.getLabels(index);
+            // value["vistaResponseReceived"] = true;
+          });
+        }, 2000);
+      },
+      (error) => {
+        this.spin = false;
+        alert(
+          `There is an error processing your request. Please retry operation once or contact system administrator.`
+        );
+      }
+    );
+  }
+
   setPage(page: number) {
     this.annotations = [];
     this.labels = [];
@@ -404,7 +451,6 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   get(lebelIndex, dataIndex) {
-    debugger;
     this.on = true;
     this.clearAct = true;
     this.id = lebelIndex;
@@ -445,9 +491,9 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.data[dataIndex]["results"][e][0]["x"],
           this.data[dataIndex]["results"][e][0]["y"],
           this.data[dataIndex]["results"][e][1]["x"] -
-            this.data[dataIndex]["results"][e][0]["x"],
+          this.data[dataIndex]["results"][e][0]["x"],
           this.data[dataIndex]["results"][e][1]["y"] -
-            this.data[dataIndex]["results"][e][0]["y"]
+          this.data[dataIndex]["results"][e][0]["y"]
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][1]["x"] - 2,
@@ -464,8 +510,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] +
-            this.data[dataIndex]["results"][e][1]["x"] -
-            4,
+          this.data[dataIndex]["results"][e][1]["x"] -
+          4,
           this.data[dataIndex]["results"][e][0]["y"] - 4,
           4,
           4
@@ -473,8 +519,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] - 2,
           this.data[dataIndex]["results"][e][0]["y"] +
-            this.data[dataIndex]["results"][e][1]["y"] -
-            2,
+          this.data[dataIndex]["results"][e][1]["y"] -
+          2,
           4,
           4
         );
@@ -486,11 +532,11 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] +
-            this.data[dataIndex]["results"][e][1]["x"] -
-            3,
+          this.data[dataIndex]["results"][e][1]["x"] -
+          3,
           this.data[dataIndex]["results"][e][0]["y"] +
-            this.data[dataIndex]["results"][e][1]["y"] -
-            3,
+          this.data[dataIndex]["results"][e][1]["y"] -
+          3,
           4,
           4
         );
@@ -546,7 +592,6 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   annotate(event, i) {
-    debugger;
     this.selectedImageIndex = i;
     this.canvas = this.rd.selectRootElement(event.target);
     this.ctx = this.canvas.getContext("2d");
@@ -680,9 +725,9 @@ export class MultipleImageDetectionComponent implements OnInit {
                   this.data[i]["results"][e][0]["x"],
                   this.data[i]["results"][e][0]["y"],
                   this.data[i]["results"][e][1]["x"] -
-                    this.data[i]["results"][e][0]["x"],
+                  this.data[i]["results"][e][0]["x"],
                   this.data[i]["results"][e][1]["y"] -
-                    this.data[i]["results"][e][0]["y"]
+                  this.data[i]["results"][e][0]["y"]
                 );
               }
               this.ctx.fillRect(
@@ -693,7 +738,7 @@ export class MultipleImageDetectionComponent implements OnInit {
               );
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"] +
-                  this.data[i]["results"][e][1]["x"],
+                this.data[i]["results"][e][1]["x"],
                 this.data[i]["results"][e][0]["y"],
                 4,
                 4
@@ -701,7 +746,7 @@ export class MultipleImageDetectionComponent implements OnInit {
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"],
                 this.data[i]["results"][e][0]["y"] +
-                  this.data[i]["results"][e][1]["y"],
+                this.data[i]["results"][e][1]["y"],
                 4,
                 4
               );
@@ -713,9 +758,9 @@ export class MultipleImageDetectionComponent implements OnInit {
               );
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"] +
-                  this.data[i]["results"][e][1]["x"],
+                this.data[i]["results"][e][1]["x"],
                 this.data[i]["results"][e][0]["y"] +
-                  this.data[i]["results"][e][1]["y"],
+                this.data[i]["results"][e][1]["y"],
                 4,
                 4
               );
@@ -759,7 +804,7 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.ctx.strokeStyle = "lime";
       if (
         this.data[this.selectedImageIndex]["results"][e][2][
-          "general_detection"
+        "general_detection"
         ] == "Yes"
       ) {
         this.ctx.fillRect(
@@ -784,9 +829,9 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.data[this.selectedImageIndex]["results"][e][0]["x"],
           this.data[this.selectedImageIndex]["results"][e][0]["y"],
           this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-            this.data[this.selectedImageIndex]["results"][e][0]["x"],
+          this.data[this.selectedImageIndex]["results"][e][0]["x"],
           this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-            this.data[this.selectedImageIndex]["results"][e][0]["y"]
+          this.data[this.selectedImageIndex]["results"][e][0]["y"]
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][1]["x"] - 2,
@@ -803,8 +848,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] +
-            this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-            4,
+          this.data[this.selectedImageIndex]["results"][e][1]["x"] -
+          4,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] - 4,
           4,
           4
@@ -812,8 +857,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] +
-            this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-            2,
+          this.data[this.selectedImageIndex]["results"][e][1]["y"] -
+          2,
           4,
           4
         );
@@ -825,11 +870,11 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] +
-            this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-            3,
+          this.data[this.selectedImageIndex]["results"][e][1]["x"] -
+          3,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] +
-            this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-            3,
+          this.data[this.selectedImageIndex]["results"][e][1]["y"] -
+          3,
           4,
           4
         );
@@ -1126,11 +1171,11 @@ export class MultipleImageDetectionComponent implements OnInit {
               .then(() => {
                 this.router.navigate([
                   "/annotations/dataset/" +
-                    this.method +
-                    "/" +
-                    this.folder +
-                    "/" +
-                    this.valueImage,
+                  this.method +
+                  "/" +
+                  this.folder +
+                  "/" +
+                  this.valueImage,
                 ]);
               });
           } else if (this.valueImage == this.total - 1) {
