@@ -626,6 +626,8 @@ let table = {
   0: "person_gsate",
   1: "vehicle_gsate",
   2: "clothing_gsate",
+  16: "ppe_gsate",
+  17: "defects_gsate"
 };
 
 let processByAnalytics = (name) => {
@@ -658,7 +660,11 @@ let processByAnalytics = (name) => {
                         ? "person"
                         : table[itm.algo_id] == "vehicle_gsate"
                         ? element.class
-                        : "clothes";
+                        : table[itm.algo_id] == "clothing_gsate"
+                        ? "clothes"
+                        : table[itm.algo_id] == "ppe_gsate"
+                        ? element.class
+                        : element.class;
                     let obj = {
                       id: count,
                       image:
