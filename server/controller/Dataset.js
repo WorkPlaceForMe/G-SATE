@@ -653,10 +653,14 @@ let processByAnalytics = (name) => {
           dataset[0].snippet_id,
           async function (err, rows) {
             if (err) reject(err);
+            console.log('ROWS', rows)
 
             if (rows.length > 0) {
               for (const itm of rows) {
+                console.log(itm.algo_id)
+                console.log(typeof itm.algo_id)
                 if (itm.algo_id !== 18) {
+                  console.log('----Entered----')
                   let data = {
                     table: table[itm.algo_id],
                     snippet_id: itm.snippet_id,
