@@ -11,29 +11,33 @@ Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
 Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
 Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
-<tensorflow.python.keras.engine.functional.Functional object at 0x7f30a04a77f0>
+<tensorflow.python.keras.engine.functional.Functional object at 0x7ff828228668>
 ['long', 'Blue', 'Long', 'Blue', 'White']
 ['short', 'Pink', 'Short', 'Unknown', 'White']
+is running: 1630514661.9662886
 ['long', 'Blue', 'Short', 'Blue', 'White']
 ['short', 'Pink', 'Short', 'Unknown', 'White']
 ['short', 'Pink', 'Short', 'Unknown', 'White']
 ['short', 'Pink', 'Short', 'Black', 'White']
-is running: 1630386495.9649873
+is running: 1630514667.1187897
+is running: 1630514672.2826862
 ['short', 'Pink', 'Long', 'Black', 'Black']
+is running: 1630514677.428672
 ['short', 'Pink', 'Long', 'Unknown', 'Black']
-is running: 1630386501.0435786
+is running: 1630514682.648867
 ['short', 'Pink', 'Long', 'Black', 'Black']
 ['short', 'Pink', 'Long', 'Black', 'White']
-is running: 1630386506.1364431
+is running: 1630514687.8048124
 ['long', 'Blue', 'Short', 'Blue', 'Black']
-is running: 1630386511.1663284
+is running: 1630514692.9931388
+is running: 1630514698.1291556
 ['long', 'Blue', 'Short', 'Unknown', 'White']
-is running: 1630386516.2734337
 ['long', 'Blue', 'Short', 'White', 'White']
+is running: 1630514703.1775155
 ['short', 'Purple', 'Short', 'Unknown', 'Black']
 ['short', 'Pink', 'Short', 'Unknown', 'White']
 ['short', 'Pink', 'Short', 'Unknown', 'White']
 EMPTY FRAME ENCOUNTERED
 Finished processing video.
-Total time is 0.8858 minutes
+Total time is 1.3516 minutes
 FPS -> 0.0000
