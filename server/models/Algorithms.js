@@ -7,6 +7,7 @@ var Algorithm = {
     },
 
     fetchAlgoData: function (data) {
+      console.log('===================> ',data)
         return new Promise((resolve, reject) => {
           db.query(`SELECT * FROM ${data.table} where snippet_id='${data.snippet_id}' ORDER BY time asc`, function (error, results, fields) {
             if (error) {console.log(error);resolve([])};

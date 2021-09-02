@@ -88,11 +88,11 @@ let Dataset = {
       strictSSL: false,
       headers: {
         // Authorization: process.env.authorization,
-        'Content-Type': `multipart/form-data;`
+        "Content-Type": `multipart/form-data;`,
       },
       auth: {
-        username: 'admin',
-        password: 'admin'
+        username: "admin",
+        password: "admin",
       },
       formData: {
         upload: {
@@ -118,48 +118,47 @@ let Dataset = {
       });
   },
   processVistaBatchImages: async (req, res, next) => {
-
-    if(!req.body.images) {
+    if (!req.body.images) {
       res.status(400).send("Images are required!");
       return;
     }
 
-    console.log('IMAGES: ', req.body.images);
+    console.log("IMAGES: ", req.body.images);
     const images = req.body.images;
 
     rq({
-      method: 'POST',
-      url: process.env.vista_server_ip + '/api/v1/urlasync',
+      method: "POST",
+      url: process.env.vista_server_ip + "/api/v1/urlasync",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic YWRtaW46YWRtaW4='
+        "Content-Type": "application/json",
+        Authorization: "Basic YWRtaW46YWRtaW4=",
       },
       body: {
         upload: images,
-        subscriptions: 'Object,themes,food,tags,face,fashion'
-      }
+        subscriptions: "Object,themes,food,tags,face,fashion",
+      },
     })
       .then((objectIds) => {
-        console.log('objectIds', objectIds);
+        console.log("objectIds", objectIds);
         let ids = [];
 
-        for(const i in objectIds) {
+        for (const i in objectIds) {
           ids[i] = objectIds[i].id;
         }
 
         rq({
-          method: 'POST',
-          url: process.env.vista_server_ip + '/api/v1/operationlist',
+          method: "POST",
+          url: process.env.vista_server_ip + "/api/v1/operationlist",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic YWRtaW46YWRtaW4='
+            "Content-Type": "application/json",
+            Authorization: "Basic YWRtaW46YWRtaW4=",
           },
           body: {
-            id: ids
-          }
+            id: ids,
+          },
         })
           .then((vistaDetections) => {
-            console.log('vistaDetections', vistaDetections);
+            console.log("vistaDetections", vistaDetections);
             res.json(vistaDetections);
           })
           .catch((error) => {
@@ -230,7 +229,7 @@ let Dataset = {
           .seekInput("00:00:00")
           .outputOptions([`-vf fps=${body.fps}`])
           .duration(`${body.t}`)
-          .saveToFile(datasetDir + "/" + Date.now() +  "-image%d.jpg")
+          .saveToFile(datasetDir + "/" + Date.now() + "-image%d.jpg")
           .on("end", function (stdout, stderr) {
             resolve("Done!!");
           });
@@ -249,10 +248,10 @@ let Dataset = {
       };
       //--------
       fs.exists(absDir, (exists) => {
-        console.log(exists ? absDir + ' - Found' : absDir + ' - Not Found!');
+        console.log(exists ? absDir + " - Found" : absDir + " - Not Found!");
       });
       //--------
-      if(!pathExist) {
+      if (!pathExist) {
         Datasets.add(data, function (err, row) {
           if (err) return res.status(500).json(err);
           Relations.getRels(cam_id, function (err, result) {
@@ -289,7 +288,9 @@ let Dataset = {
             };
             //--------
             fs.exists(datasetDir, (exists) => {
-              console.log(exists ? datasetDir + ' - Found' : datasetDir + ' - Not Found!');
+              console.log(
+                exists ? datasetDir + " - Found" : datasetDir + " - Not Found!"
+              );
             });
             //--------
             Datasets.add(data, function (err, row) {
@@ -320,7 +321,7 @@ let Dataset = {
         var lugar = process.env.resources2 + "datasets/" + pathName;
         pathExist = fs.existsSync(lugar);
 
-        console.log('lugar', lugar, pathExist);
+        console.log("lugar", lugar, pathExist);
 
         if (!fs.existsSync(lugar)) {
           fs.mkdirSync(lugar);
@@ -351,9 +352,16 @@ let Dataset = {
           req.file.originalname;
         unZippedPath = process.env.resources2 + "datasets/" + pathName;
 
-        console.log('unZippedPath', unZippedPath, pathExist, fs.existsSync(pat), pat);
+        console.log(
+          "unZippedPath",
+          unZippedPath,
+          pathExist,
+          fs.existsSync(pat),
+          pat
+        );
 
-        await fs.createReadStream(pat)
+        await fs
+          .createReadStream(pat)
           .pipe(
             unzipper.Extract({
               path: unZippedPath,
@@ -398,7 +406,7 @@ let Dataset = {
         /**
          * Store in the DB if path is not exist
          */
-        if(!pathExist) {
+        if (!pathExist) {
           let data = {
             cam_id: uuidv4(),
             clientId: uuidv4(),
@@ -627,7 +635,7 @@ let table = {
   1: "vehicle_gsate",
   2: "clothing_gsate",
   16: "ppe_gsate",
-  17: "defects_gsate"
+  17: "defects_gsate",
 };
 
 let processByAnalytics = (name) => {
@@ -648,49 +656,51 @@ let processByAnalytics = (name) => {
 
             if (rows.length > 0) {
               for (const itm of rows) {
-                let data = {
-                  table: table[itm.algo_id],
-                  snippet_id: itm.snippet_id,
-                };
-                ++index;
-                await Algorithms.fetchAlgoData(data).then((resp) => {
-                  for (const element of resp) {
-                    let cl =
-                      table[itm.algo_id] == "person_gsate"
-                        ? "person"
-                        : table[itm.algo_id] == "vehicle_gsate"
-                        ? element.class
-                        : table[itm.algo_id] == "clothing_gsate"
-                        ? "clothes"
-                        : table[itm.algo_id] == "ppe_gsate"
-                        ? element.class
-                        : element.class;
-                    let obj = {
-                      id: count,
-                      image:
-                        "/assets/shared-data/" +
-                        element.image_path.split("/").splice(5, 5).join("/"),
-                      width: element.cam_width,
-                      height: element.cam_height,
-                      checked: true,
-                      results: {
-                        Object: [
-                          {
-                            class: cl,
-                            boundingBox: {
-                              left: element.x1,
-                              top: element.y1,
-                              width: element.x2 - element.x1,
-                              height: element.y2 - element.y1,
+                if (itm.algo_id !== 18) {
+                  let data = {
+                    table: table[itm.algo_id],
+                    snippet_id: itm.snippet_id,
+                  };
+                  ++index;
+                  await Algorithms.fetchAlgoData(data).then((resp) => {
+                    for (const element of resp) {
+                      let cl =
+                        table[itm.algo_id] == "person_gsate"
+                          ? "person"
+                          : table[itm.algo_id] == "vehicle_gsate"
+                          ? element.class
+                          : table[itm.algo_id] == "clothing_gsate"
+                          ? "clothes"
+                          : table[itm.algo_id] == "ppe_gsate"
+                          ? element.class
+                          : element.class;
+                      let obj = {
+                        id: count,
+                        image:
+                          "/assets/shared-data/" +
+                          element.image_path.split("/").splice(5, 5).join("/"),
+                        width: element.cam_width,
+                        height: element.cam_height,
+                        checked: true,
+                        results: {
+                          Object: [
+                            {
+                              class: cl,
+                              boundingBox: {
+                                left: element.x1,
+                                top: element.y1,
+                                width: element.x2 - element.x1,
+                                height: element.y2 - element.y1,
+                              },
                             },
-                          },
-                        ],
-                      },
-                    };
-                    ++count;
-                    result.push(obj);
-                  }
-                });
+                          ],
+                        },
+                      };
+                      ++count;
+                      result.push(obj);
+                    }
+                  });
+                }
               }
               //result = [].concat(...result);
               resolve(result);
