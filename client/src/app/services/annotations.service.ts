@@ -79,6 +79,10 @@ export class AnnotationsService {
     return this.http.post(`${this.TRAINING_SCRIPT_URL}/preprocess`, data);
   }
 
+  trainScriptForFR(data: any) {
+    return this.http.post(`${this.TRAINING_SCRIPT_URL}/frpreprocess`, data);
+  }
+
   getTestList() {
     return this.http.get(`${this.TRAINING_SCRIPT_URL}/trainingID`);
   }
