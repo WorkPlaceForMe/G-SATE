@@ -95,6 +95,10 @@ export class AnnotationsService {
     return this.http.post<any[]>(`${this.API_URL}/datasets/process-without-vista`, data);
   }
 
+  getElasticSearchResults(data: any) {
+    return this.http.get<any[]>(`${this.API_URL}/annotations/image/${data}`);
+  }
+
   processVistaSingle(data: any) {
     return this.http.post(`${this.API_URL}/datasets/process/vista/single`, data);
   }

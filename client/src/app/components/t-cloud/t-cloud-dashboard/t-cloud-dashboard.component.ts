@@ -213,11 +213,10 @@ export class TCloudDashboardComponent implements OnInit {
           // }
 
           this.datasetName = e.params.args.data.text.trim();
-
-          console.log(e.params.args.data.text.trim());
-
+          this.searchDatasetName = e.params.args.data.text.trim();
 
           this.detect();
+          this.detectChange();
         });
       }
   }
@@ -410,6 +409,7 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   detectChange() {
+    debugger;
     this.searchFlag = false;
     if (this.searchDatasetName == "") {
       this.searchFlag = true;
