@@ -707,6 +707,8 @@ let processByAnalytics = (name) => {
                         };
                         ++count;
                         result.push(obj);
+                      } else {
+                        console.log('======> Excluding person')
                       }
                     }
                   });
