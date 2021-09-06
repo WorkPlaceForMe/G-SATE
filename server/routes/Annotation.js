@@ -27,8 +27,6 @@ router.get("/models", function (req, res, next) {
 
 router.post("/confirmed", function (req, res, next) {
   let body = req.body;
-  const elasticData = [];
-
   /**
    * Update ratio of (x, y) coordinates as per actual image width height
    */
@@ -43,34 +41,9 @@ router.post("/confirmed", function (req, res, next) {
             (SET.results[i][j].y / SET.canvas_height) * SET.height;
         }
       }
-      elasticData.push(
-        { index: { _index: elasticIndex, _type: elasticType } },
-        {
-          image: SET.image,
-          width: SET.width,
-          height: SET.height,
-          canvas_width: SET.canvas_width,
-          canvas_height: SET.canvas_height,
-          data: [...SET.results[i]],
-        }
-      );
     }
   }
   /** ---------------- */
-
-  client.bulk(
-    {
-      body: elasticData,
-    },
-    function (err, data) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send(err);
-      } else {
-        console.log("Uploaded on elastic search...");
-      }
-    }
-  );
 
   let directory =
     process.env.resources2 + "training_details/" + body.datasetName + ".json";

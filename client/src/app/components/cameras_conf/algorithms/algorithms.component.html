@@ -8,6 +8,11 @@
 <!-- banner section end -->
 <div class="section-padding" *ngIf="algos && algos.length > 0">
     <div class="container">
+      <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+        <div class="spinner-border spin" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
         <div class="bg-darken">
             <div class="row no-gutters">
                 <!-- left side content start -->
@@ -41,7 +46,7 @@
                                 <div class="invalid-feedback">Please fill all the input</div>   
                             </div>
                             <div class="form-group col-md-12 mb-0 d-flex justify-content-between">
-                                <button class="btn btn-primary" (click)="save()">Save</button>
+                                <button class="btn btn-primary" (click)="saveAndBack()">Save</button>
                                 <button class="btn btn-medium ml-2" (click)="info()">Info</button>
                             </div>
                         </div>
@@ -70,10 +75,10 @@
                                     <span class="d-block text-primary text-truncate">{{algorithm.name}}</span>
                                 </div>
                                 <!-- roi -->
-                                <div class="item pr-3">
+                                <!-- <div class="item pr-3">
                                     <span class="d-block text-uppercase text-white mb-2">ROI</span>
                                     <button class="btn btn-sm btn-primary" [routerLink]="['/cameras/algorithms/', param, algorithm.id]" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>Add   +</button>
-                                </div>
+                                </div> -->
                                 <!-- confidence -->
                                 <div class="item pr-3">
                                     <span class="d-block text-uppercase text-white mb-2">Confidence</span>

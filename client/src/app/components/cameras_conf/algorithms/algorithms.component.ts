@@ -70,6 +70,7 @@ export class AlgorithmsComponent implements OnInit {
   showU0: boolean;
   showU1: boolean;
   showU2: boolean;
+  spin: boolean = false;
   res_width: number;
   res_height: number;
   private canvas;
@@ -90,21 +91,18 @@ export class AlgorithmsComponent implements OnInit {
     //   console.log('current url', events[1].urlAfterRedirects);
     // });
     const params = this.activatedRoute.snapshot.params;
-
     this.facesService.getAlgos().subscribe(
       (res) => {
         this.algos = res;
+        console.log('this.algos - ', this.algos);
         for (let i = 0; i < this.algos.length; i++) {
           this.algos[i].conf = 95;
           if (this.algos[i]["available"] == 1) {
-            if (
-              false /* this.algos[i]['id'] <= 3 || this.algos[i]['id'] == 12 || this.algos[i]['id'] == 14 || this.algos[i]['id'] == 15 */
-            ) {
+            if (false) {
               this.Calgos.push(this.algos[i]);
             } else if (this.algos[i]["id"] == 1) {
-              /* this.algos[i]['id'] > 3 && this.algos[i]['id'] <= 8 || this.algos[i]['id'] == 13 */
               this.Balgos.push(this.algos[i]);
-            } else if (this.algos[i]["id"] == 0 || this.algos[i]["id"] == 2) {
+            } else if (this.algos[i]["id"] == 0 || this.algos[i]["id"] == 2 || this.algos[i]["id"] == 16 || this.algos[i]["id"] == 17) {
               this.Aalgos.push(this.algos[i]);
             }
           }
@@ -125,9 +123,7 @@ export class AlgorithmsComponent implements OnInit {
                   } else if (this.relations[e]["algo_id"] == 5) {
                     this.speed = JSON.parse(this.relations[e]["atributes"]);
                   } else if (this.relations[e]["algo_id"] == 2) {
-                    this.loiteringTime = JSON.parse(
-                      this.relations[e]["atributes"]
-                    );
+                    this.loiteringTime = JSON.parse(this.relations[e]["atributes"]);
                   } else if (this.relations[e]["algo_id"] == 3) {
                     this.dac = JSON.parse(this.relations[e]["atributes"]);
                   } else if (this.relations[e]["algo_id"] == 12) {
@@ -140,9 +136,7 @@ export class AlgorithmsComponent implements OnInit {
               }
             }
             for (let u = 0; u < this.relations.length; u++) {
-              this.relations[u]["roi_id"] = JSON.parse(
-                this.relations[u]["roi_id"]
-              );
+              this.relations[u]["roi_id"] = JSON.parse(this.relations[u]["roi_id"]);
               if (this.relations[u]["roi_id"] != null) {
                 for (let l = 0; l < this.relations[u]["roi_id"].length; l++) {
                   //these parameters is to scalate it according to RoI resolution
@@ -432,8 +426,12 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   saveAndBack() {
+    this.spin = true;
     this.save();
-    this.router.navigateByUrl("/camerasList");
+    setTimeout(() => {
+      this.spin = false;
+      this.router.navigateByUrl("/camerasList");
+    },3000);
   }
 
   //need to update the save with the new format
@@ -482,114 +480,7 @@ export class AlgorithmsComponent implements OnInit {
     for (let i = 0; i < this.algos.length; i++) {
       let alone = false;
       for (let e = 0; e < this.relations.length; e++) {
-        /* if (this.algos[i].id == 1 && this.relations[e]['algo_id'] == 1) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.climb)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.climb)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
-        /* if (this.algos[i].id == 7 && this.relations[e]['algo_id'] == 7) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.unwanted)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.unwanted)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
-        /* if (this.algos[i].id == 5 && this.relations[e]['algo_id'] == 5) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.speed)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.speed)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
-        /* if (this.algos[i].id == 2 && this.relations[e]['algo_id'] == 2) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.loiteringTime)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.loiteringTime)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
-        /* if (this.algos[i].id == 3 && this.relations[e]['algo_id'] == 3) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.dac)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.dac)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
-        /* if (this.algos[i].id == 12 && this.relations[e]['algo_id'] == 12) {
-          //check if there is an update in the atributes of the specific algorithm
-          if (
-            JSON.parse(this.relations[e]['atributes']) !=
-            JSON.stringify(this.quantity)
-          ) {
-            this.relation.atributes = null
-            this.relation.atributes = JSON.stringify(this.quantity)
-            this.facesService
-              .updateRelation(this.relations[e]['id'], this.relation)
-              .subscribe(
-                res => {
-                  console.log(res)
-                },
-                err => console.log(err)
-              )
-          }
-        } */
+
       }
       if (this.polygons.length != 0) {
         for (let c = 0; c < this.polygons.length; c++) {

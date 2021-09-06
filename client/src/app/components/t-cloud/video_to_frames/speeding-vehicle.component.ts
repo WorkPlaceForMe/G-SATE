@@ -32,6 +32,7 @@ export class SpeedingVehicleComponent implements OnInit {
   act: boolean = false;
   stored_vid: boolean = false;
   liveFeed: boolean = false;
+  spin: boolean = false;
   flag: boolean = true;
   isValidTime: boolean = true;
   timeValidityMessage: string;
@@ -327,21 +328,25 @@ export class SpeedingVehicleComponent implements OnInit {
   }
 
   send() {
+    this.spin = true;
     let cam = this.cameras.filter((element) => element.name === this.cam_name);
     /* this.conf.ss = (this.ss === undefined) ? this.start : this.ss;
     this.t = (this.t === undefined) ? this.finish : this.t; */
     this.conf.cam_id = cam[0].id;
-    this.conf.t =
-      this.computeSeconds(this.finish) - this.computeSeconds(this.start);
+    this.conf.t = this.computeSeconds(this.finish) - this.computeSeconds(this.start);
     this.conf.name = this.cam_name;
     this.conf.datasetName = this.datasetName;
     this.conf.stream = cam[0].rtsp_in;
-    this.router.navigate(["/annotations"]);
+    // this.router.navigate(["/annotations"]);
     this.annotationservice.cutVideo(this.conf).subscribe(
       (res) => {
+        this.spin = false;
         this.router.navigate(["/annotations"]);
       },
-      (err) => console.log(err)
+      (err) => {
+        this.spin = false;
+        console.log(err)
+      }
     );
   }
 

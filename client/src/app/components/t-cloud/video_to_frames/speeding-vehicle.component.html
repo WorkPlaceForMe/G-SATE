@@ -16,6 +16,11 @@
     </div>
     <div class="video-options py-4 z-index-1 text-white w-100">
         <div class="container">
+            <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
+                <div class="spinner-border spin" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
             <div class="form form-row align-items-end">
                 <div class="form-group col-12 col-md-2 mb-md-0 time-select1">
                     <label>Start</label>
