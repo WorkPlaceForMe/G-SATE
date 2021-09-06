@@ -668,8 +668,11 @@ let processByAnalytics = (name) => {
                       if (
                         (table[itm.algo_id] == "ppe_gsate" ||
                           table[itm.algo_id] == "defects_gsate") &&
-                        element.class !== "person"
+                        element.class == "person"
                       ) {
+                        console.log('======> Excluding person')
+                      } else {
+                        console.log('======> Including data')
                         let cl =
                           table[itm.algo_id] == "person_gsate"
                             ? "person"
@@ -707,8 +710,6 @@ let processByAnalytics = (name) => {
                         };
                         ++count;
                         result.push(obj);
-                      } else {
-                        console.log('======> Excluding person')
                       }
                     }
                   });
