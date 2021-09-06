@@ -27,7 +27,6 @@ router.get("/models", function (req, res, next) {
 
 router.post("/confirmed", function (req, res, next) {
   let body = req.body;
-
   /**
    * Update ratio of (x, y) coordinates as per actual image width height
    */
