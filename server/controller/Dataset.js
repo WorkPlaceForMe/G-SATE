@@ -656,8 +656,8 @@ let processByAnalytics = (name) => {
 
             if (rows.length > 0) {
               for (const itm of rows) {
-                if (itm.algo_id !== '18') {
-                  console.log('----Entered----')
+                if (itm.algo_id !== "18") {
+                  console.log("----Entered----");
                   let data = {
                     table: table[itm.algo_id],
                     snippet_id: itm.snippet_id,
@@ -665,40 +665,49 @@ let processByAnalytics = (name) => {
                   ++index;
                   await Algorithms.fetchAlgoData(data).then((resp) => {
                     for (const element of resp) {
-                      let cl =
-                        table[itm.algo_id] == "person_gsate"
-                          ? "person"
-                          : table[itm.algo_id] == "vehicle_gsate"
-                          ? element.class
-                          : table[itm.algo_id] == "clothing_gsate"
-                          ? "clothes"
-                          : table[itm.algo_id] == "ppe_gsate"
-                          ? element.class
-                          : element.class;
-                      let obj = {
-                        id: count,
-                        image:
-                          "/assets/shared-data/" +
-                          element.image_path.split("/").splice(5, 5).join("/"),
-                        width: element.cam_width,
-                        height: element.cam_height,
-                        checked: true,
-                        results: {
-                          Object: [
-                            {
-                              class: cl,
-                              boundingBox: {
-                                left: element.x1,
-                                top: element.y1,
-                                width: element.x2 - element.x1,
-                                height: element.y2 - element.y1,
+                      if (
+                        (table[itm.algo_id] == "ppe_gsate" ||
+                          table[itm.algo_id] == "defects_gsate") &&
+                        element.class !== "person"
+                      ) {
+                        let cl =
+                          table[itm.algo_id] == "person_gsate"
+                            ? "person"
+                            : table[itm.algo_id] == "vehicle_gsate"
+                            ? element.class
+                            : table[itm.algo_id] == "clothing_gsate"
+                            ? "clothes"
+                            : table[itm.algo_id] == "ppe_gsate"
+                            ? element.class
+                            : element.class;
+                        let obj = {
+                          id: count,
+                          image:
+                            "/assets/shared-data/" +
+                            element.image_path
+                              .split("/")
+                              .splice(5, 5)
+                              .join("/"),
+                          width: element.cam_width,
+                          height: element.cam_height,
+                          checked: true,
+                          results: {
+                            Object: [
+                              {
+                                class: cl,
+                                boundingBox: {
+                                  left: element.x1,
+                                  top: element.y1,
+                                  width: element.x2 - element.x1,
+                                  height: element.y2 - element.y1,
+                                },
                               },
-                            },
-                          ],
-                        },
-                      };
-                      ++count;
-                      result.push(obj);
+                            ],
+                          },
+                        };
+                        ++count;
+                        result.push(obj);
+                      }
                     }
                   });
                 }
