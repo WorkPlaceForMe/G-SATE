@@ -8,7 +8,8 @@
             <div class="col-sm-12">
                 <h6 class="font-weight-bold text-white">
                     Elastic Search: You can search for particular annotations
-                    for all the saved images in our DB. You can search by key words like 'person', 'cycle' etc. in the below box and click on Search button to get the results.</h6>
+                    for all the saved images in our DB. You can search by key words like 'person', 'cycle' etc. in the
+                    below box and click on Search button to get the results.</h6>
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-4">
@@ -35,6 +36,8 @@
             </div>
         </div>
         <!-- card start -->
+        <button class="btn btn-primary" (click)="showAnalyticsAnnotations()">Show Analytics Annotations
+        </button>
         <div class="row" *ngIf="datasetFlag">
             <div class="col-md-4 mb-4" *ngFor="let item of pagedItems; let i = index">
 
@@ -91,7 +94,7 @@
                                     [disabled]="item.vistaResponseReceived">Vista Detection
                                 </button>
                                 <button class="btn btn-primary" *ngIf="detectionOriginType === 'analytics'"
-                                    (click)="getAnayticsImgAnnotations(item.id,$event)">Analytics API
+                                    (click)="getAnayticsImgAnnotations(item.id,$event)" disabled>Analytics API
                                 </button>
                                 <button class="btn btn-primary" (click)="generalDetection(item.id,$event)"
                                     [disabled]="item.generalDetectionResponseReceived">General Detection

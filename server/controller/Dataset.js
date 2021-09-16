@@ -117,6 +117,7 @@ let Dataset = {
         return res.status(500).json(error);
       });
   },
+  
   processVistaBatchImages: async (req, res, next) => {
     if (!req.body.images) {
       res.status(400).send("Images are required!");
