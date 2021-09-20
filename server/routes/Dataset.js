@@ -37,6 +37,10 @@ router.post("/process/vista/single", function (req, res, next) {
   DsetController.processVistaSingleImage(req, res, next);
 });
 
+router.post("/process/vista/bulk", function (req, res, next) {
+  DsetController.processVistaMultipleImage(req, res, next);
+});
+
 router.post("/process/vista/batch-images", function (req, res, next) {
   DsetController.processVistaBatchImages(req, res, next);
 });

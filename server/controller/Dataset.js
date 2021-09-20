@@ -117,6 +117,53 @@ let Dataset = {
         return res.status(500).json(error);
       });
   },
+
+  processVistaMultipleImage: async (req, res, next) => {
+
+    const arrayOfImagePaths = []
+
+    for (const imgPath of req.body.image_paths) {
+      console.log(imgPath,'imgPath');
+    const path =  imgPath.replace(
+        `http://${process.env.my_ip}:4200/assets/shared-data/`,
+        process.env.resources2
+      );
+      console.log(path,'path');
+      console.log(fs.createReadStream(path),'fs.createReadStream(path)');
+      arrayOfImagePaths.push(fs.createReadStream(path))
+    }
+
+    console.log(">>>>>>>>>>>>> " + arrayOfImagePaths);
+
+    const options = {
+      method: "POST",
+      url: process.env.vista_server_ip + "/api/v1/async",
+      strictSSL: false,
+      headers: {
+        // Authorization: process.env.authorization,
+        "Content-Type": `application/json`,
+      },
+      auth: {
+        username: "admin",
+        password: "admin",
+      },
+      formData: {
+        upload: arrayOfImagePaths,
+        subscriptions: "Object",
+      },
+    };
+
+    console.log(JSON.stringify(options));
+
+    await rp(options)
+      .then((response) => {
+        console.log(response);
+        return res.json(response);
+      })
+      .catch((error) => {
+        return res.status(500).json(error);
+      });
+  },
   
   processVistaBatchImages: async (req, res, next) => {
     if (!req.body.images) {
