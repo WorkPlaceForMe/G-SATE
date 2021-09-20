@@ -120,20 +120,20 @@ let Dataset = {
 
   processVistaMultipleImage: async (req, res, next) => {
 
-    const arrayOfImagePaths = []
+    // const arrayOfImagePaths = []
 
-    for (const imgPath of req.body.image_paths) {
-      console.log(imgPath,'imgPath');
-    const path =  imgPath.replace(
-        `http://${process.env.my_ip}:4200/assets/shared-data/`,
-        process.env.resources2
-      );
-      console.log(path,'path');
-      console.log(fs.createReadStream(path),'fs.createReadStream(path)');
-      arrayOfImagePaths.push(fs.createReadStream(path))
-    }
+    // for (const imgPath of req.body.image_paths) {
+    //   console.log(imgPath,'imgPath');
+    // const path =  imgPath.replace(
+    //     `http://${process.env.my_ip}:4200/assets/shared-data/`,
+    //     process.env.resources2
+    //   );
+    //   console.log(path,'path');
+    //   console.log(fs.createReadStream(path),'fs.createReadStream(path)');
+    //   arrayOfImagePaths.push(fs.createReadStream(path))
+    // }
 
-    console.log(">>>>>>>>>>>>> " + arrayOfImagePaths);
+    // console.log(">>>>>>>>>>>>> " + arrayOfImagePaths);
 
     const options = {
       method: "POST",
@@ -148,7 +148,7 @@ let Dataset = {
         password: "admin",
       },
       data: {
-        upload: arrayOfImagePaths,
+        upload: req.body.image_paths,
         subscriptions: "Object,themes,food,tags,face,fashion",
       },
     };
