@@ -141,15 +141,15 @@ let Dataset = {
       strictSSL: false,
       headers: {
         // Authorization: process.env.authorization,
-        "Content-Type": `multipart/form-data;`,
+        "Content-Type": `application/json`,
       },
       auth: {
         username: "admin",
         password: "admin",
       },
-      formData: {
+      data: {
         upload: arrayOfImagePaths,
-        subscriptions: "Object",
+        subscriptions: "Object,themes,food,tags,face,fashion",
       },
     };
 
