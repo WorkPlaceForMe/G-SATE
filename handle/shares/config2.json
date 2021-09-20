@@ -1,0 +1,20 @@
+{
+    "result":["mysql"],
+    "image":["local"],
+    "es":{
+        "url":"https://search-graymatics-dev-fc6j24xphhun5xcinuusz2yfjm.ap-southeast-1.es.amazonaws.com",
+        "user":"admin",
+        "password":"Graymatics@1",
+        "index":"gmtc_searcher"
+    },
+    "gg":{
+        "url":" https://search-graymatics-dev-fc6j24xphhun5xcinuusz2yfjm.ap-southeast-1.es.amazonaws.com",
+        "user":"admin",
+        "password":"Graymatics@1",
+        "index":"gmtc_searcher"
+    },
+    "local":{},
+    "s3":{
+        "bucket":"multi-tenant2"
+    }
+}

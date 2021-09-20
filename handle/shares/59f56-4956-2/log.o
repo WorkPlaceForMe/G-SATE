@@ -1,0 +1,18 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f0b78548a90>
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 0.5959 minutes
+FPS -> 0.0000

@@ -1,0 +1,8 @@
+Device Number: 0
+  Device name: Tesla T4
+  Device 0 has compute capability 7.5.
+Using previously generated plan file located at /home/src/deep_yolo/deep_yolo/yolo_lib/yolo_trt_cpp/data/yolo/models/yolov3-kINT8-compute7.5-input416x416-batch1.engine
+Loading TRT Engine...
+Loading Complete!
+
+Network Type : yolov3 Precision : kINT8 Batch Size : 1 Prob Thresh : 0.1

@@ -1,0 +1,162 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7f28400c6668>
+is running: 1630514660.4902446
+is running: 1630514665.5357156
+is running: 1630514670.6174026
+is running: 1630514675.6275737
+is running: 1630514680.701186
+is running: 1630514685.7032144
+is running: 1630514690.747507
+is running: 1630514695.778831
+is running: 1630514700.782607
+is running: 1630514705.7966273
+is running: 1630514710.8366241
+is running: 1630514715.8513412
+is running: 1630514720.8946407
+is running: 1630514725.945509
+is running: 1630514731.0152237
+is running: 1630514736.0568445
+is running: 1630514741.1025383
+is running: 1630514746.1300588
+is running: 1630514751.1431618
+is running: 1630514756.1911578
+is running: 1630514761.2070434
+is running: 1630514766.2406104
+is running: 1630514771.2409494
+is running: 1630514776.2556076
+is running: 1630514781.2927437
+is running: 1630514786.3692799
+is running: 1630514791.3933854
+is running: 1630514796.4213724
+is running: 1630514801.450232
+is running: 1630514806.5126686
+is running: 1630514811.5209684
+is running: 1630514816.553752
+is running: 1630514821.558698
+is running: 1630514826.5837119
+is running: 1630514831.5909963
+is running: 1630514836.6686187
+is running: 1630514841.6919324
+is running: 1630514846.7016397
+is running: 1630514851.7185016
+is running: 1630514856.739896
+is running: 1630514861.7778928
+is running: 1630514866.7941713
+is running: 1630514871.8354604
+is running: 1630514876.9043884
+is running: 1630514881.922714
+is running: 1630514886.9279697
+['long', 'Blue', 'Unknown', 'Blue', 'Unknown']
+is running: 1630514892.7166712
+['long', 'Blue', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Black']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'White', 'Black']
+is running: 1630514897.731101
+is running: 1630514902.7973137
+is running: 1630514907.8366456
+['long', 'Black', 'Long', 'White', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514912.8510134
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1630514917.902818
+is running: 1630514922.9599497
+['long', 'Grey', 'Short', 'White', 'White']
+['long', 'Grey', 'Short', 'White', 'White']
+is running: 1630514928.0465164
+is running: 1630514933.0534573
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1630514938.0699685
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Short', 'Blue', 'Unknown']
+['long', 'Black', 'Short', 'White', 'Black']
+['long', 'Black', 'Short', 'Blue', 'Black']
+is running: 1630514943.1198637
+['long', 'Blue', 'Long', 'Unknown', 'Black']
+['long', 'Blue', 'Long', 'Black', 'Black']
+is running: 1630514948.4626698
+is running: 1630514953.6222591
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'White', 'White']
+['long', 'Black', 'Unknown', 'Unknown', 'Black']
+['short', 'Grey', 'Long', 'White', 'White']
+['short', 'Grey', 'Long', 'White', 'White']
+['unknown', 'Grey', 'Long', 'White', 'Unknown']
+['long', 'Grey', 'Unknown', 'Unknown', 'White']
+is running: 1630514958.628881
+['long', 'Blue', 'Unknown', 'Unknown', 'Unknown']
+['short', 'Red', 'Unknown', 'Blue', 'Unknown']
+['short', 'Red', 'Unknown', 'Blue', 'Unknown']
+is running: 1630514963.7905798
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1630514968.9043083
+is running: 1630514973.9248216
+['long', 'Mixed', 'Unknown', 'Blue', 'Unknown']
+['short', 'Mixed', 'Unknown', 'Blue', 'Unknown']
+['long', 'Blue', 'Long', 'White', 'White']
+['long', 'Blue', 'Long', 'White', 'White']
+['long', 'Green', 'Short', 'White', 'White']
+['long', 'Black', 'Long', 'White', 'White']
+is running: 1630514978.97712
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+is running: 1630514984.0332806
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'Green', 'Long', 'Green', 'Unknown']
+['long', 'Green', 'Long', 'Green', 'Unknown']
+is running: 1630514989.1185567
+is running: 1630514994.1216652
+is running: 1630514999.1783133
+is running: 1630515004.1871376
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+is running: 1630515009.2324111
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+is running: 1630515014.2445765
+is running: 1630515019.2527616
+is running: 1630515024.2731051
+is running: 1630515029.3177085
+is running: 1630515034.333265
+is running: 1630515039.3506577
+is running: 1630515044.3875697
+is running: 1630515049.4371898
+is running: 1630515054.4691205
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630515059.4855509
+is running: 1630515064.5054157
+is running: 1630515069.5765057
+is running: 1630515074.6217623
+is running: 1630515079.6536338
+is running: 1630515084.6593692
+is running: 1630515089.710423
+is running: 1630515094.7564216
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 7.8622 minutes
+FPS -> 0.0000

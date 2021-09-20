@@ -1,0 +1,291 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7fe8f1529780>
+['long', 'Blue', 'Long', 'Blue', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+is running: 1630514661.8125417
+['long', 'Blue', 'Short', 'Blue', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Black', 'White']
+is running: 1630514667.1930687
+is running: 1630514672.3589096
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Unknown', 'Black']
+is running: 1630514677.5272965
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'White']
+is running: 1630514682.6815326
+is running: 1630514687.7289968
+['long', 'Blue', 'Short', 'Blue', 'Black']
+is running: 1630514692.8597856
+is running: 1630514698.196973
+['long', 'Blue', 'Short', 'Unknown', 'White']
+['long', 'Blue', 'Short', 'White', 'White']
+is running: 1630514703.332844
+['short', 'Purple', 'Short', 'Unknown', 'Black']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+['short', 'Pink', 'Short', 'Unknown', 'White']
+is running: 1630514708.4699295
+['short', 'Pink', 'Long', 'Unknown', 'White']
+['short', 'Pink', 'Long', 'Unknown', 'Unknown']
+is running: 1630514713.5222666
+is running: 1630514718.5532029
+['long', 'Blue', 'Long', 'Blue', 'Black']
+['long', 'Blue', 'Long', 'Blue', 'Black']
+['long', 'White', 'Short', 'Red', 'Black']
+is running: 1630514723.5957663
+['long', 'Blue', 'Long', 'Blue', 'Black']
+['long', 'Blue', 'Long', 'Blue', 'Black']
+['short', 'Pink', 'Long', 'Purple', 'Unknown']
+['short', 'White', 'Long', 'Green', 'White']
+is running: 1630514728.7184253
+['long', 'Mixed', 'Short', 'Black', 'Black']
+['long', 'Blue', 'Short', 'Blue', 'Unknown']
+['long', 'Blue', 'Short', 'Black', 'White']
+is running: 1630514733.8574457
+['long', 'Blue', 'Short', 'Unknown', 'Black']
+['long', 'White', 'Short', 'Black', 'White']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['sleeveless', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Green', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['sleeveless', 'Green', 'Unknown', 'Unknown', 'Unknown']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514739.2167392
+['long', 'White', 'Long', 'Blue', 'Black']
+['long', 'White', 'Long', 'Black', 'Black']
+is running: 1630514745.1292086
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Black']
+is running: 1630514750.3288784
+['long', 'Pink', 'Long', 'Black', 'Black']
+['long', 'White', 'Long', 'Mixed', 'Black']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630514755.8207986
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+is running: 1630514761.1238751
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630514766.380301
+['long', 'Black', 'Long', 'Black', 'White']
+is running: 1630514771.9121003
+is running: 1630514777.6048002
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514782.9092705
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514787.9492166
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514793.009462
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'White', 'Short', 'Mixed', 'White']
+is running: 1630514798.6969697
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630514804.76803
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630514810.3872828
+['long', 'Mixed', 'Unknown', 'Unknown', 'Black']
+['long', 'Black', 'Long', 'Unknown', 'Black']
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630514816.1549113
+is running: 1630514821.9308631
+['long', 'Black', 'Long', 'Green', 'Black']
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630514827.527977
+is running: 1630514833.1823454
+['long', 'Mixed', 'Long', 'Green', 'Black']
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630514839.1487505
+['long', 'Black', 'Long', 'Unknown', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Unknown']
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+is running: 1630514844.6045606
+is running: 1630514849.6809416
+is running: 1630514855.600559
+is running: 1630514861.1375413
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'White', 'Short', 'Black', 'Black']
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'White', 'Short', 'Black', 'Black']
+is running: 1630514866.5697112
+is running: 1630514872.0872185
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514877.9576082
+is running: 1630514883.223561
+is running: 1630514888.3041248
+is running: 1630514894.0525784
+['long', 'Mixed', 'Long', 'Blue', 'White']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630514899.536126
+['long', 'White', 'Long', 'Black', 'Unknown']
+is running: 1630514904.7558546
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Black', 'Black']
+is running: 1630514910.340434
+is running: 1630514915.6972923
+['long', 'Mixed', 'Long', 'White', 'Black']
+['long', 'Mixed', 'Long', 'Green', 'Black']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630514920.8571174
+is running: 1630514926.141991
+['long', 'White', 'Long', 'Black', 'Black']
+['long', 'White', 'Long', 'Black', 'Black']
+is running: 1630514931.5497413
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'White', 'Long', 'Unknown', 'Unknown']
+is running: 1630514937.2175634
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Long', 'White', 'Black']
+['long', 'Mixed', 'Long', 'Green', 'White']
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Unknown', 'Unknown', 'Unknown']
+is running: 1630514942.6825268
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514948.2827933
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+is running: 1630514953.519341
+['long', 'Mixed', 'Long', 'Green', 'Unknown']
+is running: 1630514958.9667425
+is running: 1630514964.0732539
+['long', 'White', 'Long', 'Green', 'Unknown']
+is running: 1630514969.7747855
+is running: 1630514975.4073715
+is running: 1630514980.8810544
+is running: 1630514985.888998
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630514991.1749725
+is running: 1630514996.3888588
+['long', 'Black', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'White', 'Long', 'Black', 'Black']
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'White', 'Short', 'Black', 'Black']
+is running: 1630515001.7445853
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'Black', 'Long', 'Green', 'Black']
+['long', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630515006.8525977
+is running: 1630515012.115235
+['long', 'White', 'Long', 'Blue', 'Black']
+['long', 'Mixed', 'Long', 'Green', 'Unknown']
+['long', 'Mixed', 'Long', 'Blue', 'Black']
+['long', 'Mixed', 'Long', 'Green', 'Unknown']
+is running: 1630515017.4085639
+['long', 'Yellow', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Blue', 'Black']
+is running: 1630515022.8156312
+['long', 'Black', 'Long', 'Blue', 'Black']
+['long', 'Black', 'Long', 'Blue', 'White']
+['long', 'Black', 'Long', 'Blue', 'White']
+is running: 1630515027.909559
+is running: 1630515033.2520468
+is running: 1630515038.484557
+is running: 1630515043.728544
+['long', 'White', 'Long', 'Black', 'Unknown']
+['long', 'Mixed', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630515048.8855877
+is running: 1630515053.9722059
+['long', 'Black', 'Long', 'Unknown', 'Unknown']
+['long', 'Black', 'Long', 'Black', 'Unknown']
+is running: 1630515059.572094
+is running: 1630515064.7081354
+is running: 1630515070.0303993
+is running: 1630515075.504985
+is running: 1630515080.5322063
+['long', 'White', 'Long', 'Brown', 'Black']
+is running: 1630515085.6682138
+is running: 1630515090.6941361
+['long', 'White', 'Long', 'Green', 'Black']
+['long', 'White', 'Short', 'Unknown', 'Black']
+['short', 'Pink', 'Long', 'Pink', 'Black']
+['long', 'White', 'Short', 'Unknown', 'Black']
+['short', 'Pink', 'Long', 'Red', 'Black']
+is running: 1630515095.7157693
+['sleeveless', 'Blue', 'Unknown', 'Unknown', 'Black']
+['sleeveless', 'Mixed', 'Long', 'Unknown', 'Black']
+is running: 1630515100.7381282
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+is running: 1630515105.955311
+is running: 1630515111.1044557
+['sleeveless', 'Mixed', 'Long', 'Unknown', 'Black']
+['sleeveless', 'Mixed', 'Unknown', 'Unknown', 'Black']
+is running: 1630515116.1575682
+['long', 'Green', 'Unknown', 'Unknown', 'Black']
+is running: 1630515121.169063
+['long', 'Purple', 'Long', 'Red', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Brown', 'Black']
+['long', 'Mixed', 'Long', 'Black', 'Unknown']
+['long', 'Green', 'Short', 'Unknown', 'Black']
+['long', 'Green', 'Short', 'Unknown', 'Black']
+is running: 1630515126.415466
+['long', 'Mixed', 'Unknown', 'Unknown', 'Unknown']
+['long', 'Mixed', 'Unknown', 'Unknown', 'Unknown']
+is running: 1630515131.5381796
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+is running: 1630515136.5912817
+['short', 'Black', 'Short', 'Unknown', 'Black']
+['sleeveless', 'Blue', 'Unknown', 'Unknown', 'Black']
+is running: 1630515141.616116
+is running: 1630515146.7895956
+['short', 'Pink', 'Long', 'Red', 'Black']
+['short', 'Pink', 'Long', 'Unknown', 'Black']
+is running: 1630515151.9584785
+['long', 'Purple', 'Short', 'Unknown', 'White']
+is running: 1630515156.9807363
+['long', 'Blue', 'Short', 'Unknown', 'White']
+['long', 'White', 'Short', 'Unknown', 'Black']
+['long', 'White', 'Short', 'Red', 'Black']
+is running: 1630515162.1286952
+['long', 'Black', 'Long', 'White', 'Unknown']
+['long', 'Grey', 'Long', 'White', 'Black']
+is running: 1630515167.189193
+['long', 'Pink', 'Long', 'Unknown', 'Black']
+['short', 'Blue', 'Short', 'Black', 'Unknown']
+is running: 1630515172.1961515
+['short', 'Blue', 'Long', 'Black', 'White']
+['short', 'Blue', 'Long', 'Unknown', 'White']
+['long', 'White', 'Long', 'Unknown', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['sleeveless', 'White', 'Long', 'Black', 'Unknown']
+['sleeveless', 'Pink', 'Long', 'Pink', 'Unknown']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+['short', 'Pink', 'Long', 'Black', 'Black']
+is running: 1630515177.2956197
+is running: 1630515182.499067
+['long', 'White', 'Short', 'Unknown', 'White']
+is running: 1630515187.648915
+is running: 1630515192.655207
+['short', 'Blue', 'Short', 'Unknown', 'White']
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 9.4643 minutes
+FPS -> 0.0000

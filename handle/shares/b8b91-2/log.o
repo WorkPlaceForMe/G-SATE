@@ -1,0 +1,59 @@
+ Try to load cfg: ./darknet/cfg/yolov3.cfg, weights: ./darknet/backup/yolov3.weights, clear = 0 
+net.optimized_memory = 0 
+mini_batch = 1, batch = 1, time_steps = 1, train = 0 
+ Try to load weights: ./darknet/backup/yolov3.weights 
+
+ seen 64, trained: 32013 K-images (500 Kilo-batches_64) 
+Loaded - names_list: /home/Quantela/ClothingAttributes/darknet/data/coco.names, classes = 80 
+Starting the YOLO loop...
+Tensor("sleeve_length/Softmax:0", shape=(None, 4), dtype=float32)
+Tensor("top_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("bottom_length/Softmax:0", shape=(None, 3), dtype=float32)
+Tensor("bottom_color/Softmax:0", shape=(None, 13), dtype=float32)
+Tensor("shoe_color/Softmax:0", shape=(None, 13), dtype=float32)
+<tensorflow.python.keras.engine.functional.Functional object at 0x7fb594072b38>
+['short', 'Black', 'Long', 'Green', 'Black']
+is running: 1630514661.6780257
+['short', 'Black', 'Long', 'Green', 'Black']
+is running: 1630514666.7598207
+is running: 1630514671.8598619
+is running: 1630514676.9651456
+is running: 1630514682.14814
+is running: 1630514687.2387004
+is running: 1630514692.3850136
+is running: 1630514697.464909
+is running: 1630514702.5924673
+is running: 1630514707.5976496
+is running: 1630514712.6566262
+is running: 1630514717.805297
+is running: 1630514722.980769
+is running: 1630514728.0913618
+is running: 1630514733.2005575
+is running: 1630514738.4177039
+is running: 1630514743.5727282
+is running: 1630514748.6881447
+is running: 1630514753.8321307
+is running: 1630514758.865393
+is running: 1630514763.8745024
+is running: 1630514768.926194
+is running: 1630514774.0101628
+is running: 1630514779.142053
+is running: 1630514784.1635525
+is running: 1630514789.234558
+is running: 1630514794.3616793
+is running: 1630514799.377754
+is running: 1630514804.4666302
+is running: 1630514809.525197
+is running: 1630514814.6742008
+is running: 1630514819.731393
+is running: 1630514824.7376041
+is running: 1630514829.8399262
+is running: 1630514834.8448243
+is running: 1630514839.8798776
+is running: 1630514844.9216628
+is running: 1630514850.1857312
+is running: 1630514855.2496514
+EMPTY FRAME ENCOUNTERED
+Finished processing video.
+Total time is 3.8725 minutes
+FPS -> 0.0000
