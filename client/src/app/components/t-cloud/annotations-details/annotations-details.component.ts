@@ -46,6 +46,10 @@ export class AnnotationsDetailsComponent implements OnInit {
 
   }
 
+  getModel() {
+    console.log('model - ', this.model);
+  }
+
   ngOnInit() {
     debugger;
     this.datasetName = this.data.datasetName;
@@ -59,7 +63,11 @@ export class AnnotationsDetailsComponent implements OnInit {
     let isDateTimeFilled: boolean = this.date !== undefined;
     let isModelFilled: boolean = this.model !== undefined;
     let isOverfitModeFilled: boolean = this.overfit_mode !== undefined;
-    return (isDateTimeFilled && isEmailFilled && isModelFilled && isOverfitModeFilled);
+    if(this.model == 'Face Recognition') {
+      return (isEmailFilled && isModelFilled);
+    } else {
+      return (isDateTimeFilled && isEmailFilled && isModelFilled && isOverfitModeFilled);
+    }
   }
 
   ValidateEmail(mail) {
@@ -84,8 +92,6 @@ export class AnnotationsDetailsComponent implements OnInit {
     } else {
       this.datasetAnnotations();
     }
-    // this.router.navigate(['/annotations/confirm'], { state: { data: this.data } });
-    // this.router.navigate(['/annotations/objectDetection/confirm'], { state: { data: this.data } });
   }
 
   prepareCustomerData() {
@@ -122,15 +128,25 @@ export class AnnotationsDetailsComponent implements OnInit {
   }
 
   sendPayloadToTrain(data) {
-    this.annotationsServ.trainScript(data).subscribe(
-      (res: any) => {
-        console.log('sendPayloadToTrain Response - ', res);
-        var now = moment(res.date).format('DD/MM/YYYY h:mm A');
-        alert('Your training has been saved. It will start on ' + now);
-        this.router.navigate(['/annotations']);
-      },
-      err => console.log(err)
-    )
+    if(this.model == 'Face Recognition') {
+      this.annotationsServ.trainScriptForFR(data).subscribe(
+        (res: any) => {
+          alert('The faces for ' + res.datasetName + ' have been added for inferencing');
+          this.router.navigate(['/annotations']);
+        },
+        err => console.log(err)
+      )
+    } else {
+      this.annotationsServ.trainScript(data).subscribe(
+        (res: any) => {
+          console.log('sendPayloadToTrain Response - ', res);
+          var now = moment(res.date).format('DD/MM/YYYY h:mm A');
+          alert('Your training has been saved. It will start on ' + now);
+          this.router.navigate(['/annotations']);
+        },
+        err => console.log(err)
+      )
+    }
   }
 
 }

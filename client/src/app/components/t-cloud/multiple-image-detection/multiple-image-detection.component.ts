@@ -229,7 +229,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     };
     this.annotationsServ.processDataset(data).subscribe(
       (res) => {
-        this.spin = false;
         if (res.length == 0) {
           alert("Zero detections happened.");
           this.router.navigate(["/annotations"]);
@@ -257,6 +256,13 @@ export class MultipleImageDetectionComponent implements OnInit {
               };
             });
             console.log("this.data - ", this.data);
+            setTimeout(() => {
+              this.pagedItems.forEach((val, ind) => {
+                console.log(this.data[ind]);
+                this.getAnayticsImgAnnotations(this.data[ind].id, "");
+              });
+              this.spin = false;
+            }, 2000);
           }, 2000);
         }
       },
@@ -307,52 +313,54 @@ export class MultipleImageDetectionComponent implements OnInit {
 
   getElasticSearchDate() {
     this.spin = true;
-    this.annotationsServ.getElasticSearchResults(this.elasticSearchKeyWord).subscribe(
-      (res) => {
-        this.spin = false;
-        this.annObj = {};
-        this.pagedItems = [];
-        this.data = [];
-        res.forEach((value, index) => {
-          this.data.push(value._source);
-        });
-        this.setPage(1);
-        this.datasetFlag = true;
-        this.data.forEach((value, index) => {
-          let dumArr = [];
-          dumArr.push(value.data);
-          delete value.data;
-          value["results"] = dumArr;
-          value["id"] = index;
-          this.annObj[index] = {
-            image: value.image,
-            width: value.width,
-            height: value.height,
-            canvas_width: value.canvas_width,
-            canvas_height: value.canvas_height,
-            results: value["results"],
-            fixedSize: value.results.length,
-          };
-          this.getAnn(index);
-          this.getLabels(index);
-          // value["vistaResponseReceived"] = true;
-        });
-        console.log("this.data - ", this.data);
-        setTimeout(() => {
+    this.annotationsServ
+      .getElasticSearchResults(this.elasticSearchKeyWord)
+      .subscribe(
+        (res) => {
+          this.spin = false;
+          this.annObj = {};
+          this.pagedItems = [];
+          this.data = [];
+          res.forEach((value, index) => {
+            this.data.push(value._source);
+          });
+          this.setPage(1);
+          this.datasetFlag = true;
           this.data.forEach((value, index) => {
+            let dumArr = [];
+            dumArr.push(value.data);
+            delete value.data;
+            value["results"] = dumArr;
+            value["id"] = index;
+            this.annObj[index] = {
+              image: value.image,
+              width: value.width,
+              height: value.height,
+              canvas_width: value.canvas_width,
+              canvas_height: value.canvas_height,
+              results: value["results"],
+              fixedSize: value.results.length,
+            };
             this.getAnn(index);
             this.getLabels(index);
             // value["vistaResponseReceived"] = true;
           });
-        }, 2000);
-      },
-      (error) => {
-        this.spin = false;
-        alert(
-          `There is an error processing your request. Please retry operation once or contact system administrator.`
-        );
-      }
-    );
+          console.log("this.data - ", this.data);
+          setTimeout(() => {
+            this.data.forEach((value, index) => {
+              this.getAnn(index);
+              this.getLabels(index);
+              // value["vistaResponseReceived"] = true;
+            });
+          }, 2000);
+        },
+        (error) => {
+          this.spin = false;
+          alert(
+            `There is an error processing your request. Please retry operation once or contact system administrator.`
+          );
+        }
+      );
   }
 
   setPage(page: number) {
@@ -375,6 +383,11 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.pager.startIndex,
       this.pager.endIndex + 1
     );
+    if (this.detectionOriginType === "vista") {
+      // Do Nothing
+    } else {
+      // Do Nothing
+    }
   }
 
   onChangePage(pageOfItems: Array<any>) {
@@ -491,9 +504,9 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.data[dataIndex]["results"][e][0]["x"],
           this.data[dataIndex]["results"][e][0]["y"],
           this.data[dataIndex]["results"][e][1]["x"] -
-          this.data[dataIndex]["results"][e][0]["x"],
+            this.data[dataIndex]["results"][e][0]["x"],
           this.data[dataIndex]["results"][e][1]["y"] -
-          this.data[dataIndex]["results"][e][0]["y"]
+            this.data[dataIndex]["results"][e][0]["y"]
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][1]["x"] - 2,
@@ -510,8 +523,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] +
-          this.data[dataIndex]["results"][e][1]["x"] -
-          4,
+            this.data[dataIndex]["results"][e][1]["x"] -
+            4,
           this.data[dataIndex]["results"][e][0]["y"] - 4,
           4,
           4
@@ -519,8 +532,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] - 2,
           this.data[dataIndex]["results"][e][0]["y"] +
-          this.data[dataIndex]["results"][e][1]["y"] -
-          2,
+            this.data[dataIndex]["results"][e][1]["y"] -
+            2,
           4,
           4
         );
@@ -532,11 +545,11 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[dataIndex]["results"][e][0]["x"] +
-          this.data[dataIndex]["results"][e][1]["x"] -
-          3,
+            this.data[dataIndex]["results"][e][1]["x"] -
+            3,
           this.data[dataIndex]["results"][e][0]["y"] +
-          this.data[dataIndex]["results"][e][1]["y"] -
-          3,
+            this.data[dataIndex]["results"][e][1]["y"] -
+            3,
           4,
           4
         );
@@ -725,9 +738,9 @@ export class MultipleImageDetectionComponent implements OnInit {
                   this.data[i]["results"][e][0]["x"],
                   this.data[i]["results"][e][0]["y"],
                   this.data[i]["results"][e][1]["x"] -
-                  this.data[i]["results"][e][0]["x"],
+                    this.data[i]["results"][e][0]["x"],
                   this.data[i]["results"][e][1]["y"] -
-                  this.data[i]["results"][e][0]["y"]
+                    this.data[i]["results"][e][0]["y"]
                 );
               }
               this.ctx.fillRect(
@@ -738,7 +751,7 @@ export class MultipleImageDetectionComponent implements OnInit {
               );
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"] +
-                this.data[i]["results"][e][1]["x"],
+                  this.data[i]["results"][e][1]["x"],
                 this.data[i]["results"][e][0]["y"],
                 4,
                 4
@@ -746,7 +759,7 @@ export class MultipleImageDetectionComponent implements OnInit {
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"],
                 this.data[i]["results"][e][0]["y"] +
-                this.data[i]["results"][e][1]["y"],
+                  this.data[i]["results"][e][1]["y"],
                 4,
                 4
               );
@@ -758,9 +771,9 @@ export class MultipleImageDetectionComponent implements OnInit {
               );
               this.ctx.fillRect(
                 this.data[i]["results"][e][0]["x"] +
-                this.data[i]["results"][e][1]["x"],
+                  this.data[i]["results"][e][1]["x"],
                 this.data[i]["results"][e][0]["y"] +
-                this.data[i]["results"][e][1]["y"],
+                  this.data[i]["results"][e][1]["y"],
                 4,
                 4
               );
@@ -793,8 +806,6 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.data[this.selectedImageIndex]["results"] = limitedArray;
     }
 
-    console.log(this.data[this.selectedImageIndex]);
-
     for (
       let e = 0;
       e < this.data[this.selectedImageIndex]["results"].length;
@@ -804,7 +815,7 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.ctx.strokeStyle = "lime";
       if (
         this.data[this.selectedImageIndex]["results"][e][2][
-        "general_detection"
+          "general_detection"
         ] == "Yes"
       ) {
         this.ctx.fillRect(
@@ -829,9 +840,9 @@ export class MultipleImageDetectionComponent implements OnInit {
           this.data[this.selectedImageIndex]["results"][e][0]["x"],
           this.data[this.selectedImageIndex]["results"][e][0]["y"],
           this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-          this.data[this.selectedImageIndex]["results"][e][0]["x"],
+            this.data[this.selectedImageIndex]["results"][e][0]["x"],
           this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-          this.data[this.selectedImageIndex]["results"][e][0]["y"]
+            this.data[this.selectedImageIndex]["results"][e][0]["y"]
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][1]["x"] - 2,
@@ -848,8 +859,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] +
-          this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-          4,
+            this.data[this.selectedImageIndex]["results"][e][1]["x"] -
+            4,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] - 4,
           4,
           4
@@ -857,8 +868,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] - 2,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] +
-          this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-          2,
+            this.data[this.selectedImageIndex]["results"][e][1]["y"] -
+            2,
           4,
           4
         );
@@ -870,11 +881,11 @@ export class MultipleImageDetectionComponent implements OnInit {
         );
         this.ctx.fillRect(
           this.data[this.selectedImageIndex]["results"][e][0]["x"] +
-          this.data[this.selectedImageIndex]["results"][e][1]["x"] -
-          3,
+            this.data[this.selectedImageIndex]["results"][e][1]["x"] -
+            3,
           this.data[this.selectedImageIndex]["results"][e][0]["y"] +
-          this.data[this.selectedImageIndex]["results"][e][1]["y"] -
-          3,
+            this.data[this.selectedImageIndex]["results"][e][1]["y"] -
+            3,
           4,
           4
         );
@@ -977,8 +988,8 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   getAnayticsImgAnnotations(i, event) {
-    this.spin = true;
-    this.activeButton(event);
+    // this.spin = true;
+    if (event) this.activeButton(event);
     this.selectedID = "";
     this.canvas = this.rd.selectRootElement(
       `canvas#jPolygon${i}.card-img-top.img-fluid`
@@ -987,9 +998,9 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.labelsMessage = false;
     this.getAnn(i);
     this.getLabels(i);
-    setTimeout(() => {
-      this.spin = false;
-    }, 3000);
+    // setTimeout(() => {
+    //   this.spin = false;
+    // }, 3000);
   }
 
   activeButton(event) {
@@ -1171,11 +1182,11 @@ export class MultipleImageDetectionComponent implements OnInit {
               .then(() => {
                 this.router.navigate([
                   "/annotations/dataset/" +
-                  this.method +
-                  "/" +
-                  this.folder +
-                  "/" +
-                  this.valueImage,
+                    this.method +
+                    "/" +
+                    this.folder +
+                    "/" +
+                    this.valueImage,
                 ]);
               });
           } else if (this.valueImage == this.total - 1) {
