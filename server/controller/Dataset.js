@@ -137,7 +137,7 @@ let Dataset = {
 
     const options = {
       method: "POST",
-      url: process.env.vista_server_ip + "/api/v1/async",
+      url: process.env.vista_server_ip + "/api/v1/urlasync",
       strictSSL: false,
       headers: {
         // Authorization: process.env.authorization,

@@ -147,6 +147,7 @@ export class MultipleImageDetectionComponent implements OnInit {
 
   checked(event: any) {
     let checkbox = event.target;
+    //   console.log(checkbox)
     this.isChecked = checkbox.checked;
   }
 
@@ -452,8 +453,9 @@ export class MultipleImageDetectionComponent implements OnInit {
         e++
       ) {
         if (e == this.id) {
-          this.data[this.selectedImageIndex]["results"][e][3].label =
-            this.newLabel;
+          this.data[this.selectedImageIndex]["results"][
+            e
+          ][3].label = this.newLabel;
         }
       }
       this.re_draw();
@@ -801,8 +803,9 @@ export class MultipleImageDetectionComponent implements OnInit {
         0,
         len
       );
-      this.data[this.selectedImageIndex]["actualResults"] =
-        this.data[this.selectedImageIndex]["results"];
+      this.data[this.selectedImageIndex]["actualResults"] = this.data[
+        this.selectedImageIndex
+      ]["results"];
       this.data[this.selectedImageIndex]["results"] = limitedArray;
     }
 
@@ -1007,8 +1010,9 @@ export class MultipleImageDetectionComponent implements OnInit {
     let clickedElement = event.target || event.srcElement;
 
     if (clickedElement.nodeName === "BUTTON") {
-      let isCertainButtonAlreadyActive =
-        document.querySelector(".button-active");
+      let isCertainButtonAlreadyActive = document.querySelector(
+        ".button-active"
+      );
       // if a Button already has Class: .active
       if (isCertainButtonAlreadyActive) {
         isCertainButtonAlreadyActive.classList.remove("button-active");
