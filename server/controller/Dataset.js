@@ -141,7 +141,7 @@ let Dataset = {
       strictSSL: false,
       headers: {
         // Authorization: process.env.authorization,
-        "Content-Type": `application/json`,
+        "Content-Type": `multipart/form-data;`,
       },
       auth: {
         username: "admin",
