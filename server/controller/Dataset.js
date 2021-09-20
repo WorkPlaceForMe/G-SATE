@@ -119,21 +119,21 @@ let Dataset = {
   },
 
   processVistaMultipleImage: async (req, res, next) => {
+    const arrayOfImagePaths = [];
 
-    // const arrayOfImagePaths = []
+    for (const imgPath of req.body.image_paths) {
+      console.log(imgPath, "imgPath");
+      const path = imgPath.replace(
+        `http://${process.env.my_ip}:4200/assets/shared-data/`,
+        process.env.resources2
+      );
+      // console.log(path,'path');
+      // console.log(fs.createReadStream(path),'fs.createReadStream(path)');
+      // arrayOfImagePaths.push(fs.createReadStream(path))
+      arrayOfImagePaths.push(path);
+    }
 
-    // for (const imgPath of req.body.image_paths) {
-    //   console.log(imgPath,'imgPath');
-    // const path =  imgPath.replace(
-    //     `http://${process.env.my_ip}:4200/assets/shared-data/`,
-    //     process.env.resources2
-    //   );
-    //   console.log(path,'path');
-    //   console.log(fs.createReadStream(path),'fs.createReadStream(path)');
-    //   arrayOfImagePaths.push(fs.createReadStream(path))
-    // }
-
-    // console.log(">>>>>>>>>>>>> " + arrayOfImagePaths);
+    console.log(">>>>>>>>>>>>> " + arrayOfImagePaths);
 
     const options = {
       method: "POST",
@@ -164,7 +164,7 @@ let Dataset = {
         return res.status(500).json(error);
       });
   },
-  
+
   processVistaBatchImages: async (req, res, next) => {
     if (!req.body.images) {
       res.status(400).send("Images are required!");
@@ -718,9 +718,9 @@ let processByAnalytics = (name) => {
                           table[itm.algo_id] == "defects_gsate") &&
                         element.class == "person"
                       ) {
-                        console.log('======> Excluding person')
+                        console.log("======> Excluding person");
                       } else {
-                        console.log('======> Including data')
+                        console.log("======> Including data");
                         let cl =
                           table[itm.algo_id] == "person_gsate"
                             ? "person"
