@@ -14,6 +14,7 @@ const Relations = require("../models/Relations");
 const Algorithms = require("../models/Algorithms");
 const requestImageSize = require("request-image-size");
 const logger = require("../helpers/logger");
+const { resolve } = require("path");
 
 const makeRandomString = (length) => {
   var result = [];
@@ -29,8 +30,7 @@ const makeRandomString = (length) => {
 };
 
 const operationFunction = async (data) => {
-  const responseArray =[]
-
+return new Promise((resolve,reject)=>{
   const operationOptions = {
     method: "GET",
     url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
@@ -44,6 +44,13 @@ const operationFunction = async (data) => {
       password: "admin",
     }
   };
+  rp(operationOptions).then((response)=>{
+    resolve(response);
+  }).error((err)=>{
+    reject(err)
+  })
+})
+
 
   // await data.forEach(async(element)=>{
   //   console.log(element,'>>>>>>>>>>>>>>>>>forEach');
@@ -60,8 +67,8 @@ const operationFunction = async (data) => {
   //     return res.status(500).json(error);
   //   });
   //   })
-    console.log(responseArray,'>>>>>>>>responseArray');
-    return await rp(operationOptions)
+
+   // return await rp(operationOptions)
 }
 
 let Dataset = {
