@@ -316,14 +316,14 @@ let Dataset = {
         //   console.log(responseArray,'>>>>>>>>>>>269');
         //   return res.json(responseArray);
         // }, 1000);
-        try{
-           responseArray = await Promise.all(functionArray)
+ 
+     Promise.all(functionArray).then((value)=>{
+       return res.json(value);
+      }).catch((error)=>{
+        console.log(error);
+       return res.status(500).json(error);
+   })
 
-           return res.json(responseArray);
-        }catch(error){
-          console.log(error);
-          return res.status(500).json(error);
-        }
       }else{
         return res.json([]);
       }
