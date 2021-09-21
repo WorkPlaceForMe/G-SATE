@@ -283,7 +283,9 @@ let Dataset = {
       console.log(typeof data);
       for (element of data) {
         try {
+          console.log('element - ', element);
           const temp = await operationFunction(element);
+          console.log('temp - ', temp);
           responseArray.push(JSON.parse(temp));
         } catch (err) {
           return res.status(500).json(error);
