@@ -14,7 +14,6 @@ const Relations = require("../models/Relations");
 const Algorithms = require("../models/Algorithms");
 const requestImageSize = require("request-image-size");
 const logger = require("../helpers/logger");
-const { resolve } = require("path");
 
 const makeRandomString = (length) => {
   var result = [];
@@ -28,7 +27,13 @@ const makeRandomString = (length) => {
   }
   return result.join("");
 };
-
+const sleep = async (timer) => {
+  return new Promise(function (resolve) {
+    setTimeout(() => {
+      resolve(null);
+    }, timer);
+  });
+};
 const operationFunction = async (data) => {
   return new Promise((resolve, reject) => {
     const operationOptions = {
@@ -45,15 +50,20 @@ const operationFunction = async (data) => {
       }
     };
     // return rp(operationOptions)
-    rp(operationOptions, (err, response, body) => {
+    rp(operationOptions, async (err, response, body) => {
       if (err) {
         reject(err)
       } else {
-        resolve(body)
+        const temp = JSON.parse(body);
+        if (temp.error) {
+          console.log('error----------->', temp, data)
+          await sleep(1000);
+          operationFunction(data)
+        }
+        resolve(temp)
       }
     })
   })
-
 
   // await data.forEach(async(element)=>{
   //   console.log(element,'>>>>>>>>>>>>>>>>>forEach');
@@ -73,6 +83,8 @@ const operationFunction = async (data) => {
 
   // return await rp(operationOptions)
 }
+
+
 
 let Dataset = {
   processWithoutVista: async (req, res, next) => {
@@ -239,56 +251,102 @@ let Dataset = {
   // },
 
   processVistaMultipleImage: async (req, res, next) => {
+    try {
+      const options = {
+        method: "POST",
+        url: process.env.vista_server_ip + "/api/v1/urlasync",
+        strictSSL: false,
+        headers: {
+          // Authorization: process.env.authorization,
+          "Content-Type": `application/json`,
+        },
+        auth: {
+          username: "admin",
+          password: "admin",
+        },
+        body: JSON.stringify({
+          upload: req.body.image_paths,
+          subscriptions: "Object,themes,food,tags,face,fashion",
+        }),
+      };
+      console.log(JSON.stringify(options));
 
-    const options = {
-      method: "POST",
-      url: process.env.vista_server_ip + "/api/v1/urlasync",
-      strictSSL: false,
-      headers: {
-        // Authorization: process.env.authorization,
-        "Content-Type": `application/json`,
-      },
-      auth: {
-        username: "admin",
-        password: "admin",
-      },
-      body: JSON.stringify({
-        upload: req.body.image_paths,
-        subscriptions: "Object,themes,food,tags,face,fashion",
-      }),
-    };
+      const responseData = await rp(options);
 
-    console.log(JSON.stringify(options));
+      console.log(responseData, '>>>>>>>>>>>>responseData');
+      let responseArray = []
+      const data = JSON.parse(responseData)
 
-    const responseData = await rp(options).then(async (response) => {
-        console.log(response, '>>>>>>>>>>first response');
-        return response;
-      })
-      .catch((error) => {
-        return res.status(500).json(error);
-      });
-
-    console.log(responseData, '>>>>>>>>>>>>responseData');
-    let responseArray = []
-    const data = JSON.parse(responseData)
-
-    if (data && data.length > 0) {
-      console.log(data.length, '>>>>>>>responseData.length');
-      console.log(typeof data);
-      for (element of data) {
-        try {
-          console.log('element - ', element);
-          const temp = await operationFunction(element);
-          console.log('temp - ', temp);
-          responseArray.push(JSON.parse(temp));
-        } catch (err) {
-          return res.status(500).json(error);
+      if (data && data.length > 0) {
+        console.log(data.length, '>>>>>>>responseData.length');
+        console.log(typeof data);
+        for (element of data) {
+          try {
+            console.log('element - ', element);
+            const temp = await operationFunction(element);
+            console.log('temp - ', temp);
+            responseArray.push(temp);
+          } catch (err) {
+            return res.status(500).json(error);
+          }
         }
+        return res.json(responseArray);
+      } else {
+        return res.json([]);
       }
-      return res.json(responseArray);
-    } else {
-      return res.json([]);
+
+    } catch (err) {
+      return res.status(500).json(err);
     }
+    // const options = {
+    //   method: "POST",
+    //   url: process.env.vista_server_ip + "/api/v1/urlasync",
+    //   strictSSL: false,
+    //   headers: {
+    //     // Authorization: process.env.authorization,
+    //     "Content-Type": `application/json`,
+    //   },
+    //   auth: {
+    //     username: "admin",
+    //     password: "admin",
+    //   },
+    //   body: JSON.stringify({
+    //     upload: req.body.image_paths,
+    //     subscriptions: "Object,themes,food,tags,face,fashion",
+    //   }),
+    // };
+
+    // console.log(JSON.stringify(options));
+
+    // const responseData = await rp(options).then(async (response) => {
+    //     console.log(response, '>>>>>>>>>>first response');
+    //     return response;
+    //   })
+    //   .catch((error) => {
+    //     return res.status(500).json(error);
+    //   });
+
+    // console.log(responseData, '>>>>>>>>>>>>responseData');
+    // let responseArray = []
+    // const data = JSON.parse(responseData)
+
+    // if (data && data.length > 0) {
+    //   console.log(data.length, '>>>>>>>responseData.length');
+    //   console.log(typeof data);
+    //   for (element of data) {
+    //     try {
+    //       console.log('element - ', element);
+    //       const temp = await operationFunction(element);
+    //       console.log('temp - ', temp);
+    //       responseArray.push(JSON.parse(temp));
+    //     } catch (err) {
+    //       return res.status(500).json(error);
+    //     }
+    //   }
+    //   return res.json(responseArray);
+    // } else {
+    //   return res.json([]);
+    // }
 
   },
 
