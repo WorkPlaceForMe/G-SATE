@@ -158,7 +158,34 @@ let Dataset = {
     await rp(options)
       .then((response) => {
         console.log(response);
-        return res.json(response);
+        const responseArray = []
+        for (const responseObj of response) {
+          const operationOptions = {
+            method: "GET",
+            url: process.env.vista_server_ip + `/api/v1/operation/${responseObj.id}`,
+            strictSSL: false,
+            headers: {
+              // Authorization: process.env.authorization,
+              "Content-Type": `application/json`,
+            },
+            auth: {
+              username: "admin",
+              password: "admin",
+            }
+          };
+          await rp(operationOptions)
+          .then((res) => {
+            console.log(res,'line 178');
+            responseArray.push(res)
+            console.log(responseArray,'line 179');
+          })
+          .catch((error) => {
+            return res.status(500).json(error);
+          });
+          console.log(responseArray,'line 184');
+        }
+        console.log(responseArray,'line 186');
+        return res.json(responseArray);
       })
       .catch((error) => {
         return res.status(500).json(error);
