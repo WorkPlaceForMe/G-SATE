@@ -1146,7 +1146,7 @@ app.post("/api/getInfo/", function (req, res, next) {
   res.json("buena");
 });
 
-let server = app.listen(process.env.server, function () {
+let server = app.listen(process.env.server, '10.0.2.5', function () {
   let writeStream = fs.createWriteStream("./access.log", {
     flags: "a",
   });
