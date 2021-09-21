@@ -244,7 +244,7 @@ let Dataset = {
       if(data && data.length > 0){
         console.log(data.length,'>>>>>>>responseData.length');
         console.log(typeof data); 
-        data.forEach(async(element)=>{
+        await data.forEach(async(element)=>{
         console.log(element,'>>>>>>>>>>>>>>>>>forEach');
         console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
         operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
@@ -280,7 +280,9 @@ let Dataset = {
       //   // });
       // }
       console.log(responseArray,'>>>>>>>>>>>269');
-      return res.json(responseArray);
+      if(data.length === responseArray.length){
+        return res.json(responseArray);
+      }
   },
 
   processVistaBatchImages: async (req, res, next) => {
