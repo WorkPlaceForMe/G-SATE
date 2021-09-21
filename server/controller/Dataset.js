@@ -30,7 +30,7 @@ const makeRandomString = (length) => {
 };
 
 const operationFunction = async (data) => {
-return new Promise((resolve,reject)=>{
+return new Promise(async(resolve,reject)=>{
   const operationOptions = {
     method: "GET",
     url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
@@ -44,7 +44,7 @@ return new Promise((resolve,reject)=>{
       password: "admin",
     }
   };
-  rp(operationOptions).then((response)=>{
+  await rp(operationOptions).then((response)=>{
     resolve(response);
   }).error((err)=>{
     reject(err)
