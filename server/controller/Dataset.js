@@ -29,7 +29,7 @@ const makeRandomString = (length) => {
   return result.join("");
 };
 
-const operationFunction = (data) => {
+const operationFunction = async (data) => {
   return new Promise((resolve, reject) => {
     const operationOptions = {
       method: "GET",
