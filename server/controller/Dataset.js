@@ -217,7 +217,7 @@ let Dataset = {
     const responseData = await rp(options)
       .then(async(response) => {
         console.log(response,'>>>>>>>>>>first response');
-        return response.json();
+        return response;
       })
       .catch((error) => {
         return res.status(500).json(error);
