@@ -317,7 +317,8 @@ let Dataset = {
         //   return res.json(responseArray);
         // }, 1000);
  
-     Promise.all(functionArray).then((value)=>{
+   await Promise.all(functionArray).then((value)=>{
+     console.log(value,">>>>>>>>>>>>321...value");
        return res.json(value);
       }).catch((error)=>{
         console.log(error);
