@@ -224,85 +224,83 @@ let Dataset = {
       });
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
-      // const responseArray = []
-      // const operationOptions = {
-      //   method: "GET",
-      //   url: '',
-      //   strictSSL: false,
-      //   headers: {
-      //     // Authorization: process.env.authorization,
-      //     "Content-Type": `application/json`,
-      //   },
-      //   auth: {
-      //     username: "admin",
-      //     password: "admin",
-      //   }
-      // };
+      const responseArray = []
+      const operationOptions = {
+        method: "GET",
+        url: '',
+        strictSSL: false,
+        headers: {
+          // Authorization: process.env.authorization,
+          "Content-Type": `application/json`,
+        },
+        auth: {
+          username: "admin",
+          password: "admin",
+        }
+      };
 
       const data = JSON.parse(responseData)
       
       if(data && data.length > 0){
         console.log(data.length,'>>>>>>>responseData.length');
         console.log(typeof data); 
-        // data.forEach(async(element)=>{
-        // console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-        // console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
-        // operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
-        // console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-        // await rp(operationOptions)
-        // .then((res) => {
-        //   console.log(res,'>>>>>>>>>260');
-        //   responseArray.push(res)
-        //   console.log(responseArray,'>>>>>>>>261');
-        // })
-        // .catch((error) => {
-        //   return res.status(500).json(error);
-        // });
-        // })
-        const responseData = await this.operationFunction(data)
-        console.log(responseData,'>>>>>>>>>>>263');
-        return res.json(responseData);
+        data.forEach(async(element)=>{
+        console.log(element,'>>>>>>>>>>>>>>>>>forEach');
+        console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+        operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
+        console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+        await rp(operationOptions)
+        .then((res) => {
+          console.log(res,'>>>>>>>>>260');
+          responseArray.push(res)
+          console.log(responseArray,'>>>>>>>>261');
+        })
+        .catch((error) => {
+          return res.status(500).json(error);
+        });
+        })
+
+        console.log(responseArray,'>>>>>>>>>>>269');
+        return res.json(responseArray);
       }
 
-      // console.log(responseArray,'>>>>>>>>>>>269');
-      // return res.json(responseArray);
   },
 
-  operationFunction: async (data) => {
-    const responseArray =[]
+  // operationFunction :async (data) => {
+  //   const responseArray =[]
 
-    const operationOptions = {
-      method: "GET",
-      url: '',
-      strictSSL: false,
-      headers: {
-        // Authorization: process.env.authorization,
-        "Content-Type": `application/json`,
-      },
-      auth: {
-        username: "admin",
-        password: "admin",
-      }
-    };
+  //   const operationOptions = {
+  //     method: "GET",
+  //     url: '',
+  //     strictSSL: false,
+  //     headers: {
+  //       // Authorization: process.env.authorization,
+  //       "Content-Type": `application/json`,
+  //     },
+  //     auth: {
+  //       username: "admin",
+  //       password: "admin",
+  //     }
+  //   };
 
-    await data.forEach(async(element)=>{
-      console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-      console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
-      operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
-      console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-      await rp(operationOptions)
-      .then((res) => {
-        console.log(res,'>>>>>>>>>295');
-        responseArray.push(res)
-        console.log(responseArray,'>>>>>>>>297');
-      })
-      .catch((error) => {
-        return res.status(500).json(error);
-      });
-      })
-      console.log(responseArray,'>>>>>>>>responseArray');
-      return responseArray
-  },
+  //   await data.forEach(async(element)=>{
+  //     console.log(element,'>>>>>>>>>>>>>>>>>forEach');
+  //     console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+  //     operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
+  //     console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+  //     await rp(operationOptions)
+  //     .then((res) => {
+  //       console.log(res,'>>>>>>>>>295');
+  //       responseArray.push(res)
+  //       console.log(responseArray,'>>>>>>>>297');
+  //     })
+  //     .catch((error) => {
+  //       return res.status(500).json(error);
+  //     });
+  //     })
+  //     console.log(responseArray,'>>>>>>>>responseArray');
+  //     return responseArray
+  // },
 
   processVistaBatchImages: async (req, res, next) => {
     if (!req.body.images) {
