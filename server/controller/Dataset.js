@@ -227,9 +227,10 @@ let Dataset = {
       const responseArray = []
 
       for (const responseObj of responseData) {
+        console.log(responseObj.id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
         const operationOptions = {
           method: "GET",
-          url: process.env.vista_server_ip + `/api/v1/operation/${responseObj.id}`,
+          url: process.env.vista_server_ip + '/api/v1/operation/' + responseObj.id,
           strictSSL: false,
           headers: {
             // Authorization: process.env.authorization,
