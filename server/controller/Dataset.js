@@ -54,14 +54,15 @@ const operationFunction = async (data) => {
       if (err) {
         reject(err)
       } else {
-        const temp = JSON.parse(body);
-        if (temp.error) {
-          console.log('error----------->', temp, data)
-          await sleep(1000);
-          return operationFunction(data)
-        } else {
-          resolve(temp)
-        }
+        resolve(JSON.parse(body));
+        // const temp = ;
+        // if (temp.error) {
+        //   console.log('error----------->', temp, data)
+        //   await sleep(1000);
+        //   return operationFunction(data)
+        // } else {
+        //   resolve(temp)
+        // }
       }
     })
   })
@@ -284,8 +285,13 @@ let Dataset = {
         for (element of data) {
           try {
             console.log('element - ', element);
-            const temp = await operationFunction(element);
+            let temp = await operationFunction(element);
             console.log('temp - ', temp);
+            if(temp.error) {
+              await sleep(1000);
+              temp = await operationFunction(element);
+              console.log('awaited temp - ', temp);
+            }
             responseArray.push(temp);
           } catch (err) {
             return res.status(500).json(error);
