@@ -225,33 +225,35 @@ let Dataset = {
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
       const responseArray = []
+      const operationOptions = {
+        method: "GET",
+        url: '',
+        strictSSL: false,
+        headers: {
+          // Authorization: process.env.authorization,
+          "Content-Type": `application/json`,
+        },
+        auth: {
+          username: "admin",
+          password: "admin",
+        }
+      };
       for (let i = 0; i < responseData.length; i++) {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>1');
         console.log(responseData[i],">>>>>>>>>>>>>>>>responseData");
         console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
-        const operationOptions = {
-          method: "GET",
-          url: process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id,
-          strictSSL: false,
-          headers: {
-            // Authorization: process.env.authorization,
-            "Content-Type": `application/json`,
-          },
-          auth: {
-            username: "admin",
-            password: "admin",
-          }
-        };
-        await rp(operationOptions)
-        .then((res) => {
-          console.log(res,'>>>>>>>>>260');
-          responseArray.push(res)
-          console.log(responseArray,'>>>>>>>>261');
-          // return res.json(responseArray);
-        })
-        .catch((error) => {
-          return res.status(500).json(error);
-        });
+        operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id;
+        console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+        // await rp(operationOptions)
+        // .then((res) => {
+        //   console.log(res,'>>>>>>>>>260');
+        //   responseArray.push(res)
+        //   console.log(responseArray,'>>>>>>>>261');
+        //   // return res.json(responseArray);
+        // })
+        // .catch((error) => {
+        //   return res.status(500).json(error);
+        // });
       }
       console.log(responseArray,'>>>>>>>>>>>269');
       return res.json(responseArray);
