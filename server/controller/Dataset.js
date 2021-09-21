@@ -33,7 +33,7 @@ const operationFunction = async (data) => {
 
   const operationOptions = {
     method: "GET",
-    url: '',
+    url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
     strictSSL: false,
     headers: {
       // Authorization: process.env.authorization,
@@ -45,23 +45,23 @@ const operationFunction = async (data) => {
     }
   };
 
-  await data.forEach(async(element)=>{
-    console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-    console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
-    operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
-    console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-    await rp(operationOptions)
-    .then((res) => {
-      console.log(res,'>>>>>>>>>295');
-      responseArray.push(res)
-      console.log(responseArray,'>>>>>>>>297');
-    })
-    .catch((error) => {
-      return res.status(500).json(error);
-    });
-    })
+  // await data.forEach(async(element)=>{
+  //   console.log(element,'>>>>>>>>>>>>>>>>>forEach');
+  //   console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+  //   operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
+  //   console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+  //   await rp(operationOptions)
+  //   .then((res) => {
+  //     console.log(res,'>>>>>>>>>295');
+  //     responseArray.push(res)
+  //     console.log(responseArray,'>>>>>>>>297');
+  //   })
+  //   .catch((error) => {
+  //     return res.status(500).json(error);
+  //   });
+  //   })
     console.log(responseArray,'>>>>>>>>responseArray');
-    return responseArray
+    return await rp(operationOptions)
 }
 
 let Dataset = {
@@ -261,6 +261,7 @@ let Dataset = {
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
       const responseArray = []
+      const functionArray =[]
       const operationOptions = {
         method: "GET",
         url: '',
@@ -280,20 +281,22 @@ let Dataset = {
       if(data && data.length > 0){
         console.log(data.length,'>>>>>>>responseData.length');
         console.log(typeof data); 
-        data.forEach(async(element)=>{
-          console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-          console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
-          operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
-          console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-          await rp(operationOptions)
-          .then((res) => {
-            console.log(res,'>>>>>>>>>260');
-            responseArray.push(res)
-            console.log(responseArray,'>>>>>>>>261');
-          })
-          .catch((error) => {
-            return res.status(500).json(error);
-          });
+        data.forEach((element)=>{
+          // console.log(element,'>>>>>>>>>>>>>>>>>forEach');
+          // console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+          // operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
+          // console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+          // await rp(operationOptions)
+          // .then((res) => {
+          //   console.log(res,'>>>>>>>>>260');
+          //   responseArray.push(res)
+          //   console.log(responseArray,'>>>>>>>>261');
+          // })
+          // .catch((error) => {
+          //   return res.status(500).json(error);
+          // });
+          functionArray.push(operationFunction(element))
+
         })
 
         // await operationFunction(data).then((value) => {
@@ -302,10 +305,18 @@ let Dataset = {
         // }
         // )
 
-        setInterval(() => {
-          console.log(responseArray,'>>>>>>>>>>>269');
-          return res.json(responseArray);
-        }, 1000);
+        // setInterval(() => {
+        //   console.log(responseArray,'>>>>>>>>>>>269');
+        //   return res.json(responseArray);
+        // }, 1000);
+        try{
+           responseArray = await Promise.all(functionArray)
+           return res.json(responseArray);
+        }catch(error){
+          return res.status(500).json(error);
+        }
+      }else{
+        return res.json([]);
       }
 
   },
