@@ -217,7 +217,7 @@ let Dataset = {
     const responseData = await rp(options)
       .then(async(response) => {
         console.log(response,'>>>>>>>>>>first response');
-        return response;
+        return response.json();
       })
       .catch((error) => {
         return res.status(500).json(error);
@@ -238,6 +238,7 @@ let Dataset = {
           password: "admin",
         }
       };
+      
       if(responseData && responseData.length > 0){
         console.log(responseData.length,'>>>>>>>responseData.length');
         console.log(typeof responseData); 
