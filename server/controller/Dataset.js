@@ -268,7 +268,7 @@ let Dataset = {
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
       let responseArray = []
-      const functionArray =[]
+      let functionArray =[]
       const operationOptions = {
         method: "GET",
         url: '',
@@ -288,7 +288,7 @@ let Dataset = {
       if(data && data.length > 0){
         console.log(data.length,'>>>>>>>responseData.length');
         console.log(typeof data); 
-        data.forEach((element)=>{
+     //   data.forEach((element)=>{
           // console.log(element,'>>>>>>>>>>>>>>>>>forEach');
           // console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
           // operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
@@ -302,10 +302,10 @@ let Dataset = {
           // .catch((error) => {
           //   return res.status(500).json(error);
           // });
-          functionArray.push(operationFunction(element))
+        //  functionArray.push(operationFunction(element))
 
-        })
-
+      //  })
+       functionArray = data.map((element)=>operationFunction(element))
         // await operationFunction(data).then((value) => {
         //   console.log(value,'>>>>>>>>>>>301');
         //   return res.json(value);
