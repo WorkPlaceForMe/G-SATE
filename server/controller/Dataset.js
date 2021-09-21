@@ -52,11 +52,6 @@ const operationFunction = async (data) => {
         resolve(body)
       }
     })
-      .then((response) => {
-        resolve(response);
-      }).error((err) => {
-        reject(err)
-      })
   })
 
 
