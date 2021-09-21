@@ -260,8 +260,7 @@ let Dataset = {
 
     console.log(JSON.stringify(options));
 
-    const responseData = await rp(options)
-      .then(async (response) => {
+    const responseData = await rp(options).then(async (response) => {
         console.log(response, '>>>>>>>>>>first response');
         return response;
       })
