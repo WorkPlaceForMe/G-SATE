@@ -226,6 +226,8 @@ let Dataset = {
       console.log(responseData,'>>>>>>>>>>>>responseData');
       const responseArray = []
       for (let i = 0; i < responseData.length; i++) {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>1');
+        console.log(responseData[i],">>>>>>>>>>>>>>>>responseData");
         console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
         const operationOptions = {
           method: "GET",
