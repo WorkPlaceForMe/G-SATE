@@ -285,7 +285,7 @@ let Dataset = {
       }
     };
 
-     data.forEach(async(element)=>{
+    await data.forEach(async(element)=>{
       console.log(element,'>>>>>>>>>>>>>>>>>forEach');
       console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
       operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
