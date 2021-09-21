@@ -30,34 +30,34 @@ const makeRandomString = (length) => {
 };
 
 const operationFunction = (data) => {
-// return new Promise((resolve,reject)=>{
-  const operationOptions = {
-    method: "GET",
-    url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
-    strictSSL: false,
-    headers: {
-      // Authorization: process.env.authorization,
-      "Content-Type": `application/json`,
-    },
-    auth: {
-      username: "admin",
-      password: "admin",
-    }
-  };
-  return rp(operationOptions)
-  //  rp(operationOptions,(err , response,body)=>{
-  //    if(err){
-  //      reject(err)
-  //    }else{
-  //      resolve(body)
-  //    }
-  //  })
-  //  .then((response)=>{
-  //   resolve(response);
-  // }).error((err)=>{
-  //   reject(err)
-  //})
-// })
+  return new Promise((resolve, reject) => {
+    const operationOptions = {
+      method: "GET",
+      url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
+      strictSSL: false,
+      headers: {
+        // Authorization: process.env.authorization,
+        "Content-Type": `application/json`,
+      },
+      auth: {
+        username: "admin",
+        password: "admin",
+      }
+    };
+    // return rp(operationOptions)
+    rp(operationOptions, (err, response, body) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(body)
+      }
+    })
+      .then((response) => {
+        resolve(response);
+      }).error((err) => {
+        reject(err)
+      })
+  })
 
 
   // await data.forEach(async(element)=>{
@@ -76,7 +76,7 @@ const operationFunction = (data) => {
   //   });
   //   })
 
-   // return await rp(operationOptions)
+  // return await rp(operationOptions)
 }
 
 let Dataset = {
@@ -205,7 +205,7 @@ let Dataset = {
   //   };
 
   //   console.log(JSON.stringify(options));
- 
+
   //   await rp(options)
   //     .then(async(response) => {
   //       console.log(response);
@@ -266,76 +266,33 @@ let Dataset = {
     console.log(JSON.stringify(options));
 
     const responseData = await rp(options)
-      .then(async(response) => {
-        console.log(response,'>>>>>>>>>>first response');
+      .then(async (response) => {
+        console.log(response, '>>>>>>>>>>first response');
         return response;
       })
       .catch((error) => {
         return res.status(500).json(error);
       });
 
-      console.log(responseData,'>>>>>>>>>>>>responseData');
-      let responseArray = []
-      let functionArray =[]
-      const operationOptions = {
-        method: "GET",
-        url: '',
-        strictSSL: false,
-        headers: {
-          // Authorization: process.env.authorization,
-          "Content-Type": `application/json`,
-        },
-        auth: {
-          username: "admin",
-          password: "admin",
+    console.log(responseData, '>>>>>>>>>>>>responseData');
+    let responseArray = []
+    const data = JSON.parse(responseData)
+
+    if (data && data.length > 0) {
+      console.log(data.length, '>>>>>>>responseData.length');
+      console.log(typeof data);
+      for (element of data) {
+        try {
+          const temp = await operationFunction(element);
+          responseArray.push(JSON.parse(temp));
+        } catch (err) {
+          return res.status(500).json(error);
         }
-      };
-
-      const data = JSON.parse(responseData)
-      
-      if(data && data.length > 0){
-        console.log(data.length,'>>>>>>>responseData.length');
-        console.log(typeof data); 
-     //   data.forEach((element)=>{
-          // console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-          // console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
-          // operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
-          // console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-          // await rp(operationOptions)
-          // .then((res) => {
-          //   console.log(res,'>>>>>>>>>260');
-          //   responseArray.push(res)
-          //   console.log(responseArray,'>>>>>>>>261');
-          // })
-          // .catch((error) => {
-          //   return res.status(500).json(error);
-          // });
-        //  functionArray.push(operationFunction(element))
-
-      //  })
-       functionArray = data.map((element)=>operationFunction(element))
-        // await operationFunction(data).then((value) => {
-        //   console.log(value,'>>>>>>>>>>>301');
-        //   return res.json(value);
-        // }
-        // )
-
-        // setInterval(() => {
-        //   console.log(responseArray,'>>>>>>>>>>>269');
-        //   return res.json(responseArray);
-        // }, 1000);
- 
-   await Promise.all(functionArray).then((value)=>{
-     console.log(value,">>>>>>>>>>>>321...value");
-       return res.json(value);
-      }).catch((error)=>{
-        console.log(error);
-       return res.status(500).json(error);
-   })
-
-      }else{
-        return res.json([]);
       }
+      return res.json(responseArray);
+    } else {
+      return res.json([]);
+    }
 
   },
 
@@ -899,12 +856,12 @@ let processByAnalytics = (name) => {
                           table[itm.algo_id] == "person_gsate"
                             ? "person"
                             : table[itm.algo_id] == "vehicle_gsate"
-                            ? element.class
-                            : table[itm.algo_id] == "clothing_gsate"
-                            ? "clothes"
-                            : table[itm.algo_id] == "ppe_gsate"
-                            ? element.class
-                            : element.class;
+                              ? element.class
+                              : table[itm.algo_id] == "clothing_gsate"
+                                ? "clothes"
+                                : table[itm.algo_id] == "ppe_gsate"
+                                  ? element.class
+                                  : element.class;
                         let obj = {
                           id: count,
                           image:
