@@ -298,7 +298,7 @@ let Dataset = {
 
         await operationFunction(data).then((value) => {
           console.log(value,'>>>>>>>>>>>301');
-          return res.json(responseArray);
+          return res.json(value);
         }
         )
 
