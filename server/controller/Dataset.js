@@ -238,11 +238,13 @@ let Dataset = {
           password: "admin",
         }
       };
+
+      const data = JSON.parse(responseData)
       
-      if(responseData && responseData.length > 0){
-        console.log(responseData.length,'>>>>>>>responseData.length');
-        console.log(typeof responseData); 
-        responseData.forEach((element)=>{
+      if(data && data.length > 0){
+        console.log(data.length,'>>>>>>>responseData.length');
+        console.log(typeof data); 
+        data.forEach((element)=>{
           console.log(element,'>>>>>>>>>>>>>>>>>forEach');
           console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
         })
