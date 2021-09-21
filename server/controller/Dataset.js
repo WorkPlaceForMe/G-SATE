@@ -59,8 +59,9 @@ const operationFunction = async (data) => {
           console.log('error----------->', temp, data)
           await sleep(1000);
           operationFunction(data)
+        } else {
+          resolve(temp)
         }
-        resolve(temp)
       }
     })
   })
