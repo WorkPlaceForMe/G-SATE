@@ -80,8 +80,10 @@ export class MultipleImageDetectionComponent implements OnInit {
   ann: any = [];
   cacheAnnot: any = [];
   label: string;
+  imageUrlArray: any = [];
 
   isChecked: boolean = false;
+  checkedArray: any = [];
 
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
@@ -145,10 +147,45 @@ export class MultipleImageDetectionComponent implements OnInit {
     }
   }
 
-  checked(event: any) {
+  checked(event: any, id: number) {
     let checkbox = event.target;
-    //   console.log(checkbox)
-    this.isChecked = checkbox.checked;
+    let imageUrl;
+    for (const imageData of this.data) {
+      if (imageData.id === id) {
+        imageUrl = imageData.image;
+      }
+    }
+    this.checkedArray[id] = checkbox.checked;
+    if (this.checkedArray[id] && !this.imageUrlArray.includes(imageUrl)) {
+      this.imageUrlArray.push(imageUrl);
+    } else if (
+      !this.checkedArray[id] &&
+      this.imageUrlArray.includes(imageUrl)
+    ) {
+      const index = this.imageUrlArray.indexOf(imageUrl); // get index if value found otherwise -1
+      if (index > -1) {
+        //if found
+        this.imageUrlArray.splice(index, 1);
+      }
+    }
+    console.log(this.imageUrlArray);
+  }
+
+  showAnalyticsAnnotations() {
+    const data = {
+      image_paths: this.imageUrlArray,
+    };
+
+    this.annotationsServ.processVistaBulk(data).subscribe(
+      (res) => {
+        console.log(res);
+        this.checkedArray = [];
+        this.imageUrlArray = [];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getBackground(image) {
@@ -188,6 +225,8 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit called");
+
     if (this.detectionOriginType === "vista") {
       this.processDatasetWithOutVista();
     } else {
@@ -384,6 +423,11 @@ export class MultipleImageDetectionComponent implements OnInit {
       this.pager.startIndex,
       this.pager.endIndex + 1
     );
+    if (this.pageOfItems && this.pageOfItems.length > 0) {
+      for (let i = 0; i < this.pageOfItems.length; i++) {
+        this.checkedArray[i] = false;
+      }
+    }
     if (this.detectionOriginType === "vista") {
       // Do Nothing
     } else {
@@ -611,6 +655,7 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.canvas = this.rd.selectRootElement(event.target);
     this.ctx = this.canvas.getContext("2d");
     this.labelsMessage = false;
+
     this.goAnnotate(event, i);
   }
 
