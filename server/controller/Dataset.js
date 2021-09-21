@@ -240,6 +240,7 @@ let Dataset = {
       };
       for (let i = 0; i < responseData.length; i++) {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>1');
+        console.log(responseData,responseData.length,'>>>>>>>>>>len');
         console.log(responseData[i],">>>>>>>>>>>>>>>>responseData");
         console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
         operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id;
