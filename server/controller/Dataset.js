@@ -311,8 +311,10 @@ let Dataset = {
         // }, 1000);
         try{
            responseArray = await Promise.all(functionArray)
+
            return res.json(responseArray);
         }catch(error){
+          console.log(error);
           return res.status(500).json(error);
         }
       }else{
