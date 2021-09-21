@@ -244,30 +244,41 @@ let Dataset = {
       if(data && data.length > 0){
         console.log(data.length,'>>>>>>>responseData.length');
         console.log(typeof data); 
-        data.forEach((element)=>{
-          console.log(element,'>>>>>>>>>>>>>>>>>forEach');
-          console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+        data.forEach(async(element)=>{
+        console.log(element,'>>>>>>>>>>>>>>>>>forEach');
+        console.log(element.id,'>>>>>>>>>>>>>>>>>>>>>>>>elem>>>idd');
+        operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + element.id;
+        console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+        await rp(operationOptions)
+        .then((res) => {
+          console.log(res,'>>>>>>>>>260');
+          responseArray.push(res)
+          console.log(responseArray,'>>>>>>>>261');
+        })
+        .catch((error) => {
+          return res.status(500).json(error);
+        });
         })
       }
 
-      for (let i = 0; i < responseData.length; i++) {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>1');
-        console.log(responseData,responseData.length,'>>>>>>>>>>len');
-        console.log(responseData[i],">>>>>>>>>>>>>>>>responseData");
-        console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
-        operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id;
-        console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
-        // await rp(operationOptions)
-        // .then((res) => {
-        //   console.log(res,'>>>>>>>>>260');
-        //   responseArray.push(res)
-        //   console.log(responseArray,'>>>>>>>>261');
-        //   // return res.json(responseArray);
-        // })
-        // .catch((error) => {
-        //   return res.status(500).json(error);
-        // });
-      }
+      // for (let i = 0; i < responseData.length; i++) {
+      //   console.log('>>>>>>>>>>>>>>>>>>>>>>>1');
+      //   console.log(responseData,responseData.length,'>>>>>>>>>>len');
+      //   console.log(responseData[i],">>>>>>>>>>>>>>>>responseData");
+      //   console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
+      //   operationOptions['url'] = process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id;
+      //   console.log(operationOptions,'>>>>>>>>>>>>...operationOptions');
+      //   // await rp(operationOptions)
+      //   // .then((res) => {
+      //   //   console.log(res,'>>>>>>>>>260');
+      //   //   responseArray.push(res)
+      //   //   console.log(responseArray,'>>>>>>>>261');
+      //   //   // return res.json(responseArray);
+      //   // })
+      //   // .catch((error) => {
+      //   //   return res.status(500).json(error);
+      //   // });
+      // }
       console.log(responseArray,'>>>>>>>>>>>269');
       return res.json(responseArray);
   },
