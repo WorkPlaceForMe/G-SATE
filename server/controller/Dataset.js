@@ -156,7 +156,7 @@ let Dataset = {
     console.log(JSON.stringify(options));
 
     await rp(options)
-      .then((response) => {
+      .then(async(response) => {
         console.log(response);
         const responseArray = []
         for (const responseObj of response) {
