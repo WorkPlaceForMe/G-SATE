@@ -260,7 +260,7 @@ let Dataset = {
       });
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
-      const responseArray = []
+      let responseArray = []
       const functionArray =[]
       const operationOptions = {
         method: "GET",
