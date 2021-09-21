@@ -225,12 +225,11 @@ let Dataset = {
 
       console.log(responseData,'>>>>>>>>>>>>responseData');
       const responseArray = []
-
-      for (const responseObj of responseData) {
-        console.log(responseObj.id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
+      for (let i = 0; i < responseData.length; i++) {
+        console.log(responseData[i].id,'>>>>>>>>>>>>>>>>>>>>>>>>>>>idd');
         const operationOptions = {
           method: "GET",
-          url: process.env.vista_server_ip + '/api/v1/operation/' + responseObj.id,
+          url: process.env.vista_server_ip + '/api/v1/operation/' + responseData[i].id,
           strictSSL: false,
           headers: {
             // Authorization: process.env.authorization,
