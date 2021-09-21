@@ -288,7 +288,7 @@ let Dataset = {
             let temp = await operationFunction(element);
             console.log('temp - ', temp);
             if(temp.error) {
-              await sleep(1000);
+              await sleep(2000);
               temp = await operationFunction(element);
               console.log('awaited temp - ', temp);
             }
