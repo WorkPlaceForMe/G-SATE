@@ -147,33 +147,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     }
   }
 
-  // checked(event: any, id: number) {
-  //   let checkbox = event.target;
-  //   for (const imageData of this.data) {
-  //     if (imageData.id === id) {
-  //       const obj = {
-  //         url :imageData.image,
-  //         id,
-  //         event
-  //       }
-  //     }
-  //   }
-  //   this.checkedArray[id] = checkbox.checked;
-  //   if (this.checkedArray[id] && !this.imageUrlArray.includes(imageUrl)) {
-  //     this.imageUrlArray.push(imageUrl);
-  //   } else if (
-  //     !this.checkedArray[id] &&
-  //     this.imageUrlArray.includes(imageUrl)
-  //   ) {
-  //     const index = this.imageUrlArray.indexOf(imageUrl); // get index if value found otherwise -1
-  //     if (index > -1) {
-  //       //if found
-  //       this.imageUrlArray.splice(index, 1);
-  //     }
-  //   }
-  //   console.log(this.imageUrlArray);
-  // }
-
   checked(event: any, id: number) {
     let checkbox = event.target;
     this.checkedArray[id] = checkbox.checked;
@@ -201,6 +174,7 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   getVistaBatchResponse() {
+    this.spin = true;
     const imagePathsArray = [];
     for (const imageData of this.imageUrlArray) {
       imagePathsArray.push(imageData.url);
@@ -211,7 +185,7 @@ export class MultipleImageDetectionComponent implements OnInit {
     console.log(data);
 
     this.annotationsServ.processVistaBulk(data).subscribe(
-      (res: any) => {
+      async (res: any) => {
         console.log(res);
         const finalOutput = [];
         for (const data of imagePathsArray) {
@@ -235,63 +209,55 @@ export class MultipleImageDetectionComponent implements OnInit {
           }
         }
         console.log("finalOutput - ", finalOutput);
+        for (const data of finalOutput) {
+          await this.drawVistaBatchResponseBoxes(data);
+        }
+        this.spin = false;
+        // this.imageUrlArray = [];
+        // this.checkedArray = [];
       },
       (error) => {
+        this.spin = false;
         console.log(error);
       }
     );
   }
 
-  drawVistaBatchResponseBoxes(i, event) {
-    this.spin = true;
-    this.activeButton(event);
+  async drawVistaBatchResponseBoxes(batchResponse) {
+    this.activeButton(batchResponse.event);
     this.selectedID = "";
     this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
+      `canvas#jPolygon${batchResponse.id}.card-img-top.img-fluid`
     );
     this.ctx = this.canvas.getContext("2d");
     this.labelsMessage = false;
-
-    const req = { image_path: this.data[i].image };
-    this.annotationsServ.processVistaSingle(req).subscribe(
-      async (res: any) => {
-        const response = JSON.parse(res);
-        console.log("processVistaSingle -> ", response);
-        this.spin = false;
-        if (!response) {
-          alert("Zero detections happened.");
-        } else {
-          console.log("this.data - ", this.data);
-          const convertedResponse = await this.convertVistaResponseToXY(
-            response.results,
-            i,
-            "Vista API"
-          );
-          convertedResponse.forEach((element) => {
-            this.data[i]["results"].push(element);
-          });
-          this.annObj[this.data[i].id] = {
-            image: this.data[i].image,
-            width: this.data[i].res_width,
-            height: this.data[i].res_height,
-            canvas_width: this.data[i].width,
-            canvas_height: this.data[i].height,
-            results: this.data[i]["results"],
-            fixedSize: this.data[i]["results"].length,
-          };
-          this.cacheAnnot = this.data[i]["results"];
-          this.getAnn(i);
-          this.getLabels(i);
-          this.data[i]["vistaResponseReceived"] = true;
-        }
-      },
-      (error) => {
-        this.spin = false;
-        alert(
-          `There is an error processing your request. Please retry operation once or contact system administrator.`
-        );
-      }
-    );
+    const response = batchResponse;
+    this.spin = false;
+    if (!response) {
+      alert("Zero detections happened.");
+    } else {
+      const convertedResponse = await this.convertVistaResponseToXY(
+        response.vista_response.results,
+        response.id,
+        "Vista API"
+      );
+      convertedResponse.forEach((element) => {
+        this.data[batchResponse.id]["results"].push(element);
+      });
+      this.annObj[this.data[batchResponse.id].id] = {
+        image: this.data[batchResponse.id].image,
+        width: this.data[batchResponse.id].res_width,
+        height: this.data[batchResponse.id].res_height,
+        canvas_width: this.data[batchResponse.id].width,
+        canvas_height: this.data[batchResponse.id].height,
+        results: this.data[batchResponse.id]["results"],
+        fixedSize: this.data[batchResponse.id]["results"].length,
+      };
+      this.cacheAnnot = this.data[batchResponse.id]["results"];
+      this.getAnn(batchResponse.id);
+      this.getLabels(batchResponse.id);
+      this.data[batchResponse.id]["vistaResponseReceived"] = true;
+    }
   }
 
   getBackground(image) {
@@ -603,9 +569,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         e++
       ) {
         if (e == this.id) {
-          this.data[this.selectedImageIndex]["results"][
-            e
-          ][3].label = this.newLabel;
+          this.data[this.selectedImageIndex]["results"][e][3].label =
+            this.newLabel;
         }
       }
       this.re_draw();
@@ -954,9 +919,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         0,
         len
       );
-      this.data[this.selectedImageIndex]["actualResults"] = this.data[
-        this.selectedImageIndex
-      ]["results"];
+      this.data[this.selectedImageIndex]["actualResults"] =
+        this.data[this.selectedImageIndex]["results"];
       this.data[this.selectedImageIndex]["results"] = limitedArray;
     }
 
@@ -1161,9 +1125,8 @@ export class MultipleImageDetectionComponent implements OnInit {
     let clickedElement = event.target || event.srcElement;
 
     if (clickedElement.nodeName === "BUTTON") {
-      let isCertainButtonAlreadyActive = document.querySelector(
-        ".button-active"
-      );
+      let isCertainButtonAlreadyActive =
+        document.querySelector(".button-active");
       // if a Button already has Class: .active
       if (isCertainButtonAlreadyActive) {
         isCertainButtonAlreadyActive.classList.remove("button-active");

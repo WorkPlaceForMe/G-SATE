@@ -13,7 +13,8 @@ import { FacesService } from "../../../services/faces.service";
 import { PagerService } from "../../../services/pager.service";
 import { DatePipe } from "@angular/common";
 
-import * as jQuery from 'jquery'
+import * as jQuery from "jquery";
+import "select2";
 
 const zipURL = "http://" + ip + ":3000/api/datasets/upZip";
 const imgURL = "http://" + ip + ":3000/api/upload/pic";
@@ -88,6 +89,8 @@ export class TCloudDashboardComponent implements OnInit {
   selectedUnAnnotatedDataset: any = "";
   selectedAnnotatedDataset: any = "";
   count = 0;
+
+  elasticSearchKeyWord: any = "";
 
   public date_now = new Date(Date.now()).toString();
   public max = new Date(this.date_now);
@@ -195,13 +198,17 @@ export class TCloudDashboardComponent implements OnInit {
 
     // Select2
     // @ts-ignore
-    if(jQuery('.createDatasetSelect2').select2 && typeof jQuery('.createDatasetSelect2').select2 == 'function') {
+    if (
+      jQuery(".createDatasetSelect2").select2 &&
+      typeof jQuery(".createDatasetSelect2").select2 == "function"
+    ) {
       // @ts-ignore
-      jQuery('.createDatasetSelect2').select2({
-        placeholder: "Enter Dataset Name",
-        tags: true
-      })
-        .on('select2:selecting', (e: any) => {
+      jQuery(".createDatasetSelect2")
+        .select2({
+          placeholder: "Enter Dataset Name",
+          tags: true,
+        })
+        .on("select2:selecting", (e: any) => {
           // console.log('Selecting: ', e.params.args.data);
           // if (e.params.args.data.text == e.params.args.data.id) {
           //   this.datasetName = e.params.args.data.text
@@ -218,7 +225,7 @@ export class TCloudDashboardComponent implements OnInit {
           this.detect();
           this.detectChange();
         });
-      }
+    }
   }
 
   ngAfterContentChecked() {
@@ -242,6 +249,24 @@ export class TCloudDashboardComponent implements OnInit {
       this.pager.startIndex,
       this.pager.endIndex + 1
     );
+  }
+
+  getElasticSearchDate() {
+    this.spin = true;
+    this.annotationsServ
+      .getElasticSearchResults(this.elasticSearchKeyWord)
+      .subscribe(
+        (res) => {
+          this.spin = false;
+          console.log("Elastic Search response - ", res);
+        },
+        (error) => {
+          this.spin = false;
+          alert(
+            `There is an error processing your request. Please retry operation once or contact system administrator.`
+          );
+        }
+      );
   }
 
   getUnAnnDsets(thing: string) {

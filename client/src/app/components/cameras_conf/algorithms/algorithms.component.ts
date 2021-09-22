@@ -431,7 +431,7 @@ export class AlgorithmsComponent implements OnInit {
     setTimeout(() => {
       this.spin = false;
       this.router.navigateByUrl("/camerasList");
-    },3000);
+    },5000);
   }
 
   //need to update the save with the new format
