@@ -5,6 +5,7 @@ const Annotation = require('../models/Annotation')
 const elastic = require('elasticsearch')
 const elasticIndex = 'image_annotations'
 const elasticType = 'annotaions'
+
 require('dotenv').config({
   path: './config.env',
 })
@@ -13,6 +14,57 @@ const client = elastic.Client({
   // node: `${process.env.my_ip}:${process.env.server}`,
   host: process.env.elasticsearch_host,
 })
+
+const dataExistsForVehicle = async (data) => {
+  const checkingArray = []
+  Object.keys(data).map(function (key) {
+    if (!data[key]) {
+      checkingArray.push(false)
+    }
+  })
+  if (data.results && data.results.Object.length > 0) {
+    Object.keys(data.results.Object[0]).map(function (key) {
+      if (!data.results.Object[0][key]) {
+        checkingArray.push(false)
+      }
+    })
+    if (data.results.Object[0].boundingBox) {
+      Object.keys(data.results.Object[0].boundingBox).map(function (key) {
+        if (!data.results.Object[0].boundingBox[key]) {
+          checkingArray.push(false)
+        }
+      })
+    }
+  }
+  if (checkingArray.includes(false)) {
+    return false
+  } else {
+    return true
+  }
+}
+
+const dataExistsForImage = async (data) => {
+  const checkingArray = []
+  Object.keys(data).map(function (key) {
+    if (!data[key]) {
+      checkingArray.push(false)
+    }
+  })
+  if (data.data && data.data.length > 0) {
+    for (const val of data.data) {
+      Object.keys(val).map(function (key) {
+        if (!val[key]) {
+          checkingArray.push(false)
+        }
+      })
+    }
+  }
+  if (checkingArray.includes(false)) {
+    return false
+  } else {
+    return true
+  }
+}
 
 router.get('/models', function (req, res, next) {
   Annotation.getModelDetails(function (err, annotation) {
@@ -79,9 +131,16 @@ router.get('/image/:key', function (req, res, next) {
         console.log(err)
         res.status(500).send(err)
       } else {
-        const responseData = data.hits.hits
-        if (responseData.length > 0) {
-          res.status(200).send(responseData)
+        if (data && data.hits && data.hits.hits && data.hits.hits.length > 0) {
+          const responseArray = []
+          for (const element of data.hits.hits) {
+            const isExisting = await dataExistsForImage(element._source)
+            if(isExisting){
+              responseArray.push(element)
+            }
+          }
+          
+          res.status(200).send(responseArray)
         } else {
           res.status(200).send([])
         }
@@ -113,9 +172,8 @@ router.get('/vehicle/:key', function (req, res, next) {
       } else {
         const responseArray = []
         let count = 0
-        const searchResult = data.hits.hits
-        if (searchResult.length > 0) {
-          for (const element of searchResult) {
+        if (data && data.hits && data.hits.hits && data.hits.hits.length > 0) {
+          for (const element of data.hits.hits) {
             const responseObj = {
               id: count,
               image:
@@ -138,8 +196,11 @@ router.get('/vehicle/:key', function (req, res, next) {
                 ],
               },
             }
-            ++count
-            responseArray.push(responseObj)
+            const isExisting = await dataExistsForVehicle(responseObj)
+            if(isExisting){
+              ++count
+              responseArray.push(responseObj)
+            }
           }
         }
 
