@@ -65,45 +65,80 @@ router.get("/image/:key", function (req, res, next) {
   const { key } = req.params;
   if (!key) return res.status(400).send("Search key is required");
 
-    client.search({
+  client.search(
+    {
       index: elasticIndex,
       type: elasticType,
       pretty: true,
       filter_path: "hits.hits._source*",
       q: `data.label:${key}`,
       size: 10000,
-    }, function (err, data) {
+    },
+    function (err, data) {
       if (err) {
         console.log(err);
         res.status(500).send(err);
       } else {
         res.status(200).send(data.hits.hits);
       }
-    });
+    }
+  );
 });
 
 router.get("/vehicle/:key", function (req, res, next) {
-  const elasticVehicleIndex = 'vehicle_gsate';
-  const elasticVehicleType = '_doc';
+  const elasticVehicleIndex = "vehicle_gsate";
+  const elasticVehicleType = "_doc";
 
   const { key } = req.params;
   if (!key) return res.status(400).send("Search key is required");
 
-    client.search({
+  client.search(
+    {
       index: elasticVehicleIndex,
       type: elasticVehicleType,
       pretty: true,
       filter_path: "hits.hits._source*",
       q: `class:${key}`,
       size: 10000,
-    }, function (err, data) {
+    },
+    function (err, data) {
       if (err) {
         console.log(err);
         res.status(500).send(err);
       } else {
-        res.status(200).send(data.hits.hits);
+        const responseArray = [];
+        let count = 0;
+        for (const element of data.hits.hits) {
+          const responseObj = {
+            id: count,
+            image:
+              "/assets/shared-data/" +
+              element._source.image_path.split("/").splice(5, 5).join("/"),
+            width: element.cam_width,
+            height: element.cam_height,
+            checked: true,
+            results: {
+              Object: [
+                {
+                  class: element._source.class,
+                  boundingBox: {
+                    left: element._source.x1,
+                    top: element._source.y1,
+                    width: element._source.x2 - element._source.x1,
+                    height: element._source.y2 - element._source.y1,
+                  },
+                },
+              ],
+            },
+          };
+          ++count;
+          responseArray.push(responseObj)
+        }
+
+        res.status(200).send(responseArray);
       }
-    });
+    }
+  );
 });
 
 router.post("/object-detection/confirmed", function (req, res, next) {

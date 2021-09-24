@@ -838,7 +838,7 @@ let processByAnalytics = (name) => {
                       ) {
                         console.log("======> Excluding person");
                       } else {
-                        console.log("======> Including data");
+                      console.log("======> Including data");
                         let cl =
                           table[itm.algo_id] == "person_gsate"
                             ? "person"
