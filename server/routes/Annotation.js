@@ -126,7 +126,7 @@ router.get('/image/:key', function (req, res, next) {
       q: `data.label:${key}`,
       size: 10000,
     },
-    function (err, data) {
+    async function (err, data) {
       if (err) {
         console.log(err)
         res.status(500).send(err)
@@ -135,11 +135,11 @@ router.get('/image/:key', function (req, res, next) {
           const responseArray = []
           for (const element of data.hits.hits) {
             const isExisting = await dataExistsForImage(element._source)
-            if(isExisting){
+            if (isExisting) {
               responseArray.push(element)
             }
           }
-          
+
           res.status(200).send(responseArray)
         } else {
           res.status(200).send([])
@@ -165,7 +165,7 @@ router.get('/vehicle/:key', function (req, res, next) {
       q: `class:${key}`,
       size: 10000,
     },
-    function (err, data) {
+    async function (err, data) {
       if (err) {
         console.log(err)
         res.status(500).send(err)
@@ -197,7 +197,7 @@ router.get('/vehicle/:key', function (req, res, next) {
               },
             }
             const isExisting = await dataExistsForVehicle(responseObj)
-            if(isExisting){
+            if (isExisting) {
               ++count
               responseArray.push(responseObj)
             }
