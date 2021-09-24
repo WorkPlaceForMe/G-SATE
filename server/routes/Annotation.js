@@ -197,7 +197,7 @@ router.get('/vehicle/:key', function (req, res, next) {
             }
           }
         }
-
+        console.log(responseArray, 'response sent')
         res.status(200).send(responseArray)
       }
     },
