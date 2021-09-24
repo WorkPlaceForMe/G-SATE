@@ -82,6 +82,30 @@ router.get("/image/:key", function (req, res, next) {
     });
 });
 
+router.get("/vehicle/:key", function (req, res, next) {
+  const elasticVehicleIndex = 'vehicle_gsate';
+  const elasticVehicleType = '_doc';
+
+  const { key } = req.params;
+  if (!key) return res.status(400).send("Search key is required");
+
+    client.search({
+      index: elasticVehicleIndex,
+      type: elasticVehicleType,
+      pretty: true,
+      filter_path: "hits.hits._source*",
+      q: `class:${key}`,
+      size: 10000,
+    }, function (err, data) {
+      if (err) {
+        console.log(err);
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(data.hits.hits);
+      }
+    });
+});
+
 router.post("/object-detection/confirmed", function (req, res, next) {
   console.log("object detection training confirmed");
   let body = req.body;
