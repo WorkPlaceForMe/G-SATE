@@ -165,15 +165,42 @@ router.get('/vehicle/:key', function (req, res, next) {
             }
 
             const checkingArray = []
+            // Object.keys(responseObj).map(function (key) {
+            //   if (!responseObj[key]) {
+            //     console.log('vehicle searching false 1')
+            //     checkingArray.push(false)
+            //   }
+            // })
+            // if (responseObj.results && responseObj.results.Object.length > 0) {
+            //   Object.keys(responseObj.results.Object[0]).map(function (key) {
+            //     if (!responseObj.results.Object[0][key]) {
+            //       console.log('vehicle searching false 2')
+            //       checkingArray.push(false)
+            //     }
+            //   })
+            //   if (responseObj.results.Object[0].boundingBox) {
+            //     Object.keys(responseObj.results.Object[0].boundingBox).map(
+            //       function (key) {
+            //         if (!responseObj.results.Object[0].boundingBox[key]) {
+            //           console.log('vehicle searching false 3')
+            //           checkingArray.push(false)
+            //         }
+            //       },
+            //     )
+            //   }
+            // }
             Object.keys(responseObj).map(function (key) {
-              if (!responseObj[key]) {
+              const value = responseObj[key]
+              if (value === null || value === NaN || value === undefined) {
+                console.log(responseObj[key])
                 console.log('vehicle searching false 1')
                 checkingArray.push(false)
               }
             })
             if (responseObj.results && responseObj.results.Object.length > 0) {
               Object.keys(responseObj.results.Object[0]).map(function (key) {
-                if (!responseObj.results.Object[0][key]) {
+                const value = responseObj.results.Object[0][key]
+                if (value === null || value === NaN || value === undefined) {
                   console.log('vehicle searching false 2')
                   checkingArray.push(false)
                 }
@@ -181,7 +208,13 @@ router.get('/vehicle/:key', function (req, res, next) {
               if (responseObj.results.Object[0].boundingBox) {
                 Object.keys(responseObj.results.Object[0].boundingBox).map(
                   function (key) {
-                    if (!responseObj.results.Object[0].boundingBox[key]) {
+                    const value = responseObj.results.Object[0].boundingBox[key]
+                    if (
+                      value === null ||
+                      value === NaN ||
+                      value === undefined
+                    ) {
+                      console.log(value)
                       console.log('vehicle searching false 3')
                       checkingArray.push(false)
                     }
