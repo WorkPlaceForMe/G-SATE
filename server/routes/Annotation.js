@@ -114,8 +114,8 @@ router.get("/vehicle/:key", function (req, res, next) {
             image:
               "/assets/shared-data/" +
               element._source.image_path.split("/").splice(5, 5).join("/"),
-            width: element.cam_width,
-            height: element.cam_height,
+            width: element._source.cam_width,
+            height: element._source.cam_height,
             checked: true,
             results: {
               Object: [
