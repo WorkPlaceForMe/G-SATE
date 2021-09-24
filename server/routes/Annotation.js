@@ -15,57 +15,6 @@ const client = elastic.Client({
   host: process.env.elasticsearch_host,
 })
 
-const dataExistsForVehicle = async (data) => {
-  const checkingArray = []
-  Object.keys(data).map(function (key) {
-    if (!data[key]) {
-      checkingArray.push(false)
-    }
-  })
-  if (data.results && data.results.Object.length > 0) {
-    Object.keys(data.results.Object[0]).map(function (key) {
-      if (!data.results.Object[0][key]) {
-        checkingArray.push(false)
-      }
-    })
-    if (data.results.Object[0].boundingBox) {
-      Object.keys(data.results.Object[0].boundingBox).map(function (key) {
-        if (!data.results.Object[0].boundingBox[key]) {
-          checkingArray.push(false)
-        }
-      })
-    }
-  }
-  if (checkingArray.includes(false)) {
-    return false
-  } else {
-    return true
-  }
-}
-
-const dataExistsForImage = async (data) => {
-  const checkingArray = []
-  Object.keys(data).map(function (key) {
-    if (!data[key]) {
-      checkingArray.push(false)
-    }
-  })
-  if (data.data && data.data.length > 0) {
-    for (const val of data.data) {
-      Object.keys(val).map(function (key) {
-        if (!val[key]) {
-          checkingArray.push(false)
-        }
-      })
-    }
-  }
-  if (checkingArray.includes(false)) {
-    return false
-  } else {
-    return true
-  }
-}
-
 router.get('/models', function (req, res, next) {
   Annotation.getModelDetails(function (err, annotation) {
     console.log('get Model')
@@ -126,7 +75,7 @@ router.get('/image/:key', function (req, res, next) {
       q: `data.label:${key}`,
       size: 10000,
     },
-    async function (err, data) {
+    function (err, data) {
       if (err) {
         console.log(err)
         res.status(500).send(err)
@@ -134,8 +83,26 @@ router.get('/image/:key', function (req, res, next) {
         if (data && data.hits && data.hits.hits && data.hits.hits.length > 0) {
           const responseArray = []
           for (const element of data.hits.hits) {
-            const isExisting = await dataExistsForImage(element._source)
-            if (isExisting) {
+            const checkingArray = []
+            const imageData = element._source
+            Object.keys(imageData).map(function (key) {
+              if (!imageData[key]) {
+                console.log('image searching false 1')
+                checkingArray.push(false)
+              }
+            })
+            if (imageData.data && imageData.data.length > 0) {
+              for (const val of imageData.data) {
+                Object.keys(val).map(function (key) {
+                  if (!val[key]) {
+                    console.log('image searching false 2')
+                    checkingArray.push(false)
+                  }
+                })
+              }
+            }
+            console.log(checkingArray, 'image searching')
+            if (!checkingArray.includes(false)) {
               responseArray.push(element)
             }
           }
@@ -165,7 +132,7 @@ router.get('/vehicle/:key', function (req, res, next) {
       q: `class:${key}`,
       size: 10000,
     },
-    async function (err, data) {
+    function (err, data) {
       if (err) {
         console.log(err)
         res.status(500).send(err)
@@ -196,8 +163,35 @@ router.get('/vehicle/:key', function (req, res, next) {
                 ],
               },
             }
-            const isExisting = await dataExistsForVehicle(responseObj)
-            if (isExisting) {
+
+            const checkingArray = []
+            Object.keys(responseObj).map(function (key) {
+              if (!responseObj[key]) {
+                console.log('vehicle searching false 1')
+                checkingArray.push(false)
+              }
+            })
+            if (responseObj.results && responseObj.results.Object.length > 0) {
+              Object.keys(responseObj.results.Object[0]).map(function (key) {
+                if (!responseObj.results.Object[0][key]) {
+                  console.log('vehicle searching false 2')
+                  checkingArray.push(false)
+                }
+              })
+              if (responseObj.results.Object[0].boundingBox) {
+                Object.keys(responseObj.results.Object[0].boundingBox).map(
+                  function (key) {
+                    if (!responseObj.results.Object[0].boundingBox[key]) {
+                      console.log('vehicle searching false 3')
+                      checkingArray.push(false)
+                    }
+                  },
+                )
+              }
+            }
+            console.log(checkingArray, 'vehicle searching')
+            //   const isExisting = await dataExistsForVehicle(responseObj)
+            if (!checkingArray.includes(false)) {
               ++count
               responseArray.push(responseObj)
             }
