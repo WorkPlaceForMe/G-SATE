@@ -213,7 +213,7 @@ export class MultipleImageDetectionComponent implements OnInit {
           await this.drawVistaBatchResponseBoxes(data);
         }
         this.spin = false;
-        // this.imageUrlArray = [];
+        this.imageUrlArray = [];
         // this.checkedArray = [];
       },
       (error) => {
@@ -288,8 +288,7 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.data[index].res_width = this.data[index].width;
         this.data[index].res_height = this.data[index].height;
         this.data[index].width = rect.width;
-        let resRelation =
-          this.data[index].res_height / this.data[index].res_width;
+        let resRelation = this.data[index].res_height / this.data[index].res_width;
         this.data[index].height = this.data[index].width * resRelation;
         ++ind;
       });
