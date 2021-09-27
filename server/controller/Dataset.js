@@ -853,18 +853,14 @@ let processByAnalytics = (name) => {
                         width: element.cam_width,
                         height: element.cam_height,
                         checked: true,
-                        results: {
-                          Object: [
-                            {
-                              class: cl,
-                              boundingBox: {
-                                left: element.x1,
-                                top: element.y1,
-                                width: element.x2 - element.x1,
-                                height: element.y2 - element.y1,
-                              },
-                            },
-                          ],
+                        resultObject: {
+                          class: cl,
+                          boundingBox: {
+                            left: element.x1,
+                            top: element.y1,
+                            width: element.x2 - element.x1,
+                            height: element.y2 - element.y1,
+                          },
                         },
                       }
                       result.push(obj)
@@ -884,18 +880,20 @@ let processByAnalytics = (name) => {
                 width: resultData.width,
                 height: resultData.height,
                 checked: resultData.checked,
-                results: [],
+                results: {
+                  Object: [],
+                },
               }
 
               for (let i = 0; i < responseArray.length; i++) {
                 if (responseArray[i].image === resultObj.image) {
                   resultObj['duplicate'] = true
-                  responseArray[i].results.push(resultData.results)
+                  responseArray[i].results.Object.push(resultData.resultObject)
                 }
               }
 
               if (!resultObj.duplicate) {
-                resultObj.results.push(resultData.results)
+                resultObj.results.Object.push(resultData.resultObject)
                 responseArray.push(resultObj)
                 ++count
               }
