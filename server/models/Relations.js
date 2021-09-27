@@ -15,7 +15,7 @@ var Relations = {
     },
 
     create: function (relation, callback) {
-        return db.query('INSERT INTO relations values (?,?,?,?,?,?,?,?,?,?,?,?)', [relation.id,relation.camera_id, relation.algo_id, relation.snippet_id, relation.roi_id, relation.atributes, relation.id_account, relation.id_branch, relation.stream, relation.createdAt, relation.updatedAt, relation.http_out], callback);
+        return db.query('INSERT INTO relations values (?,?,?,?,?,?,?,?,?,?,?,?,?)', [relation.id,relation.camera_id, relation.algo_id, relation.snippet_id, relation.roi_id, relation.atributes, relation.id_account, relation.id_branch, relation.stream, relation.createdAt, relation.updatedAt, relation.http_out, relation.completed], callback);
     },
 
     delete: function (id, callback) {

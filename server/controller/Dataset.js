@@ -436,6 +436,7 @@ let Dataset = {
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 http_out: null,
+                completed: 'No'
               };
               Relations.create(d, function (err, r) {
                 if (err) console.log("err>>>>>>>>>>>>>>>>", err);
