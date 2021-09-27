@@ -92,7 +92,8 @@ router.get('/image/:key', function (req, res, next) {
                 value === null ||
                 Object.is(value, NaN)
               ) {
-                console.log(`1st checking image search >>>>> ${imageData}`)
+                console.log('1st checking image search >>>>>')
+                console.log(imageData)
                 checkingArray.push(false)
               }
             })
@@ -105,7 +106,8 @@ router.get('/image/:key', function (req, res, next) {
                     value === null ||
                     Object.is(value, NaN)
                   ) {
-                    console.log(`2nd checking image search >>>>> ${val}`)
+                    console.log('2nd checking image search >>>>>')
+                    console.log(val)
                     checkingArray.push(false)
                   }
                 })
@@ -182,7 +184,8 @@ router.get('/vehicle/:key', function (req, res, next) {
                 value === null ||
                 Object.is(value, NaN)
               ) {
-                console.log(`1st checking vehicle search >>>>> ${responseObj}`)
+                console.log('1st checking vehicle search >>>>>')
+                console.log(responseObj)
                 checkingArray.push(false)
               }
             })
@@ -194,9 +197,8 @@ router.get('/vehicle/:key', function (req, res, next) {
                   value === null ||
                   Object.is(value, NaN)
                 ) {
-                  console.log(
-                    `2nd checking vehicle search >>>>> ${responseObj.results.Object[0]}`,
-                  )
+                  console.log('2nd checking vehicle search >>>>>')
+                  console.log(responseObj.results.Object[0])
                   checkingArray.push(false)
                 }
               })
@@ -209,9 +211,8 @@ router.get('/vehicle/:key', function (req, res, next) {
                       value === null ||
                       Object.is(value, NaN)
                     ) {
-                      console.log(
-                        `3rd checking vehicle search >>>>> ${responseObj.results.Object[0].boundingBox}`,
-                      )
+                      console.log('3rd checking vehicle search >>>>> ')
+                      console.log(responseObj.results.Object[0].boundingBox)
                       checkingArray.push(false)
                     }
                   },
