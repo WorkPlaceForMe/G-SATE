@@ -875,6 +875,7 @@ let processByAnalytics = (name) => {
             }
 
             console.log(result.length, '>>>>>>result array length')
+            // preparing final response by concating result if duplicate image data found
             const responseArray = []
             for (const resultData of result) {
               const resultObj = {

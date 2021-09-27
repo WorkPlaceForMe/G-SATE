@@ -82,6 +82,8 @@ router.get('/image/:key', function (req, res, next) {
       } else {
         if (data && data.hits && data.hits.hits && data.hits.hits.length > 0) {
           const responseArray = []
+          // preparing final response
+          // if any result data contains null NaN or undefined value, remove it
           for (const element of data.hits.hits) {
             const checkingArray = []
             const imageData = element._source
@@ -127,110 +129,6 @@ router.get('/image/:key', function (req, res, next) {
     },
   )
 })
-
-// router.get('/vehicle/:key', function (req, res, next) {
-//   const elasticVehicleIndex = 'vehicle_gsate'
-//   const elasticVehicleType = '_doc'
-
-//   const { key } = req.params
-//   if (!key) return res.status(400).send('Search key is required')
-
-//   client.search(
-//     {
-//       index: elasticVehicleIndex,
-//       type: elasticVehicleType,
-//       pretty: true,
-//       filter_path: 'hits.hits._source*',
-//       q: `class:${key}`,
-//       size: 10000,
-//     },
-//     function (err, data) {
-//       if (err) {
-//         console.log(err)
-//         res.status(500).send(err)
-//       } else {
-//         const responseArray = []
-//         let count = 0
-//         if (data && data.hits && data.hits.hits && data.hits.hits.length > 0) {
-//           for (const element of data.hits.hits) {
-//             const responseObj = {
-//               id: count,
-//               image:
-//                 '/assets/shared-data/' +
-//                 element._source.image_path.split('/').splice(5, 5).join('/'),
-//               width: element._source.cam_width,
-//               height: element._source.cam_height,
-//               checked: true,
-//               results: {
-//                 Object: [
-//                   {
-//                     class: element._source.class,
-//                     boundingBox: {
-//                       left: element._source.x1,
-//                       top: element._source.y1,
-//                       width: element._source.x2 - element._source.x1,
-//                       height: element._source.y2 - element._source.y1,
-//                     },
-//                   },
-//                 ],
-//               },
-//             }
-
-//             const checkingArray = []
-//             Object.keys(responseObj).map(function (key) {
-//               const value = responseObj[key]
-//               if (
-//                 typeof value === 'undefined' ||
-//                 value === null ||
-//                 Object.is(value, NaN)
-//               ) {
-//                 console.log('1st checking vehicle search >>>>>')
-//                 console.log(responseObj)
-//                 checkingArray.push(false)
-//               }
-//             })
-//             if (responseObj.results && responseObj.results.Object.length > 0) {
-//               Object.keys(responseObj.results.Object[0]).map(function (key) {
-//                 const value = responseObj.results.Object[0][key]
-//                 if (
-//                   typeof value === 'undefined' ||
-//                   value === null ||
-//                   Object.is(value, NaN)
-//                 ) {
-//                   console.log('2nd checking vehicle search >>>>>')
-//                   console.log(responseObj.results.Object[0])
-//                   checkingArray.push(false)
-//                 }
-//               })
-//               if (responseObj.results.Object[0].boundingBox) {
-//                 Object.keys(responseObj.results.Object[0].boundingBox).map(
-//                   function (key) {
-//                     const value = responseObj.results.Object[0].boundingBox[key]
-//                     if (
-//                       typeof value === 'undefined' ||
-//                       value === null ||
-//                       Object.is(value, NaN)
-//                     ) {
-//                       console.log('3rd checking vehicle search >>>>> ')
-//                       console.log(responseObj.results.Object[0].boundingBox)
-//                       checkingArray.push(false)
-//                     }
-//                   },
-//                 )
-//               }
-//             }
-//             console.log(checkingArray, 'vehicle searching')
-//             if (!checkingArray.includes(false)) {
-//               ++count
-//               responseArray.push(responseObj)
-//             }
-//           }
-//         }
-//         res.status(200).send(responseArray)
-//       }
-//     },
-//   )
-// })
 
 router.get('/vehicle/:key', function (req, res, next) {
   const elasticVehicleIndex = 'vehicle_gsate'
@@ -279,6 +177,7 @@ router.get('/vehicle/:key', function (req, res, next) {
               },
             }
 
+            // if any result data contains null NaN or undefined value, remove it
             const checkingArray = []
             Object.keys(responseObj).map(function (key) {
               const value = responseObj[key]
@@ -329,6 +228,7 @@ router.get('/vehicle/:key', function (req, res, next) {
           }
         }
         console.log(responseArray.length, '>>>>>>total result array length')
+        // preparing final response by concating result if duplicate image data found
         const finalResponse = []
         for (const resultData of responseArray) {
           const resultObj = {
