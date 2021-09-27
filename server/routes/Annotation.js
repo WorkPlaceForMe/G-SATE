@@ -92,7 +92,7 @@ router.get('/image/:key', function (req, res, next) {
                 value === null ||
                 Object.is(value, NaN)
               ) {
-                console.log('image searching false 1')
+                console.log(`1st checking image search >>>>> ${imageData}`)
                 checkingArray.push(false)
               }
             })
@@ -105,7 +105,7 @@ router.get('/image/:key', function (req, res, next) {
                     value === null ||
                     Object.is(value, NaN)
                   ) {
-                    console.log('image searching false 2')
+                    console.log(`2nd checking image search >>>>> ${val}`)
                     checkingArray.push(false)
                   }
                 })
@@ -182,8 +182,7 @@ router.get('/vehicle/:key', function (req, res, next) {
                 value === null ||
                 Object.is(value, NaN)
               ) {
-                console.log(responseObj[key])
-                console.log('vehicle searching false 1')
+                console.log(`1st checking vehicle search >>>>> ${responseObj}`)
                 checkingArray.push(false)
               }
             })
@@ -195,7 +194,9 @@ router.get('/vehicle/:key', function (req, res, next) {
                   value === null ||
                   Object.is(value, NaN)
                 ) {
-                  console.log('vehicle searching false 2')
+                  console.log(
+                    `2nd checking vehicle search >>>>> ${responseObj.results.Object[0]}`,
+                  )
                   checkingArray.push(false)
                 }
               })
@@ -208,8 +209,9 @@ router.get('/vehicle/:key', function (req, res, next) {
                       value === null ||
                       Object.is(value, NaN)
                     ) {
-                      console.log(value)
-                      console.log('vehicle searching false 3')
+                      console.log(
+                        `3rd checking vehicle search >>>>> ${responseObj.results.Object[0].boundingBox}`,
+                      )
                       checkingArray.push(false)
                     }
                   },
@@ -223,7 +225,6 @@ router.get('/vehicle/:key', function (req, res, next) {
             }
           }
         }
-        console.log(responseArray, 'response sent')
         res.status(200).send(responseArray)
       }
     },
