@@ -15,58 +15,6 @@ const client = elastic.Client({
   host: process.env.elasticsearch_host,
 })
 
-// const checkDataHaveOrNot = (dataObj) => {
-//   const checkingArray = []
-//   Object.keys(dataObj).map(function (key) {
-//     const value = dataObj[key]
-//     if (
-//       typeof value === 'undefined' ||
-//       value === null ||
-//       Object.is(value, NaN)
-//     ) {
-//       console.log(dataObj)
-//       checkingArray.push(false)
-//     }
-//     if (typeof value === 'object' && !Array.isArray(value)) {
-//       Object.keys(value).map(function (key) {
-//         const objValue = value[key]
-//         if (
-//           typeof objValue === 'undefined' ||
-//           objValue === null ||
-//           Object.is(objValue, NaN)
-//         ) {
-//           console.log('2nd checking image search >>>>>')
-//           console.log(objValue)
-//           checkingArray.push(false)
-//         }
-//       })
-//     }
-//     if (typeof value === 'object' && Array.isArray(value)) {
-//       for (const val of value) {
-//         if (typeof val === 'object' && !Array.isArray(val)) {
-//           Object.keys(val).map(function (key) {
-//             const arrayOfObjValue = val[key]
-//             if (
-//               typeof arrayOfObjValue === 'undefined' ||
-//               arrayOfObjValue === null ||
-//               Object.is(arrayOfObjValue, NaN)
-//             ) {
-//               console.log('3rd checking image search >>>>>')
-//               console.log(arrayOfObjValue)
-//               checkingArray.push(false)
-//             }
-//           })
-//         }
-//       }
-//     }
-//   })
-//   if (checkingArray.includes(false)) {
-//     return false
-//   } else {
-//     return true
-//   }
-// }
-
 router.get('/models', function (req, res, next) {
   Annotation.getModelDetails(function (err, annotation) {
     console.log('get Model')
@@ -365,7 +313,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
                 value === null ||
                 Object.is(value, NaN)
               ) {
-                console.log('1st checking vehicle search >>>>>')
+                console.log('1st checking elastic search >>>>>')
                 console.log(responseObj)
                 checkingArray.push(false)
               }
@@ -378,7 +326,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
                   value === null ||
                   Object.is(value, NaN)
                 ) {
-                  console.log('2nd checking vehicle search >>>>>')
+                  console.log('2nd checking elastic search >>>>>')
                   console.log(responseObj.resultObject)
                   checkingArray.push(false)
                 }
@@ -393,7 +341,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
                     value === null ||
                     Object.is(value, NaN)
                   ) {
-                    console.log('3rd checking vehicle search >>>>> ')
+                    console.log('3rd checking elastic search >>>>> ')
                     console.log(responseObj.resultObject.boundingBox)
                     checkingArray.push(false)
                   }
