@@ -381,9 +381,9 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
     ),
   ])
   console.log(vehicleSearchResult, personSearchResult)
-  const res = { vehicleSearchResult, personSearchResult }
+  const responseData = { vehicleSearchResult, personSearchResult }
 
-  res.status(200).send(res)
+  res.status(200).send(responseData)
 })
 
 router.post('/object-detection/confirmed', function (req, res, next) {
