@@ -84,6 +84,7 @@ export class MultipleImageDetectionComponent implements OnInit {
 
   isChecked: boolean = false;
   checkedArray: any = [];
+  currentPage: any;
 
   @ViewChildren("polygon") polygon: QueryList<ElementRef>;
   private canvas;
@@ -265,6 +266,7 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    console.log("ngAfterViewInit Fired - ", this.polygon);
     this.polygon.forEach((c, index) => {
       this.canvas = this.rd.selectRootElement(c["nativeElement"]);
       this.ctx = this.canvas.getContext("2d");
@@ -278,21 +280,85 @@ export class MultipleImageDetectionComponent implements OnInit {
     });
   }
 
-  setContext(ind) {
-    setTimeout(() => {
-      this.polygon.forEach((c) => {
-        let index = ind;
-        this.canvas = this.rd.selectRootElement(c["nativeElement"]);
-        this.ctx = this.canvas.getContext("2d");
-        let rect = this.canvas.getBoundingClientRect();
-        this.data[index].res_width = this.data[index].width;
-        this.data[index].res_height = this.data[index].height;
-        this.data[index].width = rect.width;
-        let resRelation = this.data[index].res_height / this.data[index].res_width;
-        this.data[index].height = this.data[index].width * resRelation;
-        ++ind;
+  setPage(page: number) {
+    this.currentPage = page;
+    this.annotations = [];
+    this.labels = [];
+    this.labelsMessage = true;
+    this.label = "object";
+    if (page < 1 || page > this.pager.totalPages) {
+      return;
+    }
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.data.length, page);
+
+    // get current page of items
+    this.pagedItems = this.data.slice(
+      this.pager.startIndex,
+      this.pager.endIndex + 1
+    );
+    if (this.pageOfItems && this.pageOfItems.length > 0) {
+      for (let i = 0; i < this.pageOfItems.length; i++) {
+        this.checkedArray[i] = false;
+      }
+    }
+
+    if (page > 1) {
+      this.setContext(this.pager.startIndex, (result) => {
+        this.test();
       });
-    }, 1000);
+    } else {
+      this.setContext(0, (result) => {
+        this.test();
+      });
+    }
+  }
+
+  test() {
+    this.spin = true;
+    console.log("this.pager - ", this.pager);
+    console.log("this.pagedItems - ", this.pagedItems);
+    this.asyncForEachAnaliticsAPI()
+      .then((result) => {
+        console.log(result);
+        setTimeout(() => {
+          this.getAnayticsImgAnnotations(() => {
+            console.log("this.data - ", this.data);
+            this.spin = false;
+          });
+        }, 5000);
+      })
+      .catch((err) => {
+        this.spin = false;
+        console.log("error - ", err);
+      });
+  }
+
+  async setContext(ind, setContextCallback) {
+    console.log("setContext Fired - ", ind, this.polygon);
+    await setTimeout(() => {
+      if (this.polygon.length > 0) {
+        this.polygon.forEach((c, indexPos, array) => {
+          let index = ind;
+          this.canvas = this.rd.selectRootElement(c["nativeElement"]);
+          this.ctx = this.canvas.getContext("2d");
+          let rect = this.canvas.getBoundingClientRect();
+          this.data[index].res_width = this.data[index].width;
+          this.data[index].res_height = this.data[index].height;
+          this.data[index].width = rect.width;
+          let resRelation =
+            this.data[index].res_height / this.data[index].res_width;
+          this.data[index].height = this.data[index].width * resRelation;
+          if (indexPos === array.length - 1) {
+            setContextCallback();
+            return;
+          }
+          ++ind;
+        });
+      } else {
+        setContextCallback("error");
+      }
+    }, 2000);
   }
 
   ngOnInit() {
@@ -300,6 +366,9 @@ export class MultipleImageDetectionComponent implements OnInit {
 
     if (this.detectionOriginType === "vista") {
       this.processDatasetWithOutVista();
+    } else if (this.detectionOriginType === "elastic-search") {
+      this.elasticSearchKeyWord = this.folder;
+      this.getElasticSearchDate();
     } else {
       this.processDataset();
     }
@@ -339,52 +408,67 @@ export class MultipleImageDetectionComponent implements OnInit {
       method: this.detectionOriginType,
     };
     this.annotationsServ.processDataset(data).subscribe(
-      (res) => {
+      async (res) => {
         if (res.length == 0) {
           alert("Zero detections happened.");
           this.router.navigate(["/annotations"]);
         } else {
+          this.spin = false;
           this.data = res;
-          this.setPage(1);
           this.datasetFlag = true;
-          setTimeout(() => {
-            this.data.forEach(async (value, index) => {
-              value["image"] = "http://" + ip + ":4200" + value.image;
-              const convertedResponse = await this.convertVistaResponseToXY(
-                value.results,
-                index,
-                "Analytics API"
-              );
-              value["results"] = convertedResponse;
-              this.annObj[value.id] = {
-                image: value.image,
-                width: value.res_width,
-                height: value.res_height,
-                canvas_width: value.width,
-                canvas_height: value.height,
-                results: value["results"],
-                fixedSize: value.length,
-              };
-            });
-            console.log("this.data - ", this.data);
-            setTimeout(() => {
-              this.pagedItems.forEach((val, ind) => {
-                console.log(this.data[ind]);
-                this.getAnayticsImgAnnotations(this.data[ind].id, "");
-              });
-              this.spin = false;
-            }, 2000);
-          }, 2000);
+          this.data.map((value, index) => {
+            value["source_result"] = JSON.stringify(value.results);
+            this.annObj[value.id] = {
+              image: value.image,
+              width: value.width,
+              height: value.height,
+              canvas_width: "",
+              canvas_height: "",
+              results: value["results"],
+              source_result: value["source_result"],
+              fixedSize: value.length,
+            };
+          });
+          this.setPage(1);
         }
       },
       (error) => {
-        this.spin = false;
         alert(
           `There is an error processing your request. Please retry operation once or contact system administrator.`
         );
         this.router.navigate(["/annotations"]);
       }
     );
+  }
+
+  asyncForEachAnaliticsAPI() {
+    return new Promise<void>((resolve, reject) => {
+      this.pagedItems.map(async (value, index) => {
+        // if (!value["source_result"]) {
+        value["image"] = "http://" + ip + ":4200" + value.image;
+        const convertedResponse = await this.convertVistaResponseToXY(
+          value.results,
+          index,
+          "Analytics API"
+        );
+        value["results"] = convertedResponse;
+        this.annObj[value.id] = {
+          image: value.image,
+          width: value.res_width,
+          height: value.res_height,
+          canvas_width: value.width,
+          canvas_height: value.height,
+          results: value["results"],
+          source_result: value["source_result"],
+          fixedSize: value.length,
+        };
+        // }
+        if (index == this.pagedItems.length - 1) {
+          resolve();
+          return;
+        }
+      });
+    });
   }
 
   processDatasetWithOutVista() {
@@ -428,42 +512,53 @@ export class MultipleImageDetectionComponent implements OnInit {
       .getElasticSearchResults(this.elasticSearchKeyWord)
       .subscribe(
         (res) => {
-          this.spin = false;
-          this.annObj = {};
-          this.pagedItems = [];
-          this.data = [];
+          let dumArray = [];
           res.forEach((value, index) => {
-            this.data.push(value._source);
+            value["checked"] = true;
+            dumArray.push(value);
           });
-          this.setPage(1);
+          this.data = dumArray;
           this.datasetFlag = true;
-          this.data.forEach((value, index) => {
-            let dumArr = [];
-            dumArr.push(value.data);
-            delete value.data;
-            value["results"] = dumArr;
-            value["id"] = index;
-            this.annObj[index] = {
+          this.data.map((value, index) => {
+            value["source_result"] = JSON.stringify(value.results);
+            this.annObj[value.id] = {
               image: value.image,
               width: value.width,
               height: value.height,
-              canvas_width: value.canvas_width,
-              canvas_height: value.canvas_height,
+              canvas_width: "",
+              canvas_height: "",
               results: value["results"],
-              fixedSize: value.results.length,
+              source_result: value["source_result"],
+              fixedSize: value.length,
             };
-            this.getAnn(index);
-            this.getLabels(index);
-            // value["vistaResponseReceived"] = true;
           });
-          console.log("this.data - ", this.data);
-          setTimeout(() => {
-            this.data.forEach((value, index) => {
-              this.getAnn(index);
-              this.getLabels(index);
-              // value["vistaResponseReceived"] = true;
-            });
-          }, 2000);
+          this.setPage(1);
+
+          // setTimeout(() => {
+          //   this.data.forEach((value, index) => {
+          //     let dumArr = [];
+          //     dumArr.push(value.data);
+          //     delete value.data;
+          //     value["results"] = dumArr;
+          //     value["id"] = index;
+          //     this.annObj[index] = {
+          //       image: value.image,
+          //       width: value.width,
+          //       height: value.height,
+          //       canvas_width: value.width,
+          //       canvas_height: value.height,
+          //       results: value["results"],
+          //       fixedSize: value.results.length,
+          //     };
+          //   });
+          //   console.log("this.data - ", this.data[5]);
+          //   setTimeout(() => {
+          //     this.pagedItems.forEach((val, ind) => {
+          //       // this.getAnayticsImgAnnotations(this.data[ind].id, "");
+          //     });
+          //     this.spin = false;
+          //   }, 2000);
+          // }, 2000);
         },
         (error) => {
           this.spin = false;
@@ -472,38 +567,6 @@ export class MultipleImageDetectionComponent implements OnInit {
           );
         }
       );
-  }
-
-  setPage(page: number) {
-    this.annotations = [];
-    this.labels = [];
-    this.labelsMessage = true;
-    this.label = "object";
-    if (page < 1 || page > this.pager.totalPages) {
-      return;
-    }
-    // get pager object from service
-    this.pager = this.pagerService.getPager(this.data.length, page);
-    if (page > 1) {
-      this.setContext(this.pager.startIndex);
-    } else {
-      this.setContext(0);
-    }
-    // get current page of items
-    this.pagedItems = this.data.slice(
-      this.pager.startIndex,
-      this.pager.endIndex + 1
-    );
-    if (this.pageOfItems && this.pageOfItems.length > 0) {
-      for (let i = 0; i < this.pageOfItems.length; i++) {
-        this.checkedArray[i] = false;
-      }
-    }
-    if (this.detectionOriginType === "vista") {
-      // Do Nothing
-    } else {
-      // Do Nothing
-    }
   }
 
   onChangePage(pageOfItems: Array<any>) {
@@ -1012,6 +1075,7 @@ export class MultipleImageDetectionComponent implements OnInit {
     }
   }
 
+  /** VISTA Single Image Processing */
   getImgAnnotations(i, event) {
     this.spin = true;
     this.activeButton(event);
@@ -1064,6 +1128,44 @@ export class MultipleImageDetectionComponent implements OnInit {
     );
   }
 
+  convertAnalyticsResponseToXY(res, i, source) {
+    let annotatedList = [];
+    for (let itm in res) {
+      res[itm].Object.forEach((element) => {
+        let obj1 = {
+          x:
+            (element.boundingBox.left * this.data[i].width) /
+            this.data[i].res_width,
+          y:
+            (element.boundingBox.top * this.data[i].height) /
+            this.data[i].res_height,
+        };
+        this.ann.push(obj1);
+        let obj2 = {
+          x:
+            (element.boundingBox.width * this.data[i].width) /
+            this.data[i].res_width,
+          y:
+            (element.boundingBox.height * this.data[i].height) /
+            this.data[i].res_height,
+        };
+        this.ann.push(obj2);
+        let obj3 = {
+          general_detection: "No",
+          detection_source: source,
+        };
+        this.ann.push(obj3);
+        let obj4 = {
+          label: element.class,
+        };
+        this.ann.push(obj4);
+        annotatedList.push(this.ann);
+        this.ann = [];
+      });
+    }
+    return annotatedList;
+  }
+
   convertVistaResponseToXY(res, i, source) {
     let annotatedList = [];
     for (let itm in res) {
@@ -1104,20 +1206,21 @@ export class MultipleImageDetectionComponent implements OnInit {
     return annotatedList;
   }
 
-  getAnayticsImgAnnotations(i, event) {
-    // this.spin = true;
-    if (event) this.activeButton(event);
-    this.selectedID = "";
-    this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
-    );
-    this.ctx = this.canvas.getContext("2d");
-    this.labelsMessage = false;
-    this.getAnn(i);
-    this.getLabels(i);
-    // setTimeout(() => {
-    //   this.spin = false;
-    // }, 3000);
+  getAnayticsImgAnnotations(callback) {
+    this.pagedItems.forEach((val, i, array) => {
+      this.selectedID = "";
+      this.canvas = this.rd.selectRootElement(
+        `canvas#jPolygon${val.id}.card-img-top.img-fluid`
+      );
+      this.ctx = this.canvas.getContext("2d");
+      this.labelsMessage = false;
+      this.getAnn(val.id);
+      this.getLabels(val.id);
+      if (i === array.length - 1) {
+        callback();
+        return;
+      }
+    });
   }
 
   activeButton(event) {
@@ -1189,58 +1292,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     });
   }
 
-  ppeDetection(i, event) {
-    this.activeButton(event);
-    this.selectedID = "";
-    this.spin = true;
-    let body = {
-      image: !this.annObj.hasOwnProperty(this.data[i].id)
-        ? this.data[i].image
-        : this.annObj[this.data[i].id].image,
-    };
-    this.canvas = this.rd.selectRootElement(
-      `canvas#jPolygon${i}.card-img-top.img-fluid`
-    );
-    this.ctx = this.canvas.getContext("2d");
-    this.annotationsServ.getPPEDetection(body).subscribe((res) => {
-      this.spin = false;
-      alert(`${res.length} PPE Objects detected.`);
-      if (res.length > 0) {
-        res.forEach((element) => {
-          element[2]["detection_source"] = "PPE Detection Script";
-          this.data[i]["results"].push(element);
-        });
-        console.log(res);
-        res.forEach((element) => {
-          if (!this.annObj.hasOwnProperty(this.data[i].id)) {
-            this.annObj[this.data[i].id] = {
-              image: this.data[i].image,
-              width: this.data[i].res_width,
-              height: this.data[i].res_height,
-              canvas_width: this.data[i].width,
-              canvas_height: this.data[i].height,
-              results: this.data[i]["results"],
-              fixedSize: this.data[i]["results"].length,
-            };
-          } else {
-            console.log("eee", this.annObj[this.data[i].id].results);
-            this.annObj[this.data[i].id].results = this.data[i]["results"];
-          }
-        });
-        this.data[i]["results"].forEach((element, index) => {
-          if (element[3].label == "") {
-            element[3].label = "PPE Object " + (index + 1);
-          }
-        });
-        console.log(this.data[i]);
-        this.labelsMessage = false;
-        this.selectedImageIndex = i;
-        this.re_draw();
-        this.data[i]["ppeDetectionResponseReceived"] = true;
-      }
-    });
-  }
-
   handleSelected(img, checked) {
     console.log("img : ", img);
     console.log("checked : ", checked);
@@ -1251,10 +1302,18 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.newLabel = null;
   }
 
-  next() {
+  async next() {
+    debugger;
     this.annObj["datasetName"] = this.folder;
     this.annObj["payloadType"] = this.folder;
-    console.log("this.annObj -> ", JSON.stringify(this.annObj));
+
+    for (var key of Object.keys(this.annObj)) {
+      if (this.annObj[key]["source_result"])
+        this.annObj[key]["results"] = JSON.parse(
+          this.annObj[key]["source_result"]
+        );
+    }
+
     if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
       this.annObj = this.data;
     }
@@ -1266,8 +1325,6 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.router
           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
           .then(() => {
-            // this.router.navigate(["/annotations/dataset/" + this.method + "/" + this.folder + "/" + this.valueImage + "/details"
-            // ], { state: { data: this.annObj } });
             this.router.navigate(["annotations/save"], {
               state: { data: this.annObj },
             });
@@ -1280,7 +1337,6 @@ export class MultipleImageDetectionComponent implements OnInit {
         this.router.navigateByUrl("/annotations");
       }
     } else {
-      // this.router.navigate(["/annotations/dataset/" + this.method + "/" + this.folder + "/" + this.detectionOriginType + "/details"], { state: { data: this.annObj } });
       this.router.navigate(["annotations/save"], {
         state: { data: this.annObj },
       });

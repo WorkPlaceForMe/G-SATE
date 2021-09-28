@@ -8,7 +8,7 @@
     <h1 class="text-uppercase font-weight-bold text-white mb-0">
       Customize Annotations - Images
     </h1>
-    <div class="row mt-3">
+    <!-- <div class="row mt-3">
       <div class="col-sm-12">
         <h6 class="font-weight-bold text-white">
           Elastic Search: You can search for particular annotations for all the
@@ -28,7 +28,7 @@
         </button>
       </div>
       <div class="col-sm-3"></div>
-    </div>
+    </div> -->
   </div>
 </section>
 <!-- banner section end -->
@@ -105,15 +105,6 @@
                   General Detection
                 </button>
               </div>
-              <!-- <div class="d-flex mt-2 align-items-center justify-content-between">
-                                <button class="btn btn-primary" (click)="ppeDetection(item.id,$event)"
-                                    [disabled]="item.ppeDetectionResponseReceived">PPE Detection
-                                </button>
-                                [disabled]="item.defectDetectionResponseReceived"
-                                <button class="btn btn-primary" (click)="ppeDetection(item.id,$event)"
-                                    disabled>Defect Detection
-                                </button>
-                            </div> -->
             </form>
           </div>
 
@@ -156,19 +147,19 @@
       <ul *ngIf="pager.pages && pager.pages.length"
         class="pagination justify-content-center mt-4 text-uppercase font-weight-medium">
         <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
-          <a class="page-link" (click)="setPage(1)">First</a>
+          <a class="page-link" (click)="setPage(1, null)">First</a>
         </li>
         <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
-          <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+          <a class="page-link" (click)="setPage(pager.currentPage - 1, null)">Previous</a>
         </li>
         <li *ngFor="let page of pager.pages" [ngClass]="{ active: pager.currentPage === page }" class="page-item">
-          <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+          <a class="page-link" (click)="setPage(page, null)">{{ page }}</a>
         </li>
         <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
-          <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+          <a class="page-link" (click)="setPage(pager.currentPage + 1, null)">Next</a>
         </li>
         <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
-          <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+          <a class="page-link" (click)="setPage(pager.totalPages, null)">Last</a>
         </li>
       </ul>
       <div class="form form-row justify-content-center mt-4" *ngIf="pager.pages && pager.pages.length">
@@ -178,7 +169,7 @@
         </div>
         <div class="form-group col-12 col-md-2 mb-md-0">
           <button [disabled]="!gotoPageNo" type="button" class="btn btn-sm btn-block btn-primary ml-3"
-            (click)="setPage(gotoPageNo)">
+            (click)="setPage(gotoPageNo, null)">
             Go
           </button>
         </div>

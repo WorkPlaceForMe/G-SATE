@@ -357,17 +357,21 @@ export class TCloudDashboardComponent implements OnInit {
 
   annotateByVista() {
     this.router.navigate([
-      "/annotations/dataset/" + "object" + "/" + this.choosenDataset + "/vista",
+      "/annotations/dataset/object/" + this.choosenDataset + "/vista",
     ]);
   }
 
   annotateByAnalytics() {
     this.router.navigate([
-      "/annotations/dataset/" +
-        "object" +
-        "/" +
-        this.choosenDataset +
-        "/analytics",
+      "/annotations/dataset/object/" + this.choosenDataset + "/analytics",
+    ]);
+  }
+
+  annotateByElasticSearch() {
+    this.router.navigate([
+      "/annotations/dataset/object/" +
+        this.elasticSearchKeyWord +
+        "/elastic-search",
     ]);
   }
 

@@ -205,7 +205,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row mt-2 justify-content-center">
+        <div class="row mt-2 justify-content-center">
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="rounded bg-darken p-3 h-100">
                     <div class="form d-flex flex-column h-100">
@@ -213,24 +213,21 @@
                         <h3 class="text-uppercase font-weight-bold text-white mb-3">
                             Elastic Search
                         </h3>
-                        <p class="text-white">You can search for particular annotations from all the
-                            trained/saved annotations in our DB. You can search by key words like 'person',
-                            'cycle' etc. in the below box and click on Get Result to get the
-                            annotations.</p>
+                        <p class="text-white">You can search for particular annotations from all saved videoes. You can search by key words like 'person', 'cycle' etc. in the below box and click on Get Result to get the annotations.</p>
                         <div class="form-group">
-                            <input type="text" placeholder="Search by key words like 'person', 'cycle'"
+                            <input type="text" placeholder="Search"
                                 class="form-control form-control-transparent" [(ngModel)]="elasticSearchKeyWord" />
                         </div>
                         <div class="mt-auto">
                             <button class="btn btn-primary btn-block font-weight-normal" id="basic-text1"
-                                (click)="getElasticSearchDate()" [disabled]="elasticSearchKeyWord == ''">
+                                (click)="annotateByElasticSearch()" [disabled]="elasticSearchKeyWord == ''">
                                 Get Result
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <div class="separator">
             <span>OR</span>
