@@ -337,85 +337,6 @@ router.get('/vehicle/:key', function (req, res, next) {
   )
 })
 
-// router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
-//   // const finalResponse = []
-//   const elasticVehicleIndex = 'vehicle_gsate'
-//   const elasticPersonIndex = 'person_gsate'
-//   const elasticSearchType = '_doc'
-//   const arrayOfElasticIndex = ['vehicle_gsate', 'person_gsate']
-
-//   const { key } = req.params
-//   if (!key) return res.status(400).send('Search key is required')
-
-//   for (const index of arrayOfElasticIndex) {
-//   }
-
-//   const [vehicleSearchResult, personSearchResult] = await Promise.all([
-//     client
-//       .search({
-//         index: elasticVehicleIndex,
-//         type: elasticSearchType,
-//         pretty: true,
-//         filter_path: 'hits.hits._source*',
-//         q: `class:${key}`,
-//         size: 10000,
-//       })
-//       .then(
-//         function (body) {
-//           if (
-//             body &&
-//             body.hits &&
-//             body.hits.hits &&
-//             body.hits.hits.length > 0
-//           ) {
-//             return body.hits.hits
-//           } else {
-//             return []
-//           }
-//         },
-//         function (error) {
-//           if (error) {
-//             console.log(error)
-//             res.status(500).send(error)
-//           }
-//         },
-//       ),
-//     client
-//       .search({
-//         index: elasticPersonIndex,
-//         type: elasticSearchType,
-//         pretty: true,
-//         filter_path: 'hits.hits._source*',
-//         q: `class:${key}`,
-//         size: 10000,
-//       })
-//       .then(
-//         function (body) {
-//           if (
-//             body &&
-//             body.hits &&
-//             body.hits.hits &&
-//             body.hits.hits.length > 0
-//           ) {
-//             return body.hits.hits
-//           } else {
-//             return []
-//           }
-//         },
-//         function (error) {
-//           if (error) {
-//             console.log(error)
-//             res.status(500).send(error)
-//           }
-//         },
-//       ),
-//   ])
-//   console.log(vehicleSearchResult, personSearchResult)
-//   const responseData = { vehicleSearchResult, personSearchResult }
-
-//   res.status(200).send(responseData)
-// })
-
 router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
   const elasticVehicleIndex = 'vehicle_gsate'
   const elasticPersonIndex = 'person_gsate'
@@ -672,6 +593,45 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
   }
   console.log(finalResponse.length, '>>>>>>response array length')
   res.status(200).send(finalResponse)
+})
+
+router.get('/analytics/elasticSearch-test/:key', async function (
+  req,
+  res,
+  next,
+) {
+  const elasticSearchType = '_doc'
+  const elasticIndexArray = [
+    'vehicle_gsate',
+    'person_gsate',
+    'clothing_gsate',
+    'ppe_gsate',
+    'defects_gsate',
+  ]
+
+  const { key } = req.params
+  if (!key) return res.status(400).send('Search key is required')
+
+  client
+    .search({
+      index: elasticIndexArray,
+      type: elasticSearchType,
+      pretty: true,
+      filter_path: 'hits.hits._source*',
+      q: `class:${key}`,
+      size: 10000,
+    })
+    .then(
+      function (body) {
+        res.status(200).send(body)
+      },
+      function (error) {
+        if (error) {
+          console.log(error)
+          res.status(500).send(error)
+        }
+      },
+    )
 })
 
 router.post('/object-detection/confirmed', function (req, res, next) {
