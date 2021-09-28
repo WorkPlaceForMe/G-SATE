@@ -110,7 +110,8 @@ export class AnnotationsService {
   }
 
   getElasticSearchResults(data: any) {
-    return this.http.get<any[]>(`${this.API_URL}/annotations/image/${data}`);
+    // return this.http.get<any[]>(`${this.API_URL}/annotations/image/${data}`);
+    return this.http.get<any[]>(`${this.API_URL}/annotations/analytics/elasticSearch/${data}`);
   }
 
   processVistaSingle(data: any) {
