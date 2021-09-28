@@ -421,6 +421,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
   const elasticPersonIndex = 'person_gsate'
   const elasticClothingIndex = 'clothing_gsate'
   const elasticPpeIndex = 'ppe_gsate'
+  const elasticDefectsIndex = 'defects_gsate'
   const elasticSearchType = '_doc'
 
   const { key } = req.params
@@ -541,10 +542,36 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
           }
         },
       ),
+    client
+      .search({
+        index: elasticDefectsIndex,
+        type: elasticSearchType,
+        pretty: true,
+        filter_path: 'hits.hits._source*',
+        q: `class:${key}`,
+        size: 10000,
+      })
+      .then(
+        function (body) {
+          if (
+            body &&
+            body.hits &&
+            body.hits.hits &&
+            body.hits.hits.length > 0
+          ) {
+            console.log('ppe search function called')
+            resultArray.push(...body.hits.hits)
+          }
+        },
+        function (error) {
+          if (error) {
+            console.log(error)
+            res.status(500).send(error)
+          }
+        },
+      ),
   ])
-  console.log(resultArray)
-  console.log(resultArray.length)
-  console.log('result array')
+
   const responseArray = []
   let count = 0
   if (resultArray.length > 0) {
