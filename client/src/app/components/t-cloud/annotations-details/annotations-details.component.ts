@@ -32,6 +32,7 @@ export class AnnotationsDetailsComponent implements OnInit {
   }
   public date_now = new Date(Date.now()).toString();
   public min = new Date(this.date_now);
+  spin: boolean = false;
   constructor(
     private router: Router,
     private annotationsServ: AnnotationsService,
@@ -78,6 +79,7 @@ export class AnnotationsDetailsComponent implements OnInit {
   }
 
   train() {
+    this.spin = true;
     this.annotationsServ.datasetName = this.datasetName;
     this.annotationsServ.emailAddress = this.emailAddress;
     this.annotationsServ.date = new Date(this.date).toUTCString();
@@ -111,8 +113,10 @@ export class AnnotationsDetailsComponent implements OnInit {
       (res) => {
         console.log('sendSingleImageAnnotations Response - ', JSON.stringify(res));
         this.sendPayloadToTrain(res);
-      },
-      err => console.log(err)
+      }, (err) => {
+        console.log(err);
+        this.spin = false;
+      }
     )
   }
 
@@ -122,8 +126,10 @@ export class AnnotationsDetailsComponent implements OnInit {
       (res) => {
         console.log('datasetAnnotations Response - ', JSON.stringify(res));
         this.sendPayloadToTrain(res);
-      },
-      err => console.log(err)
+      }, (err) => { 
+        console.log(err);
+        this.spin = false;
+      }
     )
   }
 
@@ -131,20 +137,26 @@ export class AnnotationsDetailsComponent implements OnInit {
     if(this.model == 'Face Recognition') {
       this.annotationsServ.trainScriptForFR(data).subscribe(
         (res: any) => {
+          this.spin = false;
           alert('The faces for ' + res.datasetName + ' have been added for inferencing');
           this.router.navigate(['/annotations']);
-        },
-        err => console.log(err)
+        }, (err) => { 
+          console.log(err);
+          this.spin = false;
+        }
       )
     } else {
       this.annotationsServ.trainScript(data).subscribe(
         (res: any) => {
+          this.spin = false;
           console.log('sendPayloadToTrain Response - ', res);
           var now = moment(res.date).format('DD/MM/YYYY h:mm A');
           alert('Your training has been saved. It will start on ' + now);
           this.router.navigate(['/annotations']);
-        },
-        err => console.log(err)
+        }, (err) => { 
+          console.log(err);
+          this.spin = false;
+        }
       )
     }
   }

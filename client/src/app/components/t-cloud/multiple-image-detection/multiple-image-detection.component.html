@@ -46,9 +46,9 @@
         <div class="bg-darken rounded overflow-hidden h-100 d-flex flex-column position-relative border"
           id="{{ item.id }}" [ngClass]="checkedArray[item.id] ? 'border-info' : 'border-light'">
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="datasetFlag-{{ i }}"
+            <input type="checkbox" class="custom-control-input" id="datasetFlag-{{ item.id }}"
               (change)="checked($event, item.id)" [checked]="checkedArray[item.id]" [disabled]="item.vistaResponseReceived" />
-            <label class="custom-control-label" for="datasetFlag-{{ i }}"></label>
+            <label class="custom-control-label" for="datasetFlag-{{ item.id }}"></label>
           </div>
           <!-- canvas -->
           <div class="flex-none">
@@ -122,14 +122,14 @@
               <ul class="label-list px-4 pb-4" *ngIf="item.results && item.results.length > 0">
                 <li class="d-flex align-items-center justify-content-between"
                   *ngFor="let ann of item.results; index as j" [ngClass]="{ 'active-label': selectedID === j }">
-                  <span class="d-block text-truncate" role="button" (click)="get(j, i)">{{ ann[3].label }}</span>
+                  <span class="d-block text-truncate" role="button" (click)="get(j, item.id)">{{ ann[3].label }}</span>
                   <div class="flex-none">
                     <button class="btn text-white p-1 ml-2" data-toggle="modal" data-target="#confirmModal"
-                      data-dismiss="modal" (click)="openlebelModal(j, i)">
+                      data-dismiss="modal" (click)="openlebelModal(j, item.id)">
                       <!-- <i class="far fa-edit"></i> -->
                       <i class="fa fa-edit" aria-hidden="true"></i>
                     </button>
-                    <button class="btn text-white p-1 ml-1" (click)="clear(j, i)">
+                    <button class="btn text-white p-1 ml-1" (click)="clear(j, item.id)">
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </div>

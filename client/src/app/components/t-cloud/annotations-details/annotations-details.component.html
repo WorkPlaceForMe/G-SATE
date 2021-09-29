@@ -1,6 +1,11 @@
 <div class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
     [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
     <div class="container container-medium text-center z-index-1 text-white">
+        <div class="d-flex justify-content-center position-fixed loader" *ngIf="spin">
+            <div class="spinner-border spin" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <h2 class="mb-4 text-uppercase text-white">Training With Annotated Dataset</h2>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
@@ -29,7 +34,8 @@
                             <label for="">Select a Model</label>
                             <div class="form-row">
                                 <div class="col-12">
-                                    <select class="form-control select-picker" [(ngModel)]="model" (change)="getModel()">
+                                    <select class="form-control select-picker" [(ngModel)]="model"
+                                        (change)="getModel()">
                                         <option value="undefined" disabled>Pick a training model</option>
                                         <option *ngFor="let mod of models" [value]="mod.name">{{mod.name}}</option>
                                     </select>

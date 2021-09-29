@@ -320,7 +320,6 @@ export class MultipleImageDetectionComponent implements OnInit {
     console.log("this.pagedItems - ", this.pagedItems);
     this.asyncForEachAnaliticsAPI()
       .then((result) => {
-        console.log(result);
         setTimeout(() => {
           this.getAnayticsImgAnnotations(() => {
             console.log("this.data - ", this.data);
@@ -422,8 +421,8 @@ export class MultipleImageDetectionComponent implements OnInit {
               image: value.image,
               width: value.width,
               height: value.height,
-              canvas_width: "",
-              canvas_height: "",
+              canvas_width: '',
+              canvas_height: '',
               results: value["results"],
               source_result: value["source_result"],
               fixedSize: value.length,
@@ -443,26 +442,38 @@ export class MultipleImageDetectionComponent implements OnInit {
 
   asyncForEachAnaliticsAPI() {
     return new Promise<void>((resolve, reject) => {
-      this.pagedItems.map(async (value, index) => {
-        // if (!value["source_result"]) {
-        value["image"] = "http://" + ip + ":4200" + value.image;
-        const convertedResponse = await this.convertVistaResponseToXY(
-          value.results,
-          index,
-          "Analytics API"
-        );
-        value["results"] = convertedResponse;
-        this.annObj[value.id] = {
-          image: value.image,
-          width: value.res_width,
-          height: value.res_height,
-          canvas_width: value.width,
-          canvas_height: value.height,
-          results: value["results"],
-          source_result: value["source_result"],
-          fixedSize: value.length,
-        };
-        // }
+      this.data.map(async (value, index) => {
+        if (!Array.isArray(value.results)) {
+          if (!value.res_width && !value.res_height) {
+            const dumWidth = this.data[0].width;
+            const dumHeight = this.data[0].height;
+            const dumResWidth = this.data[0].res_width;
+            const dumResHeight = this.data[0].res_height;
+            value.res_width = dumResWidth;
+            value.res_height = dumResHeight;
+            value.width = dumWidth;
+            value.height = dumHeight;
+          }
+          // if (!value["source_result"]) {
+          value["image"] = "http://" + ip + ":4200" + value.image;
+          const convertedResponse = await this.convertVistaResponseToXY(
+            value.results,
+            index,
+            "Analytics API"
+          );
+          value["results"] = convertedResponse;
+          this.annObj[value.id] = {
+            image: value.image,
+            width: value.res_width,
+            height: value.res_height,
+            canvas_width: value.width,
+            canvas_height: value.height,
+            results: value["results"],
+            source_result: value["source_result"],
+            fixedSize: value.length,
+          };
+          // }
+        }
         if (index == this.pagedItems.length - 1) {
           resolve();
           return;
@@ -1303,16 +1314,8 @@ export class MultipleImageDetectionComponent implements OnInit {
   }
 
   async next() {
-    debugger;
     this.annObj["datasetName"] = this.folder;
     this.annObj["payloadType"] = this.folder;
-
-    for (var key of Object.keys(this.annObj)) {
-      if (this.annObj[key]["source_result"])
-        this.annObj[key]["results"] = JSON.parse(
-          this.annObj[key]["source_result"]
-        );
-    }
 
     if (Object.keys(this.annObj).length == 0 || this.annObj == {}) {
       this.annObj = this.data;
