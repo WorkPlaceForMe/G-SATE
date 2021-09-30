@@ -52,6 +52,7 @@ const operationFunction = async (data) => {
       if (err) {
         reject(err)
       } else {
+        console.log(JSON.parse(body).image)
         resolve(JSON.parse(body))
         // const temp = ;
         // if (temp.error) {
@@ -275,6 +276,38 @@ let Dataset = {
     // } else {
     //   return res.json([]);
     // }
+  },
+
+  processVistaUploadVideo: async (req, res, next) => {
+    try {
+      const options = {
+        method: 'POST',
+        url: process.env.vista_server_ip + '/api/v1/video',
+        strictSSL: false,
+        headers: {
+          'Content-Type': `application/json`,
+        },
+        auth: {
+          username: 'admin',
+          password: 'admin',
+        },
+        body: JSON.stringify({
+          upload: req.body.video_url,
+          subscriptions:
+            'face,fashion,Object,lostfound,tags1,tags2,imagenet1k,themes,wideattributes,carshape',
+          sample_rate: 60,
+        }),
+      }
+      const responseData = await rp(options)
+      const data = JSON.parse(responseData)
+      console.log(data)
+
+      return res.json({
+        message: 'Video uploaded successfully!',
+      })
+    } catch (err) {
+      return res.status(500).json(err)
+    }
   },
 
   processVistaBatchImages: async (req, res, next) => {
