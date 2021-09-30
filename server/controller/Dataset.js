@@ -14,6 +14,7 @@ const Relations = require('../models/Relations')
 const Algorithms = require('../models/Algorithms')
 const requestImageSize = require('request-image-size')
 const logger = require('../helpers/logger')
+const Process = require('../models/Process')
 
 const makeRandomString = (length) => {
   var result = []
@@ -302,8 +303,15 @@ let Dataset = {
       const data = JSON.parse(responseData)
       console.log(data)
 
-      return res.json({
-        message: 'Video uploaded successfully!',
+      Process.create(data, function (err, result) {
+        if (err) {
+          console.log('Error adding data to vista_video_process table : ', err)
+          res.status(500).json(err)
+        } else {
+          res.status(200).send({
+            message: 'Video uploaded successfully!',
+          })
+        }
       })
     } catch (err) {
       return res.status(500).json(err)
