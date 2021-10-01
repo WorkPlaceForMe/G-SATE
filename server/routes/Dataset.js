@@ -65,7 +65,7 @@ router.post('/process/vista/upload-video', function (req, res, next) {
   DsetController.processVistaUploadVideo(req, res, next)
 })
 
-router.post('/process/vista/video-process', function (req, res, next) {
+router.get('/process/vista/video-process', function (req, res, next) {
   DsetController.vistaVideoProcess(req, res, next)
 })
 
