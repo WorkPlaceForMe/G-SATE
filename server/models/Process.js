@@ -17,6 +17,26 @@ var Process = {
       callback,
     )
   },
+  getByCompletedOrNot: function (value, callback) {
+    return db.query(
+      'SELECT * FROM vista_video_process WHERE completed = ?',
+      [value],
+      callback,
+    )
+  },
+
+  update: function (dataItems, callback) {
+    return db.query(
+      'UPDATE vista_video_process set result=?,completed=?,completed_at=? where id=?',
+      [
+        dataItems.result,
+        'YES',
+        moment().format('YYYY-MM-DD HH:mm:ss'),
+        dataItems.id,
+      ],
+      callback,
+    )
+  },
 }
 
 module.exports = Process

@@ -15,6 +15,7 @@ const Algorithms = require('../models/Algorithms')
 const requestImageSize = require('request-image-size')
 const logger = require('../helpers/logger')
 const Process = require('../models/Process')
+const elastic = require('elasticsearch')
 
 const makeRandomString = (length) => {
   var result = []
@@ -33,11 +34,18 @@ const sleep = async (timer) => {
     }, timer)
   })
 }
-const operationFunction = async (data) => {
+
+//Unsure
+const client = elastic.Client({
+  // node: `${process.env.my_ip}:${process.env.server}`,
+  host: process.env.elasticsearch_host,
+})
+
+const operationFunction = async (id) => {
   return new Promise((resolve, reject) => {
     const operationOptions = {
       method: 'GET',
-      url: process.env.vista_server_ip + '/api/v1/operation/' + data.id,
+      url: process.env.vista_server_ip + '/api/v1/operation/' + id,
       strictSSL: false,
       headers: {
         // Authorization: process.env.authorization,
@@ -53,7 +61,6 @@ const operationFunction = async (data) => {
       if (err) {
         reject(err)
       } else {
-        console.log(JSON.parse(body).image)
         resolve(JSON.parse(body))
         // const temp = ;
         // if (temp.error) {
@@ -209,11 +216,11 @@ let Dataset = {
         for (element of data) {
           try {
             console.log('element - ', element)
-            let temp = await operationFunction(element)
+            let temp = await operationFunction(element.id)
             console.log('temp - ', temp)
             if (temp.error) {
               await sleep(2000)
-              temp = await operationFunction(element)
+              temp = await operationFunction(element.id)
               console.log('awaited temp - ', temp)
             }
             responseArray.push(temp)
@@ -311,6 +318,118 @@ let Dataset = {
           res.status(200).send({
             message: 'Video uploaded successfully!',
           })
+        }
+      })
+    } catch (err) {
+      return res.status(500).json(err)
+    }
+  },
+
+  // vistaVideoProcess: async (req, res, next) => {
+  //   try {
+  //     Process.getByCompletedOrNot('YES', async function (err, result) {
+  //       if (err) {
+  //         console.log(
+  //           'Error getting data from vista_video_process table : ',
+  //           err,
+  //         )
+  //         res.status(500).json(err)
+  //       } else {
+  //         const responseArray = []
+  //         for (element of result) {
+  //           try {
+  //             let temp = await operationFunction(element.vista_operation_id)
+  //             if (temp.error) {
+  //               await sleep(2000)
+  //               temp = await operationFunction(element.vista_operation_id)
+  //             }
+  //             const objectData = {
+  //               id: element.id,
+  //               result: JSON.stringify(temp),
+  //             }
+  //             responseArray.push(temp)
+  //             Process.update(objectData, function (errRes, resultData) {
+  //               if (errRes) {
+  //                 console.log(
+  //                   'Error updating data to vista_video_process table : ',
+  //                   errRes,
+  //                 )
+  //                 res.status(500).json(errRes)
+  //               }
+  //             })
+  //           } catch (err) {
+  //             return res.status(500).json(error)
+  //           }
+  //         }
+
+  //         res.status(200).send(responseArray)
+  //       }
+  //     })
+  //   } catch (err) {
+  //     return res.status(500).json(err)
+  //   }
+  // },
+
+  vistaVideoProcess: async (req, res, next) => {
+    try {
+      Process.getByCompletedOrNot('NO', async function (err, result) {
+        if (err) {
+          console.log(
+            'Error getting data from vista_video_process table : ',
+            err,
+          )
+          res.status(500).json(err)
+        } else {
+          const elasticData = []
+          const elasticIndex = 'vista_video_process_gsate'
+          const elasticType = 'vista_video_process'
+          for (element of result) {
+            try {
+              let temp = await operationFunction(element.vista_operation_id)
+              if (temp.error) {
+                await sleep(2000)
+                temp = await operationFunction(element.vista_operation_id)
+              }
+              const objectData = {
+                id: element.id,
+                result: JSON.stringify(temp),
+              }
+
+              Process.update(objectData, function (errRes, resultData) {
+                if (errRes) {
+                  console.log(
+                    'Error updating data to vista_video_process table : ',
+                    errRes,
+                  )
+                  res.status(500).json(errRes)
+                }
+              })
+              elasticData.push(
+                { index: { _index: elasticIndex, _type: elasticType } },
+                {
+                  result: temp,
+                },
+              )
+            } catch (err) {
+              return res.status(500).json(error)
+            }
+          }
+          console.log(elasticData)
+          client.bulk(
+            {
+              body: elasticData,
+            },
+            function (err, data) {
+              if (err) {
+                console.log(err)
+                return res.status(500).send(err)
+              } else {
+                console.log('Uploaded on elastic search...')
+                res.status(200).send(data)
+              }
+            },
+          )
+          //  res.status(200).send(elasticData)
         }
       })
     } catch (err) {
