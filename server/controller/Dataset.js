@@ -384,7 +384,6 @@ let Dataset = {
                 }
               },
             )
-            res.status(200).send(elasticData)
           } else {
             res
               .status(200)
