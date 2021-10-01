@@ -383,53 +383,61 @@ let Dataset = {
           const elasticData = []
           const elasticIndex = 'vista_video_process_gsate'
           const elasticType = 'vista_video_process'
-          for (element of result) {
-            try {
-              let temp = await operationFunction(element.vista_operation_id)
-              if (temp.error) {
-                await sleep(2000)
-                temp = await operationFunction(element.vista_operation_id)
-              }
-              const objectData = {
-                id: element.id,
-                result: JSON.stringify(temp),
-              }
-
-              Process.update(objectData, function (errRes, resultData) {
-                if (errRes) {
-                  console.log(
-                    'Error updating data to vista_video_process table : ',
-                    errRes,
-                  )
-                  res.status(500).json(errRes)
+          if (result.length > 0) {
+            for (element of result) {
+              try {
+                let temp = await operationFunction(element.vista_operation_id)
+                if (temp.error) {
+                  await sleep(2000)
+                  temp = await operationFunction(element.vista_operation_id)
                 }
-              })
-              elasticData.push(
-                { index: { _index: elasticIndex, _type: elasticType } },
-                {
-                  result: temp,
-                },
-              )
-            } catch (err) {
-              return res.status(500).json(error)
-            }
-          }
-          console.log(elasticData)
-          client.bulk(
-            {
-              body: elasticData,
-            },
-            function (err, data) {
-              if (err) {
-                console.log(err)
-                return res.status(500).send(err)
-              } else {
-                console.log('Uploaded on elastic search...')
-                res.status(200).send(data)
+                const objectData = {
+                  id: element.id,
+                  result: JSON.stringify(temp),
+                }
+
+                Process.update(objectData, function (errRes, resultData) {
+                  if (errRes) {
+                    console.log(
+                      'Error updating data to vista_video_process table : ',
+                      errRes,
+                    )
+                    res.status(500).json(errRes)
+                  }
+                })
+                elasticData.push(
+                  { index: { _index: elasticIndex, _type: elasticType } },
+                  {
+                    result: temp,
+                  },
+                )
+              } catch (err) {
+                return res.status(500).json(error)
               }
-            },
-          )
-          //  res.status(200).send(elasticData)
+            }
+            console.log(elasticData)
+            client.bulk(
+              {
+                index: elasticIndex,
+                type: elasticType,
+                body: elasticData,
+              },
+              function (err, data) {
+                if (err) {
+                  console.log(err)
+                  return res.status(500).send(err)
+                } else {
+                  console.log('Uploaded on elastic search...')
+                  res.status(200).send(data)
+                }
+              },
+            )
+          } else {
+            res
+              .status(200)
+              .send({ message: 'There have no vista process incomplete data' })
+          }
+          // res.status(200).send(elasticData)
         }
       })
     } catch (err) {
