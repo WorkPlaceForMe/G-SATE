@@ -325,51 +325,6 @@ let Dataset = {
     }
   },
 
-  // vistaVideoProcess: async (req, res, next) => {
-  //   try {
-  //     Process.getByCompletedOrNot('YES', async function (err, result) {
-  //       if (err) {
-  //         console.log(
-  //           'Error getting data from vista_video_process table : ',
-  //           err,
-  //         )
-  //         res.status(500).json(err)
-  //       } else {
-  //         const responseArray = []
-  //         for (element of result) {
-  //           try {
-  //             let temp = await operationFunction(element.vista_operation_id)
-  //             if (temp.error) {
-  //               await sleep(2000)
-  //               temp = await operationFunction(element.vista_operation_id)
-  //             }
-  //             const objectData = {
-  //               id: element.id,
-  //               result: JSON.stringify(temp),
-  //             }
-  //             responseArray.push(temp)
-  //             Process.update(objectData, function (errRes, resultData) {
-  //               if (errRes) {
-  //                 console.log(
-  //                   'Error updating data to vista_video_process table : ',
-  //                   errRes,
-  //                 )
-  //                 res.status(500).json(errRes)
-  //               }
-  //             })
-  //           } catch (err) {
-  //             return res.status(500).json(error)
-  //           }
-  //         }
-
-  //         res.status(200).send(responseArray)
-  //       }
-  //     })
-  //   } catch (err) {
-  //     return res.status(500).json(err)
-  //   }
-  // },
-
   vistaVideoProcess: async (req, res, next) => {
     try {
       Process.getByCompletedOrNot('NO', async function (err, result) {
@@ -384,38 +339,35 @@ let Dataset = {
           const elasticIndex = 'vista_video_process_gsate'
           const elasticType = 'vista_video_process'
           if (result.length > 0) {
-            for (element of result) {
-              try {
-                let temp = await operationFunction(element.vista_operation_id)
-                if (temp.error) {
-                  await sleep(2000)
-                  temp = await operationFunction(element.vista_operation_id)
-                }
-                const objectData = {
-                  id: element.id,
-                  result: JSON.stringify(temp),
-                }
+            console.log('vista_operation_id - ', result[0].vista_operation_id)
 
-                Process.update(objectData, function (errRes, resultData) {
-                  if (errRes) {
-                    console.log(
-                      'Error updating data to vista_video_process table : ',
-                      errRes,
-                    )
-                    res.status(500).json(errRes)
-                  }
-                })
-                elasticData.push(
-                  { index: { _index: elasticIndex, _type: elasticType } },
-                  {
-                    result: temp,
-                  },
-                )
-              } catch (err) {
-                return res.status(500).json(error)
-              }
+            let temp = await operationFunction(result[0].vista_operation_id)
+
+            if (temp.error) {
+              await sleep(2000)
+              temp = await operationFunction(result[0].vista_operation_id)
             }
-            console.log(elasticData)
+            const objectData = {
+              id: result[0].id,
+              result: JSON.stringify(temp),
+            }
+
+            Process.update(objectData, function (errRes, resultData) {
+              if (errRes) {
+                console.log(
+                  'Error updating data to vista_video_process table : ',
+                  errRes,
+                )
+                res.status(500).json(errRes)
+              }
+            })
+            elasticData.push(
+              { index: { _index: elasticIndex, _type: elasticType } },
+              {
+                result: temp,
+              },
+            )
+
             client.bulk(
               {
                 index: elasticIndex,
@@ -432,12 +384,12 @@ let Dataset = {
                 }
               },
             )
+            res.status(200).send(elasticData)
           } else {
             res
               .status(200)
               .send({ message: 'There have no vista process incomplete data' })
           }
-          // res.status(200).send(elasticData)
         }
       })
     } catch (err) {
