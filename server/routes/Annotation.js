@@ -408,12 +408,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
                 for (const element of searchedData.hits.hits) {
                   const vistaSearchedObj = {
                     id: searchedDataId,
-                    image:
-                      '/assets/shared-data/' +
-                      element._source.data.image
-                        .split('/')
-                        .splice(5, 5)
-                        .join('/'),
+                    image: element._source.data.image,
                     results: element._source.data.results,
                   }
                   vistaSearchedArray.push(vistaSearchedObj)
