@@ -35,45 +35,41 @@ const sleep = async (timer) => {
   })
 }
 
-const prepareEsData = (data, responseArray, type, image) => {
+const prepareEsData = (data, esDataArray, type) => {
   for (const element of data) {
     const result = []
-    //   console.log(element)
-    for (let i = 0; i < responseArray.length; i++) {
-      if (element.class === responseArray[i].class) {
+
+    for (let i = 0; i < esDataArray.length; i++) {
+      if (element.class === esDataArray[i].class) {
         if (type === 'Object') {
-          responseArray[i].data.results.Object.push(element)
+          esDataArray[i].data.results.Object.push(element)
         }
         if (type === 'face') {
-          responseArray[i].data.results.face.push(element)
+          esDataArray[i].data.results.face.push(element)
         }
         if (type === 'fashion') {
-          responseArray[i].data.results.fashion.push(element)
+          esDataArray[i].data.results.fashion.push(element)
         }
-
         element['inserted'] = true
-        console.log('inserted')
       }
     }
 
     if (!element.inserted) {
-      console.log('not')
       result.push(element)
       const resultObj = {}
       resultObj['class'] = element.class
       resultObj['data'] = {
-        image,
         results: {
           face: type === 'face' ? result : [],
           fashion: type === 'fashion' ? result : [],
           Object: type === 'Object' ? result : [],
         },
       }
-      responseArray.push(resultObj)
+      esDataArray.push(resultObj)
     }
   }
 
-  return responseArray
+  return esDataArray
 }
 
 //Unsure
@@ -474,58 +470,50 @@ let Dataset = {
               }
             })
 
-            let responseArray = []
+            let esDataArray = []
 
-            responseArray = await prepareEsData(
+            esDataArray = await prepareEsData(
               temp.results.Object,
-              responseArray,
+              esDataArray,
               'Object',
-              temp.image,
             )
 
-            responseArray = await prepareEsData(
+            esDataArray = await prepareEsData(
               temp.results.face,
-              responseArray,
+              esDataArray,
               'face',
-              temp.image,
             )
 
-            responseArray = await prepareEsData(
+            esDataArray = await prepareEsData(
               temp.results.fashion,
-              responseArray,
+              esDataArray,
               'fashion',
-              temp.image,
             )
 
-            elasticData.push(
-              { index: { _index: elasticIndex, _type: elasticType } },
+            for (const esData of esDataArray) {
+              esData.data.image = temp.image
+              elasticData.push(
+                { index: { _index: elasticIndex, _type: elasticType } },
+                esData,
+              )
+            }
+
+            client.bulk(
               {
-                responseArray,
+                index: elasticIndex,
+                type: elasticType,
+                body: elasticData,
+              },
+              function (err, data) {
+                if (err) {
+                  console.log(err)
+                  return res.status(500).send(err)
+                } else {
+                  console.log('Uploaded on elastic search...')
+                  res.status(200).send(data)
+                }
               },
             )
-
-            // client.bulk(
-            //   {
-            //     index: elasticIndex,
-            //     type: elasticType,
-            //     body: elasticData,
-            //   },
-            //   function (err, data) {
-            //     if (err) {
-            //       console.log(err)
-            //       return res.status(500).send(err)
-            //     } else {
-            //       console.log('Uploaded on elastic search...')
-            //       res.status(200).send(data)
-            //     }
-            //   },
-            // )
-
-            const resD = {
-              temp,
-              responseArray,
-            }
-            res.status(200).send(resD)
           } else {
             res
               .status(200)
