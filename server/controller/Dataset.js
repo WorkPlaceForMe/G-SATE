@@ -595,13 +595,14 @@ let Dataset = {
           Relations.getRels(cam_id, function (err, result) {
             if (err) return res.status(500).json(err)
             for (const itm of result) {
+              console.log('itm - ', itm);
               let d = {
                 id: uuidv4(),
                 camera_id: cam_id,
                 algo_id: itm.algo_id,
                 snippet_id: snippetId,
                 roi_id: null,
-                atributes: `[{"conf": 10, "save": true, "time": 0, "fps":${body.fps}}]`,
+                atributes: `[{"conf": ${itm.conf}, "save": true, "time": 0, "fps":${body.fps}}]`,
                 id_account: accId,
                 id_branch: accId,
                 stream: null,
@@ -1017,12 +1018,12 @@ let processByAnalytics = (name) => {
                         table[itm.algo_id] == 'person_gsate'
                           ? 'person'
                           : table[itm.algo_id] == 'vehicle_gsate'
-                          ? element.class
-                          : table[itm.algo_id] == 'clothing_gsate'
-                          ? 'clothes'
-                          : table[itm.algo_id] == 'ppe_gsate'
-                          ? element.class
-                          : element.class
+                            ? element.class
+                            : table[itm.algo_id] == 'clothing_gsate'
+                              ? 'clothes'
+                              : table[itm.algo_id] == 'ppe_gsate'
+                                ? element.class
+                                : element.class
 
                       let obj = {
                         image:

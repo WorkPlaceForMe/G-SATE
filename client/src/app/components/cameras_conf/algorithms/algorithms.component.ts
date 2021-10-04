@@ -498,6 +498,7 @@ export class AlgorithmsComponent implements OnInit {
           }
         }
       }
+      debugger;
       if (this.algos[i].activated == true && this.polygons.length == 0) {
         if (this.relations.length == 0) {
           this.relation.atributes = null;
@@ -514,7 +515,6 @@ export class AlgorithmsComponent implements OnInit {
           } else if (this.algos[i].id == 12) {
             this.relation.atributes = JSON.stringify(this.quantity);
           }
-          debugger;
           this.relation.algo_id = this.algos[i].id;
           this.relation.camera_id = params.uuid;
           this.relation.id = uuidv4();
@@ -600,6 +600,8 @@ export class AlgorithmsComponent implements OnInit {
               },
               (err) => console.error(err)
             );
+          } else {
+            console.log(this.algos[i].name, + 'Algo needs to be updated');
           }
         }
       } else if (this.algos[i].activated == false && this.polygons.length == 0) {
