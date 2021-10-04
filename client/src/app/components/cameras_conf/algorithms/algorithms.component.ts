@@ -94,15 +94,20 @@ export class AlgorithmsComponent implements OnInit {
     this.facesService.getAlgos().subscribe(
       (res) => {
         this.algos = res;
-        console.log('this.algos - ', this.algos);
+        console.log("this.algos - ", this.algos);
         for (let i = 0; i < this.algos.length; i++) {
-          this.algos[i].conf = 95;
+          this.algos[i].conf = 10;
           if (this.algos[i]["available"] == 1) {
             if (false) {
               this.Calgos.push(this.algos[i]);
             } else if (this.algos[i]["id"] == 1) {
               this.Balgos.push(this.algos[i]);
-            } else if (this.algos[i]["id"] == 0 || this.algos[i]["id"] == 2 || this.algos[i]["id"] == 16 || this.algos[i]["id"] == 17) {
+            } else if (
+              this.algos[i]["id"] == 0 ||
+              this.algos[i]["id"] == 2 ||
+              this.algos[i]["id"] == 16 ||
+              this.algos[i]["id"] == 17
+            ) {
               this.Aalgos.push(this.algos[i]);
             }
           }
@@ -123,7 +128,9 @@ export class AlgorithmsComponent implements OnInit {
                   } else if (this.relations[e]["algo_id"] == 5) {
                     this.speed = JSON.parse(this.relations[e]["atributes"]);
                   } else if (this.relations[e]["algo_id"] == 2) {
-                    this.loiteringTime = JSON.parse(this.relations[e]["atributes"]);
+                    this.loiteringTime = JSON.parse(
+                      this.relations[e]["atributes"]
+                    );
                   } else if (this.relations[e]["algo_id"] == 3) {
                     this.dac = JSON.parse(this.relations[e]["atributes"]);
                   } else if (this.relations[e]["algo_id"] == 12) {
@@ -136,7 +143,9 @@ export class AlgorithmsComponent implements OnInit {
               }
             }
             for (let u = 0; u < this.relations.length; u++) {
-              this.relations[u]["roi_id"] = JSON.parse(this.relations[u]["roi_id"]);
+              this.relations[u]["roi_id"] = JSON.parse(
+                this.relations[u]["roi_id"]
+              );
               if (this.relations[u]["roi_id"] != null) {
                 for (let l = 0; l < this.relations[u]["roi_id"].length; l++) {
                   //these parameters is to scalate it according to RoI resolution
@@ -430,8 +439,8 @@ export class AlgorithmsComponent implements OnInit {
     this.save();
     setTimeout(() => {
       this.spin = false;
-      this.router.navigateByUrl("/camerasList");
-    },5000);
+      // this.router.navigateByUrl("/camerasList");
+    }, 5000);
   }
 
   //need to update the save with the new format
@@ -479,9 +488,7 @@ export class AlgorithmsComponent implements OnInit {
     }
     for (let i = 0; i < this.algos.length; i++) {
       let alone = false;
-      for (let e = 0; e < this.relations.length; e++) {
-
-      }
+      for (let e = 0; e < this.relations.length; e++) {}
       if (this.polygons.length != 0) {
         for (let c = 0; c < this.polygons.length; c++) {
           if (
@@ -507,11 +514,14 @@ export class AlgorithmsComponent implements OnInit {
           } else if (this.algos[i].id == 12) {
             this.relation.atributes = JSON.stringify(this.quantity);
           }
+          debugger;
           this.relation.algo_id = this.algos[i].id;
           this.relation.camera_id = params.uuid;
           this.relation.id = uuidv4();
           this.relation.atributes =
-            '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+            '[{"fps": 1, "conf": ' +
+            this.algos[i].conf +
+            ', "save": true, "time": 0}]';
           let time = new Date();
           this.relation.createdAt = this.datePipe.transform(
             time,
@@ -563,7 +573,9 @@ export class AlgorithmsComponent implements OnInit {
             this.relation.camera_id = params.uuid;
             this.relation.id = uuidv4();
             this.relation.atributes =
-              '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+              '[{"fps": 1, "conf": ' +
+              this.algos[i].conf +
+              ', "save": true, "time": 0}]';
             let time = new Date();
             this.relation.createdAt = this.datePipe.transform(
               time,
@@ -590,10 +602,7 @@ export class AlgorithmsComponent implements OnInit {
             );
           }
         }
-      } else if (
-        this.algos[i].activated == false &&
-        this.polygons.length == 0
-      ) {
+      } else if (this.algos[i].activated == false && this.polygons.length == 0) {
         for (let u = 0; u < this.relations.length; u++) {
           if (this.relations[u]["algo_id"] == this.algos[i].id) {
             this.facesService.deleteRelation(this.relations[u]["id"]).subscribe(
@@ -624,7 +633,9 @@ export class AlgorithmsComponent implements OnInit {
           }
           this.relation.id = uuidv4();
           this.relation.atributes =
-            '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+            '[{"fps": 1, "conf": ' +
+            this.algos[i].conf +
+            ', "save": true, "time": 0}]';
           let time = new Date();
           this.relation.createdAt = this.datePipe.transform(
             time,
@@ -677,7 +688,9 @@ export class AlgorithmsComponent implements OnInit {
           this.relation.camera_id = params.uuid;
           this.relation.id = uuidv4();
           this.relation.atributes =
-            '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+            '[{"fps": 1, "conf": ' +
+            this.algos[i].conf +
+            ', "save": true, "time": 0}]';
           let time = new Date();
           this.relation.createdAt = this.datePipe.transform(
             time,
@@ -740,7 +753,9 @@ export class AlgorithmsComponent implements OnInit {
               this.relation.roi_id = string;
               this.relation.id = uuidv4();
               this.relation.atributes =
-                '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+                '[{"fps": 1, "conf": ' +
+                this.algos[i].conf +
+                ', "save": true, "time": 0}]';
               let time = new Date();
               this.relation.createdAt = this.datePipe.transform(
                 time,
@@ -784,7 +799,9 @@ export class AlgorithmsComponent implements OnInit {
                 this.relation.roi_id = string;
                 this.relation.id = uuidv4();
                 this.relation.atributes =
-                  '[{"fps": 1, "conf": 10, "save": true, "time": 0}]';
+                  '[{"fps": 1, "conf": ' +
+                  this.algos[i].conf +
+                  ', "save": true, "time": 0}]';
                 let time = new Date();
                 this.relation.createdAt = this.datePipe.transform(
                   time,
