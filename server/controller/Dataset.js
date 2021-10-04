@@ -35,6 +35,47 @@ const sleep = async (timer) => {
   })
 }
 
+const prepareEsData = (data, responseArray, type, image) => {
+  for (const element of data) {
+    const result = []
+    //   console.log(element)
+    for (let i = 0; i < responseArray.length; i++) {
+      if (element.class === responseArray[i].class) {
+        if (type === 'Object') {
+          responseArray[i].data.results.Object.push(element)
+        }
+        if (type === 'face') {
+          responseArray[i].data.results.face.push(element)
+        }
+        if (type === 'fashion') {
+          responseArray[i].data.results.fashion.push(element)
+        }
+
+        element['inserted'] = true
+        console.log('inserted')
+      }
+    }
+
+    if (!element.inserted) {
+      console.log('not')
+      result.push(element)
+      const resultObj = {}
+      resultObj['class'] = element.class
+      resultObj['data'] = {
+        image,
+        results: {
+          face: type === 'face' ? result : [],
+          fashion: type === 'fashion' ? result : [],
+          Object: type === 'Object' ? result : [],
+        },
+      }
+      responseArray.push(resultObj)
+    }
+  }
+
+  return responseArray
+}
+
 //Unsure
 const client = elastic.Client({
   // node: `${process.env.my_ip}:${process.env.server}`,
@@ -325,6 +366,77 @@ let Dataset = {
     }
   },
 
+  // vistaVideoProcess: async (req, res, next) => {
+  //   try {
+  //     Process.getByCompletedOrNot('NO', async function (err, result) {
+  //       if (err) {
+  //         console.log(
+  //           'Error getting data from vista_video_process table : ',
+  //           err,
+  //         )
+  //         res.status(500).json(err)
+  //       } else {
+  //         const elasticData = []
+  //         const elasticIndex = 'vista_video_process_gsate'
+  //         const elasticType = 'vista_video_process'
+  //         if (result.length > 0) {
+  //           console.log('vista_operation_id - ', result[0].vista_operation_id)
+
+  //           let temp = await operationFunction(result[0].vista_operation_id)
+
+  //           if (temp.error) {
+  //             await sleep(2000)
+  //             temp = await operationFunction(result[0].vista_operation_id)
+  //           }
+  //           const objectData = {
+  //             id: result[0].id,
+  //             result: JSON.stringify(temp),
+  //           }
+
+  //           Process.update(objectData, function (errRes, resultData) {
+  //             if (errRes) {
+  //               console.log(
+  //                 'Error updating data to vista_video_process table : ',
+  //                 errRes,
+  //               )
+  //               res.status(500).json(errRes)
+  //             }
+  //           })
+  //           elasticData.push(
+  //             { index: { _index: elasticIndex, _type: elasticType } },
+  //             {
+  //               result: temp,
+  //             },
+  //           )
+
+  //           client.bulk(
+  //             {
+  //               index: elasticIndex,
+  //               type: elasticType,
+  //               body: elasticData,
+  //             },
+  //             function (err, data) {
+  //               if (err) {
+  //                 console.log(err)
+  //                 return res.status(500).send(err)
+  //               } else {
+  //                 console.log('Uploaded on elastic search...')
+  //                 res.status(200).send(data)
+  //               }
+  //             },
+  //           )
+  //         } else {
+  //           res
+  //             .status(200)
+  //             .send({ message: 'There have no vista process incomplete data' })
+  //         }
+  //       }
+  //     })
+  //   } catch (err) {
+  //     return res.status(500).json(err)
+  //   }
+  // },
+
   vistaVideoProcess: async (req, res, next) => {
     try {
       Process.getByCompletedOrNot('NO', async function (err, result) {
@@ -361,29 +473,61 @@ let Dataset = {
                 res.status(500).json(errRes)
               }
             })
-            elasticData.push(
-              { index: { _index: elasticIndex, _type: elasticType } },
-              {
-                result: temp,
-              },
+
+
+            let responseArray = []
+
+            responseArray = await prepareEsData(
+              temp.results.Object,
+              responseArray,
+              'Object',
+              temp.image,
             )
 
-            client.bulk(
-              {
-                index: elasticIndex,
-                type: elasticType,
-                body: elasticData,
-              },
-              function (err, data) {
-                if (err) {
-                  console.log(err)
-                  return res.status(500).send(err)
-                } else {
-                  console.log('Uploaded on elastic search...')
-                  res.status(200).send(data)
-                }
-              },
+            responseArray = await prepareEsData(
+              temp.results.face,
+              responseArray,
+              'face',
+              temp.image,
             )
+
+            responseArray = await prepareEsData(
+              temp.results.fashion,
+              responseArray,
+              'fashion',
+              temp.image,
+            )
+
+
+            // elasticData.push(
+            //   { index: { _index: elasticIndex, _type: elasticType } },
+            //   {
+            //     result: temp,
+            //   },
+            // )
+
+            // client.bulk(
+            //   {
+            //     index: elasticIndex,
+            //     type: elasticType,
+            //     body: elasticData,
+            //   },
+            //   function (err, data) {
+            //     if (err) {
+            //       console.log(err)
+            //       return res.status(500).send(err)
+            //     } else {
+            //       console.log('Uploaded on elastic search...')
+            //       res.status(200).send(data)
+            //     }
+            //   },
+            // )
+
+            const resD = {
+              temp,
+              responseArray,
+            }
+            res.status(200).send(resD)
           } else {
             res
               .status(200)
