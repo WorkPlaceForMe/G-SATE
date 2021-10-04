@@ -474,7 +474,6 @@ let Dataset = {
               }
             })
 
-
             let responseArray = []
 
             responseArray = await prepareEsData(
@@ -498,13 +497,12 @@ let Dataset = {
               temp.image,
             )
 
-
-            // elasticData.push(
-            //   { index: { _index: elasticIndex, _type: elasticType } },
-            //   {
-            //     result: temp,
-            //   },
-            // )
+            elasticData.push(
+              { index: { _index: elasticIndex, _type: elasticType } },
+              {
+                responseArray,
+              },
+            )
 
             // client.bulk(
             //   {
