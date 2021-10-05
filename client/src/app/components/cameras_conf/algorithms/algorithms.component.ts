@@ -96,7 +96,7 @@ export class AlgorithmsComponent implements OnInit {
         this.algos = res;
         console.log("this.algos - ", this.algos);
         for (let i = 0; i < this.algos.length; i++) {
-          this.algos[i].conf = 10;
+          this.algos[i].conf = 95;
           if (this.algos[i]["available"] == 1) {
             if (false) {
               this.Calgos.push(this.algos[i]);
@@ -119,6 +119,14 @@ export class AlgorithmsComponent implements OnInit {
               for (let e = 0; e < this.relations.length; e++) {
                 if (this.algos[i].id == this.relations[e]["algo_id"]) {
                   this.algos[i].activated = true;
+                  if (
+                    this.relations[e]["atributes"] &&
+                    JSON.parse(this.relations[e]["atributes"])[0].conf
+                  ) {
+                    this.algos[i].conf = JSON.parse(
+                      this.relations[e]["atributes"]
+                    )[0].conf;
+                  }
                 }
                 if (this.relations[e]["atributes"] != null) {
                   if (this.relations[e]["algo_id"] == 1) {
@@ -443,7 +451,7 @@ export class AlgorithmsComponent implements OnInit {
     }, 5000);
   }
 
-  //need to update the save with the new format
+  // need to update the save with the new format
 
   save() {
     let string, a;
@@ -498,7 +506,7 @@ export class AlgorithmsComponent implements OnInit {
           }
         }
       }
-      debugger;
+    
       if (this.algos[i].activated == true && this.polygons.length == 0) {
         if (this.relations.length == 0) {
           this.relation.atributes = null;
@@ -601,10 +609,35 @@ export class AlgorithmsComponent implements OnInit {
               (err) => console.error(err)
             );
           } else {
-            console.log(this.algos[i].name, + 'Algo needs to be updated');
+            for (
+              let relIndex = 0;
+              relIndex < this.relations.length;
+              relIndex++
+            ) {
+              if (this.relations[relIndex].algo_id == this.algos[i].id) {
+                this.relation.atributes =
+                  '[{"fps": 1, "conf": ' +
+                  this.algos[i].conf +
+                  ', "save": true, "time": 0}]';
+
+                this.facesService
+                  .updateRelation(this.relations[relIndex].id, this.relation)
+                  .subscribe(
+                    (res) => {
+                      console.log("relation updated", res);
+                    },
+                    (err) => console.log(err)
+                  );
+              }
+            }
+
+            console.log(this.algos[i].name, "Algo needs to be updated");
           }
         }
-      } else if (this.algos[i].activated == false && this.polygons.length == 0) {
+      } else if (
+        this.algos[i].activated == false &&
+        this.polygons.length == 0
+      ) {
         for (let u = 0; u < this.relations.length; u++) {
           if (this.relations[u]["algo_id"] == this.algos[i].id) {
             this.facesService.deleteRelation(this.relations[u]["id"]).subscribe(

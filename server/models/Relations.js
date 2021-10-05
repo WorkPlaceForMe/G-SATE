@@ -63,6 +63,7 @@ var Relations = {
   },
 
   update: function (id, relation, callback) {
+    console.log(id, relation.atributes, 'relation update data')
     return db.query(
       'UPDATE relations set atributes=? where id=?',
       [relation.atributes, id],
