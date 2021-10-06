@@ -338,8 +338,7 @@ let Dataset = {
         },
         body: JSON.stringify({
           upload: req.body.video_url,
-          subscriptions:
-            'face,fashion,Object,lostfound,tags1,tags2,imagenet1k,themes,wideattributes,carshape',
+          subscriptions: 'Object',
           sample_rate: 60,
         }),
       }
@@ -381,9 +380,12 @@ let Dataset = {
             let temp = await operationFunction(result[0].vista_operation_id)
 
             if (temp.error) {
+              console.log('entered in error')
               await sleep(2000)
               temp = await operationFunction(result[0].vista_operation_id)
             }
+            console.log(temp)
+            console.log('temp...........')
             if (!temp.error) {
               const objectData = {
                 id: result[0].id,
