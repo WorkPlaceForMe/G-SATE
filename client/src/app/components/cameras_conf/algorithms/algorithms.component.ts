@@ -47,6 +47,7 @@ export class AlgorithmsComponent implements OnInit {
   Balgos: any = [];
   Calgos: any = [];
   colour: string = "";
+  video_url: string = "";
   fill: string = "";
   roi: Roi = {
     id: "",
@@ -207,6 +208,8 @@ export class AlgorithmsComponent implements OnInit {
         this.link = sanitizer.bypassSecurityTrustStyle(
           "url(http://" + ip + ":4200" + this.camera.heatmap_pic + ")"
         );
+
+        this.video_url = "http://" + ip + ":4200" + this.camera.rtsp_out;
       },
       (err) => console.error(err)
     );
@@ -322,6 +325,7 @@ export class AlgorithmsComponent implements OnInit {
     this.unwanted["truck.rangeB"] = 0;
     this.unwanted["truck.rangeE"] = 0;
   }
+
   resetTimeUtwo() {
     this.unwanted["two_wheeler.rangeB"] = 0;
     this.unwanted["two_wheeler.rangeE"] = 0;
@@ -445,10 +449,10 @@ export class AlgorithmsComponent implements OnInit {
   saveAndBack() {
     this.spin = true;
     this.save();
-    setTimeout(() => {
-      this.spin = false;
-      // this.router.navigateByUrl("/camerasList");
-    }, 5000);
+    // setTimeout(() => {
+    //   this.spin = false;
+    //   // this.router.navigateByUrl("/camerasList");
+    // }, 5000);
   }
 
   // need to update the save with the new format
@@ -506,7 +510,7 @@ export class AlgorithmsComponent implements OnInit {
           }
         }
       }
-    
+
       if (this.algos[i].activated == true && this.polygons.length == 0) {
         if (this.relations.length == 0) {
           this.relation.atributes = null;
@@ -880,5 +884,24 @@ export class AlgorithmsComponent implements OnInit {
         }
       }
     }
+    this.uploadVideoToVista();
+  }
+
+  uploadVideoToVista() {
+    this.facesService
+      .uploadVideoToVista({ video_url: this.video_url })
+      .subscribe(
+        (res) => {
+          console.log("success - ", res);
+          setTimeout(() => {
+            this.spin = false;
+            this.router.navigateByUrl("/camerasList");
+          }, 5000);
+        }, (err) => {
+          this.spin = false;
+          alert('Error happened while uploading this video to VISTA');
+          console.error("Error - ", err) 
+        }
+      );
   }
 }

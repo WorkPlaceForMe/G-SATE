@@ -421,8 +421,8 @@ export class MultipleImageDetectionComponent implements OnInit {
               image: value.image,
               width: value.width,
               height: value.height,
-              canvas_width: '',
-              canvas_height: '',
+              canvas_width: "",
+              canvas_height: "",
               results: value["results"],
               source_result: value["source_result"],
               fixedSize: value.length,
@@ -455,11 +455,18 @@ export class MultipleImageDetectionComponent implements OnInit {
             value.height = dumHeight;
           }
           // if (!value["source_result"]) {
-          value["image"] = "http://" + ip + ":4200" + value.image;
+          if (this.detectionOriginType === "elastic-search") {
+            value["image"] = value["detection_method"] ==  'Analytics API' ? "http://" + ip + ":4200" + value.image : vistaIP + value.image;
+          } else {
+            value["image"] = "http://" + ip + ":4200" + value.image;
+          }
+
+          const source = value["detection_method"] ==  'Analytics API' ? 'Analytics API' : 'Vista API';
+
           const convertedResponse = await this.convertVistaResponseToXY(
             value.results,
             index,
-            "Analytics API"
+            source
           );
           value["results"] = convertedResponse;
           this.annObj[value.id] = {
@@ -491,6 +498,7 @@ export class MultipleImageDetectionComponent implements OnInit {
     console.log("req data -> ", data);
     this.annotationsServ.processDatasetWithOutVista(data).subscribe(
       (res) => {
+        console.log("Vista response - ", res);
         this.spin = false;
         if (res.length == 0) {
           alert("Zero detections happened.");
@@ -522,10 +530,21 @@ export class MultipleImageDetectionComponent implements OnInit {
     this.annotationsServ
       .getElasticSearchResults(this.elasticSearchKeyWord)
       .subscribe(
-        (res) => {
+        (res: any) => {
+          console.log(
+            "elasticSearchData - ",
+            res.analytics_processing[0],
+            res.vista_processing[0]
+          );
           let dumArray = [];
-          res.forEach((value, index) => {
+          res.analytics_processing.forEach((value, index) => {
             value["checked"] = true;
+            value["detection_method"] = "Analytics API";
+            dumArray.push(value);
+          });
+          res.vista_processing.forEach((value, index) => {
+            value["checked"] = true;
+            value["detection_method"] = "Vista API";
             dumArray.push(value);
           });
           this.data = dumArray;
@@ -544,32 +563,6 @@ export class MultipleImageDetectionComponent implements OnInit {
             };
           });
           this.setPage(1);
-
-          // setTimeout(() => {
-          //   this.data.forEach((value, index) => {
-          //     let dumArr = [];
-          //     dumArr.push(value.data);
-          //     delete value.data;
-          //     value["results"] = dumArr;
-          //     value["id"] = index;
-          //     this.annObj[index] = {
-          //       image: value.image,
-          //       width: value.width,
-          //       height: value.height,
-          //       canvas_width: value.width,
-          //       canvas_height: value.height,
-          //       results: value["results"],
-          //       fixedSize: value.results.length,
-          //     };
-          //   });
-          //   console.log("this.data - ", this.data[5]);
-          //   setTimeout(() => {
-          //     this.pagedItems.forEach((val, ind) => {
-          //       // this.getAnayticsImgAnnotations(this.data[ind].id, "");
-          //     });
-          //     this.spin = false;
-          //   }, 2000);
-          // }, 2000);
         },
         (error) => {
           this.spin = false;
