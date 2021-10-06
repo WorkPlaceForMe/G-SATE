@@ -88,7 +88,7 @@ export class ROIComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe
   ) {
-    debugger;
+    //  debugger;
     const params = this.activatedRoute.snapshot.params;
     this.wrong["dir"] = "beggining";
     this.wrong["of"] = this.polygons.length + 1;
@@ -262,6 +262,11 @@ export class ROIComponent implements OnInit {
   }
 
   private draw(end) {
+    console.log(".............draw");
+    console.log(end, ".....end");
+    console.log(this.perimeter, ".........this.perimeter");
+    console.log(this.ctx, ".....this.ctx");
+
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = "white";
     this.ctx.lineCap = "circle";
@@ -366,9 +371,15 @@ export class ROIComponent implements OnInit {
         this.re_draw(true);
       }
       rect = this.canvas.getBoundingClientRect();
-      // console.log(rect);
-      x = event.clientX - rect.left;
-      y = event.clientY - rect.top;
+
+      // x = event.clientX - rect.left;
+      // y = event.clientY - rect.top;
+      (x =
+        ((event.clientX - rect.left) / (rect.right - rect.left)) *
+        this.canvas.width),
+        (y =
+          ((event.clientY - rect.top) / (rect.bottom - rect.top)) *
+          this.canvas.height);
       // x = event.clientX;
       // y = event.clientY;
       if (
@@ -402,6 +413,7 @@ export class ROIComponent implements OnInit {
         return false;
       }
       this.perimeter.push({ x: x, y: y });
+
       this.draw(false);
       return false;
     }
