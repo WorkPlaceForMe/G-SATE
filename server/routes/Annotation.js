@@ -448,6 +448,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
     'clothing_gsate',
     'ppe_gsate',
     'defects_gsate',
+    'vista_video_process_gsate',
   ]
 
   const vistaVideoProcessIndex = 'vista_video_process_gsate'
@@ -471,6 +472,8 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
     }
   }
   console.log('..............entered in search')
+  elasticIndexArray.pop(vistaVideoProcessIndex)
+  console.log(elasticIndexArray)
   client
     .search({
       index: elasticIndexArray,
@@ -583,6 +586,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
           }
         }
         console.log(finalResponse.length, '>>>>>>response array length')
+
         client
           .search({
             index: vistaVideoProcessIndex,
