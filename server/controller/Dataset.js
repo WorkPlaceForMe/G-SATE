@@ -403,24 +403,27 @@ let Dataset = {
               })
 
               let esDataArray = []
-
-              esDataArray = await prepareEsData(
-                temp.results.Object,
-                esDataArray,
-                'Object',
-              )
-
-              esDataArray = await prepareEsData(
-                temp.results.face,
-                esDataArray,
-                'face',
-              )
-
-              esDataArray = await prepareEsData(
-                temp.results.fashion,
-                esDataArray,
-                'fashion',
-              )
+              if (temp.results && temp.results.Object) {
+                esDataArray = await prepareEsData(
+                  temp.results.Object,
+                  esDataArray,
+                  'Object',
+                )
+              }
+              if (temp.results && temp.results.face) {
+                esDataArray = await prepareEsData(
+                  temp.results.face,
+                  esDataArray,
+                  'face',
+                )
+              }
+              if (temp.results && temp.results.fashion) {
+                esDataArray = await prepareEsData(
+                  temp.results.fashion,
+                  esDataArray,
+                  'fashion',
+                )
+              }
 
               for (const esData of esDataArray) {
                 esData.data.image = temp.image
