@@ -443,23 +443,27 @@ let Dataset = {
                   index: elasticIndex,
                 })
               }
-
-              client.bulk(
-                {
-                  index: elasticIndex,
-                  type: elasticType,
-                  body: elasticData,
-                },
-                function (err, data) {
-                  if (err) {
-                    console.log(err)
-                    return res.status(500).send(err)
-                  } else {
-                    console.log('Uploaded on elastic search...')
-                    res.status(200).send(data)
-                  }
-                },
-              )
+              if (elasticData.length > 0) {
+                client.bulk(
+                  {
+                    index: elasticIndex,
+                    type: elasticType,
+                    body: elasticData,
+                  },
+                  function (err, data) {
+                    if (err) {
+                      console.log(err)
+                      return res.status(500).send(err)
+                    } else {
+                      console.log('Uploaded on elastic search...')
+                      res.status(200).send(data)
+                    }
+                  },
+                )
+              } else {
+                console.log('No data found to insert...')
+                res.status(200).send({ message: 'No data found to insert' })
+              }
             } else {
               res
                 .status(400)
