@@ -170,7 +170,8 @@ export class AlgorithmsComponent implements OnInit {
                 this.polygons.push(this.relations[u]["roi_id"]);
               }
             }
-            if (this.polygons != null) {
+            if (this.polygons != null && this.polygon) {
+              // condition added for re_draw
               this.re_draw(true);
             }
             this.actA = this.getNbOccur(true, this.Aalgos);
@@ -203,8 +204,10 @@ export class AlgorithmsComponent implements OnInit {
           this.height = this.width * this.resRelation;
         }
 
-        this.re_draw(true);
-
+        if (this.polygon) {
+          // condition added for re_draw
+          this.re_draw(true);
+        }
         this.link = sanitizer.bypassSecurityTrustStyle(
           "url(http://" + ip + ":4200" + this.camera.heatmap_pic + ")"
         );
@@ -341,8 +344,13 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   private setBcg() {
+    console.log("set bcg 1");
+    console.log(this.polygon);
+
     // this.src = 'assets/heatmap_picture.png';
     if (this.polygon) {
+      console.log("set bcg");
+
       this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
       this.ctx = this.canvas.getContext("2d");
     }
@@ -381,7 +389,10 @@ export class AlgorithmsComponent implements OnInit {
       this.perimeter = [];
       this.complete = true;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.re_draw(true);
+      if (this.polygon) {
+        // condition added for re_draw
+        this.re_draw(true);
+      }
     } else if (algorithm.activated == true) {
       this.complete = true;
     }
@@ -402,6 +413,7 @@ export class AlgorithmsComponent implements OnInit {
           pred_fill = "rgba(" + rgb + ",0.3)";
         }
       }
+
       this.ctx.lineWidth = 1;
       this.ctx.strokeStyle = "yellow";
       this.ctx.lineCap = "circle";
@@ -897,10 +909,11 @@ export class AlgorithmsComponent implements OnInit {
             this.spin = false;
             this.router.navigateByUrl("/camerasList");
           }, 5000);
-        }, (err) => {
+        },
+        (err) => {
           this.spin = false;
-          alert('Error happened while uploading this video to VISTA');
-          console.error("Error - ", err) 
+          alert("Error happened while uploading this video to VISTA");
+          console.error("Error - ", err);
         }
       );
   }

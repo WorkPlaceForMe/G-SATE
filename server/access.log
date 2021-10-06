@@ -16731,3 +16731,15 @@ Date: Tue, 05 Oct 2021 12:04:11 GMT // Url: 127.0.0.1 // Method: GET/api/relatio
 Date: Tue, 05 Oct 2021 12:04:36 GMT // Url: 127.0.0.1 // Method: GET/api/cameras/c5510cdb-4e8c-4ab1-9923-52ea8c057136 // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
 Date: Tue, 05 Oct 2021 12:04:36 GMT // Url: 127.0.0.1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
 Date: Tue, 05 Oct 2021 12:04:37 GMT // Url: 127.0.0.1 // Method: GET/api/relations/c5510cdb-4e8c-4ab1-9923-52ea8c057136 // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Wed Oct 06 2021 16:53:26 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Oct 06 2021 16:53:42 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Oct 06 2021 16:53:53 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Oct 06 2021 16:54:00 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 

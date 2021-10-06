@@ -384,65 +384,71 @@ let Dataset = {
               await sleep(2000)
               temp = await operationFunction(result[0].vista_operation_id)
             }
-            const objectData = {
-              id: result[0].id,
-              result: JSON.stringify(temp),
-            }
-
-            Process.update(objectData, function (errRes, resultData) {
-              if (errRes) {
-                console.log(
-                  'Error updating data to vista_video_process table : ',
-                  errRes,
-                )
-                res.status(500).json(errRes)
+            if (!temp.error) {
+              const objectData = {
+                id: result[0].id,
+                result: JSON.stringify(temp),
               }
-            })
 
-            let esDataArray = []
-
-            esDataArray = await prepareEsData(
-              temp.results.Object,
-              esDataArray,
-              'Object',
-            )
-
-            esDataArray = await prepareEsData(
-              temp.results.face,
-              esDataArray,
-              'face',
-            )
-
-            esDataArray = await prepareEsData(
-              temp.results.fashion,
-              esDataArray,
-              'fashion',
-            )
-
-            for (const esData of esDataArray) {
-              esData.data.image = temp.image
-              elasticData.push(
-                { index: { _index: elasticIndex, _type: elasticType } },
-                esData,
-              )
-            }
-
-            client.bulk(
-              {
-                index: elasticIndex,
-                type: elasticType,
-                body: elasticData,
-              },
-              function (err, data) {
-                if (err) {
-                  console.log(err)
-                  return res.status(500).send(err)
-                } else {
-                  console.log('Uploaded on elastic search...')
-                  res.status(200).send(data)
+              Process.update(objectData, function (errRes, resultData) {
+                if (errRes) {
+                  console.log(
+                    'Error updating data to vista_video_process table : ',
+                    errRes,
+                  )
+                  res.status(500).json(errRes)
                 }
-              },
-            )
+              })
+
+              let esDataArray = []
+
+              esDataArray = await prepareEsData(
+                temp.results.Object,
+                esDataArray,
+                'Object',
+              )
+
+              esDataArray = await prepareEsData(
+                temp.results.face,
+                esDataArray,
+                'face',
+              )
+
+              esDataArray = await prepareEsData(
+                temp.results.fashion,
+                esDataArray,
+                'fashion',
+              )
+
+              for (const esData of esDataArray) {
+                esData.data.image = temp.image
+                elasticData.push(
+                  { index: { _index: elasticIndex, _type: elasticType } },
+                  esData,
+                )
+              }
+
+              client.bulk(
+                {
+                  index: elasticIndex,
+                  type: elasticType,
+                  body: elasticData,
+                },
+                function (err, data) {
+                  if (err) {
+                    console.log(err)
+                    return res.status(500).send(err)
+                  } else {
+                    console.log('Uploaded on elastic search...')
+                    res.status(200).send(data)
+                  }
+                },
+              )
+            } else {
+              res
+                .status(400)
+                .send('There have some problem in vista video process')
+            }
           } else {
             res
               .status(200)
@@ -595,7 +601,7 @@ let Dataset = {
           Relations.getRels(cam_id, function (err, result) {
             if (err) return res.status(500).json(err)
             for (const itm of result) {
-              console.log('itm - ', itm);
+              console.log('itm - ', itm)
               let d = {
                 id: uuidv4(),
                 camera_id: cam_id,
@@ -1018,12 +1024,12 @@ let processByAnalytics = (name) => {
                         table[itm.algo_id] == 'person_gsate'
                           ? 'person'
                           : table[itm.algo_id] == 'vehicle_gsate'
-                            ? element.class
-                            : table[itm.algo_id] == 'clothing_gsate'
-                              ? 'clothes'
-                              : table[itm.algo_id] == 'ppe_gsate'
-                                ? element.class
-                                : element.class
+                          ? element.class
+                          : table[itm.algo_id] == 'clothing_gsate'
+                          ? 'clothes'
+                          : table[itm.algo_id] == 'ppe_gsate'
+                          ? element.class
+                          : element.class
 
                       let obj = {
                         image:

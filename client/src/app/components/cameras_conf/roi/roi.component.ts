@@ -262,11 +262,6 @@ export class ROIComponent implements OnInit {
   }
 
   private draw(end) {
-    console.log(".............draw");
-    console.log(end, ".....end");
-    console.log(this.perimeter, ".........this.perimeter");
-    console.log(this.ctx, ".....this.ctx");
-
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = "white";
     this.ctx.lineCap = "circle";
@@ -763,6 +758,7 @@ export class ROIComponent implements OnInit {
   save() {
     let string, a;
     const params = this.activatedRoute.snapshot.params;
+
     if (this.relations.length != 0) {
       if (this.rois.length != 0) {
         for (let u = 0; u < this.relations.length; u++) {
