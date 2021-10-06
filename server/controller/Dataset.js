@@ -362,6 +362,105 @@ let Dataset = {
     }
   },
 
+  // vistaVideoProcess: async (req, res, next) => {
+  //   try {
+  //     Process.getByCompletedOrNot('NO', async function (err, result) {
+  //       if (err) {
+  //         console.log(
+  //           'Error getting data from vista_video_process table : ',
+  //           err,
+  //         )
+  //         res.status(500).json(err)
+  //       } else {
+  //         const elasticData = []
+  //         const elasticIndex = 'vista_video_process_gsate'
+  //         const elasticType = 'vista_video_process'
+  //         if (result.length > 0) {
+  //           console.log('vista_operation_id - ', result[0].vista_operation_id)
+
+  //           let temp = await operationFunction(result[0].vista_operation_id)
+
+  //           if (temp.error) {
+  //             await sleep(2000)
+  //             temp = await operationFunction(result[0].vista_operation_id)
+  //           }
+  //           if (!temp.error) {
+  //             const objectData = {
+  //               id: result[0].id,
+  //               result: JSON.stringify(temp),
+  //             }
+
+  //             Process.update(objectData, function (errRes, resultData) {
+  //               if (errRes) {
+  //                 console.log(
+  //                   'Error updating data to vista_video_process table : ',
+  //                   errRes,
+  //                 )
+  //                 res.status(500).json(errRes)
+  //               }
+  //             })
+
+  //             let esDataArray = []
+
+  //             esDataArray = await prepareEsData(
+  //               temp.results.Object,
+  //               esDataArray,
+  //               'Object',
+  //             )
+
+  //             esDataArray = await prepareEsData(
+  //               temp.results.face,
+  //               esDataArray,
+  //               'face',
+  //             )
+
+  //             esDataArray = await prepareEsData(
+  //               temp.results.fashion,
+  //               esDataArray,
+  //               'fashion',
+  //             )
+
+  //             for (const esData of esDataArray) {
+  //               esData.data.image = temp.image
+  //               elasticData.push(
+  //                 { index: { _index: elasticIndex, _type: elasticType } },
+  //                 esData,
+  //               )
+  //             }
+
+  //             client.bulk(
+  //               {
+  //                 index: elasticIndex,
+  //                 type: elasticType,
+  //                 body: elasticData,
+  //               },
+  //               function (err, data) {
+  //                 if (err) {
+  //                   console.log(err)
+  //                   return res.status(500).send(err)
+  //                 } else {
+  //                   console.log('Uploaded on elastic search...')
+  //                   res.status(200).send(data)
+  //                 }
+  //               },
+  //             )
+  //           } else {
+  //             res
+  //               .status(400)
+  //               .send('There have some problem in vista video process')
+  //           }
+  //         } else {
+  //           res
+  //             .status(200)
+  //             .send({ message: 'There have no vista process incomplete data' })
+  //         }
+  //       }
+  //     })
+  //   } catch (err) {
+  //     return res.status(500).json(err)
+  //   }
+  // },
+
   vistaVideoProcess: async (req, res, next) => {
     try {
       Process.getByCompletedOrNot('NO', async function (err, result) {
@@ -426,6 +525,17 @@ let Dataset = {
                   { index: { _index: elasticIndex, _type: elasticType } },
                   esData,
                 )
+              }
+
+              const indexAlreadyExists = await client.indices.exists({
+                index: elasticIndex,
+              })
+              // check index already exists or not
+              if (!indexAlreadyExists) {
+                console.log(elasticIndex, '....elastic index created')
+                await client.indices.create({
+                  index: elasticIndex,
+                })
               }
 
               client.bulk(
