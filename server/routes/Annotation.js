@@ -448,6 +448,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
     'clothing_gsate',
     'ppe_gsate',
     'defects_gsate',
+    'testing_gsate',
   ]
 
   const vistaVideoProcessIndex = 'vista_video_process_gsate'
@@ -456,18 +457,33 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
   const { key } = req.params
   if (!key) return res.status(400).send('Search key is required')
 
-  const existsIndex1 = await client.indices.exists({
-    index: 'abc',
-  })
-  console.log('existsIndex1..........')
-  console.log(existsIndex1)
+  // const existsIndex1 = await client.indices.exists({
+  //   index: 'abc',
+  // })
+  // console.log('existsIndex1..........')
+  // console.log(existsIndex1)
 
-  const existsIndex2 = await client.indices.exists({
-    index: elasticIndexArray[0],
-  })
-  console.log('existsIndex2..........')
-  console.log(existsIndex2)
+  // const existsIndex2 = await client.indices.exists({
+  //   index: elasticIndexArray[0],
+  // })
+  // console.log('existsIndex2..........')
+  // console.log(existsIndex2)
 
+  for (const esIndex of elasticIndexArray) {
+    const indexAlreadyExists = await client.indices.exists({
+      index: esIndex,
+    })
+    if (!indexAlreadyExists) {
+      await client.indices.create({
+        index: esIndex,
+      })
+      const created = await client.indices.exists({
+        index: esIndex,
+      })
+      console.log(created, '.......created')
+    }
+  }
+  console.log('..............entered in search')
   client
     .search({
       index: elasticIndexArray,
