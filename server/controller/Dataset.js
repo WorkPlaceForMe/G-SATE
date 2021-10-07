@@ -204,7 +204,7 @@ let Dataset = {
             contentType: null,
           },
         },
-        subscriptions: 'Object,themes,food,tags,face,fashion',
+        subscriptions: 'Object',
       },
     }
 
@@ -236,7 +236,7 @@ let Dataset = {
         },
         body: JSON.stringify({
           upload: req.body.image_paths,
-          subscriptions: 'Object,themes,food,tags,face,fashion',
+          subscriptions: 'Object',
         }),
       }
       console.log(JSON.stringify(options))
