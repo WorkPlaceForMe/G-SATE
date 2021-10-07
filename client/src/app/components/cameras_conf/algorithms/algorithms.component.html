@@ -1,219 +1,526 @@
 <!-- banner section start -->
-<section class="section-padding header-padding inner-banner bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
-    [ngStyle]="{'background-image': 'url(/assets/images/camera-edit-bg.jpg)'}">
-    <div class="container text-center z-index-1 banner-caption section-padding">
-        <h1 class="text-uppercase font-weight-bold text-white mb-0">Cameras - Algorithms</h1>
-    </div>
+<section
+  class="section-padding header-padding inner-banner bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/camera-edit-bg.jpg)' }"
+>
+  <div class="container text-center z-index-1 banner-caption section-padding">
+    <h1 class="text-uppercase font-weight-bold text-white mb-0">
+      Cameras - Algorithms
+    </h1>
+  </div>
 </section>
 <!-- banner section end -->
 <div class="section-padding" *ngIf="algos && algos.length > 0">
-    <div class="container">
-      <div class="d-flex justify-content-center position-fixed  loader" *ngIf="spin">
-        <div class="spinner-border spin" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+  <div class="container">
+    <div
+      class="d-flex justify-content-center position-fixed loader"
+      *ngIf="spin"
+    >
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
-        <div class="bg-darken">
-            <div class="row no-gutters">
-                <!-- left side content start -->
-                <div class="col-md-5">
-                    <canvas #polygon id="jPolygon" width='{{width}}' height='{{height}}' [style.background-image]="link">Your browser does not support the HTML5 canvas tag.</canvas>
-                    <!-- form -->
-                    <div class="p-4">
-                        <div class="form-row">
-                            <div class="form-group col-md-6" *ngIf="algos[1]['activated']==true">
-                                <label class="d-block text-white">Climbing of barricade</label>
-                                <div class="d-flex align-items-center">
-                                    <div class="custom-control custom-checkbox custom-control-inline mr-5">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="climb['person']">
-                                        <label class="custom-control-label text-white text-uppercase" for="customCheck1">Person</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="climb['animal']">
-                                        <label class="custom-control-label text-white text-uppercase" for="customCheck2">Animal</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6" *ngIf="algos[2]['activated']==true">
-                                <label class="d-block text-white">Loitering Settings</label>
-                                <div class="input-group">
-                                    <input type="text" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" class="form-control time-picker" placeholder="MM:SS" [(ngModel)]="loiteringTime['time']" (click)='checkTime(loiteringTime)'>
-                                    <owl-date-time #dt1 pickerType="timer"></owl-date-time>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button" (click)='resetTime()'>Reset</button>
-                                    </div>
-                                </div>
-                                <div class="invalid-feedback">Please fill all the input</div>   
-                            </div>
-                            <div class="form-group col-md-12 mb-0 d-flex justify-content-between">
-                                <button class="btn btn-primary" (click)="saveAndBack()">Save</button>
-                                <button class="btn btn-medium ml-2" (click)="info()">Info</button>
-                            </div>
-                        </div>
-                      </div>
+    <div class="bg-darken">
+      <div class="row no-gutters">
+        <!-- left side content start -->
+        <div class="col-md-5">
+          <canvas
+            #polygon
+            id="jPolygon"
+            width="{{ width }}"
+            height="{{ height }}"
+            [style.background-image]="link"
+            >Your browser does not support the HTML5 canvas tag.</canvas
+          >
+          <!-- form -->
+          <div class="p-4">
+            <div class="form-row">
+              <div
+                class="form-group col-md-6"
+                *ngIf="algos[1]['activated'] == true"
+              >
+                <label class="d-block text-white">Climbing of barricade</label>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline mr-5"
+                  >
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="customCheck1"
+                      [(ngModel)]="climb['person']"
+                    />
+                    <label
+                      class="custom-control-label text-white text-uppercase"
+                      for="customCheck1"
+                      >Person</label
+                    >
+                  </div>
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="customCheck2"
+                      [(ngModel)]="climb['animal']"
+                    />
+                    <label
+                      class="custom-control-label text-white text-uppercase"
+                      for="customCheck2"
+                      >Animal</label
+                    >
+                  </div>
                 </div>
-                <!-- left side content end -->
-
-                <!-- right side content start -->
-                <div class="col-md-7 algorithm-right-sidebar py-4">
-                    <h3 class="text-white text-uppercase px-4">Algorithms</h3>
-                    <mat-accordion displayMode="flat" multi class="mat-table">
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header class="text-primary text-uppercase font-weight-bold h4 mb-0">People Related {{Aalgos.length}}</mat-expansion-panel-header>
-                            <div class="d-flex alogrithm-row" *ngFor='let algorithm of Aalgos; index as i'>
-                                <!-- status -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Status</span>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox"  [checked]="algorithm.activated" (change)="algorithm.activated =!algorithm.activated; onChange(algorithm)" class="custom-control-input" id={{algorithm.id}}>
-                                        <label class="custom-control-label" for={{algorithm.id}}></label>
-                                    </div>
-                                </div>
-                                <!-- name -->
-                                <div class="item item-name pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Name</span>
-                                    <span class="d-block text-primary text-truncate">{{algorithm.name}}</span>
-                                </div>
-                                <!-- roi -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">ROI</span>
-                                    <button class="btn btn-sm btn-primary" [routerLink]="['/cameras/algorithms/', param, algorithm.id]" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>Add   +</button>
-                                </div>
-                                <!-- confidence -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Confidence</span>
-                                    <div class="input-group input-group-sm">
-                                        <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Aalgos[i].conf' min="0" max="100" value="95" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-primary border-0 text-white">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- crops -->
-                                <div class="item">
-                                    <span class="d-block text-uppercase text-white mb-2">Crops</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="custom-control custom-checkbox mr-2">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]='Aalgos[i].save' [disabled]='algorithm.activated==false || algorithm.activated == undefined' id="save1">
-                                            <label class="custom-control-label text-white text-uppercase" for="save1">Save</label>
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Aalgos[i].time' min="0" max="120"  [disabled]='algorithm.activated==false || algorithm.activated == undefined || Aalgos[i].save == false || Aalgos[i].save == undefined'>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text bg-primary border-0 text-white">Sec</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header class="text-primary text-uppercase font-weight-bold h4 mb-0">Traffic Management related {{Balgos.length}}</mat-expansion-panel-header>
-                            <div class="d-flex alogrithm-row" *ngFor='let algorithm of Balgos; index as i'>
-                                <!-- status -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Status</span>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" [checked]="algorithm.activated" (change)="algorithm.activated =!algorithm.activated; onChange(algorithm)" class="custom-control-input" id={{algorithm.id}}>
-                                        <label class="custom-control-label" for={{algorithm.id}}></label>
-                                    </div>
-                                </div>
-                                <!-- name -->
-                                <div class="item item-name pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Name</span>
-                                    <span class="d-block text-primary text-truncate">{{algorithm.name}}</span>
-                                </div>
-                                <!-- roi -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">ROI</span>
-                                    <button class="btn btn-sm btn-primary" [routerLink]="['/cameras/algorithms/', param, algorithm.id]" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>Add   +</button>
-                                </div>
-                                <!-- confidence -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Confidence</span>
-                                    <div class="input-group input-group-sm">
-                                        <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Balgos[i].conf' min="0" max="100" value="95" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-primary border-0 text-white">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- crops -->
-                                <div class="item">
-                                    <span class="d-block text-uppercase text-white mb-2">Crops</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="custom-control custom-checkbox mr-2">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]='Balgos[i].save' [disabled]='algorithm.activated==false || algorithm.activated == undefined' id="save2">
-                                            <label class="custom-control-label text-white text-uppercase" for="save2">Save</label>
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Balgos[i].time' min="0" max="120" [disabled]='algorithm.activated==false || algorithm.activated == undefined || Balgos[i].save == false || Balgos[i].save == undefined'>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text bg-primary border-0 text-white">Sec</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header class="text-primary text-uppercase font-weight-bold h4 mb-0">Security related {{Calgos.length}}</mat-expansion-panel-header>
-                            <div class="d-flex alogrithm-row" *ngFor='let algorithm of Calgos; index as i'>
-                                <!-- status -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Status</span>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" [checked]="algorithm.activated" (change)="algorithm.activated =!algorithm.activated; onChange(algorithm)" class="custom-control-input" id={{algorithm.id}}>
-                                        <label class="custom-control-label" for={{algorithm.id}}></label>
-                                    </div>
-                                </div>
-                                <!-- name -->
-                                <div class="item item-name pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Name</span>
-                                    <span class="d-block text-primary text-truncate">{{algorithm.name}}</span>
-                                </div>
-                                <!-- roi -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">ROI</span>
-                                    <button class="btn btn-sm btn-primary" [routerLink]="['/cameras/algorithms/', param, algorithm.id]" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>Add   +</button>
-                                </div>
-                                <!-- confidence -->
-                                <div class="item pr-3">
-                                    <span class="d-block text-uppercase text-white mb-2">Confidence</span>
-                                    <div class="input-group input-group-sm">
-                                        <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Calgos[i].conf' min="0" max="100" value="95" [disabled]='algorithm.activated==false || algorithm.activated == undefined'>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text bg-primary border-0 text-white">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- crops -->
-                                <div class="item">
-                                    <span class="d-block text-uppercase text-white mb-2">Crops</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="custom-control custom-checkbox mr-2">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]='Calgos[i].save' [disabled]='algorithm.activated==false || algorithm.activated == undefined' id="save3">
-                                            <label class="custom-control-label text-white text-uppercase" for="save3">Save</label>
-                                        </div>
-                                        <div class="input-group input-group-sm">
-                                            <input type="number" class="form-control form-control-transparent px-2" [(ngModel)]='Calgos[i].time' min="0" max="120" disabled]='algorithm.activated==false || algorithm.activated == undefined || Calgos[i].save == false || Calgos[i].save == undefined'>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text bg-primary border-0 text-white">Sec</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-expansion-panel>
-
-                    </mat-accordion>        
+              </div>
+              <div
+                class="form-group col-md-6"
+                *ngIf="algos[2]['activated'] == true"
+              >
+                <label class="d-block text-white">Loitering Settings</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    [owlDateTime]="dt1"
+                    [owlDateTimeTrigger]="dt1"
+                    class="form-control time-picker"
+                    placeholder="MM:SS"
+                    [(ngModel)]="loiteringTime['time']"
+                    (click)="checkTime(loiteringTime)"
+                  />
+                  <owl-date-time #dt1 pickerType="timer"></owl-date-time>
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      (click)="resetTime()"
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
-                <!-- right side content end -->
+                <div class="invalid-feedback">Please fill all the input</div>
+              </div>
+              <div
+                class="form-group col-md-12 mb-0 d-flex justify-content-between"
+              >
+                <button class="btn btn-primary" (click)="saveAndBack()">
+                  Save
+                </button>
+                <button class="btn btn-medium ml-2" (click)="info()">
+                  Info
+                </button>
+              </div>
             </div>
+          </div>
         </div>
+        <!-- left side content end -->
+
+        <!-- right side content start -->
+        <div class="col-md-7 algorithm-right-sidebar py-4">
+          <h3 class="text-white text-uppercase px-4">Algorithms</h3>
+          <mat-accordion displayMode="flat" multi class="mat-table">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                class="text-primary text-uppercase font-weight-bold h4 mb-0"
+                >People Related {{ Aalgos.length }}</mat-expansion-panel-header
+              >
+              <div
+                class="d-flex alogrithm-row"
+                *ngFor="let algorithm of Aalgos; index as i"
+              >
+                <!-- status -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Status</span
+                  >
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      [checked]="algorithm.activated"
+                      (change)="
+                        algorithm.activated = !algorithm.activated;
+                        onChange(algorithm)
+                      "
+                      class="custom-control-input"
+                      id="{{ algorithm.id }}"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="{{ algorithm.id }}"
+                    ></label>
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="item item-name pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Name</span
+                  >
+                  <span class="d-block text-primary text-truncate">{{
+                    algorithm.name
+                  }}</span>
+                </div>
+                <!-- roi -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >ROI</span
+                  >
+                  <button
+                    class="btn btn-sm btn-primary"
+                    [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [disabled]="
+                      algorithm.activated == false ||
+                      algorithm.activated == undefined
+                    "
+                  >
+                    Add +
+                  </button>
+                </div>
+                <!-- confidence -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Confidence</span
+                  >
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      class="form-control form-control-transparent px-2"
+                      [(ngModel)]="Aalgos[i].conf"
+                      min="0"
+                      max="100"
+                      value="95"
+                      [disabled]="
+                        algorithm.activated == false ||
+                        algorithm.activated == undefined
+                      "
+                    />
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text bg-primary border-0 text-white"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- crops -->
+                <div class="item">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Crops</span
+                  >
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="custom-control custom-checkbox mr-2">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [(ngModel)]="Aalgos[i].save"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined
+                        "
+                        id="save1"
+                      />
+                      <label
+                        class="custom-control-label text-white text-uppercase"
+                        for="save1"
+                        >Save</label
+                      >
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <input
+                        type="number"
+                        class="form-control form-control-transparent px-2"
+                        [(ngModel)]="Aalgos[i].time"
+                        min="0"
+                        max="120"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined ||
+                          Aalgos[i].save == false ||
+                          Aalgos[i].save == undefined
+                        "
+                      />
+                      <div class="input-group-append">
+                        <span
+                          class="input-group-text bg-primary border-0 text-white"
+                          >Sec</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                class="text-primary text-uppercase font-weight-bold h4 mb-0"
+                >Traffic Management related
+                {{ Balgos.length }}</mat-expansion-panel-header
+              >
+              <div
+                class="d-flex alogrithm-row"
+                *ngFor="let algorithm of Balgos; index as i"
+              >
+                <!-- status -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Status</span
+                  >
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      [checked]="algorithm.activated"
+                      (change)="
+                        algorithm.activated = !algorithm.activated;
+                        onChange(algorithm)
+                      "
+                      class="custom-control-input"
+                      id="{{ algorithm.id }}"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="{{ algorithm.id }}"
+                    ></label>
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="item item-name pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Name</span
+                  >
+                  <span class="d-block text-primary text-truncate">{{
+                    algorithm.name
+                  }}</span>
+                </div>
+                <!-- roi -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >ROI</span
+                  >
+                  <button
+                    class="btn btn-sm btn-primary"
+                    [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [disabled]="
+                      algorithm.activated == false ||
+                      algorithm.activated == undefined
+                    "
+                  >
+                    Add +
+                  </button>
+                </div>
+                <!-- confidence -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Confidence</span
+                  >
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      class="form-control form-control-transparent px-2"
+                      [(ngModel)]="Balgos[i].conf"
+                      min="0"
+                      max="100"
+                      value="95"
+                      [disabled]="
+                        algorithm.activated == false ||
+                        algorithm.activated == undefined
+                      "
+                    />
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text bg-primary border-0 text-white"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- crops -->
+                <div class="item">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Crops</span
+                  >
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="custom-control custom-checkbox mr-2">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [(ngModel)]="Balgos[i].save"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined
+                        "
+                        id="save2"
+                      />
+                      <label
+                        class="custom-control-label text-white text-uppercase"
+                        for="save2"
+                        >Save</label
+                      >
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <input
+                        type="number"
+                        class="form-control form-control-transparent px-2"
+                        [(ngModel)]="Balgos[i].time"
+                        min="0"
+                        max="120"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined ||
+                          Balgos[i].save == false ||
+                          Balgos[i].save == undefined
+                        "
+                      />
+                      <div class="input-group-append">
+                        <span
+                          class="input-group-text bg-primary border-0 text-white"
+                          >Sec</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                class="text-primary text-uppercase font-weight-bold h4 mb-0"
+                >Security related
+                {{ Calgos.length }}</mat-expansion-panel-header
+              >
+              <div
+                class="d-flex alogrithm-row"
+                *ngFor="let algorithm of Calgos; index as i"
+              >
+                <!-- status -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Status</span
+                  >
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      [checked]="algorithm.activated"
+                      (change)="
+                        algorithm.activated = !algorithm.activated;
+                        onChange(algorithm)
+                      "
+                      class="custom-control-input"
+                      id="{{ algorithm.id }}"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="{{ algorithm.id }}"
+                    ></label>
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="item item-name pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Name</span
+                  >
+                  <span class="d-block text-primary text-truncate">{{
+                    algorithm.name
+                  }}</span>
+                </div>
+                <!-- roi -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >ROI</span
+                  >
+                  <button
+                    class="btn btn-sm btn-primary"
+                    [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [disabled]="
+                      algorithm.activated == false ||
+                      algorithm.activated == undefined
+                    "
+                  >
+                    Add +
+                  </button>
+                </div>
+                <!-- confidence -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Confidence</span
+                  >
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      class="form-control form-control-transparent px-2"
+                      [(ngModel)]="Calgos[i].conf"
+                      min="0"
+                      max="100"
+                      value="95"
+                      [disabled]="
+                        algorithm.activated == false ||
+                        algorithm.activated == undefined
+                      "
+                    />
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text bg-primary border-0 text-white"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- crops -->
+                <div class="item">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Crops</span
+                  >
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="custom-control custom-checkbox mr-2">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [(ngModel)]="Calgos[i].save"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined
+                        "
+                        id="save3"
+                      />
+                      <label
+                        class="custom-control-label text-white text-uppercase"
+                        for="save3"
+                        >Save</label
+                      >
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <input
+                        type="number"
+                        class="form-control form-control-transparent px-2"
+                        [(ngModel)]="Calgos[i].time"
+                        min="0"
+                        max="120"
+                        disabled]="algorithm.activated==false || algorithm.activated == undefined || Calgos[i].save == false || Calgos[i].save == undefined"
+                      />
+                      <div class="input-group-append">
+                        <span
+                          class="input-group-text bg-primary border-0 text-white"
+                          >Sec</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <!-- right side content end -->
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- <div class="tab-content">

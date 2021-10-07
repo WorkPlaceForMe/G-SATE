@@ -28,7 +28,7 @@ import { ip } from "src/app/models/IpServer";
 export class AlgorithmsComponent implements OnInit {
   @Input() private src: string;
   @Output() private created = new EventEmitter();
-  @ViewChild("polygon", { static: true }) private polygon: ElementRef;
+  @ViewChild("polygon", { static: false }) private polygon: ElementRef;
 
   public innerWidth: any;
   public innerHeight: any;
@@ -151,10 +151,12 @@ export class AlgorithmsComponent implements OnInit {
                 this.algos[i].activated = false;
               }
             }
+
             for (let u = 0; u < this.relations.length; u++) {
               this.relations[u]["roi_id"] = JSON.parse(
                 this.relations[u]["roi_id"]
               );
+
               if (this.relations[u]["roi_id"] != null) {
                 for (let l = 0; l < this.relations[u]["roi_id"].length; l++) {
                   //these parameters is to scalate it according to RoI resolution
@@ -169,11 +171,16 @@ export class AlgorithmsComponent implements OnInit {
                 this.relations[u]["roi_id"].push(this.relations[u]["algo_id"]);
                 this.polygons.push(this.relations[u]["roi_id"]);
               }
+
+              if (u === this.relations.length - 1 && this.polygons != null) {
+                this.re_draw(true);
+              }
             }
-            if (this.polygons != null && this.polygon) {
-              // condition added for re_draw
-              this.re_draw(true);
-            }
+
+            // if (this.polygons != null && this.polygon) {
+            //   // condition added for re_draw
+            //   this.re_draw(true);
+            // }
             this.actA = this.getNbOccur(true, this.Aalgos);
             this.actB = this.getNbOccur(true, this.Balgos);
             this.actC = this.getNbOccur(true, this.Calgos);
@@ -203,11 +210,8 @@ export class AlgorithmsComponent implements OnInit {
           this.width = 485;
           this.height = this.width * this.resRelation;
         }
+        this.re_draw(true);
 
-        if (this.polygon) {
-          // condition added for re_draw
-          this.re_draw(true);
-        }
         this.link = sanitizer.bypassSecurityTrustStyle(
           "url(http://" + ip + ":4200" + this.camera.heatmap_pic + ")"
         );
@@ -344,13 +348,8 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   private setBcg() {
-    console.log("set bcg 1");
-    console.log(this.polygon);
-
     // this.src = 'assets/heatmap_picture.png';
     if (this.polygon) {
-      console.log("set bcg");
-
       this.canvas = this.rd.selectRootElement(this.polygon["nativeElement"]);
       this.ctx = this.canvas.getContext("2d");
     }
@@ -389,10 +388,7 @@ export class AlgorithmsComponent implements OnInit {
       this.perimeter = [];
       this.complete = true;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      if (this.polygon) {
-        // condition added for re_draw
-        this.re_draw(true);
-      }
+      this.re_draw(true);
     } else if (algorithm.activated == true) {
       this.complete = true;
     }
@@ -404,6 +400,7 @@ export class AlgorithmsComponent implements OnInit {
   public showMyMessage = false;
 
   re_draw(end: boolean) {
+    this.setBcg();
     let pred_colour, pred_fill;
     for (let e = 0; e < this.polygons.length; e++) {
       for (let u = 0; u < this.algos.length; u++) {
