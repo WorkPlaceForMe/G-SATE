@@ -458,6 +458,7 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
 router.post('/object-detection/confirmed', function (req, res, next) {
   console.log('object detection training confirmed')
   let body = req.body
+
   const elasticData = []
 
   /**

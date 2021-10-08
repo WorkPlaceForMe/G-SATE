@@ -71,6 +71,8 @@ export class AnnotationsService {
   }
 
   saveObjectDetectionDetails(conf: Customer) {
+    console.log(conf);
+
     return this.http.post(
       `${this.API_URL}/annotations/object-detection/confirmed`,
       conf
@@ -111,7 +113,9 @@ export class AnnotationsService {
 
   getElasticSearchResults(data: any) {
     // return this.http.get<any[]>(`${this.API_URL}/annotations/image/${data}`);
-    return this.http.get<any[]>(`${this.API_URL}/annotations/analytics/elasticSearch/${data}`);
+    return this.http.get<any[]>(
+      `${this.API_URL}/annotations/analytics/elasticSearch/${data}`
+    );
   }
 
   processVistaSingle(data: any) {
