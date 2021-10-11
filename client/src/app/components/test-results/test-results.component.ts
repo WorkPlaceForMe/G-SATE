@@ -18,6 +18,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   testList: Array<any>;
   selectedDataset: any;
   graphData: any;
+  rows: any;
 
   public accuracyLineChartData: ChartDataSets[] = [
     {
@@ -31,7 +32,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
       label: "Validation Accuracy",
       lineTension: 0,
       fill: false,
-    }
+    },
   ];
   public lossLineChartData: ChartDataSets[] = [
     {
@@ -45,7 +46,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
       label: "Validation Loss",
       lineTension: 0,
       fill: false,
-    }
+    },
   ];
 
   public accuracyLineChartLabels: Label[] = [];
@@ -67,7 +68,9 @@ export class TestResultComponent implements OnInit, OnDestroy {
     this.getTestResults();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getTrainStatus();
+  }
 
   getTestResults() {
     this.spin = true;
@@ -76,6 +79,53 @@ export class TestResultComponent implements OnInit, OnDestroy {
         this.spin = false;
         this.testList = res.data;
         console.log("this.testList - ", this.testList);
+      },
+      (err) => {
+        this.spin = false;
+        console.log(err);
+      }
+    );
+  }
+
+  getTrainStatus() {
+    this.spin = true;
+    this.annotationsServ.getTrainStatus().subscribe(
+      (res: any) => {
+        this.spin = false;
+        const result = [];
+
+        // FOR TESTING
+        // res.results.push({
+        //   datasetName: "change_rm_conf3",
+        //   datasetStatus: "Training Completed",
+        // });
+
+        for (const element of res.results) {
+          if (element.datasetStatus == "Training Completed") {
+            element["enable"] = true;
+          } else {
+            element["enable"] = false;
+          }
+          result.push(element);
+        }
+        this.rows = result;
+      },
+      (err) => {
+        this.spin = false;
+        console.log(err);
+      }
+    );
+  }
+
+  onSelectRow(data: any) {
+    this.annotationsServ.getModel(data.datasetName).subscribe(
+      (res: any) => {
+        this.spin = false;
+        if (res.success) {
+          alert("Training model will be moved to inferencing engine.");
+        } else {
+          alert(res.error);
+        }
       },
       (err) => {
         this.spin = false;

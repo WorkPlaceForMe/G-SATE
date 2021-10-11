@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { ip, tarinScriptIP } from "../models/IpServer";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { ip, tarinScriptIP, trainStatusIp } from "../models/IpServer";
 import { Customer } from "../models/Customer";
 import { vistaIP } from "../models/VistaServer";
 import { Observable, throwError } from "rxjs";
@@ -21,6 +21,7 @@ export class AnnotationsService {
   API_URL = "http://" + ip + ":3000/api";
   TRAINING_SCRIPT_URL = "http://" + tarinScriptIP + ":8080";
   VISTA_API_URL = vistaIP;
+  TRAIN_STATUS_URL = "http://" + trainStatusIp + ":8080";
 
   getImages(where: string, info: string) {
     return this.http.get(`${this.API_URL}/getImages/${where}/${info}`);
@@ -171,5 +172,15 @@ export class AnnotationsService {
 
   processVistaBulk(data: any) {
     return this.http.post(`${this.API_URL}/datasets/process/vista/bulk`, data);
+  }
+
+  getTrainStatus() {
+    return this.http.get(`${this.TRAIN_STATUS_URL}/trainStatus`);
+  }
+
+  getModel(datasetName: string) {
+    const formData = new FormData();
+    formData.append("model", datasetName);
+    return this.http.post(`${this.TRAIN_STATUS_URL}/getModel`, formData);
   }
 }

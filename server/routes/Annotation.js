@@ -413,7 +413,6 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
           .then(
             function (searchedData) {
               const vistaSearchedArray = []
-              //  let searchedDataId = 0
               if (
                 searchedData &&
                 searchedData.hits &&
@@ -422,13 +421,11 @@ router.get('/analytics/elasticSearch/:key', async function (req, res, next) {
               ) {
                 for (const element of searchedData.hits.hits) {
                   const vistaSearchedObj = {
-                    //  id: searchedDataId,
                     id: count,
                     image: element._source.data.image,
                     results: element._source.data.results,
                   }
                   vistaSearchedArray.push(vistaSearchedObj)
-                  //  ++searchedDataId
                   ++count
                 }
               }

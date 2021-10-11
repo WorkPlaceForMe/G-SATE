@@ -76,6 +76,7 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { ChartsModule, ThemeService } from "ng2-charts";
 import { TestResultComponent } from "./components/test-results/test-results.component";
 import { UiSwitchModule } from "ngx-toggle-switch";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -150,6 +151,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     PerfectScrollbarModule,
     ChartsModule,
     UiSwitchModule,
+    NgxDatatableModule,
   ],
   providers: [
     FacesService,
