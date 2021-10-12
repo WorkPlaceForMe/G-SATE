@@ -18,7 +18,10 @@ export class TestResultComponent implements OnInit, OnDestroy {
   testList: Array<any>;
   selectedDataset: any;
   graphData: any;
-  rows: any;
+  rows: any = [];
+  columns: any = [];
+  loadingIndicator = true;
+  reorderable = true;
 
   public accuracyLineChartData: ChartDataSets[] = [
     {
