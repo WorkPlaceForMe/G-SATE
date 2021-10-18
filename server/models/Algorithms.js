@@ -24,7 +24,7 @@ var Algorithm = {
 
   create: function (algoDetails, callback) {
     return db.query(
-      `INSERT INTO algorithms (id,name, available) VALUES ("${algoDetails.id}","${algoDetails.name}","${algoDetails.available}")`,
+      `INSERT INTO algorithms (id,name, available ,custom_trained) VALUES ("${algoDetails.id}","${algoDetails.name}","${algoDetails.available}","1")`,
       callback,
     )
   },

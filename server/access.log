@@ -17130,3 +17130,18 @@ Date: Mon, 18 Oct 2021 11:19:15 GMT // Url: 127.0.0.1 // Method: GET/api/algorit
 Date: Mon, 18 Oct 2021 11:19:15 GMT // Url: 127.0.0.1 // Method: GET/api/cameras/0c147783-1710-4524-9dd7-2981b28a7161 // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
 Date: Mon, 18 Oct 2021 11:19:16 GMT // Url: 127.0.0.1 // Method: GET/api/relations/0c147783-1710-4524-9dd7-2981b28a7161 // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
 Date: Mon, 18 Oct 2021 12:54:56 GMT // Url: 127.0.0.1 // Method: GET/api/algorithm // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Mon Oct 18 2021 19:29:55 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Mon Oct 18 2021 19:30:57 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Mon, 18 Oct 2021 14:01:46 GMT // Url: 127.0.0.1 // Method: POST/api/algorithm // Status:200 // User-agent: PostmanRuntime/7.6.0
+Server started at: Mon Oct 18 2021 19:38:28 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Mon, 18 Oct 2021 14:08:55 GMT // Url: 127.0.0.1 // Method: POST/api/algorithm // Status:200 // User-agent: PostmanRuntime/7.6.0
+Server started at: Mon Oct 18 2021 19:39:17 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Mon, 18 Oct 2021 14:09:51 GMT // Url: 127.0.0.1 // Method: POST/api/algorithm // Status:200 // User-agent: PostmanRuntime/7.6.0

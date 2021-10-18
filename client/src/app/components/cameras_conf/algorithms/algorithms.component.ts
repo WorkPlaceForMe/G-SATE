@@ -111,7 +111,7 @@ export class AlgorithmsComponent implements OnInit {
               this.algos[i]["id"] == 17
             ) {
               this.Aalgos.push(this.algos[i]);
-            } else if (this.algos[i]["id"] == 19) {
+            } else if (this.algos[i]["custom_trained"] == 1) {
               this.Dalgos.push(this.algos[i]);
             }
           }
