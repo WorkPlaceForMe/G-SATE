@@ -46,6 +46,7 @@ export class AlgorithmsComponent implements OnInit {
   Aalgos: any = [];
   Balgos: any = [];
   Calgos: any = [];
+  Dalgos: any = [];
   colour: string = "";
   video_url: string = "";
   fill: string = "";
@@ -110,6 +111,8 @@ export class AlgorithmsComponent implements OnInit {
               this.algos[i]["id"] == 17
             ) {
               this.Aalgos.push(this.algos[i]);
+            } else if (this.algos[i]["id"] == 19) {
+              this.Dalgos.push(this.algos[i]);
             }
           }
         }

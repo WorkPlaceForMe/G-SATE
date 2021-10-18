@@ -515,6 +515,140 @@
                 </div>
               </div>
             </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                class="text-primary text-uppercase font-weight-bold h4 mb-0"
+                >Custom trained models
+                {{ Dalgos.length }}</mat-expansion-panel-header
+              >
+              <div
+                class="d-flex alogrithm-row"
+                *ngFor="let algorithm of Dalgos; index as i"
+              >
+                <!-- status -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Status</span
+                  >
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      [checked]="algorithm.activated"
+                      (change)="
+                        algorithm.activated = !algorithm.activated;
+                        onChange(algorithm)
+                      "
+                      class="custom-control-input"
+                      id="{{ algorithm.id }}"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="{{ algorithm.id }}"
+                    ></label>
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="item item-name pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Name</span
+                  >
+                  <span class="d-block text-primary text-truncate">{{
+                    algorithm.name
+                  }}</span>
+                </div>
+                <!-- roi -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >ROI</span
+                  >
+                  <button
+                    class="btn btn-sm btn-primary"
+                    [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [disabled]="
+                      algorithm.activated == false ||
+                      algorithm.activated == undefined
+                    "
+                  >
+                    Add +
+                  </button>
+                </div>
+                <!-- confidence -->
+                <div class="item pr-3">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Confidence</span
+                  >
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      class="form-control form-control-transparent px-2"
+                      [(ngModel)]="Aalgos[i].conf"
+                      min="0"
+                      max="100"
+                      value="95"
+                      [disabled]="
+                        algorithm.activated == false ||
+                        algorithm.activated == undefined
+                      "
+                    />
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text bg-primary border-0 text-white"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- crops -->
+                <div class="item">
+                  <span class="d-block text-uppercase text-white mb-2"
+                    >Crops</span
+                  >
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="custom-control custom-checkbox mr-2">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [(ngModel)]="Aalgos[i].save"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined
+                        "
+                        id="save1"
+                      />
+                      <label
+                        class="custom-control-label text-white text-uppercase"
+                        for="save1"
+                        >Save</label
+                      >
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <input
+                        type="number"
+                        class="form-control form-control-transparent px-2"
+                        [(ngModel)]="Aalgos[i].time"
+                        min="0"
+                        max="120"
+                        [disabled]="
+                          algorithm.activated == false ||
+                          algorithm.activated == undefined ||
+                          Aalgos[i].save == false ||
+                          Aalgos[i].save == undefined
+                        "
+                      />
+                      <div class="input-group-append">
+                        <span
+                          class="input-group-text bg-primary border-0 text-white"
+                          >Sec</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
           </mat-accordion>
         </div>
         <!-- right side content end -->

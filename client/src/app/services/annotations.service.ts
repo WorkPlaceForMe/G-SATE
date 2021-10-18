@@ -183,4 +183,8 @@ export class AnnotationsService {
     formData.append("model", datasetName);
     return this.http.post(`${this.TRAIN_STATUS_URL}/getModel`, formData);
   }
+
+  addToAlgorithm(name: string) {
+    return this.http.post(`${this.API_URL}/algorithm`, { name });
+  }
 }

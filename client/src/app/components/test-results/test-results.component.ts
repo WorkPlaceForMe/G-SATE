@@ -125,7 +125,19 @@ export class TestResultComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.spin = false;
         if (res.success) {
-          alert("Training model will be moved to inferencing engine.");
+          this.annotationsServ.addToAlgorithm(data.datasetName).subscribe(
+            (res: any) => {
+              console.log(res);
+              if (res.algorithmAdded) {
+                alert("Training model will be moved to inferencing engine.");
+              } else {
+                alert(res.message);
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         } else {
           alert(res.error);
         }
