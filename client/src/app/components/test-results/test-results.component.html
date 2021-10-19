@@ -43,13 +43,53 @@
               class="btn btn-secondary"
               data-dismiss="modal"
               [disabled]="!row.enable"
-              (click)="onSelectRow(row)"
+              (click)="openModal(template, row)"
             >
               Move To Inference
             </button>
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
+
+      <ng-template #template>
+        <div class="modal-header">
+          <h5 class="modal-title pull-left">
+            Please enter your custom name for trained model
+          </h5>
+          <button
+            type="button"
+            class="close pull-right"
+            aria-label="Close"
+            (click)="modalRef.hide()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="model">Name</label>
+            <input
+              class="form-control mb-3"
+              [(ngModel)]="modelName"
+              type="text"
+              nbInput
+              id="model"
+              placeholder="Enter model name"
+              (keydown.space)="$event.preventDefault()"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              [disabled]="!modelName"
+              (click)="onSelectRow()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </ng-template>
     </div>
     <h2 class="mb-4 text-uppercase text-white">Select a Trained Model</h2>
     <div class="form-group form-row">

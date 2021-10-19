@@ -77,6 +77,7 @@ import { ChartsModule, ThemeService } from "ng2-charts";
 import { TestResultComponent } from "./components/test-results/test-results.component";
 import { UiSwitchModule } from "ngx-toggle-switch";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { ModalModule } from "ngx-bootstrap/modal";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -152,6 +153,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     ChartsModule,
     UiSwitchModule,
     NgxDatatableModule,
+    ModalModule.forRoot(),
   ],
   providers: [
     FacesService,

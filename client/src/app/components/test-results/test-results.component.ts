@@ -1,11 +1,18 @@
 import { DatePipe } from "@angular/common";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  TemplateRef,
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { ChartDataSets, ChartOptions } from "chart.js";
 import { Label, Color } from "ng2-charts";
 import { AnnotationsService } from "src/app/services/annotations.service";
 import { FacesService } from "src/app/services/faces.service";
 import { PagerService } from "src/app/services/pager.service";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-test-results",
@@ -22,6 +29,9 @@ export class TestResultComponent implements OnInit, OnDestroy {
   columns: any = [];
   loadingIndicator = true;
   reorderable = true;
+  modalRef: BsModalRef;
+  modelName: string = "";
+  datasetName: string = "";
 
   public accuracyLineChartData: ChartDataSets[] = [
     {
@@ -64,7 +74,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
     private facesservices: FacesService,
     private datepipe: DatePipe,
     private pagerService: PagerService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private modalService: BsModalService
   ) {
     this.selectedDataset = "";
     this.testList = [];
@@ -120,12 +131,23 @@ export class TestResultComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelectRow(data: any) {
-    this.annotationsServ.getModel(data.datasetName).subscribe(
+  openModal(template: TemplateRef<any>, data: any) {
+    this.modelName = data.datasetName;
+    this.datasetName = data.datasetName;
+    this.modalRef = this.modalService.show(template, {
+      animated: true,
+      backdrop: "static",
+      class: "modal-dialog-centered",
+    });
+  }
+
+  onSelectRow() {
+    this.annotationsServ.getModel(this.datasetName).subscribe(
       (res: any) => {
         this.spin = false;
+        this.modalRef.hide();
         if (res.success) {
-          this.annotationsServ.addToAlgorithm(data.datasetName).subscribe(
+          this.annotationsServ.addToAlgorithm(this.modelName).subscribe(
             (res: any) => {
               console.log(res);
               if (res.algorithmAdded) {
