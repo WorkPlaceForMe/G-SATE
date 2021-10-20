@@ -1,121 +1,189 @@
 <!-- banner start -->
-<div class="section-padding home-section main-banner bg-white d-flex align-items-center bg-after bg-after-secondary bg-after-75"
-    [ngStyle]="{'background-image': 'url(/assets/images/banner-bg.jpg)'}">
-    <div class="container text-white z-index-1">
-        <div class="row">
-            <div class="col-md-5 d-flex align-items-center">
-                <h1 class="text-white mb-0 display-1 font-weight-bold">Unleash the power of the Graymatics AI engine on
-                    your data</h1>
-            </div>
-            <div class="col-md-6 offset-1">
-                <img src="/assets/images/banner-device.png" />
-            </div>
-        </div>
+<div
+  class="section-padding home-section main-banner bg-white d-flex align-items-center bg-after bg-after-secondary bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/banner-bg.jpg)' }"
+>
+  <div class="container text-white z-index-1">
+    <div class="row">
+      <div class="col-md-5 d-flex align-items-center">
+        <h1 class="text-white mb-0 display-1 font-weight-bold">
+          Unleash the power of the Graymatics AI engine on your data
+        </h1>
+      </div>
+      <div class="col-md-6 offset-1">
+        <img src="/assets/images/banner-device.png" />
+      </div>
     </div>
+  </div>
 </div>
 <!-- banner end -->
 
 <!-- souffle start -->
-<div class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-50"
-    [ngStyle]="{'background-image': 'url(/assets/images/souffle-bg.jpg)'}">
-    <div class="container container-medium text-center text-white z-index-1">
-        <h2 class="text-white mb-4 text-uppercase">SOUFFLE</h2>
-        <p>Self-Organizing User-Friendly Federated Learning Environment</p>
-        <p>We provide a maximally automated annotation platform for instant results and ease of use. We leverage our
-            high-accuracy inference engine to provide you the insights you need from your datasets.</p>
-        <p class="mb-4">Coupled with the capability to execute decentralized, dynamic, federated learning with real-time
-            CCTV footage and videos, this novel aspect of our solution makes it a powerful AI engine at your disposal.
-            As a one-stop-shop for working with your data, SOUFFLE allows you the option to Train and test your models
-            too. So just load up your data and watch the magic happen! </p>
-        <p class="mb-5">Click the button below to learn more about us.</p>
-        <button type="button" class="btn btn-primary btn-lg btn-min-w" (click)="openTab('https://www.graymatics.com/')">Graymatics Home</button>
-    </div>
+<div
+  class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-50"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/souffle-bg.jpg)' }"
+>
+  <div class="container container-medium text-center text-white z-index-1">
+    <h2 class="text-white mb-4 text-uppercase">SOUFFLE</h2>
+    <p>Self-Organizing User-Friendly Federated Learning Environment</p>
+    <p>
+      We provide a maximally automated annotation platform for instant results
+      and ease of use. We leverage our high-accuracy inference engine to provide
+      you the insights you need from your datasets.
+    </p>
+    <p class="mb-4">
+      Coupled with the capability to execute decentralized, dynamic, federated
+      learning with real-time CCTV footage and videos, this novel aspect of our
+      solution makes it a powerful AI engine at your disposal. As a
+      one-stop-shop for working with your data, SOUFFLE allows you the option to
+      Train and test your models too. So just load up your data and watch the
+      magic happen!
+    </p>
+    <p class="mb-5">Click the button below to learn more about us.</p>
+    <button
+      type="button"
+      class="btn btn-primary btn-lg btn-min-w"
+      (click)="openTab('https://www.graymatics.com/')"
+    >
+      Graymatics Home
+    </button>
+  </div>
 </div>
 <!-- souffle end -->
 
 <!-- create dataset start -->
-<div class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-white bg-after-75"
-    [ngStyle]="{'background-image': 'url(/assets/images/create-dataset-bg.jpg)'}">
-    <div class="container container-medium text-center z-index-1">
-        <h2 class=" mb-4 text-uppercase">Create and Annotate Dataset for Training</h2>
-        <p>Create Dataset from a variety of sources</p>
-        <p>SOUFFLE provides you the option to source data through multiple channels - local images, zipped files, web
-            image search, archived CCTV footage, and live CCTV footage. Our maximally automated annotation platform
-            helps you create an annotated dataset with just the click of a button.</p>
-        <p class="mb-5">With options to control the annotation density and image search results we provide the added
-            layer of customization to your annotation options. Additionally, we provide you the option to augment
-            annotations with generic object detection and custom addition/removal of annotations. </p>
-        <button type="button" class="btn btn-primary btn-lg btn-min-w" (click)="goto('/annotations')">Create/Augment
-            Dataset</button>
-    </div>
+<div
+  class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-white bg-after-75"
+  [ngStyle]="{
+    'background-image': 'url(/assets/images/create-dataset-bg.jpg)'
+  }"
+>
+  <div class="container container-medium text-center z-index-1">
+    <h2 class="mb-4 text-uppercase">
+      Create and Annotate Dataset for Training
+    </h2>
+    <p>Create Dataset from a variety of sources</p>
+    <p>
+      SOUFFLE provides you the option to source data through multiple channels -
+      local images, zipped files, web image search, archived CCTV footage, and
+      live CCTV footage. Our maximally automated annotation platform helps you
+      create an annotated dataset with just the click of a button.
+    </p>
+    <p class="mb-5">
+      With options to control the annotation density and image search results we
+      provide the added layer of customization to your annotation options.
+      Additionally, we provide you the option to augment annotations with
+      generic object detection and custom addition/removal of annotations.
+    </p>
+    <button
+      type="button"
+      class="btn btn-primary btn-lg btn-min-w"
+      (click)="goto('/annotations')"
+    >
+      Create/Augment Dataset
+    </button>
+  </div>
 </div>
 <!-- create dataset end -->
 
 <!-- test model start -->
-<div class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
-    [ngStyle]="{'background-image': 'url(/assets/images/test-model-bg.jpg)'}">
-    <div class="container container-medium text-center z-index-1 text-white">
-        <h2 class=" mb-4 text-uppercase text-white">Test your Model</h2>
-        <h4 class="text-white mb-3">Improve your model by testing with un-annotated data</h4>
-        <p class="mb-5">Reuse the created dataset to train and test your models to improve accuracy. This symbiotic
-            feature of the platform helps you apply back the dataset generated to reinforce your model and improve on
-            sensitivity, specificity, positive and negative predictive values.</p>
-        <button type="button" class="btn btn-primary btn-lg btn-min-w">Test Model</button>
-    </div>
+<div
+  class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/test-model-bg.jpg)' }"
+>
+  <div class="container container-medium text-center z-index-1 text-white">
+    <h2 class="mb-4 text-uppercase text-white">Test your Model</h2>
+    <h4 class="text-white mb-3">
+      Improve your model by testing with un-annotated data
+    </h4>
+    <p class="mb-5">
+      Reuse the created dataset to train and test your models to improve
+      accuracy. This symbiotic feature of the platform helps you apply back the
+      dataset generated to reinforce your model and improve on sensitivity,
+      specificity, positive and negative predictive values.
+    </p>
+    <button
+      type="button"
+      class="btn btn-primary btn-lg btn-min-w"
+      routerLink="/test-results"
+    >
+      Test Model
+    </button>
+  </div>
 </div>
 <!-- test model end -->
 
 <!-- federated learning start -->
-<div class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-black bg-after-50"
-    [ngStyle]="{'background-image': 'url(/assets/images/federated-bg.jpg)'}">
-    <div class="container container-medium text-center z-index-1 text-white">
-        <h2 class=" mb-4 text-uppercase text-white">Activate system for Federated Learning</h2>
-        <h4 class="text-white mb-3">Leverage the benefits of Federated learning</h4>
-        <p class="mb-5">We cater to the need for a continuous learning framework on which inferencing can be carried
-            out. Local data processing ensures data security and negates the thread of data infringement of sensitive
-            data. For CCTVs, city-specific algorithms are passed to local servers which helps decentralize data storage.
-            Further, integrating learning from multiple deployments helps reinforce the accuracy of your model.
-            Customized provision for configuring hardware as inference engine and training engine to maximize
-            utilization.</p>
-        <button type="button" class="btn btn-primary btn-lg btn-min-w" (click)="goto('/federated-learning')">Federated
-            Learning</button>
-    </div>
+<div
+  class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-black bg-after-50"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/federated-bg.jpg)' }"
+>
+  <div class="container container-medium text-center z-index-1 text-white">
+    <h2 class="mb-4 text-uppercase text-white">
+      Activate system for Federated Learning
+    </h2>
+    <h4 class="text-white mb-3">Leverage the benefits of Federated learning</h4>
+    <p class="mb-5">
+      We cater to the need for a continuous learning framework on which
+      inferencing can be carried out. Local data processing ensures data
+      security and negates the thread of data infringement of sensitive data.
+      For CCTVs, city-specific algorithms are passed to local servers which
+      helps decentralize data storage. Further, integrating learning from
+      multiple deployments helps reinforce the accuracy of your model.
+      Customized provision for configuring hardware as inference engine and
+      training engine to maximize utilization.
+    </p>
+    <button
+      type="button"
+      class="btn btn-primary btn-lg btn-min-w"
+      (click)="goto('/federated-learning')"
+    >
+      Federated Learning
+    </button>
+  </div>
 </div>
 <!-- federated learning end -->
 
 <!-- contact us start -->
-<div class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-white bg-after-75"
-    [ngStyle]="{'background-image': 'url(/assets/images/banner-bg.jpg)'}">
-    <div class="container container-medium text-center z-index-1 text-white">
-        <h2 class=" mb-4 text-uppercase">Contact Us</h2>
-        <span class="h4 d-block mb-3">We want to hear from you!</span>
-        <span class="h4 d-block">Tel: 123-456-7890</span>
-        <span class="h4 d-block mb-4">Fax: 123-456-7890</span>
-        <span class="h4 d-block mb-4">#02-01, The Ascent, 2 Science Park Dr, Singapore 118222</span>
+<div
+  class="section-padding home-section bg-white d-flex align-items-center justify-content-center bg-after bg-after-white bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/banner-bg.jpg)' }"
+>
+  <div class="container container-medium text-center z-index-1 text-white">
+    <h2 class="mb-4 text-uppercase">Contact Us</h2>
+    <span class="h4 d-block mb-3">We want to hear from you!</span>
+    <span class="h4 d-block">Tel: 123-456-7890</span>
+    <span class="h4 d-block mb-4">Fax: 123-456-7890</span>
+    <span class="h4 d-block mb-4"
+      >#02-01, The Ascent, 2 Science Park Dr, Singapore 118222</span
+    >
 
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <input type="text" class="form-control" placeholder="Name">
-                </div>
-                <div class="form-group col-md-6">
-                    <input type="email" class="form-control" placeholder="Email">
-                </div>
-                <div class="form-group col-md-12">
-                    <input type="email" class="form-control" placeholder="Subject">
-                </div>
-                <div class="form-group col-md-12">
-                    <input type="email" class="form-control" placeholder="Subject">
-                </div>
-                <div class="form-group col-md-12">
-                    <textarea class="form-control" placeholder="Message" rows="4"></textarea>
-                </div>
-                <div class="form-group col-md-12 mb-0">
-                    <button type="button" class="btn btn-primary btn-lg btn-min-w">Submit</button>
-                </div>
-            </div>
-        </form>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="Name" />
+        </div>
+        <div class="form-group col-md-6">
+          <input type="email" class="form-control" placeholder="Email" />
+        </div>
+        <div class="form-group col-md-12">
+          <input type="email" class="form-control" placeholder="Subject" />
+        </div>
 
-    </div>
+        <div class="form-group col-md-12">
+          <textarea
+            class="form-control"
+            placeholder="Message"
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="form-group col-md-12 mb-0">
+          <button type="button" class="btn btn-primary btn-lg btn-min-w">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <!-- contact us end -->

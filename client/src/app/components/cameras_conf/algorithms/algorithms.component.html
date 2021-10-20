@@ -582,7 +582,7 @@
                     <input
                       type="number"
                       class="form-control form-control-transparent px-2"
-                      [(ngModel)]="Aalgos[i].conf"
+                      [(ngModel)]="Dalgos[i].conf"
                       min="0"
                       max="100"
                       value="95"
@@ -611,7 +611,7 @@
                       <input
                         type="checkbox"
                         class="custom-control-input"
-                        [(ngModel)]="Aalgos[i].save"
+                        [(ngModel)]="Dalgos[i].save"
                         [disabled]="
                           algorithm.activated == false ||
                           algorithm.activated == undefined
@@ -628,14 +628,14 @@
                       <input
                         type="number"
                         class="form-control form-control-transparent px-2"
-                        [(ngModel)]="Aalgos[i].time"
+                        [(ngModel)]="Dalgos[i].time"
                         min="0"
                         max="120"
                         [disabled]="
                           algorithm.activated == false ||
                           algorithm.activated == undefined ||
-                          Aalgos[i].save == false ||
-                          Aalgos[i].save == undefined
+                          Dalgos[i].save == false ||
+                          Dalgos[i].save == undefined
                         "
                       />
                       <div class="input-group-append">
