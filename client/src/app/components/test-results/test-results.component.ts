@@ -71,7 +71,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private annotationsServ: AnnotationsService,
-    private facesservices: FacesService,
+    private facesService: FacesService,
     private datepipe: DatePipe,
     private pagerService: PagerService,
     private cdref: ChangeDetectorRef,
@@ -107,13 +107,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.spin = false;
         const result = [];
-
-        // FOR TESTING
-        // res.results.push({
-        //   datasetName: "change_rm_conf3",
-        //   datasetStatus: "Training Completed",
-        // });
-
         for (const element of res.results) {
           if (element.datasetStatus == "Training Completed") {
             element["enable"] = true;
@@ -143,29 +136,51 @@ export class TestResultComponent implements OnInit, OnDestroy {
 
   onSelectRow() {
     this.modalRef.hide();
-    this.annotationsServ.addToAlgorithm(this.modelName).subscribe(
+    const modelNameCheckArray = [];
+    this.facesService.getAlgos().subscribe(
       (res: any) => {
-        console.log(res);
         this.spin = false;
-        if (res.algorithmAdded) {
-          this.annotationsServ.getModel(this.datasetName, this.modelName).subscribe(
+        for (const algorithm of res) {
+          if (algorithm.name === this.modelName) {
+            modelNameCheckArray.push(algorithm.name);
+          }
+        }
+
+        if (modelNameCheckArray.length == 0) {
+          this.annotationsServ
+            .getModel(this.datasetName, this.modelName)
+            .subscribe(
               (res: any) => {
                 if (res.success) {
-                  alert("Training model will be moved to inferencing engine.");
+                  this.annotationsServ.addToAlgorithm(this.modelName).subscribe(
+                    (res: any) => {
+                      console.log(res);
+                      if (res.algorithmAdded) {
+                        alert(
+                          "Training model will be moved to inferencing engine."
+                        );
+                      } else {
+                        alert(res.message);
+                      }
+                    },
+                    (error) => {
+                      console.log(error);
+                    }
+                  );
                 } else {
                   alert(res.error);
                 }
               },
               (err) => {
-                this.spin = false;
                 console.log(err);
               }
             );
         } else {
-          alert(res.message);
+          alert("Model already exists.");
         }
       },
       (error) => {
+        this.spin = false;
         console.log(error);
       }
     );
