@@ -142,31 +142,33 @@ export class TestResultComponent implements OnInit, OnDestroy {
   }
 
   onSelectRow() {
-    this.annotationsServ.getModel(this.datasetName, this.modelName).subscribe(
+    this.modalRef.hide();
+    this.annotationsServ.addToAlgorithm(this.modelName).subscribe(
       (res: any) => {
+        console.log(res);
         this.spin = false;
-        this.modalRef.hide();
-        if (res.success) {
-          this.annotationsServ.addToAlgorithm(this.modelName).subscribe(
-            (res: any) => {
-              console.log(res);
-              if (res.algorithmAdded) {
-                alert("Training model will be moved to inferencing engine.");
-              } else {
-                alert(res.message);
+        if (res.algorithmAdded) {
+          this.annotationsServ
+            .getModel(this.datasetName, this.modelName)
+            .subscribe(
+              (res: any) => {
+                if (res.success) {
+                  alert("Training model will be moved to inferencing engine.");
+                } else {
+                  alert(res.error);
+                }
+              },
+              (err) => {
+                this.spin = false;
+                console.log(err);
               }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+            );
         } else {
-          alert(res.error);
+          alert(res.message);
         }
       },
-      (err) => {
-        this.spin = false;
-        console.log(err);
+      (error) => {
+        console.log(error);
       }
     );
   }

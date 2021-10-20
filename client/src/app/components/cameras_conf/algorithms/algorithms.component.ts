@@ -75,6 +75,7 @@ export class AlgorithmsComponent implements OnInit {
   spin: boolean = false;
   res_width: number;
   res_height: number;
+  roiIds: any = [];
   private canvas;
   private ctx;
   constructor(
@@ -92,6 +93,7 @@ export class AlgorithmsComponent implements OnInit {
     //   console.log('previous url', events[0].urlAfterRedirects);
     //   console.log('current url', events[1].urlAfterRedirects);
     // });
+
     const params = this.activatedRoute.snapshot.params;
     this.facesService.getAlgos().subscribe(
       (res) => {
@@ -99,6 +101,7 @@ export class AlgorithmsComponent implements OnInit {
         console.log("this.algos - ", this.algos);
         for (let i = 0; i < this.algos.length; i++) {
           this.algos[i].conf = 95;
+
           if (this.algos[i]["available"] == 1) {
             if (false) {
               this.Calgos.push(this.algos[i]);
@@ -116,80 +119,7 @@ export class AlgorithmsComponent implements OnInit {
             }
           }
         }
-        this.facesService.getRelations(params.uuid).subscribe(
-          (res) => {
-            this.relations = res;
-            for (let i = 0; i < this.algos.length; i++) {
-              for (let e = 0; e < this.relations.length; e++) {
-                if (this.algos[i].id == this.relations[e]["algo_id"]) {
-                  this.algos[i].activated = true;
-                  if (
-                    this.relations[e]["atributes"] &&
-                    JSON.parse(this.relations[e]["atributes"])[0].conf
-                  ) {
-                    this.algos[i].conf = JSON.parse(
-                      this.relations[e]["atributes"]
-                    )[0].conf;
-                  }
-                }
-                if (this.relations[e]["atributes"] != null) {
-                  if (this.relations[e]["algo_id"] == 1) {
-                    this.climb = JSON.parse(this.relations[e]["atributes"]);
-                  } else if (this.relations[e]["algo_id"] == 7) {
-                    this.unwanted = JSON.parse(this.relations[e]["atributes"]);
-                  } else if (this.relations[e]["algo_id"] == 5) {
-                    this.speed = JSON.parse(this.relations[e]["atributes"]);
-                  } else if (this.relations[e]["algo_id"] == 2) {
-                    this.loiteringTime = JSON.parse(
-                      this.relations[e]["atributes"]
-                    );
-                  } else if (this.relations[e]["algo_id"] == 3) {
-                    this.dac = JSON.parse(this.relations[e]["atributes"]);
-                  } else if (this.relations[e]["algo_id"] == 12) {
-                    this.quantity = JSON.parse(this.relations[e]["atributes"]);
-                  }
-                }
-              }
-              if (this.algos[i].activated == undefined) {
-                this.algos[i].activated = false;
-              }
-            }
-
-            for (let u = 0; u < this.relations.length; u++) {
-              this.relations[u]["roi_id"] = JSON.parse(
-                this.relations[u]["roi_id"]
-              );
-
-              if (this.relations[u]["roi_id"] != null) {
-                for (let l = 0; l < this.relations[u]["roi_id"].length; l++) {
-                  //these parameters is to scalate it according to RoI resolution
-                  this.relations[u]["roi_id"][l]["x"] =
-                    (this.relations[u]["roi_id"][l]["x"] * this.width) /
-                    this.res_width;
-                  this.relations[u]["roi_id"][l]["y"] =
-                    (this.relations[u]["roi_id"][l]["y"] * this.height) /
-                    this.res_height;
-                }
-
-                this.relations[u]["roi_id"].push(this.relations[u]["algo_id"]);
-                this.polygons.push(this.relations[u]["roi_id"]);
-              }
-
-              if (u === this.relations.length - 1 && this.polygons != null) {
-                this.re_draw(true);
-              }
-            }
-
-            // if (this.polygons != null && this.polygon) {
-            //   // condition added for re_draw
-            //   this.re_draw(true);
-            // }
-            this.actA = this.getNbOccur(true, this.Aalgos);
-            this.actB = this.getNbOccur(true, this.Balgos);
-            this.actC = this.getNbOccur(true, this.Calgos);
-          },
-          (err) => console.error(err)
-        );
+        this.getRelationsData();
       },
       (err) => console.error(err)
     );
@@ -371,6 +301,15 @@ export class AlgorithmsComponent implements OnInit {
 
   public onChange(algorithm) {
     if (algorithm.activated == false) {
+      for (const rel of this.relations) {
+        if (
+          String(rel["algo_id"]) === String(algorithm.id) &&
+          this.roiIds.includes(rel["id"])
+        ) {
+          this.roiIds = this.roiIds.filter((e) => e != rel["id"]);
+        }
+      }
+
       for (let i = 0; i < this.polygons.length; i++) {
         if (this.polygons[i][this.polygons[i].length - 1] == algorithm.id) {
           this.polygons[i].push(1);
@@ -388,16 +327,98 @@ export class AlgorithmsComponent implements OnInit {
       for (let i = 0; i < this.polygons.length; i++) {
         this.polygons[i].pop();
       }
+
       this.perimeter = [];
       this.complete = true;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.re_draw(true);
     } else if (algorithm.activated == true) {
       this.complete = true;
+      this.getRelationsData();
     }
+
     this.actA = this.getNbOccur(true, this.Aalgos);
     this.actB = this.getNbOccur(true, this.Balgos);
     this.actC = this.getNbOccur(true, this.Calgos);
+  }
+
+  public getRelationsData() {
+    const params = this.activatedRoute.snapshot.params;
+    this.facesService.getRelations(params.uuid).subscribe(
+      (res) => {
+        this.relations = res;
+        for (let i = 0; i < this.algos.length; i++) {
+          for (let e = 0; e < this.relations.length; e++) {
+            if (this.algos[i].id == this.relations[e]["algo_id"]) {
+              this.algos[i].activated = true;
+
+              if (
+                this.relations[e]["atributes"] != null &&
+                JSON.parse(this.relations[e]["atributes"])[0].conf
+              ) {
+                this.algos[i].conf = JSON.parse(
+                  this.relations[e]["atributes"]
+                )[0].conf;
+              }
+            }
+            if (this.relations[e]["atributes"] != null) {
+              if (this.relations[e]["algo_id"] == 1) {
+                this.climb = JSON.parse(this.relations[e]["atributes"]);
+              } else if (this.relations[e]["algo_id"] == 7) {
+                this.unwanted = JSON.parse(this.relations[e]["atributes"]);
+              } else if (this.relations[e]["algo_id"] == 5) {
+                this.speed = JSON.parse(this.relations[e]["atributes"]);
+              } else if (this.relations[e]["algo_id"] == 2) {
+                this.loiteringTime = JSON.parse(this.relations[e]["atributes"]);
+              } else if (this.relations[e]["algo_id"] == 3) {
+                this.dac = JSON.parse(this.relations[e]["atributes"]);
+              } else if (this.relations[e]["algo_id"] == 12) {
+                this.quantity = JSON.parse(this.relations[e]["atributes"]);
+              }
+            }
+          }
+          if (this.algos[i].activated == undefined) {
+            this.algos[i].activated = false;
+          }
+        }
+
+        for (let u = 0; u < this.relations.length; u++) {
+          this.relations[u]["roi_id"] = JSON.parse(this.relations[u]["roi_id"]);
+
+          if (this.relations[u]["roi_id"] != null) {
+            for (let l = 0; l < this.relations[u]["roi_id"].length; l++) {
+              //these parameters is to scalate it according to RoI resolution
+              this.relations[u]["roi_id"][l]["x"] =
+                (this.relations[u]["roi_id"][l]["x"] * this.width) /
+                this.res_width;
+              this.relations[u]["roi_id"][l]["y"] =
+                (this.relations[u]["roi_id"][l]["y"] * this.height) /
+                this.res_height;
+            }
+
+            this.relations[u]["roi_id"].push(this.relations[u]["algo_id"]);
+
+            if (!this.roiIds.includes(this.relations[u]["id"])) {
+              this.polygons.push(this.relations[u]["roi_id"]);
+              this.roiIds.push(this.relations[u]["id"]);
+            }
+          }
+
+          if (u === this.relations.length - 1 && this.polygons != null) {
+            this.re_draw(true);
+          }
+        }
+
+        // if (this.polygons != null && this.polygon) {
+        //   // condition added for re_draw
+        //   this.re_draw(true);
+        // }
+        this.actA = this.getNbOccur(true, this.Aalgos);
+        this.actB = this.getNbOccur(true, this.Balgos);
+        this.actC = this.getNbOccur(true, this.Calgos);
+      },
+      (err) => console.error(err)
+    );
   }
 
   public showMyMessage = false;
