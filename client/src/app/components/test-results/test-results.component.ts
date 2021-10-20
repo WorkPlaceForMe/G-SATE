@@ -142,7 +142,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   }
 
   onSelectRow() {
-    this.annotationsServ.getModel(this.datasetName).subscribe(
+    this.annotationsServ.getModel(this.datasetName, this.modelName).subscribe(
       (res: any) => {
         this.spin = false;
         this.modalRef.hide();

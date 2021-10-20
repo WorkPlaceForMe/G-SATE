@@ -178,9 +178,11 @@ export class AnnotationsService {
     return this.http.get(`${this.TRAIN_STATUS_URL}/trainStatus`);
   }
 
-  getModel(datasetName: string) {
+  getModel(datasetName: string, modelName: string) {
     const formData = new FormData();
     formData.append("model", datasetName);
+    formData.append("customModelName", modelName);
+    formData.append("customModelTableName", modelName + '_gsate');
     return this.http.post(`${this.TRAIN_STATUS_URL}/getModel`, formData);
   }
 
