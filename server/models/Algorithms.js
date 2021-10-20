@@ -35,7 +35,7 @@ var Algorithm = {
 
   createAlgorithmTable: function (tableName, callback) {
     return db.query(
-      `create table IF NOT EXISTS ${tableName}_gsate(track_id VARCHAR(250) NOT NULL, time DATE NOT NULL, class VARCHAR(250) NOT NULL, camera_name VARCHAR(250), cam_id VARCHAR(250), id_account VARCHAR(250), id_branch VARCHAR(250), image_path VARCHAR(500), x1 DECIMAL(6,4), x2 DECIMAL(6,4), y1 DECIMAL(6,4), y2 DECIMAL(6,4), cam_width DECIMAL(6,4), cam_height DECIMAL(6,4), snippet_id VARCHAR(250))`,
+      `create table IF NOT EXISTS ${tableName}_gsate(track_id VARCHAR(250), time DATE, class VARCHAR(250), camera_name VARCHAR(250), cam_id VARCHAR(250), id_account VARCHAR(250), id_branch VARCHAR(250), image_path VARCHAR(500), x1 VARCHAR(250), x2 VARCHAR(250), y1 VARCHAR(250), y2 VARCHAR(250), cam_width VARCHAR(250), cam_height VARCHAR(250), snippet_id VARCHAR(250))`,
       callback,
     )
   },

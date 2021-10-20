@@ -17145,3 +17145,18 @@ Server started at: Mon Oct 18 2021 19:39:17 GMT+0530 (India Standard Time)
 From: localhost
 Using port 3000 for server and 4444 for socket. 
 Date: Mon, 18 Oct 2021 14:09:51 GMT // Url: 127.0.0.1 // Method: POST/api/algorithm // Status:200 // User-agent: PostmanRuntime/7.6.0
+Server started at: Wed Oct 20 2021 18:19:09 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Oct 20 2021 18:27:29 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Oct 20 2021 18:27:57 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Wed, 20 Oct 2021 12:59:56 GMT // Url: 127.0.0.1 // Method: GET/api/algorithm // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 20 Oct 2021 12:59:58 GMT // Url: 127.0.0.1 // Method: OPTIONS/api/algorithm // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 20 Oct 2021 13:00:00 GMT // Url: 127.0.0.1 // Method: POST/api/algorithm // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Wed Oct 20 2021 19:08:54 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
