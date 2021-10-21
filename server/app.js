@@ -39,6 +39,7 @@ const Stream = require('node-rtsp-stream')
 const sharp = require('sharp')
 const Annotation = require('./routes/Annotation')
 const PpeDetection = require('./routes/PpeDetection')
+const Home = require('./routes/Home')
 
 app.use(
   express.json({
@@ -128,6 +129,7 @@ app.use('/api/relations', Relations)
 app.use('/api/rel', Rel)
 app.use('/api/annotations', Annotation)
 app.use('/api/ppe/detection', PpeDetection)
+app.use('/api/home', Home)
 
 /** Serving from the same express Server
 No cors required */

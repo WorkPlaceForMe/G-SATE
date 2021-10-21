@@ -1019,3 +1019,4 @@
 07-05-2021 10:33:37 PM - error: image7.jpg: RangeError [ERR_BUFFER_OUT_OF_BOUNDS]: Attempt to access memory outside buffer bounds
 07-05-2021 10:37:20 PM - error: vlcsnap-2019-11-29-17h26m55s206.png: RequestError: Error: connect ETIMEDOUT 54.210.219.113:443
 07-05-2021 10:38:36 PM - error: vlcsnap-2019-11-29-17h27m05s738.png: RequestError: Error: connect ETIMEDOUT 54.210.219.113:443
+21-10-2021 03:54:57 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/video_test_2'

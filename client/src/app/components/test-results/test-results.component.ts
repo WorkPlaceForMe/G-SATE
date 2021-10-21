@@ -135,6 +135,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   }
 
   onSelectRow() {
+    this.spin = true;
     this.modalRef.hide();
     const modelNameCheckArray = [];
     this.facesService.getAlgos().subscribe(

@@ -158,27 +158,116 @@
       >#02-01, The Ascent, 2 Science Park Dr, Singapore 118222</span
     >
 
-    <form>
+    <div
+      class="d-flex justify-content-center position-fixed loader"
+      *ngIf="spin"
+    >
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <form [formGroup]="contactsForm" (ngSubmit)="onContactSubmit()">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <input type="text" class="form-control" placeholder="Name" />
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Name"
+          />
+          <span
+            style="float: left"
+            *ngIf="
+              !contactsForm.controls.name.valid &&
+              contactsForm.controls.name.touched
+            "
+            class="error text-danger"
+          >
+            <span *ngIf="contactsForm.controls.name.hasError('required')">
+              Please enter your name
+            </span>
+            <span *ngIf="contactsForm.controls.name.hasError('minlength')">
+              Name must be atleast 3 characters long
+            </span>
+          </span>
         </div>
         <div class="form-group col-md-6">
-          <input type="email" class="form-control" placeholder="Email" />
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Email"
+          />
+          <span
+            style="float: left"
+            *ngIf="
+              !contactsForm.controls.email.valid &&
+              contactsForm.controls.email.touched
+            "
+            class="error text-danger"
+          >
+            <span *ngIf="contactsForm.controls.email.hasError('required')">
+              Please enter your email
+            </span>
+            <span *ngIf="contactsForm.controls.email.hasError('email')">
+              Please enter a valid email address
+            </span>
+          </span>
         </div>
         <div class="form-group col-md-12">
-          <input type="email" class="form-control" placeholder="Subject" />
+          <input
+            type="text"
+            class="form-control"
+            formControlName="subject"
+            placeholder="Subject"
+          />
+          <span
+            style="float: left"
+            *ngIf="
+              !contactsForm.controls.subject.valid &&
+              contactsForm.controls.subject.touched
+            "
+            class="error text-danger"
+          >
+            <span *ngIf="contactsForm.controls.subject.hasError('required')">
+              Please enter the subject
+            </span>
+            <span *ngIf="contactsForm.controls.subject.hasError('minlength')">
+              Subject must be atleast 3 characters long
+            </span>
+          </span>
         </div>
 
         <div class="form-group col-md-12">
           <textarea
             class="form-control"
+            formControlName="message"
             placeholder="Message"
             rows="4"
           ></textarea>
+          <span
+            style="float: left"
+            *ngIf="
+              !contactsForm.controls.message.valid &&
+              contactsForm.controls.message.touched
+            "
+            class="error text-danger"
+          >
+            <span *ngIf="contactsForm.controls.message.hasError('required')">
+              Please enter a message
+            </span>
+            <span *ngIf="contactsForm.controls.message.hasError('minlength')">
+              Message must be atleast 3 characters long
+            </span>
+          </span>
         </div>
         <div class="form-group col-md-12 mb-0">
-          <button type="button" class="btn btn-primary btn-lg btn-min-w">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-min-w"
+            [disabled]="!contactsForm.valid"
+          >
             Submit
           </button>
         </div>
