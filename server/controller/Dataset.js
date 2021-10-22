@@ -16,6 +16,7 @@ const requestImageSize = require('request-image-size')
 const logger = require('../helpers/logger')
 const Process = require('../models/Process')
 const elastic = require('elasticsearch')
+var Algorithm = require('../models/Algorithms')
 
 const makeRandomString = (length) => {
   var result = []
@@ -557,6 +558,7 @@ let Dataset = {
   },
   createDataset: async (req, res) => {
     const body = req.body
+    console.log(body, 'reqBody')
     if (body.name.includes('.mov')) {
       body.name = body.name.replace('.mov', '')
       body.format = '.mov'
@@ -574,6 +576,7 @@ let Dataset = {
         pathExist = true
       }
       let snippetId = uuidv4()
+      console.log(snippetId, 'snippet id')
       let accId = uuidv4()
       let cam_id = body.cam_id
       let datasetName = body.datasetName
@@ -622,6 +625,7 @@ let Dataset = {
             if (err) return res.status(500).json(err)
             for (const itm of result) {
               console.log('itm - ', itm)
+              console.log(snippetId, 'line 628')
               let d = {
                 id: uuidv4(),
                 camera_id: cam_id,
@@ -670,6 +674,121 @@ let Dataset = {
       console.log('error>>>>>>>>>>', e)
     }
   },
+  // createDataset: async (req, res) => {
+  //   const body = req.body
+  //   if (body.name.includes('.mov')) {
+  //     body.name = body.name.replace('.mov', '')
+  //     body.format = '.mov'
+  //   }
+  //   try {
+  //     let pathExist = false
+  //     let directory =
+  //       process.env.resources2 + 'recordings/' + body.datasetName + '.mp4'
+  //     let datasetDir = process.env.resources2 + 'datasets/' + body.datasetName
+  //     let absDir =
+  //       process.env.resources2 + 'recordings/' + body.datasetName + '.mp4'
+  //     if (!fs.existsSync(datasetDir)) {
+  //       fs.mkdirSync(datasetDir)
+  //     } else {
+  //       pathExist = true
+  //     }
+  //     let snippetId = uuidv4()
+  //     let accId = uuidv4()
+  //     let cam_id = body.cam_id
+  //     let datasetName = body.datasetName
+  //     let promise1 = new Promise((resolve, reject) => {
+  //       ffmpeg(body.stream)
+  //         .format('mp4')
+  //         .seekInput('00:00:00')
+  //         .duration(`${body.t}`)
+  //         .saveToFile(directory)
+  //         .on('end', function (stdout, stderr) {
+  //           resolve('Done')
+  //         })
+  //     })
+  //     let promise2 = new Promise((resolve, reject) => {
+  //       ffmpeg(body.stream)
+  //         //.format('mp4')
+  //         .seekInput('00:00:00')
+  //         .outputOptions([`-vf fps=${body.fps}`])
+  //         .duration(`${body.t}`)
+  //         .saveToFile(datasetDir + '/' + Date.now() + '-image%d.jpg')
+  //         .on('end', function (stdout, stderr) {
+  //           resolve('Done!!')
+  //         })
+  //     })
+  //     await Promise.all([promise1, promise2])
+  //     let data = {
+  //       cam_id: cam_id,
+  //       clientId: uuidv4(),
+  //       name: datasetName,
+  //       path: absDir,
+  //       processed: 'No',
+  //       class: 'data',
+  //       type: 'video',
+  //       uploaded: 'Yes',
+  //       snippet_id: snippetId,
+  //     }
+  //     //--------
+  //     fs.exists(absDir, (exists) => {
+  //       console.log(exists ? absDir + ' - Found' : absDir + ' - Not Found!')
+  //     })
+  //     //--------
+  //     if (!pathExist) {
+  //       Datasets.add(data, function (err, row) {
+  //         if (err) return res.status(500).json(err)
+  //         Relations.getRels(cam_id, function (err, result) {
+  //           if (err) return res.status(500).json(err)
+  //           for (const itm of result) {
+  //             console.log('itm - ', itm)
+  //             let d = {
+  //               id: uuidv4(),
+  //               camera_id: cam_id,
+  //               algo_id: itm.algo_id,
+  //               snippet_id: snippetId,
+  //               roi_id: null,
+  //               atributes: `[{"conf": ${itm.conf}, "save": true, "time": 0, "fps":${body.fps}}]`,
+  //               id_account: accId,
+  //               id_branch: accId,
+  //               stream: null,
+  //               createdAt: new Date(),
+  //               updatedAt: new Date(),
+  //               http_out: null,
+  //               completed: 'No',
+  //             }
+  //             Relations.create(d, function (err, r) {
+  //               if (err) console.log('err>>>>>>>>>>>>>>>>', err)
+  //             })
+  //           }
+  //           let data = {
+  //             cam_id: cam_id,
+  //             clientId: uuidv4(),
+  //             name: datasetName,
+  //             path: datasetDir,
+  //             processed: 'Yes',
+  //             class: 'data',
+  //             type: 'zip',
+  //             uploaded: 'Yes',
+  //             snippet_id: uuidv4(),
+  //           }
+  //           //--------
+  //           fs.exists(datasetDir, (exists) => {
+  //             console.log(
+  //               exists ? datasetDir + ' - Found' : datasetDir + ' - Not Found!',
+  //             )
+  //           })
+  //           //--------
+  //           Datasets.add(data, function (err, row) {
+  //             if (err) return res.status(500).json(err)
+  //             res.status(200).json('Dataset created successfully!')
+  //           })
+  //         })
+  //       })
+  //     }
+  //   } catch (e) {
+  //     console.log('error>>>>>>>>>>', e)
+  //   }
+  // },
   unzipDataset: async (req, res) => {
     let pathExist
 
@@ -996,119 +1115,258 @@ let processByVista = (name) => {
   })
 }
 
-let table = {
-  0: 'person_gsate',
-  1: 'vehicle_gsate',
-  2: 'clothing_gsate',
-  16: 'ppe_gsate',
-  17: 'defects_gsate',
-}
+// let table = {
+//   0: 'person_gsate',
+//   1: 'vehicle_gsate',
+//   2: 'clothing_gsate',
+//   16: 'ppe_gsate',
+//   17: 'defects_gsate',
+// }
+
+// let processByAnalytics = (name) => {
+//   console.log('******* Process By Analytics ********* ')
+//   let result = []
+//   let index = 0
+//   let count = 0
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       Datasets.listOneByTypeVideo(name, function (err, dataset) {
+//         if (err) reject(err)
+
+//         if (dataset.length === 0) resolve('Dataset does not exists.')
+//         Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function (
+//           err,
+//           rows,
+//         ) {
+//           if (err) reject(err)
+
+//           if (rows.length > 0) {
+//             for (const itm of rows) {
+//               if (itm.algo_id !== '18') {
+//                 console.log('----Entered----')
+//                 let data = {
+//                   table: table[itm.algo_id],
+//                   snippet_id: itm.snippet_id,
+//                 }
+//                 ++index
+//                 await Algorithms.fetchAlgoData(data).then((resp) => {
+//                   for (const element of resp) {
+//                     if (
+//                       (table[itm.algo_id] == 'ppe_gsate' ||
+//                         table[itm.algo_id] == 'defects_gsate') &&
+//                       element.class == 'person'
+//                     ) {
+//                       console.log('======> Excluding person')
+//                     } else {
+//                       // console.log('======> Including data')
+//                       let cl =
+//                         table[itm.algo_id] == 'person_gsate'
+//                           ? 'person'
+//                           : table[itm.algo_id] == 'vehicle_gsate'
+//                           ? element.class
+//                           : table[itm.algo_id] == 'clothing_gsate'
+//                           ? 'clothes'
+//                           : table[itm.algo_id] == 'ppe_gsate'
+//                           ? element.class
+//                           : element.class
+
+//                       let obj = {
+//                         image:
+//                           '/assets/shared-data/' +
+//                           element.image_path.split('/').splice(5, 5).join('/'),
+//                         width: element.cam_width,
+//                         height: element.cam_height,
+//                         checked: true,
+//                         resultObject: {
+//                           class: cl,
+//                           boundingBox: {
+//                             left: element.x1,
+//                             top: element.y1,
+//                             width: element.x2 - element.x1,
+//                             height: element.y2 - element.y1,
+//                           },
+//                         },
+//                       }
+//                       result.push(obj)
+//                     }
+//                   }
+//                 })
+//               }
+//             }
+
+//             console.log(result.length, '>>>>>>result array length')
+//             // preparing final response by concating result if duplicate image data found
+//             const responseArray = []
+//             for (const resultData of result) {
+//               const resultObj = {
+//                 id: count,
+//                 image: resultData.image,
+//                 width: resultData.width,
+//                 height: resultData.height,
+//                 checked: resultData.checked,
+//                 results: {
+//                   Object: [],
+//                 },
+//               }
+
+//               for (let i = 0; i < responseArray.length; i++) {
+//                 if (responseArray[i].image === resultObj.image) {
+//                   resultObj['duplicate'] = true
+//                   responseArray[i].results.Object.push(resultData.resultObject)
+//                 }
+//               }
+
+//               if (!resultObj.duplicate) {
+//                 resultObj.results.Object.push(resultData.resultObject)
+//                 responseArray.push(resultObj)
+//                 ++count
+//               }
+//             }
+//             console.log(responseArray.length, '>>>>>>response array length')
+//             resolve(responseArray)
+//           } else {
+//             resolve([])
+//           }
+//         })
+//       })
+//     } catch (err) {
+//       reject(err)
+//     }
+//   })
+// }
 
 let processByAnalytics = (name) => {
+  const table = {
+    0: 'person_gsate',
+    1: 'vehicle_gsate',
+    2: 'clothing_gsate',
+    16: 'ppe_gsate',
+    17: 'defects_gsate',
+  }
+
   console.log('******* Process By Analytics ********* ')
   let result = []
   let index = 0
   let count = 0
   return new Promise(async (resolve, reject) => {
     try {
-      Datasets.listOneByTypeVideo(name, function (err, dataset) {
-        if (err) reject(err)
+      Algorithm.getCustomAlgorithms(function (err, algos) {
+        if (err) {
+          res.json(err)
+        } else {
+          for (const algo of algos) {
+            table[algo.id] = `${algo.name}_gsate`
+          }
+          console.log(table)
+          Datasets.listOneByTypeVideo(name, function (err, dataset) {
+            if (err) reject(err)
 
-        if (dataset.length === 0) resolve('Dataset does not exists.')
-        Relations.getRelsFromSnippetId(dataset[0].snippet_id, async function (
-          err,
-          rows,
-        ) {
-          if (err) reject(err)
+            if (dataset.length === 0) resolve('Dataset does not exists.')
+            Relations.getRelsFromSnippetId(
+              dataset[0].snippet_id,
+              async function (err, rows) {
+                if (err) reject(err)
 
-          if (rows.length > 0) {
-            for (const itm of rows) {
-              if (itm.algo_id !== '18') {
-                console.log('----Entered----')
-                let data = {
-                  table: table[itm.algo_id],
-                  snippet_id: itm.snippet_id,
-                }
-                ++index
-                await Algorithms.fetchAlgoData(data).then((resp) => {
-                  for (const element of resp) {
-                    if (
-                      (table[itm.algo_id] == 'ppe_gsate' ||
-                        table[itm.algo_id] == 'defects_gsate') &&
-                      element.class == 'person'
-                    ) {
-                      console.log('======> Excluding person')
-                    } else {
-                      // console.log('======> Including data')
-                      let cl =
-                        table[itm.algo_id] == 'person_gsate'
-                          ? 'person'
-                          : table[itm.algo_id] == 'vehicle_gsate'
-                          ? element.class
-                          : table[itm.algo_id] == 'clothing_gsate'
-                          ? 'clothes'
-                          : table[itm.algo_id] == 'ppe_gsate'
-                          ? element.class
-                          : element.class
-
-                      let obj = {
-                        image:
-                          '/assets/shared-data/' +
-                          element.image_path.split('/').splice(5, 5).join('/'),
-                        width: element.cam_width,
-                        height: element.cam_height,
-                        checked: true,
-                        resultObject: {
-                          class: cl,
-                          boundingBox: {
-                            left: element.x1,
-                            top: element.y1,
-                            width: element.x2 - element.x1,
-                            height: element.y2 - element.y1,
-                          },
-                        },
+                if (rows.length > 0) {
+                  for (const itm of rows) {
+                    console.log(itm.algo_id, 'algo id')
+                    if (itm.algo_id !== '18') {
+                      console.log('----Entered----')
+                      let data = {
+                        table: table[itm.algo_id],
+                        snippet_id: itm.snippet_id,
                       }
-                      result.push(obj)
+                      ++index
+                      await Algorithms.fetchAlgoData(data).then((resp) => {
+                        for (const element of resp) {
+                          if (
+                            (table[itm.algo_id] == 'ppe_gsate' ||
+                              table[itm.algo_id] == 'defects_gsate') &&
+                            element.class == 'person'
+                          ) {
+                            console.log('======> Excluding person')
+                          } else {
+                            // console.log('======> Including data')
+                            let cl =
+                              table[itm.algo_id] == 'person_gsate'
+                                ? 'person'
+                                : table[itm.algo_id] == 'vehicle_gsate'
+                                ? element.class
+                                : table[itm.algo_id] == 'clothing_gsate'
+                                ? 'clothes'
+                                : table[itm.algo_id] == 'ppe_gsate'
+                                ? element.class
+                                : element.class
+
+                            let obj = {
+                              image:
+                                '/assets/shared-data/' +
+                                element.image_path
+                                  .split('/')
+                                  .splice(5, 5)
+                                  .join('/'),
+                              width: element.cam_width,
+                              height: element.cam_height,
+                              checked: true,
+                              resultObject: {
+                                class: cl,
+                                boundingBox: {
+                                  left: element.x1,
+                                  top: element.y1,
+                                  width: element.x2 - element.x1,
+                                  height: element.y2 - element.y1,
+                                },
+                              },
+                            }
+                            result.push(obj)
+                          }
+                        }
+                      })
                     }
                   }
-                })
-              }
-            }
 
-            console.log(result.length, '>>>>>>result array length')
-            // preparing final response by concating result if duplicate image data found
-            const responseArray = []
-            for (const resultData of result) {
-              const resultObj = {
-                id: count,
-                image: resultData.image,
-                width: resultData.width,
-                height: resultData.height,
-                checked: resultData.checked,
-                results: {
-                  Object: [],
-                },
-              }
+                  console.log(result.length, '>>>>>>result array length')
+                  // preparing final response by concating result if duplicate image data found
+                  const responseArray = []
+                  for (const resultData of result) {
+                    const resultObj = {
+                      id: count,
+                      image: resultData.image,
+                      width: resultData.width,
+                      height: resultData.height,
+                      checked: resultData.checked,
+                      results: {
+                        Object: [],
+                      },
+                    }
 
-              for (let i = 0; i < responseArray.length; i++) {
-                if (responseArray[i].image === resultObj.image) {
-                  resultObj['duplicate'] = true
-                  responseArray[i].results.Object.push(resultData.resultObject)
+                    for (let i = 0; i < responseArray.length; i++) {
+                      if (responseArray[i].image === resultObj.image) {
+                        resultObj['duplicate'] = true
+                        responseArray[i].results.Object.push(
+                          resultData.resultObject,
+                        )
+                      }
+                    }
+
+                    if (!resultObj.duplicate) {
+                      resultObj.results.Object.push(resultData.resultObject)
+                      responseArray.push(resultObj)
+                      ++count
+                    }
+                  }
+                  console.log(
+                    responseArray.length,
+                    '>>>>>>response array length',
+                  )
+                  resolve(responseArray)
+                } else {
+                  resolve([])
                 }
-              }
-
-              if (!resultObj.duplicate) {
-                resultObj.results.Object.push(resultData.resultObject)
-                responseArray.push(resultObj)
-                ++count
-              }
-            }
-            console.log(responseArray.length, '>>>>>>response array length')
-            resolve(responseArray)
-          } else {
-            resolve([])
-          }
-        })
+              },
+            )
+          })
+        }
       })
     } catch (err) {
       reject(err)

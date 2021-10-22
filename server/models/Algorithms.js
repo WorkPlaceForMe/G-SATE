@@ -39,6 +39,13 @@ var Algorithm = {
       callback,
     )
   },
+
+  getCustomAlgorithms: function (callback) {
+    return db.query(
+      `SELECT * FROM algorithms where custom_trained='1'`,
+      callback,
+    )
+  },
 }
 
 module.exports = Algorithm
