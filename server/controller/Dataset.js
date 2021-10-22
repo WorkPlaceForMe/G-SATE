@@ -626,13 +626,14 @@ let Dataset = {
             for (const itm of result) {
               console.log('itm - ', itm)
               console.log(snippetId, 'line 628')
+              const conf = JSON.parse(itm.atributes)[0].conf
               let d = {
                 id: uuidv4(),
                 camera_id: cam_id,
                 algo_id: itm.algo_id,
                 snippet_id: snippetId,
                 roi_id: null,
-                atributes: `[{"conf": ${itm.conf}, "save": true, "time": 0, "fps":${body.fps}}]`,
+                atributes: `[{"conf": ${conf}, "save": true, "time": 0, "fps":${body.fps}}]`,
                 id_account: accId,
                 id_branch: accId,
                 stream: null,
