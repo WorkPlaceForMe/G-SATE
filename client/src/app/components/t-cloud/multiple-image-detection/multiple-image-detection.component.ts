@@ -565,34 +565,41 @@ export class MultipleImageDetectionComponent implements OnInit {
             res.vista_processing[0]
           );
           let dumArray = [];
-          res.analytics_processing.forEach((value, index) => {
-            value["checked"] = true;
-            value["detection_method"] = "Analytics API";
-            dumArray.push(value);
-          });
-          res.vista_processing.forEach((value, index) => {
-            value["checked"] = true;
-            value["detection_method"] = "Vista API";
-            dumArray.push(value);
-          });
-          this.data = dumArray;
-          this.datasetFlag = true;
-          this.data.map((value, index) => {
-            value["source_result"] = JSON.stringify(value.results);
-            value["annotationType"] = "";
-            this.annObj[value.id] = {
-              image: value.image,
-              width: value.width,
-              height: value.height,
-              canvas_width: "",
-              canvas_height: "",
-              results: value["results"],
-              source_result: value["source_result"],
-              fixedSize: value.length,
-              annotationType: value.annotationType,
-            };
-          });
-          this.setPage(1);
+          if (res.analytics_processing.length > 0) {
+            res.analytics_processing.forEach((value, index) => {
+              value["checked"] = true;
+              value["detection_method"] = "Analytics API";
+              dumArray.push(value);
+            });
+            res.vista_processing.forEach((value, index) => {
+              value["checked"] = true;
+              value["detection_method"] = "Vista API";
+              dumArray.push(value);
+            });
+            this.data = dumArray;
+            this.datasetFlag = true;
+            this.data.map((value, index) => {
+              value["source_result"] = JSON.stringify(value.results);
+              value["annotationType"] = "";
+              this.annObj[value.id] = {
+                image: value.image,
+                width: value.width,
+                height: value.height,
+                canvas_width: "",
+                canvas_height: "",
+                results: value["results"],
+                source_result: value["source_result"],
+                fixedSize: value.length,
+                annotationType: value.annotationType,
+              };
+            });
+            this.setPage(1);
+          } else {
+            alert(
+              "No result found with the searched query. Please try again with other words."
+            );
+            this._location.back();
+          }
         },
         (error) => {
           this.spin = false;
@@ -665,9 +672,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         e++
       ) {
         if (e == this.id) {
-          this.data[this.selectedImageIndex]["results"][
-            e
-          ][3].label = this.newLabel;
+          this.data[this.selectedImageIndex]["results"][e][3].label =
+            this.newLabel;
         }
       }
       this.re_draw();
@@ -1017,9 +1023,8 @@ export class MultipleImageDetectionComponent implements OnInit {
         0,
         len
       );
-      this.data[this.selectedImageIndex]["actualResults"] = this.data[
-        this.selectedImageIndex
-      ]["results"];
+      this.data[this.selectedImageIndex]["actualResults"] =
+        this.data[this.selectedImageIndex]["results"];
       this.data[this.selectedImageIndex]["results"] = limitedArray;
     }
 
@@ -1265,9 +1270,8 @@ export class MultipleImageDetectionComponent implements OnInit {
     let clickedElement = event.target || event.srcElement;
 
     if (clickedElement.nodeName === "BUTTON") {
-      let isCertainButtonAlreadyActive = document.querySelector(
-        ".button-active"
-      );
+      let isCertainButtonAlreadyActive =
+        document.querySelector(".button-active");
       // if a Button already has Class: .active
       if (isCertainButtonAlreadyActive) {
         isCertainButtonAlreadyActive.classList.remove("button-active");
