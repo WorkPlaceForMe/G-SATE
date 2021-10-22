@@ -22,7 +22,6 @@ var Relations = {
   },
 
   create: function (relation, callback) {
-    console.log(relation, 'relation create data')
     return db.query(
       'INSERT INTO relations values (?,?,?,?,?,?,?,?,?,?,?,?,?)',
       [
