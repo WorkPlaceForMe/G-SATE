@@ -19,6 +19,7 @@
     "express": "~4.16.0",
     "express-graceful-exit": "^0.5.0",
     "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.4.0",
     "fluent-ffmpeg": "^2.1.2",
     "http-errors": "~1.6.2",
     "image-size": "^0.8.3",
@@ -30,6 +31,7 @@
     "mysql": "^2.17.1",
     "node-rtsp-stream": "0.0.9",
     "nodemon": "^2.0.2",
+    "path": "^0.12.7",
     "piexifjs": "^1.0.4",
     "request": "^2.88.2",
     "request-image-size": "^2.2.0",
@@ -39,6 +41,7 @@
     "socket.io": "^2.3.0",
     "unzipper": "^0.10.5",
     "uuid": "^8.3.2",
+    "video-stitch": "^1.7.1",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.4",
     "yargs": "^15.0.2"

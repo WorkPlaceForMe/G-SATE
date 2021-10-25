@@ -191,6 +191,14 @@ export class FacesService {
     return this.http.put(`${this.API_URI}/cameras/newRt/${id}`, cam);
   }
   uploadVideoToVista(req) {
-    return this.http.post(`${this.API_URI}/datasets/process/vista/upload-video`, req);
+    return this.http.post(
+      `${this.API_URI}/datasets/process/vista/upload-video`,
+      req
+    );
+  }
+  mergeVideo(file: any) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return this.http.post(`${this.API_URI}/video/merge`, formData);
   }
 }
