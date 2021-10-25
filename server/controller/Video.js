@@ -283,10 +283,13 @@ let Video = {
               if (result) {
                 const videoClips = [
                   {
-                    fileName: result.rtsp_in,
+                    fileName: path.resolve(__dirname, result.rtsp_in),
                   },
                   {
-                    fileName: `${process.env.resources2}stored_videos/${req.file.originalname}`,
+                    fileName: path.resolve(
+                      __dirname,
+                      `${process.env.resources2}stored_videos/${req.file.originalname}`,
+                    ),
                   },
                 ]
                 console.log(videoClips, '..........................videoClips')
@@ -299,7 +302,7 @@ let Video = {
                   ffmpeg_path: ffmpegStatic,
                 })
                   .clips(videoClips)
-                  .output(imgString)
+                  .output(path.resolve(__dirname, result.rtsp_in))
                   .concat()
                   .then((outputFileName) => {
                     console.log(outputFileName, '.........outputFileName')
