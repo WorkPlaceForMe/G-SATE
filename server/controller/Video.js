@@ -282,10 +282,16 @@ let Video = {
               console.log(result)
               if (result) {
                 const videoClips = [
-                  result.rtsp_in,
-                  `${process.env.resources2}stored_videos/${req.file.originalname}`,
+                  {
+                    fileName: result.rtsp_in,
+                  },
+                  {
+                    fileName: `${process.env.resources2}stored_videos/${req.file.originalname}`,
+                  },
                 ]
                 console.log(videoClips, '..........................videoClips')
+
+                const imgString = result.rtsp_in
 
                 videoConcat({
                   silent: false,
@@ -293,7 +299,7 @@ let Video = {
                   ffmpeg_path: ffmpegStatic,
                 })
                   .clips(videoClips)
-                  .output(result.rtsp_in)
+                  .output(imgString)
                   .concat()
                   .then((outputFileName) => {
                     console.log(outputFileName, '.........outputFileName')
