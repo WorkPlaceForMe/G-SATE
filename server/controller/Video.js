@@ -287,6 +287,7 @@ let Video = {
                     `${process.env.resources2}stored_videos/${req.file.originalname}`,
                   ),
                 ]
+                console.log(videoClips, '..........................videoClips')
 
                 videoConcat({
                   silent: false,
@@ -297,10 +298,12 @@ let Video = {
                   .output(path.join(__dirname, result.rtsp_in))
                   .concat()
                   .then((outputFileName) => {
+                    console.log(outputFileName, '.........outputFileName')
                     ffmpeg.ffprobe(
                       `${process.env.resources2}stored_videos/${req.file.originalname}`,
                       function (err, metadata) {
                         //console.dir(metadata); // all metadata
+                        console.log(1)
                         let data = {
                           id: req.params.id,
                           vid_length: `${new Date(
@@ -309,6 +312,7 @@ let Video = {
                             .toISOString()
                             .substr(11, 8)}`,
                         }
+                        console.log(data, '......data')
                         Camera.updateCameraTable(data, function (err, cam) {
                           if (err) {
                             console.log(
