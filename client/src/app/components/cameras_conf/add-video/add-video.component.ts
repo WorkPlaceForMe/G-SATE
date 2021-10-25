@@ -24,6 +24,7 @@ export class AddVideoComponent implements OnInit {
   constructor(private router: Router, private facesService: FacesService) {}
 
   @ViewChild("fileInput", { static: false }) fileInputVariable: any;
+
   public uploader: FileUploader = new FileUploader({
     url: URL,
     itemAlias: "file",
@@ -156,7 +157,7 @@ export class AddVideoComponent implements OnInit {
   //   }
   // }
 
-  uploa() {
+  uploa1() {
     if (this.cameraName) {
       URL = URL + "/" + this.cameraName;
     }
@@ -168,5 +169,34 @@ export class AddVideoComponent implements OnInit {
     this.uploader.uploadAll();
     console.log(this.name);
     console.log(this.cameraName);
+  }
+
+  uploa() {
+    console.log(this.name);
+
+    console.log(this.cameraName);
+    console.log(this.fileName);
+    if (this.name == "") {
+      this.facesService
+        .mergeVideo(
+          this.cameraName,
+          this.fileInputVariable.nativeElement.files[0]
+        )
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.cameraName == "";
+            this.fileName = null;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    } else if (this.cameraName == "") {
+      this.up = true;
+      this.load = true;
+      this.fileInputVariable.nativeElement.value = "";
+      this.uploader.uploadAll();
+    }
   }
 }

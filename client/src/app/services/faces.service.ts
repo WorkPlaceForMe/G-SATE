@@ -196,9 +196,9 @@ export class FacesService {
       req
     );
   }
-  mergeVideo(file: any) {
+  mergeVideo(id: string, file: any) {
     const formData = new FormData();
     formData.append("file", file);
-    return this.http.post(`${this.API_URI}/video/merge`, formData);
+    return this.http.post(`${this.API_URI}/video/merge/${id}`, formData);
   }
 }

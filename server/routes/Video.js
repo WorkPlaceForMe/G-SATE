@@ -6,7 +6,7 @@ router.post('/upload', function (req, res, next) {
   videoController.upload(req, res)
 })
 
-router.post('/merge', function (req, res, next) {
+router.post('/merge/:id', function (req, res, next) {
   videoController.merge(req, res)
 })
 
