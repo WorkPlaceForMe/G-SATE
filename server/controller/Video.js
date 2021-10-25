@@ -295,7 +295,11 @@ let Video = {
                 ]
                 console.log(videoClips, '..........................videoClips')
 
-                const imgString = result.rtsp_in
+                const outputFile = path.resolve(
+                  __dirname,
+                  '../',
+                  `${process.env.resources2}stored_videos/${Date.now()}.mp4`,
+                )
 
                 videoConcat({
                   silent: false,
@@ -303,48 +307,49 @@ let Video = {
                   ffmpeg_path: ffmpegStatic,
                 })
                   .clips(videoClips)
-                  .output(
-                    path.resolve(
-                      __dirname,
-                      '../',
-                      '../resources/stored_videos/testTemp.mp4',
-                    ),
-                  )
+                  .output(outputFile)
                   .concat()
                   .then((outputFileName) => {
                     console.log(outputFileName, '.........outputFileName')
-                    ffmpeg.ffprobe(
-                      `${process.env.resources2}stored_videos/${req.file.originalname}`,
-                      function (err, metadata) {
-                        //console.dir(metadata); // all metadata
-                        console.log(1)
-                        let data = {
-                          id: req.params.id,
-                          vid_length: `${new Date(
-                            metadata.format.duration * 1000,
-                          )
-                            .toISOString()
-                            .substr(11, 8)}`,
-                        }
-                        console.log(data, '......data')
-                        Camera.updateCameraTable(data, function (err, cam) {
+
+                    ffmpeg.ffprobe(outputFile, function (err, metadata) {
+                      //console.dir(metadata); // all metadata
+                      console.log(1)
+                      let data = {
+                        id: req.params.id,
+                        vid_length: `${new Date(metadata.format.duration * 1000)
+                          .toISOString()
+                          .substr(11, 8)}`,
+                      }
+                      console.log(data, '......data')
+                      fs.rename(
+                        outputFile,
+                        path.resolve(__dirname, '../', result.rtsp_in),
+                        (err) => {
                           if (err) {
-                            console.log(
-                              'Error adding video to camera table : ',
-                              err,
-                            )
+                            console.log(err)
                             res.status(500).json(err)
                           } else {
-                            res.status(200).send({
-                              success: true,
-                              message: 'Video merged successfully!',
-                              name: outputFileName,
-                              id: req.params.id,
+                            Camera.updateCameraTable(data, function (err, cam) {
+                              if (err) {
+                                console.log(
+                                  'Error adding video to camera table : ',
+                                  err,
+                                )
+                                res.status(500).json(err)
+                              } else {
+                                res.status(200).send({
+                                  success: true,
+                                  message: 'Video merged successfully!',
+                                  name: outputFileName,
+                                  id: req.params.id,
+                                })
+                              }
                             })
                           }
-                        })
-                      },
-                    )
+                        },
+                      )
+                    })
                   })
                   .catch((err) => {
                     console.log('Error merging video : ', err)
