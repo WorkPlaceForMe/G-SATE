@@ -303,7 +303,13 @@ let Video = {
                   ffmpeg_path: ffmpegStatic,
                 })
                   .clips(videoClips)
-                  .output(path.resolve(__dirname, '../', result.rtsp_in))
+                  .output(
+                    path.resolve(
+                      __dirname,
+                      '../',
+                      '../resources/stored_videos/testTemp.mp4',
+                    ),
+                  )
                   .concat()
                   .then((outputFileName) => {
                     console.log(outputFileName, '.........outputFileName')
