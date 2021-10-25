@@ -157,19 +157,19 @@ export class AddVideoComponent implements OnInit {
   //   }
   // }
 
-  uploa1() {
-    if (this.cameraName) {
-      URL = URL + "/" + this.cameraName;
-    }
-    console.log(URL);
+  // uploa1() {
+  //   if (this.cameraName) {
+  //     URL = URL + "/" + this.cameraName;
+  //   }
+  //   console.log(URL);
 
-    this.up = true;
-    this.load = true;
-    this.fileInputVariable.nativeElement.value = "";
-    this.uploader.uploadAll();
-    console.log(this.name);
-    console.log(this.cameraName);
-  }
+  //   this.up = true;
+  //   this.load = true;
+  //   this.fileInputVariable.nativeElement.value = "";
+  //   this.uploader.uploadAll();
+  //   console.log(this.name);
+  //   console.log(this.cameraName);
+  // }
 
   uploa() {
     console.log(this.name);
@@ -185,7 +185,7 @@ export class AddVideoComponent implements OnInit {
         .subscribe(
           (res) => {
             console.log(res);
-            this.cameraName == "";
+            this.cameraName = "";
             this.fileName = null;
           },
           (err) => {

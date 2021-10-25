@@ -341,7 +341,7 @@ let Video = {
                                 res.status(200).send({
                                   success: true,
                                   message: 'Video merged successfully!',
-                                  name: outputFileName,
+                                  name: req.file.originalname.split('.')[0],
                                   id: req.params.id,
                                 })
                               }
