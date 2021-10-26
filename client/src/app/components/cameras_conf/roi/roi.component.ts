@@ -30,6 +30,7 @@ export class ROIComponent implements OnInit {
   @Input() private src: string;
   @Output() private created = new EventEmitter();
   @ViewChild("polygon", { static: true }) private polygon: ElementRef;
+  // @Input() conf: string;
 
   link: SafeResourceUrl;
   x: number;
@@ -889,13 +890,18 @@ export class ROIComponent implements OnInit {
         }
         string = JSON.stringify(this.polygons[e]);
         this.relation.roi_id = string;
-        this.relation.atributes = atr;
-        if (atr == null && this.atrCache != null) {
-          this.relation.atributes = this.atrCache;
-        }
+        // this.relation.atributes = atr;
+        // if (atr == null && this.atrCache != null) {
+        //   this.relation.atributes = this.atrCache;
+        // }
         this.relation.algo_id = this.id;
         this.relation.camera_id = params.uuid;
         this.relation.id = uuidv4();
+        this.relation.atributes =
+          '[{"fps": 1, "conf": ' +
+          this.activatedRoute.snapshot.queryParams.conf +
+          ', "save": true, "time": 0}]';
+        console.log(this.relation);
         this.facesService.saveRelation(this.relation).subscribe(
           (res) => {
             console.log(res);
@@ -949,13 +955,19 @@ export class ROIComponent implements OnInit {
 
           string = JSON.stringify(this.polygons[e]);
           this.relation.roi_id = string;
-          this.relation.atributes = atr;
-          if (atr == null && this.atrCache != null) {
-            this.relation.atributes = this.atrCache;
-          }
+          // this.relation.atributes = atr;
+          // if (atr == null && this.atrCache != null) {
+          //   this.relation.atributes = this.atrCache;
+          // }
           this.relation.algo_id = this.id;
           this.relation.camera_id = params.uuid;
           this.relation.id = uuidv4();
+          this.relation.atributes =
+            '[{"fps": 1, "conf": ' +
+            this.activatedRoute.snapshot.queryParams.conf +
+            ', "save": true, "time": 0}]';
+          console.log(this.relation);
+
           this.facesService.saveRelation(this.relation).subscribe(
             (res) => {
               console.log(res);

@@ -168,6 +168,7 @@
                   <button
                     class="btn btn-sm btn-primary"
                     [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [queryParams]="{ conf: Aalgos[i].conf }"
                     [disabled]="
                       algorithm.activated == false ||
                       algorithm.activated == undefined
@@ -302,6 +303,7 @@
                   <button
                     class="btn btn-sm btn-primary"
                     [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [queryParams]="{ conf: Balgos[i].conf }"
                     [disabled]="
                       algorithm.activated == false ||
                       algorithm.activated == undefined
@@ -436,6 +438,7 @@
                   <button
                     class="btn btn-sm btn-primary"
                     [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [queryParams]="{ conf: Calgos[i].conf }"
                     [disabled]="
                       algorithm.activated == false ||
                       algorithm.activated == undefined
@@ -565,6 +568,7 @@
                   <button
                     class="btn btn-sm btn-primary"
                     [routerLink]="['/cameras/algorithms/', param, algorithm.id]"
+                    [queryParams]="{ conf: Dalgos[i].conf }"
                     [disabled]="
                       algorithm.activated == false ||
                       algorithm.activated == undefined
