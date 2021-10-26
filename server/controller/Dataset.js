@@ -571,8 +571,10 @@ let Dataset = {
       let absDir =
         process.env.resources2 + 'recordings/' + body.datasetName + '.mp4'
       if (!fs.existsSync(datasetDir)) {
+        console.log(1)
         fs.mkdirSync(datasetDir)
       } else {
+        console.log(2)
         pathExist = true
       }
       let snippetId = uuidv4()
@@ -616,6 +618,8 @@ let Dataset = {
       fs.exists(absDir, (exists) => {
         console.log(exists ? absDir + ' - Found' : absDir + ' - Not Found!')
       })
+
+      console.log(pathExist, '.........................pathExist')
       //--------
       if (!pathExist) {
         Datasets.add(data, function (err, row) {
@@ -640,6 +644,7 @@ let Dataset = {
                 http_out: null,
                 completed: 'No',
               }
+              console.log(d)
               Relations.create(d, function (err, r) {
                 if (err) console.log('err>>>>>>>>>>>>>>>>', err)
               })
@@ -668,8 +673,6 @@ let Dataset = {
             })
           })
         })
-      } else {
-        // merge video
       }
     } catch (e) {
       console.log('error>>>>>>>>>>', e)
@@ -802,6 +805,7 @@ let Dataset = {
     })
   },
   imageSeachDataset: (req, res) => {
+    console.log(req.body)
     let directory = process.env.resources2 + 'search_images_json/'
     if (!fs.existsSync(directory)) {
       fs.mkdirSync(directory)
