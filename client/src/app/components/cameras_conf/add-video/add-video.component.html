@@ -3,7 +3,7 @@
   [ngStyle]="{ 'background-image': 'url(/assets/images/federated-bg.jpg)' }"
 >
   <div class="container container-medium text-center z-index-1 text-white">
-    <h2 class="mb-4 text-uppercase text-white">Add a Video</h2>
+    <h2 class="mb-4 text-white">Add a Video (Only .mp4 file format is supported)</h2>
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8 col-xl-6">
         <div class="p-5 custom-card rounded text-left">
@@ -45,6 +45,7 @@
               <div class="custom-file">
                 <input
                   type="file"
+                  accept="video/mp4"
                   (change)="change()"
                   [uploader]="uploader"
                   ng2FileSelect

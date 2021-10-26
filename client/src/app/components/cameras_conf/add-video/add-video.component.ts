@@ -21,7 +21,7 @@ export class AddVideoComponent implements OnInit {
   cameraList: any = [];
   cameraName: string = "";
 
-  constructor(private router: Router, private facesService: FacesService) {}
+  constructor(private router: Router, private facesService: FacesService) { }
 
   @ViewChild("fileInput", { static: false }) fileInputVariable: any;
 
@@ -49,22 +49,18 @@ export class AddVideoComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      debugger;
       this.up = false;
-      // this.load = false;
       this.fileInputVariable.nativeElement.value = "";
       this.fileName = null;
       this.name = "";
       this.facesService.doOneImage(JSON.parse(response).id).subscribe(
         (res) => {
-          debugger;
           console.log(res);
           this.router.navigate([
             "/cameras/algorithms/" + JSON.parse(response).id,
           ]);
         },
         (err) => {
-          debugger;
           console.log(err);
           this.router.navigate([
             "/cameras/algorithms/" + JSON.parse(response).id,
@@ -107,7 +103,7 @@ export class AddVideoComponent implements OnInit {
     if (file !== "video") {
       this.up = false;
       alert("File format not supported");
-    } else if (format === "avi" || format === "AVI") {
+    } else if (format !== 'mp4') {
       this.up = false;
       alert("File format not supported");
     } else {
@@ -173,25 +169,33 @@ export class AddVideoComponent implements OnInit {
 
   uploa() {
     console.log(this.name);
-
     console.log(this.cameraName);
     console.log(this.fileName);
     if (this.name == "") {
-      this.facesService
-        .mergeVideo(
-          this.cameraName,
-          this.fileInputVariable.nativeElement.files[0]
-        )
-        .subscribe(
-          (res) => {
-            console.log(res);
-            this.cameraName = "";
-            this.fileName = null;
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
+      this.facesService.mergeVideo(this.cameraName, this.fileInputVariable.nativeElement.files[0]).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.cameraName = "";
+          this.fileName = null;
+
+          this.up = false;
+          this.fileInputVariable.nativeElement.value = "";
+          this.name = "";
+          this.facesService.doOneImage(response.id).subscribe(
+            (res) => {
+              console.log(res);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            },
+            (err) => {
+              console.log(err);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            }
+          );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     } else if (this.cameraName == "") {
       this.up = true;
       this.load = true;
