@@ -182,11 +182,19 @@ export class AnnotationsService {
     const formData = new FormData();
     formData.append("model", datasetName);
     formData.append("customModelName", modelName);
-    formData.append("customModelTableName", modelName + '_gsate');
+    formData.append("customModelTableName", modelName + "_gsate");
     return this.http.post(`${this.TRAIN_STATUS_URL}/getModel`, formData);
   }
 
   addToAlgorithm(name: string) {
     return this.http.post(`${this.API_URL}/algorithm`, { name });
+  }
+
+  getCustomTrainedModels() {
+    return this.http.get(`${this.API_URL}/algorithm/custom`);
+  }
+
+  deleteCustomAlgorithm(id: string) {
+    return this.http.delete(`${this.API_URL}/algorithm/custom/${id}`);
   }
 }

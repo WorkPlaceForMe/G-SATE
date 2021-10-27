@@ -1,201 +1,202 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { FaceFormComponent } from './components/facial_recognition/face-form/face-form.component';
-import { ImagesFormComponent } from './components/facial_recognition/images-form/images-form.component';
-import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
-import { ScheduleComponent } from './components/facial_recognition/schedule/schedule.component';
-import { SettingsComponent } from './components/settings/settings.component';
-import { LiveComponent } from './components/cameras_conf/livestream/live.component';
-import { HeatmapComponent } from './components/cameras_conf/heatmap/heatmap.component';
-import { FaceListComponent } from './components/facial_recognition/face-list/face-list.component';
-import { VidComponent } from './components/cameras_conf/add_camera/vid.component';
-import { ROIComponent } from './components/cameras_conf/roi/roi.component';
-import { AnalyticsComponent } from './components/analytics/analytics.component';
-import { AlgorithmsComponent } from './components/cameras_conf/algorithms/algorithms.component';
-import { SearchComponent } from './components/facial_recognition/search/search.component';
-import { TCloudDashboardComponent } from './components/t-cloud/t-cloud-dashboard/t-cloud-dashboard.component';
-import { ClimbingBarricadeComponent } from './components/others/main_docs/climbing-barricade.component';
-import { SingleImageDetectionComponent } from './components/t-cloud/single-image-detection/single-image-detection.component';
-import { SpeedingVehicleComponent } from './components/t-cloud/video_to_frames/speeding-vehicle.component';
-import { UnwantedVehicleComponent } from './components/t-cloud/images_classification/unwanted-vehicle.component';
-import { LivestreamComponent } from './components/cameras_conf/camera_list/livestream.component';
-import { ObjectDetectionComponent } from './components/t-cloud/object-detection/object-detection.component';
-import { ObjDetImgComponent } from './components/t-cloud/obj-det-img/obj-det-img.component';
-import { MultipleImageDetectionComponent } from './components/t-cloud/multiple-image-detection/multiple-image-detection.component';
-import { AnnotationsDetailsComponent } from './components/t-cloud/annotations-details/annotations-details.component';
-import { AddVideoComponent } from './components/cameras_conf/add-video/add-video.component';
-import { AnnotationsConfirmComponent } from './components/t-cloud/annotations-confirm/annotations-confirm.component';
-import { ObjectDetectionConfirmComponent } from './components/t-cloud/object-detection-confirm/object-detection-confirm.component';
-import { ObjectDetectionDetailsComponent } from './components/t-cloud/object-detection-details/object-detection-details.component';
-import { FederatedLearningComponent } from './components/federated-learning/federated-learning.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { TestYourModelComponent } from './components/test-your-model/test-your-model.component';
-import { TestResultComponent } from './components/test-results/test-results.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
+import { FaceFormComponent } from "./components/facial_recognition/face-form/face-form.component";
+import { ImagesFormComponent } from "./components/facial_recognition/images-form/images-form.component";
+import { PagenotfoundComponent } from "./components/pagenotfound/pagenotfound.component";
+import { ScheduleComponent } from "./components/facial_recognition/schedule/schedule.component";
+import { SettingsComponent } from "./components/settings/settings.component";
+import { LiveComponent } from "./components/cameras_conf/livestream/live.component";
+import { HeatmapComponent } from "./components/cameras_conf/heatmap/heatmap.component";
+import { FaceListComponent } from "./components/facial_recognition/face-list/face-list.component";
+import { VidComponent } from "./components/cameras_conf/add_camera/vid.component";
+import { ROIComponent } from "./components/cameras_conf/roi/roi.component";
+import { AnalyticsComponent } from "./components/analytics/analytics.component";
+import { AlgorithmsComponent } from "./components/cameras_conf/algorithms/algorithms.component";
+import { SearchComponent } from "./components/facial_recognition/search/search.component";
+import { TCloudDashboardComponent } from "./components/t-cloud/t-cloud-dashboard/t-cloud-dashboard.component";
+import { ClimbingBarricadeComponent } from "./components/others/main_docs/climbing-barricade.component";
+import { SingleImageDetectionComponent } from "./components/t-cloud/single-image-detection/single-image-detection.component";
+import { SpeedingVehicleComponent } from "./components/t-cloud/video_to_frames/speeding-vehicle.component";
+import { UnwantedVehicleComponent } from "./components/t-cloud/images_classification/unwanted-vehicle.component";
+import { LivestreamComponent } from "./components/cameras_conf/camera_list/livestream.component";
+import { ObjectDetectionComponent } from "./components/t-cloud/object-detection/object-detection.component";
+import { ObjDetImgComponent } from "./components/t-cloud/obj-det-img/obj-det-img.component";
+import { MultipleImageDetectionComponent } from "./components/t-cloud/multiple-image-detection/multiple-image-detection.component";
+import { AnnotationsDetailsComponent } from "./components/t-cloud/annotations-details/annotations-details.component";
+import { AddVideoComponent } from "./components/cameras_conf/add-video/add-video.component";
+import { AnnotationsConfirmComponent } from "./components/t-cloud/annotations-confirm/annotations-confirm.component";
+import { ObjectDetectionConfirmComponent } from "./components/t-cloud/object-detection-confirm/object-detection-confirm.component";
+import { ObjectDetectionDetailsComponent } from "./components/t-cloud/object-detection-details/object-detection-details.component";
+import { FederatedLearningComponent } from "./components/federated-learning/federated-learning.component";
+import { HomePageComponent } from "./components/home-page/home-page.component";
+import { TestYourModelComponent } from "./components/test-your-model/test-your-model.component";
+import { TestResultComponent } from "./components/test-results/test-results.component";
+import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
 
 const routes: Routes = [
   {
-    path: 'management',
-    component: FaceListComponent
+    path: "management",
+    component: FaceListComponent,
   },
   {
-    path: 'user/schedule/:id',
-    component: ScheduleComponent
+    path: "user/schedule/:id",
+    component: ScheduleComponent,
   },
   {
-    path: 'user/edit/:uuid',
-    component: FaceFormComponent
+    path: "user/edit/:uuid",
+    component: FaceFormComponent,
   },
   {
-    path: 'user/add',
-    component: FaceFormComponent
+    path: "user/add",
+    component: FaceFormComponent,
   },
   {
-    path: 'annotations',
-    component: TCloudDashboardComponent
+    path: "annotations",
+    component: TCloudDashboardComponent,
   },
   {
-    path: 'home',
-    component: HomePageComponent
+    path: "home",
+    component: HomePageComponent,
   },
   {
-    path: 'federated-learning',
-    component: FederatedLearningComponent
+    path: "federated-learning",
+    component: FederatedLearningComponent,
   },
   {
-    path: 'test-results',
-    component: TestResultComponent
+    path: "test-results",
+    component: TestResultComponent,
   },
   {
-    path: 'user/images/:id',
-    component: ImagesFormComponent
+    path: "custom-trained-models",
+    component: CustomTrainedModelsComponent,
   },
   {
-    path: 'settings',
-    component: SettingsComponent
+    path: "user/images/:id",
+    component: ImagesFormComponent,
   },
   {
-    path: 'cameras/live/:id',
-    component: LiveComponent
+    path: "settings",
+    component: SettingsComponent,
   },
   {
-    path: 'cameras/heatmap/:uuid',
-    component: HeatmapComponent
+    path: "cameras/live/:id",
+    component: LiveComponent,
   },
   {
-    path: 'classify/:choose',
-    component: UnwantedVehicleComponent
+    path: "cameras/heatmap/:uuid",
+    component: HeatmapComponent,
   },
   {
-    path: 'prediction/:choose',
-    component: UnwantedVehicleComponent
+    path: "classify/:choose",
+    component: UnwantedVehicleComponent,
   },
   {
-    path: 'cameras/algorithms/:uuid/:id',
-    component: ROIComponent
+    path: "prediction/:choose",
+    component: UnwantedVehicleComponent,
   },
   {
-    path: 'user/search',
-    component: SearchComponent
+    path: "cameras/algorithms/:uuid/:id",
+    component: ROIComponent,
   },
   {
-    path: 'camerasList',
-    component: LivestreamComponent
+    path: "user/search",
+    component: SearchComponent,
   },
   {
-    path: 'annotations/dataset/:method/:folder/:image',
-    component: MultipleImageDetectionComponent
+    path: "camerasList",
+    component: LivestreamComponent,
   },
   {
-    path: 'annotations/dataset/:method/:folder/:image/details',
-    component: ObjectDetectionDetailsComponent
+    path: "annotations/dataset/:method/:folder/:image",
+    component: MultipleImageDetectionComponent,
   },
   {
-    path: 'annotations/objectDetection/confirm',
-    component: ObjectDetectionConfirmComponent
+    path: "annotations/dataset/:method/:folder/:image/details",
+    component: ObjectDetectionDetailsComponent,
   },
   {
-    path: 'annotations/:method/:folder/:image',
-    component: SingleImageDetectionComponent
+    path: "annotations/objectDetection/confirm",
+    component: ObjectDetectionConfirmComponent,
   },
   {
-    path: 'annotations/:method/:folder/:image/details',
-    component: AnnotationsDetailsComponent
+    path: "annotations/:method/:folder/:image",
+    component: SingleImageDetectionComponent,
   },
   {
-    path: 'annotations/save',
-    component: AnnotationsDetailsComponent
+    path: "annotations/:method/:folder/:image/details",
+    component: AnnotationsDetailsComponent,
   },
   {
-    path: 'annotations/confirm',
-    component: AnnotationsConfirmComponent
+    path: "annotations/save",
+    component: AnnotationsDetailsComponent,
+  },
+  {
+    path: "annotations/confirm",
+    component: AnnotationsConfirmComponent,
   },
   /* {
     path: 'objectDetection/:folder/:image',
     component: SingleImageDetectionComponent
   }, */
   {
-    path: 'annotation/video/:cam_name/:date',
-    component: SpeedingVehicleComponent
+    path: "annotation/video/:cam_name/:date",
+    component: SpeedingVehicleComponent,
   },
   {
-    path: 'cameras/edit/:uuid',
-    component: VidComponent
+    path: "cameras/edit/:uuid",
+    component: VidComponent,
   },
   {
-    path: 'cameras/add_camera',
-    component: VidComponent
+    path: "cameras/add_camera",
+    component: VidComponent,
   },
   {
-    path: 'cameras/add_video',
-    component: AddVideoComponent
+    path: "cameras/add_video",
+    component: AddVideoComponent,
   },
   {
-    path: 'analytics',
-    component: AnalyticsComponent
+    path: "analytics",
+    component: AnalyticsComponent,
   },
   {
-    path: 'cameras/algorithms/:uuid',
-    component: AlgorithmsComponent
+    path: "cameras/algorithms/:uuid",
+    component: AlgorithmsComponent,
   },
   {
-    path: 'documents',
-    component: ClimbingBarricadeComponent
+    path: "documents",
+    component: ClimbingBarricadeComponent,
   },
   {
-    path: 'objectDetection',
-    component: ObjectDetectionComponent
+    path: "objectDetection",
+    component: ObjectDetectionComponent,
   },
   {
-    path: 'objectDetection/img/label',
-    component: SingleImageDetectionComponent
+    path: "objectDetection/img/label",
+    component: SingleImageDetectionComponent,
   },
   {
-    path: 'test-your-model',
-    component: TestYourModelComponent
+    path: "test-your-model",
+    component: TestYourModelComponent,
   },
   {
-    path: '',
+    path: "",
     // redirectTo: 'annotations',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    redirectTo: "home",
+    pathMatch: "full",
   },
   {
-    path: '**',
-    component: PagenotfoundComponent
-  }
+    path: "**",
+    component: PagenotfoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(
-      routes,
-      {
-        preloadingStrategy: PreloadAllModules,
-        scrollPositionRestoration: 'enabled'
-      },
-    )
-    
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      scrollPositionRestoration: "enabled",
+    }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -70,6 +70,22 @@ var Relations = {
       callback,
     )
   },
+
+  deleteByAlgoId: function (algoId, callback) {
+    return db.query(
+      'DELETE FROM relations WHERE algo_id = ?',
+      [algoId],
+      callback,
+    )
+  },
+
+  deleteFromRelationR: function (algoId, callback) {
+    return db.query(
+      'DELETE FROM relation_r WHERE algo_id = ?',
+      [algoId],
+      callback,
+    )
+  },
 }
 
 module.exports = Relations

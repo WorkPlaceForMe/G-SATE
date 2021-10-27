@@ -78,6 +78,7 @@ import { TestResultComponent } from "./components/test-results/test-results.comp
 import { UiSwitchModule } from "ngx-toggle-switch";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ModalModule } from "ngx-bootstrap/modal";
+import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -124,6 +125,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     TestYourModelComponent,
     FooterComponent,
     TestResultComponent,
+    CustomTrainedModelsComponent,
   ],
   imports: [
     BrowserModule,

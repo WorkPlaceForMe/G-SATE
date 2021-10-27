@@ -46,6 +46,18 @@ var Algorithm = {
       callback,
     )
   },
+
+  getCustomAlgorithmById: function (id, callback) {
+    return db.query('SELECT * FROM algorithms where id = ?', [id], callback)
+  },
+
+  deleteAlgorithm: function (id, callback) {
+    return db.query('DELETE FROM algorithms where id = ?', [id], callback)
+  },
+
+  dropTable: function (tableName, callback) {
+    return db.query(`DROP TABLE IF EXISTS ${tableName}`, callback)
+  },
 }
 
 module.exports = Algorithm
