@@ -138,6 +138,8 @@ router.delete('/custom/:id', function (req, res, next) {
                           ),
                         )
 
+                        console.log(path.resolve(__dirname, '../'))
+
                         console.log(
                           path.resolve(
                             __dirname,
@@ -145,6 +147,16 @@ router.delete('/custom/:id', function (req, res, next) {
                             `${process.env.resources3}`,
                           ),
                         )
+
+                        console.log(
+                          path.resolve(
+                            __dirname,
+                            '../',
+                            `${process.env.resources3}`,
+                            '../../',
+                          ),
+                        )
+
                         console.log('new')
 
                         const dirName = path.resolve(
@@ -180,6 +192,20 @@ router.delete('/custom/:id', function (req, res, next) {
       }
     }
   })
+})
+
+router.get('/test', function (req, res, next) {
+  console.log(path.resolve(__dirname, '../', `${process.env.resources2}`))
+
+  console.log(path.resolve(__dirname, '../'))
+
+  console.log(path.resolve(__dirname, '../', `${process.env.resources3}`))
+
+  console.log(
+    path.resolve(__dirname, '../', `${process.env.resources3}`, '../../'),
+  )
+
+  res.status(200).send('ok')
 })
 
 module.exports = router
