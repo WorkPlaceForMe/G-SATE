@@ -121,62 +121,17 @@ router.delete('/custom/:id', function (req, res, next) {
                       if (err) {
                         res.json(err)
                       } else {
-                        // const dirName = path.join(
-                        //   __dirname,
-                        //   '../../',
-                        //   `handle/tritonserver/models/${customAlgo[0].name}`,
-                        // )
-
-                        // console.log(path.resolve(__dirname))
-                        // console.log(path.resolve(__dirname, '../'))
-
-                        console.log(
-                          path.resolve(
-                            __dirname,
-                            '../',
-                            `${process.env.resources2}`,
-                          ),
-                        )
-
-                        console.log(path.resolve(__dirname, '../'))
-
-                        console.log(
-                          path.resolve(
-                            __dirname,
-                            '../',
-                            `${process.env.resources3}`,
-                          ),
-                        )
-
-                        console.log(
-                          path.resolve(
-                            __dirname,
-                            '../',
-                            `${process.env.resources3}`,
-                            '../../',
-                          ),
-                        )
-
-                        console.log('new')
-
-                        // const dirName = path.resolve(
-                        //   __dirname,
-                        //   '../',
-                        //   `handle/tritonserver/models/${customAlgo[0].name}`,
-                        // )
-
                         const dirName = path.resolve(
                           __dirname,
                           '../',
                           `${process.env.resources3}`,
-                          './../',
-                          `handle/tritonserver/models/${customAlgo[0].name}`,
+                          `./../handle/tritonserver/models/${customAlgo[0].name}`,
                         )
 
                         console.log(dirName, 'dirName')
                         if (fs.existsSync(dirName)) {
                           console.log('dir exists')
-                          // fs.rmdirSync(dirName, { recursive: true })
+                          fs.rmdirSync(dirName, { recursive: true })
                           if (fs.existsSync(dirName)) {
                             console.log('dir not deleted')
                           } else {
@@ -203,33 +158,67 @@ router.delete('/custom/:id', function (req, res, next) {
   })
 })
 
-router.get('/test', function (req, res, next) {
-  console.log(path.resolve(__dirname, '../', `${process.env.resources3}`))
+// router.get('/test', function (req, res, next) {
+//   // const dirName = path.join(
+//   //   __dirname,
+//   //   '../../',
+//   //   `handle/tritonserver/models/${customAlgo[0].name}`,
+//   // )
 
-  console.log(
-    path.resolve(__dirname, '../', `${process.env.resources3}`, './../'),
-  )
+//   // console.log(path.resolve(__dirname))
+//   // console.log(path.resolve(__dirname, '../'))
 
-  console.log(
-    path.resolve(
-      __dirname,
-      '../',
-      `${process.env.resources3}`,
-      './../',
-      `handle/tritonserver/models/`,
-    ),
-  )
+//   console.log(path.resolve(__dirname, '../', `${process.env.resources2}`))
 
-  console.log(
-    path.resolve(
-      __dirname,
-      '../',
-      `${process.env.resources3}`,
-      `./../handle/tritonserver/models/`,
-    ),
-  )
+//   console.log(path.resolve(__dirname, '../'))
 
-  res.status(200).send('ok')
-})
+//   console.log(path.resolve(__dirname, '../', `${process.env.resources3}`))
+
+//   console.log(
+//     path.resolve(__dirname, '../', `${process.env.resources3}`, '../../'),
+//   )
+
+//   console.log('new')
+
+//   // const dirName = path.resolve(
+//   //   __dirname,
+//   //   '../',
+//   //   `handle/tritonserver/models/${customAlgo[0].name}`,
+//   // )
+
+//   // const dirName = path.resolve(
+//   //   __dirname,
+//   //   '../',
+//   //   `${process.env.resources3}`,
+//   //   './../',
+//   //   `handle/tritonserver/models/${customAlgo[0].name}`,
+//   // )
+//   console.log(path.resolve(__dirname, '../', `${process.env.resources3}`))
+
+//   console.log(
+//     path.resolve(__dirname, '../', `${process.env.resources3}`, './../'),
+//   )
+
+//   console.log(
+//     path.resolve(
+//       __dirname,
+//       '../',
+//       `${process.env.resources3}`,
+//       './../',
+//       `handle/tritonserver/models/`,
+//     ),
+//   )
+
+//   console.log(
+//     path.resolve(
+//       __dirname,
+//       '../',
+//       `${process.env.resources3}`,
+//       `./../handle/tritonserver/models/`,
+//     ),
+//   )
+
+//   res.status(200).send('ok')
+// })
 
 module.exports = router
