@@ -164,6 +164,15 @@ router.delete('/custom/:id', function (req, res, next) {
                           '../',
                           `handle/tritonserver/models/${customAlgo[0].name}`,
                         )
+
+                        const dirName = path.resolve(
+                          __dirname,
+                          '../',
+                          `${process.env.resources3}`,
+                          './../',
+                          `/handle/tritonserver/models/${customAlgo[0].name}`,
+                        )
+
                         console.log(dirName, 'dirName')
                         if (fs.existsSync(dirName)) {
                           console.log('dir exists')
@@ -199,6 +208,16 @@ router.get('/test', function (req, res, next) {
 
   console.log(
     path.resolve(__dirname, '../', `${process.env.resources3}`, './../'),
+  )
+
+  console.log(
+    path.resolve(
+      __dirname,
+      '../',
+      `${process.env.resources3}`,
+      './../',
+      `/handle/tritonserver/models/`,
+    ),
   )
 
   res.status(200).send('ok')
