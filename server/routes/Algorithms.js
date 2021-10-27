@@ -121,12 +121,21 @@ router.delete('/custom/:id', function (req, res, next) {
                       if (err) {
                         res.json(err)
                       } else {
-                        const dirName = path.join(
+                        // const dirName = path.join(
+                        //   __dirname,
+                        //   '../../',
+                        //   `handle/tritonserver/models/${customAlgo[0].name}`,
+                        // )
+
+                        console.log(path.resolve(__dirname))
+                        console.log(path.resolve(__dirname, '../'))
+
+                        const dirName = path.resolve(
                           __dirname,
-                          '../../',
+                          '../',
                           `handle/tritonserver/models/${customAlgo[0].name}`,
                         )
-                        console.log(dirName)
+                        console.log(dirName, 'dirName')
                         if (fs.existsSync(dirName)) {
                           console.log('dir exists')
                           // fs.rmdirSync(dirName, { recursive: true })
