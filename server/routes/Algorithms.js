@@ -170,7 +170,7 @@ router.delete('/custom/:id', function (req, res, next) {
                           '../',
                           `${process.env.resources3}`,
                           './../',
-                          `/handle/tritonserver/models/${customAlgo[0].name}`,
+                          `handle/tritonserver/models/${customAlgo[0].name}`,
                         )
 
                         console.log(dirName, 'dirName')
@@ -216,7 +216,16 @@ router.get('/test', function (req, res, next) {
       '../',
       `${process.env.resources3}`,
       './../',
-      `/handle/tritonserver/models/`,
+      `handle/tritonserver/models/`,
+    ),
+  )
+
+  console.log(
+    path.resolve(
+      __dirname,
+      '../',
+      `${process.env.resources3}`,
+      `./../handle/tritonserver/models/`,
     ),
   )
 
