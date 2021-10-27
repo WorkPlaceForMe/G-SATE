@@ -127,8 +127,25 @@ router.delete('/custom/:id', function (req, res, next) {
                         //   `handle/tritonserver/models/${customAlgo[0].name}`,
                         // )
 
-                        console.log(path.resolve(__dirname))
-                        console.log(path.resolve(__dirname, '../'))
+                        // console.log(path.resolve(__dirname))
+                        // console.log(path.resolve(__dirname, '../'))
+
+                        console.log(
+                          path.resolve(
+                            __dirname,
+                            '../',
+                            `${process.env.resources2}`,
+                          ),
+                        )
+
+                        console.log(
+                          path.resolve(
+                            __dirname,
+                            '../',
+                            `${process.env.resources3}`,
+                          ),
+                        )
+                        console.log('new')
 
                         const dirName = path.resolve(
                           __dirname,
