@@ -13,6 +13,8 @@ export class CustomTrainedModelsComponent implements OnInit {
   modalRef: BsModalRef;
   modelId: string = "";
   columns: any = [];
+  loadingIndicator = true;
+  reorderable = true;
   modalWarning: string = "";
 
   constructor(
