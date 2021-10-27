@@ -53,6 +53,7 @@ export class CustomTrainedModelsComponent implements OnInit {
       (err) => {
         this.spin = false;
         console.log(err);
+        alert(err.message);
       }
     );
   }

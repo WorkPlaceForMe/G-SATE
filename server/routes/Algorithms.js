@@ -141,7 +141,7 @@ router.delete('/custom/:id', function (req, res, next) {
         console.log(dirName, 'dirName')
         if (fs.existsSync(dirName)) {
           console.log('dir exists')
-          fs.rmdirSync(dirName, { recursive: true })
+          //  fs.rmdirSync(dirName, { recursive: true })
           if (fs.existsSync(dirName)) {
             console.log('dir not deleted')
             return res
