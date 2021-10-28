@@ -21,7 +21,7 @@ export class AddVideoComponent implements OnInit {
   cameraList: any = [];
   cameraName: string = "";
 
-  constructor(private router: Router, private facesService: FacesService) { }
+  constructor(private router: Router, private facesService: FacesService) {}
 
   @ViewChild("fileInput", { static: false }) fileInputVariable: any;
 
@@ -103,7 +103,7 @@ export class AddVideoComponent implements OnInit {
     if (file !== "video") {
       this.up = false;
       alert("File format not supported");
-    } else if (format !== 'mp4') {
+    } else if (format !== "mp4") {
       this.up = false;
       alert("File format not supported");
     } else {
@@ -118,84 +118,40 @@ export class AddVideoComponent implements OnInit {
     }
   }
 
-  // uploa1() {
-  //   this.up = true;
-  //   this.load = true;
-  //   this.fileInputVariable.nativeElement.value = "";
-  //   this.uploader.uploadAll();
-  //   console.log(this.name);
-  //   console.log(this.cameraName);
-  // }
-
-  // uploa() {
-  //   console.log(this.name);
-
-  //   console.log(this.cameraName);
-  //   console.log(this.fileName);
-  //   if (this.name == "") {
-  //     this.facesService
-  //       .mergeVideo(this.fileInputVariable.nativeElement.files[0])
-  //       .subscribe(
-  //         (res) => {
-  //           console.log(res);
-  //           this.cameraName == "";
-  //           this.fileName = null;
-  //         },
-  //         (err) => {
-  //           console.log(err);
-  //         }
-  //       );
-  //   } else if (this.cameraName == "") {
-  //     this.up = true;
-  //     this.load = true;
-  //     this.fileInputVariable.nativeElement.value = "";
-  //     this.uploader.uploadAll();
-  //   }
-  // }
-
-  // uploa1() {
-  //   if (this.cameraName) {
-  //     URL = URL + "/" + this.cameraName;
-  //   }
-  //   console.log(URL);
-
-  //   this.up = true;
-  //   this.load = true;
-  //   this.fileInputVariable.nativeElement.value = "";
-  //   this.uploader.uploadAll();
-  //   console.log(this.name);
-  //   console.log(this.cameraName);
-  // }
-
   uploa() {
     console.log(this.name);
     console.log(this.cameraName);
     console.log(this.fileName);
     if (this.name == "") {
-      this.facesService.mergeVideo(this.cameraName, this.fileInputVariable.nativeElement.files[0]).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.cameraName = "";
-          this.fileName = null;
+      this.facesService
+        .mergeVideo(
+          this.cameraName,
+          this.fileInputVariable.nativeElement.files[0]
+        )
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            this.cameraName = "";
+            this.fileName = null;
 
-          this.up = false;
-          this.fileInputVariable.nativeElement.value = "";
-          this.name = "";
-          this.facesService.doOneImage(response.id).subscribe(
-            (res) => {
-              console.log(res);
-              this.router.navigate(["/cameras/algorithms/" + response.id]);
-            },
-            (err) => {
-              console.log(err);
-              this.router.navigate(["/cameras/algorithms/" + response.id]);
-            }
-          );
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+            this.up = false;
+            this.fileInputVariable.nativeElement.value = "";
+            this.name = "";
+            this.facesService.doOneImage(response.id).subscribe(
+              (res) => {
+                console.log(res);
+                this.router.navigate(["/cameras/algorithms/" + response.id]);
+              },
+              (err) => {
+                console.log(err);
+                this.router.navigate(["/cameras/algorithms/" + response.id]);
+              }
+            );
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
     } else if (this.cameraName == "") {
       this.up = true;
       this.load = true;
