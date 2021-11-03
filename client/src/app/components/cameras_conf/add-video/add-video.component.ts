@@ -20,6 +20,7 @@ export class AddVideoComponent implements OnInit {
   progress: number = 0;
   cameraList: any = [];
   cameraName: string = "";
+  videoName: string = "";
 
   constructor(private router: Router, private facesService: FacesService) {}
 
@@ -118,40 +119,34 @@ export class AddVideoComponent implements OnInit {
     }
   }
 
-  uploa() {
-    console.log(this.name);
-    console.log(this.cameraName);
-    console.log(this.fileName);
+  upload() {
+    console.log(this.videoName);
     if (this.name == "") {
-      this.facesService
-        .mergeVideo(
-          this.cameraName,
-          this.fileInputVariable.nativeElement.files[0]
-        )
-        .subscribe(
-          (response: any) => {
-            console.log(response);
-            this.cameraName = "";
-            this.fileName = null;
+      this.facesService.mergeVideo(this.cameraName, this.videoName).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.cameraName = "";
+          this.fileName = null;
 
-            this.up = false;
-            this.fileInputVariable.nativeElement.value = "";
-            this.name = "";
-            this.facesService.doOneImage(response.id).subscribe(
-              (res) => {
-                console.log(res);
-                this.router.navigate(["/cameras/algorithms/" + response.id]);
-              },
-              (err) => {
-                console.log(err);
-                this.router.navigate(["/cameras/algorithms/" + response.id]);
-              }
-            );
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
+          this.up = false;
+          this.fileInputVariable.nativeElement.value = "";
+          this.name = "";
+          this.facesService.doOneImage(response.id).subscribe(
+            (res) => {
+              console.log(res);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            },
+            (err) => {
+              console.log(err);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            }
+          );
+        },
+        (err) => {
+          console.log(err);
+          alert(err.error.message);
+        }
+      );
     } else if (this.cameraName == "") {
       this.up = true;
       this.load = true;

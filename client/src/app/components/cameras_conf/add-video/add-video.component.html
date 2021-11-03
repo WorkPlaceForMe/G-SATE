@@ -3,7 +3,9 @@
   [ngStyle]="{ 'background-image': 'url(/assets/images/federated-bg.jpg)' }"
 >
   <div class="container container-medium text-center z-index-1 text-white">
-    <h2 class="mb-4 text-white">Add a Video (Only .mp4 file format is supported)</h2>
+    <h2 class="mb-4 text-white">
+      Add a Video (Only .mp4 file format is supported)
+    </h2>
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8 col-xl-6">
         <div class="p-5 custom-card rounded text-left">
@@ -18,6 +20,34 @@
               placeholder="Choose a Name"
               [disabled]="cameraName !== ''"
             />
+          </div>
+          <div class="form-group">
+            <label for="search">Choose Video</label>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  accept="video/mp4"
+                  (change)="change()"
+                  [uploader]="uploader"
+                  ng2FileSelect
+                  #fileInput
+                  class="custom-file-input"
+                  id="exampleInputFile"
+                  aria-describedby="fileHelp"
+                  name="file"
+                  [disabled]="name == ''"
+                />
+                <label
+                  class="custom-file-label custom-file-label-transparent mb-0"
+                  #labelImportZip
+                  for="exampleInputFile"
+                  >{{
+                    fileName == null ? "Choose a File to upload" : fileName
+                  }}</label
+                >
+              </div>
+            </div>
           </div>
           <p>Or</p>
           <div class="form-group">
@@ -40,40 +70,27 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="search">Choose Video</label>
-            <div class="input-group mb-3">
-              <div class="custom-file">
-                <input
-                  type="file"
-                  accept="video/mp4"
-                  (change)="change()"
-                  [uploader]="uploader"
-                  ng2FileSelect
-                  #fileInput
-                  class="custom-file-input"
-                  id="exampleInputFile"
-                  aria-describedby="fileHelp"
-                  name="file"
-                  [disabled]="name == '' && !cameraName"
-                />
-                <label
-                  class="custom-file-label custom-file-label-transparent mb-0"
-                  #labelImportZip
-                  for="exampleInputFile"
-                  >{{
-                    fileName == null ? "Choose a File to upload" : fileName
-                  }}</label
-                >
-              </div>
-            </div>
+            <label for="search">Video Name</label>
+            <input
+              class="form-control"
+              [(ngModel)]="videoName"
+              type="text"
+              nbInput
+              id="search"
+              placeholder="Enter .mp4 File Name"
+              [disabled]="cameraName == ''"
+              (keydown.space)="$event.preventDefault()"
+              required
+            />
           </div>
+
           <div class="text-center pt-3">
             <button
               nbButton
               class="btn btn-primary btn-block"
-              (click)="uploa()"
+              (click)="upload()"
               *ngIf="!load"
-              [disabled]="fileName == null"
+              [disabled]="fileName == null && videoName == ''"
             >
               Upload
             </button>

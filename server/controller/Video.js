@@ -84,135 +84,243 @@ let Video = {
     })
   },
 
+  // merge: async function (req, res) {
+  //   try {
+  //     const stor = multer.diskStorage({
+  //       // multers disk storage settings
+  //       filename: function (req, file, cb) {
+  //         const format = file.originalname.split('.')[1]
+  //         const newName = file.originalname.split('.')[0] + '.' + format
+  //         cb(null, newName)
+  //       },
+  //       destination: function (req, file, cb) {
+  //         const where = `${process.env.resources2}/stored_videos/`
+  //         if (!fs.existsSync(where)) {
+  //           fs.mkdirSync(where)
+  //         }
+  //         cb(null, where)
+  //       },
+  //     })
+  //     const upVideo = multer({
+  //       // multer settings
+  //       storage: stor,
+  //     }).single('file')
+
+  //     upVideo(req, res, function (err) {
+  //       if (err) {
+  //         return res.status(500).json({
+  //           success: false,
+  //           error_code: 1,
+  //           err_desc: err,
+  //         })
+  //       } else {
+  //         if (!req.file) {
+  //           return res.status(500).json({
+  //             success: false,
+  //             error_code: 1,
+  //           })
+  //         }
+
+  //         console.log(req.params.id, '................req.params.id')
+  //         Camera.getOne(req.params.id, function (err, result) {
+  //           if (err) {
+  //             console.log('Error adding video to camera table : ', err)
+  //             res.status(500).json(err)
+  //           } else {
+  //             console.log(result)
+  //             if (result) {
+  //               const videoClips = [
+  //                 {
+  //                   fileName: path.resolve(__dirname, '../', result.rtsp_in),
+  //                 },
+  //                 {
+  //                   fileName: path.resolve(
+  //                     __dirname,
+  //                     '../',
+  //                     `${process.env.resources2}stored_videos/${req.file.originalname}`,
+  //                   ),
+  //                 },
+  //               ]
+  //               console.log(videoClips, '..........................videoClips')
+
+  //               const outputFile = path.resolve(
+  //                 __dirname,
+  //                 '../',
+  //                 `${process.env.resources2}stored_videos/${Date.now()}.mp4`,
+  //               )
+
+  //               videoConcat({
+  //                 silent: false,
+  //                 overwrite: true,
+  //                 ffmpeg_path: ffmpegStatic,
+  //               })
+  //                 .clips(videoClips)
+  //                 .output(outputFile)
+  //                 .concat()
+  //                 .then((outputFileName) => {
+  //                   console.log(outputFileName, '.........outputFileName')
+
+  //                   ffmpeg.ffprobe(outputFile, function (err, metadata) {
+  //                     //console.dir(metadata); // all metadata
+  //                     console.log(1)
+  //                     let data = {
+  //                       id: req.params.id,
+  //                       vid_length: `${new Date(metadata.format.duration * 1000)
+  //                         .toISOString()
+  //                         .substr(11, 8)}`,
+  //                     }
+  //                     console.log(data, '......data')
+  //                     fs.rename(
+  //                       outputFile,
+  //                       path.resolve(__dirname, '../', result.rtsp_in),
+  //                       (err) => {
+  //                         if (err) {
+  //                           console.log(err)
+  //                           res.status(500).json(err)
+  //                         } else {
+  //                           Camera.updateCameraTable(data, function (err, cam) {
+  //                             if (err) {
+  //                               console.log(
+  //                                 'Error adding video to camera table : ',
+  //                                 err,
+  //                               )
+  //                               res.status(500).json(err)
+  //                             } else {
+  //                               res.status(200).send({
+  //                                 success: true,
+  //                                 message: 'Video merged successfully!',
+  //                                 name: req.file.originalname.split('.')[0],
+  //                                 id: req.params.id,
+  //                               })
+  //                             }
+  //                           })
+  //                         }
+  //                       },
+  //                     )
+  //                   })
+  //                 })
+  //                 .catch((err) => {
+  //                   console.log('Error merging video : ', err)
+  //                   res.status(500).json(err)
+  //                 })
+  //             } else {
+  //               res.status(400).send({
+  //                 success: false,
+  //                 message: 'Video not found',
+  //               })
+  //             }
+  //           }
+  //         })
+  //       }
+  //     })
+  //   } catch (error) {
+  //     res.status(500).json(error)
+  //   }
+  // },
+
   merge: async function (req, res) {
     try {
-      const stor = multer.diskStorage({
-        // multers disk storage settings
-        filename: function (req, file, cb) {
-          const format = file.originalname.split('.')[1]
-          const newName = file.originalname.split('.')[0] + '.' + format
-          cb(null, newName)
-        },
-        destination: function (req, file, cb) {
-          const where = `${process.env.resources2}/stored_videos/`
-          if (!fs.existsSync(where)) {
-            fs.mkdirSync(where)
-          }
-          cb(null, where)
-        },
-      })
-      const upVideo = multer({
-        // multer settings
-        storage: stor,
-      }).single('file')
+      if (!req.body.fileName)
+        return res.status(400).send({ message: 'Filename is required' })
+      const dirName = `${process.env.mergedVideoPath}${req.body.fileName}`
+      console.log(dirName, 'dirName')
+      if (fs.existsSync(dirName)) {
+        console.log('file exists')
+        Camera.getOne(req.params.id, function (err, result) {
+          if (err) {
+            console.log('Error adding video to camera table : ', err)
+            res.status(500).json(err)
+          } else {
+            console.log(result)
+            if (result) {
+              const videoClips = [
+                {
+                  fileName: path.resolve(__dirname, '../', result.rtsp_in),
+                },
+                {
+                  fileName: dirName,
+                },
+              ]
+              console.log(videoClips, '..........................videoClips')
 
-      upVideo(req, res, function (err) {
-        if (err) {
-          return res.status(500).json({
-            success: false,
-            error_code: 1,
-            err_desc: err,
-          })
-        } else {
-          if (!req.file) {
-            return res.status(500).json({
-              success: false,
-              error_code: 1,
-            })
-          }
+              const outputFile = path.resolve(
+                __dirname,
+                '../',
+                `${process.env.resources2}stored_videos/${Date.now()}.mp4`,
+              )
 
-          console.log(req.params.id, '................req.params.id')
-          Camera.getOne(req.params.id, function (err, result) {
-            if (err) {
-              console.log('Error adding video to camera table : ', err)
-              res.status(500).json(err)
-            } else {
-              console.log(result)
-              if (result) {
-                const videoClips = [
-                  {
-                    fileName: path.resolve(__dirname, '../', result.rtsp_in),
-                  },
-                  {
-                    fileName: path.resolve(
-                      __dirname,
-                      '../',
-                      `${process.env.resources2}stored_videos/${req.file.originalname}`,
-                    ),
-                  },
-                ]
-                console.log(videoClips, '..........................videoClips')
+              videoConcat({
+                silent: false,
+                overwrite: true,
+                ffmpeg_path: ffmpegStatic,
+              })
+                .clips(videoClips)
+                .output(outputFile)
+                .concat()
+                .then((outputFileName) => {
+                  console.log(outputFileName, '.........outputFileName')
 
-                const outputFile = path.resolve(
-                  __dirname,
-                  '../',
-                  `${process.env.resources2}stored_videos/${Date.now()}.mp4`,
-                )
-
-                videoConcat({
-                  silent: false,
-                  overwrite: true,
-                  ffmpeg_path: ffmpegStatic,
-                })
-                  .clips(videoClips)
-                  .output(outputFile)
-                  .concat()
-                  .then((outputFileName) => {
-                    console.log(outputFileName, '.........outputFileName')
-
-                    ffmpeg.ffprobe(outputFile, function (err, metadata) {
-                      //console.dir(metadata); // all metadata
-                      console.log(1)
-                      let data = {
-                        id: req.params.id,
-                        vid_length: `${new Date(metadata.format.duration * 1000)
-                          .toISOString()
-                          .substr(11, 8)}`,
-                      }
-                      console.log(data, '......data')
-                      fs.rename(
-                        outputFile,
-                        path.resolve(__dirname, '../', result.rtsp_in),
-                        (err) => {
-                          if (err) {
-                            console.log(err)
-                            res.status(500).json(err)
-                          } else {
-                            Camera.updateCameraTable(data, function (err, cam) {
-                              if (err) {
-                                console.log(
-                                  'Error adding video to camera table : ',
-                                  err,
-                                )
-                                res.status(500).json(err)
+                  ffmpeg.ffprobe(outputFile, function (err, metadata) {
+                    let data = {
+                      id: req.params.id,
+                      vid_length: `${new Date(metadata.format.duration * 1000)
+                        .toISOString()
+                        .substr(11, 8)}`,
+                    }
+                    console.log(data, '......data')
+                    fs.rename(
+                      outputFile,
+                      path.resolve(__dirname, '../', result.rtsp_in),
+                      (err) => {
+                        if (err) {
+                          console.log(err)
+                          res.status(500).json(err)
+                        } else {
+                          Camera.updateCameraTable(data, function (err, cam) {
+                            if (err) {
+                              console.log(
+                                'Error adding video to camera table : ',
+                                err,
+                              )
+                              res.status(500).json(err)
+                            } else {
+                              fs.rmdirSync(dirName, { recursive: true })
+                              if (fs.existsSync(dirName)) {
+                                console.log('file not deleted')
                               } else {
-                                res.status(200).send({
-                                  success: true,
-                                  message: 'Video merged successfully!',
-                                  name: req.file.originalname.split('.')[0],
-                                  id: req.params.id,
-                                })
+                                console.log('file deleted')
                               }
-                            })
-                          }
-                        },
-                      )
-                    })
+                              res.status(200).send({
+                                success: true,
+                                message: 'Video merged successfully!',
+                                name: req.body.fileName.split('.')[0],
+                                id: req.params.id,
+                              })
+                            }
+                          })
+                        }
+                      },
+                    )
                   })
-                  .catch((err) => {
-                    console.log('Error merging video : ', err)
-                    res.status(500).json(err)
-                  })
-              } else {
-                res.status(400).send({
-                  success: false,
-                  message: 'Video not found',
                 })
-              }
+                .catch((err) => {
+                  console.log('Error merging video : ', err)
+                  res.status(500).json(err)
+                })
+            } else {
+              res.status(400).send({
+                success: false,
+                message: 'Video not found',
+              })
             }
-          })
-        }
-      })
+          }
+        })
+      } else {
+        console.log('file not exists')
+        return res
+          .status(400)
+          .send({ message: `${req.body.fileName} file not exists` })
+      }
     } catch (error) {
       res.status(500).json(error)
     }
