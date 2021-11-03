@@ -284,12 +284,12 @@ let Video = {
                               )
                               res.status(500).json(err)
                             } else {
-                              fs.rmdirSync(dirName, { recursive: true })
-                              if (fs.existsSync(dirName)) {
-                                console.log('file not deleted')
-                              } else {
-                                console.log('file deleted')
-                              }
+                              fs.unlink(dirName, (err) => {
+                                if (err) {
+                                  console.log(err)
+                                }
+                              })
+
                               res.status(200).send({
                                 success: true,
                                 message: 'Video merged successfully!',
