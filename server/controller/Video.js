@@ -19,14 +19,19 @@ let Video = {
       console.log(pathName, 'pathName')
       if (fs.existsSync(pathName)) {
         const ext = req.body.fileName.split('.')[1]
-        const newPath = `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`
+        // const newPath = `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`
+        const newPath = path.resolve(
+          __dirname,
+          '../',
+          `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`,
+        )
         // const newPath = `${process.env.mergedVideoPath1}${req.body.newFileName}.${ext}`
         console.log(newPath, 'newPath')
 
-        // fs.rename(pathName, newPath, function (err) {
-        //   if (err) throw err
-        //   console.log('file moved to stored_videos!')
-        // })
+        fs.rename(pathName, newPath, function (err) {
+          if (err) throw err
+          console.log('file moved to stored_videos!')
+        })
         // Read the file
         fs.readFile(pathName, function (err, data) {
           if (err) throw err
@@ -54,7 +59,7 @@ let Video = {
           let data = {
             id: cam_id,
             name: req.body.newFileName,
-            rtsp_in: newPath,
+            rtsp_in: `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`,
             rtsp_out: `/assets/shared-data/stored_videos/${req.body.newFileName}.${ext}`,
             heatmap_pic: '',
             pic_height: null,
