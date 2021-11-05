@@ -8,6 +8,14 @@
     </h2>
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div
+          class="d-flex justify-content-center position-fixed loader"
+          *ngIf="spin"
+        >
+          <div class="spinner-border spin" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
         <div class="p-5 custom-card rounded text-left">
           <div class="form-group">
             <label for="search">Name</label>

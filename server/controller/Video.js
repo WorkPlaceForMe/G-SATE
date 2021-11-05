@@ -19,40 +19,27 @@ let Video = {
       console.log(pathName, 'pathName')
       if (fs.existsSync(pathName)) {
         const ext = req.body.fileName.split('.')[1]
-        // const newPath = `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`
         const newPath = path.resolve(
           __dirname,
           '../',
           `${process.env.resources2}stored_videos/${req.body.newFileName}.${ext}`,
         )
-        // const newPath = `${process.env.mergedVideoPath1}${req.body.newFileName}.${ext}`
         console.log(newPath, 'newPath')
 
-        fs.rename(pathName, newPath, function (err) {
-          if (err) throw err
-          console.log('file moved to stored_videos!')
-        })
-        // Read the file
         fs.readFile(pathName, function (err, data) {
           if (err) throw err
-          console.log('File read!')
+          console.log('File exists')
 
-          // Write the file
           fs.writeFile(newPath, data, function (err) {
             if (err) throw err
-            console.log('File written!')
+            console.log('File copied to stored videos')
           })
 
-          // Delete the file
           fs.unlink(pathName, function (err) {
             if (err) throw err
-            console.log('File deleted!')
+            console.log('Old file deleted')
           })
         })
-
-        if (fs.existsSync(newPath)) {
-          console.log('file moved to stored_videos!')
-        }
 
         let cam_id = uuidv4()
         ffmpeg.ffprobe(newPath, function (err, metadata) {
