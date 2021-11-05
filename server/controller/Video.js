@@ -33,7 +33,7 @@ let Video = {
           console.log('File read!')
 
           // Write the file
-          fs.writeFile(newpath, data, function (err) {
+          fs.writeFile(newPath, data, function (err) {
             if (err) throw err
             console.log('File written!')
           })
