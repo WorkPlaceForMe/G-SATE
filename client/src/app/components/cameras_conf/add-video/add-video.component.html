@@ -21,7 +21,7 @@
               [disabled]="cameraName !== ''"
             />
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="search">Choose Video</label>
             <div class="input-group mb-3">
               <div class="custom-file">
@@ -48,7 +48,7 @@
                 >
               </div>
             </div>
-          </div>
+          </div> -->
           <p>Or</p>
           <div class="form-group">
             <label for="search">Merge Video</label>
@@ -78,7 +78,7 @@
               nbInput
               id="search"
               placeholder="Enter .mp4 File Name"
-              [disabled]="cameraName == ''"
+              [disabled]="cameraName == '' && name == ''"
               (keydown.space)="$event.preventDefault()"
               required
             />
@@ -90,7 +90,7 @@
               class="btn btn-primary btn-block"
               (click)="upload()"
               *ngIf="!load"
-              [disabled]="fileName == null && videoName == ''"
+              [disabled]="videoName == ''"
             >
               Upload
             </button>

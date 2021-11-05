@@ -119,6 +119,41 @@ export class AddVideoComponent implements OnInit {
     }
   }
 
+  // upload() {
+  //   console.log(this.videoName);
+  //   if (this.name == "") {
+  //     this.facesService.mergeVideo(this.cameraName, this.videoName).subscribe(
+  //       (response: any) => {
+  //         console.log(response);
+  //         this.cameraName = "";
+  //         this.fileName = null;
+  //         this.up = false;
+  //         this.fileInputVariable.nativeElement.value = "";
+  //         this.name = "";
+  //         this.facesService.doOneImage(response.id).subscribe(
+  //           (res) => {
+  //             console.log(res);
+  //             this.router.navigate(["/cameras/algorithms/" + response.id]);
+  //           },
+  //           (err) => {
+  //             console.log(err);
+  //             this.router.navigate(["/cameras/algorithms/" + response.id]);
+  //           }
+  //         );
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //         alert(err.error.message);
+  //       }
+  //     );
+  //   } else if (this.cameraName == "") {
+  //     this.up = true;
+  //     this.load = true;
+  //     this.fileInputVariable.nativeElement.value = "";
+  //     this.uploader.uploadAll();
+  //   }
+  // }
+
   upload() {
     console.log(this.videoName);
     if (this.name == "") {
@@ -127,7 +162,6 @@ export class AddVideoComponent implements OnInit {
           console.log(response);
           this.cameraName = "";
           this.fileName = null;
-
           this.up = false;
           this.fileInputVariable.nativeElement.value = "";
           this.name = "";
@@ -148,10 +182,30 @@ export class AddVideoComponent implements OnInit {
         }
       );
     } else if (this.cameraName == "") {
-      this.up = true;
-      this.load = true;
-      this.fileInputVariable.nativeElement.value = "";
-      this.uploader.uploadAll();
+      this.facesService.uploadVideo(this.videoName, this.name).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.name = "";
+          this.fileName = null;
+          this.up = false;
+          this.fileInputVariable.nativeElement.value = "";
+          this.name = "";
+          this.facesService.doOneImage(response.id).subscribe(
+            (res) => {
+              console.log(res);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            },
+            (err) => {
+              console.log(err);
+              this.router.navigate(["/cameras/algorithms/" + response.id]);
+            }
+          );
+        },
+        (err) => {
+          console.log(err);
+          alert(err.error.message);
+        }
+      );
     }
   }
 }

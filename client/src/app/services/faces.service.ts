@@ -207,4 +207,12 @@ export class FacesService {
     };
     return this.http.post(`${this.API_URI}/video/merge/${id}`, requestData);
   }
+
+  uploadVideo(fileName: string, newFileName: string) {
+    const requestData = {
+      fileName,
+      newFileName,
+    };
+    return this.http.post(`${this.API_URI}/video/upload`, requestData);
+  }
 }
