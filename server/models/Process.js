@@ -37,13 +37,6 @@ var Process = {
       callback,
     )
   },
-
-  // update: function (dataItems, callback) {
-  //   return db.query(
-  //     "ALTER TABLE `vista_video_process` MODIFY COLUMN `completed` enum('YES','NO','FAILED') default 'NO';",
-  //     callback,
-  //   )
-  // },
 }
 
 module.exports = Process
