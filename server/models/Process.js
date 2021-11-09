@@ -30,13 +30,20 @@ var Process = {
       'UPDATE vista_video_process set result=?,completed=?,completed_at=? where id=?',
       [
         dataItems.result,
-        'YES',
+        dataItems.completed,
         moment().format('YYYY-MM-DD HH:mm:ss'),
         dataItems.id,
       ],
       callback,
     )
   },
+
+  // update: function (dataItems, callback) {
+  //   return db.query(
+  //     "ALTER TABLE `vista_video_process` MODIFY COLUMN `completed` enum('YES','NO','FAILED') default 'NO';",
+  //     callback,
+  //   )
+  // },
 }
 
 module.exports = Process
