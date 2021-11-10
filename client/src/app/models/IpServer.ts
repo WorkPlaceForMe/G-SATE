@@ -6,4 +6,3 @@ export var tarinScriptIP: string = "13.76.172.134"; // Kartik's training Script
 // export var ip: string = "localhost";
 // ip of where the server is running 13.52.209.143
 // export var trainStatusIp: string = "20.98.212.250";
-export var trainStatusIp: string = "20.119.220.118";

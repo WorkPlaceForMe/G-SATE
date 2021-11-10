@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { ip, tarinScriptIP, trainStatusIp } from "../models/IpServer";
+import { ip, tarinScriptIP } from "../models/IpServer";
 import { Customer } from "../models/Customer";
 import { vistaIP } from "../models/VistaServer";
 import { Observable, throwError } from "rxjs";
@@ -21,7 +21,7 @@ export class AnnotationsService {
   API_URL = "http://" + ip + ":3000/api";
   TRAINING_SCRIPT_URL = "http://" + tarinScriptIP + ":8080";
   VISTA_API_URL = vistaIP;
-  TRAIN_STATUS_URL = "http://" + trainStatusIp + ":8080";
+  // TRAIN_STATUS_URL = "http://" + trainStatusIp + ":8080";
 
   getImages(where: string, info: string) {
     return this.http.get(`${this.API_URL}/getImages/${where}/${info}`);
@@ -175,7 +175,7 @@ export class AnnotationsService {
   }
 
   getTrainStatus() {
-    return this.http.get(`${this.TRAIN_STATUS_URL}/trainStatus`);
+    return this.http.get(`${this.VISTA_API_URL}:8080/trainStatus`);
   }
 
   getModel(datasetName: string, modelName: string) {
@@ -183,7 +183,7 @@ export class AnnotationsService {
     formData.append("model", datasetName);
     formData.append("customModelName", modelName);
     formData.append("customModelTableName", modelName + "_gsate");
-    return this.http.post(`${this.TRAIN_STATUS_URL}/getModel`, formData);
+    return this.http.post(`${this.VISTA_API_URL}:8080/getModel`, formData);
   }
 
   addToAlgorithm(name: string) {
