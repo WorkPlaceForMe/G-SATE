@@ -393,7 +393,6 @@ let Dataset = {
               result: JSON.stringify(temp),
               completed: temp.error ? 'FAILED' : 'YES',
             }
-            console.log(objectData)
 
             Process.update(objectData, function (errRes, resultData) {
               if (errRes) {
