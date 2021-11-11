@@ -680,132 +680,6 @@ let Dataset = {
       console.log('error>>>>>>>>>>', e)
     }
   },
-  unzipDataset1: async (req, res) => {
-    let pathExist
-
-    let stor = await multer.diskStorage({
-      //multers disk storage settings
-      filename: (req, file, cb) => {
-        var newName = file.originalname.toString()
-        cb(null, newName)
-        console.log(newName)
-        //file.originalname
-      },
-      destination: (req, file, cb) => {
-        const pathName = file.originalname.toString().replace('.zip', '')
-        console.log(pathName)
-        var lugar = process.env.resources2 + 'datasets/' + pathName
-        pathExist = fs.existsSync(lugar)
-
-        console.log('lugar', lugar, pathExist)
-
-        if (!fs.existsSync(lugar)) {
-          fs.mkdirSync(lugar)
-        }
-        cb(null, lugar)
-      },
-    })
-
-    let upZip = await multer({
-      //multer settings
-      storage: stor,
-    }).single('zip')
-
-    upZip(req, res, async (err) => {
-      if (err) {
-        res.json({
-          error_code: 1,
-          err_desc: err,
-        })
-        return
-      } else {
-        const pathName = req.file.originalname.toString().replace('.zip', '')
-        pat =
-          process.env.resources2 +
-          'datasets/' +
-          pathName +
-          '/' +
-          req.file.originalname
-        unZippedPath = process.env.resources2 + 'datasets/' + pathName
-
-        console.log(
-          'unZippedPath',
-          unZippedPath,
-          pathExist,
-          fs.existsSync(pat),
-          pat,
-        )
-
-        await fs
-          .createReadStream(pat)
-          .pipe(
-            unzipper.Extract({
-              path: unZippedPath,
-            }),
-          )
-          .promise()
-          .then(
-            () => {
-              /**
-               * File rename
-               */
-              fs.readdirSync(unZippedPath)
-                .filter(junk.not)
-                .forEach((file) => {
-                  if (file !== `${pathName}.zip`) {
-                    console.log(
-                      file,
-                      `${pathName}-${makeRandomString(14)}.${file
-                        .split('.')
-                        .pop()}`,
-                    )
-
-                    fs.rename(
-                      unZippedPath + '/' + file,
-                      // unZippedPath + "/" + file.split(" ").join("-"),
-                      `${unZippedPath}/${pathName}-${makeRandomString(
-                        14,
-                      )}.${file.split('.').pop()}`,
-                      (err) => {
-                        if (err) {
-                          logger.log('error', `${file}: ${err}`)
-                        }
-                        console.log('Rename complete!')
-                      },
-                    )
-                  }
-                })
-            },
-            (e) => console.log('error', e),
-          )
-
-        /**
-         * Store in the DB if path is not exist
-         */
-        if (!pathExist) {
-          let data = {
-            cam_id: uuidv4(),
-            clientId: uuidv4(),
-            name: pathName,
-            path: unZippedPath,
-            processed: 'Yes',
-            class: 'data',
-            type: 'zip',
-            uploaded: 'Yes',
-            snippet_id: uuidv4(),
-          }
-          Datasets.add(data, function (err, row) {
-            if (err) return res.status(500).json(err)
-            fs.unlinkSync(pat)
-            res.status(200).json('Uploaded')
-          })
-        } else {
-          fs.unlinkSync(pat)
-          res.status(200).json('Uploaded')
-        }
-      }
-    })
-  },
 
   unzipDataset: async (req, res) => {
     let pathExist
@@ -888,9 +762,8 @@ let Dataset = {
                     )
 
                     const stats = fs.statSync(unZippedPath + '/' + file)
-                    console.log(stats.isDirectory(), '........is directory')
+                    console.log('directory found', stats.isDirectory())
                     if (stats.isDirectory()) {
-                      console.log('directory found')
                       fs.readdirSync(unZippedPath + '/' + file)
                         .filter(junk.not)
                         .forEach((unzippedFile) => {
@@ -899,28 +772,8 @@ let Dataset = {
                             `${pathName}-${makeRandomString(
                               14,
                             )}.${unzippedFile.split('.').pop()}`,
-                            'line 900',
+                            'case: directory',
                           )
-                          // fs.readFile(
-                          //   unZippedPath + '/' + file + '/' + unzippedFile,
-                          //   function (err, data) {
-                          //     if (err) throw err
-                          //     console.log('File exists')
-
-                          //     fs.writeFile(unZippedPath, data, function (err) {
-                          //       if (err) throw err
-                          //       console.log('File copied')
-                          //     })
-
-                          //     fs.unlink(
-                          //       unZippedPath + '/' + file + '/' + unzippedFile,
-                          //       function (err) {
-                          //         if (err) throw err
-                          //         console.log('Old file deleted')
-                          //       },
-                          //     )
-                          //   },
-                          // )
 
                           fs.renameSync(
                             unZippedPath + '/' + file + '/' + unzippedFile,
@@ -929,41 +782,13 @@ let Dataset = {
                             )}.${unzippedFile.split('.').pop()}`,
                             function (err) {
                               if (err) throw err
-                              console.log('Successfully renamed - AKA moved!')
                             },
                           )
                         })
 
-                      // fs.rmdirSync(unZippedPath + '/' + file, {
-                      //   recursive: true,
-                      // })
-
-                      // fs.readdirSync(unZippedPath)
-                      //   .filter(junk.not)
-                      //   .forEach((newFile) => {
-                      //     if (newFile !== `${pathName}.zip`) {
-                      //       console.log(
-                      //         newFile,
-                      //         `${pathName}-${makeRandomString(
-                      //           14,
-                      //         )}.${newFile.split('.').pop()}`,
-                      //       )
-
-                      //       fs.rename(
-                      //         unZippedPath + '/' + newFile,
-                      //         // unZippedPath + "/" + file.split(" ").join("-"),
-                      //         `${unZippedPath}/${pathName}-${makeRandomString(
-                      //           14,
-                      //         )}.${newFile.split('.').pop()}`,
-                      //         (err) => {
-                      //           if (err) {
-                      //             logger.log('error', `${newFile}: ${err}`)
-                      //           }
-                      //           console.log('Rename complete!,961')
-                      //         },
-                      //       )
-                      //     }
-                      //   })
+                      fs.rmdirSync(unZippedPath + '/' + file, {
+                        recursive: true,
+                      })
                     } else {
                       fs.rename(
                         unZippedPath + '/' + file,
