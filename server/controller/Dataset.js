@@ -932,32 +932,32 @@ let Dataset = {
                           )
                         })
 
-                      fs.rmdirSync(unZippedPath + '/' + file, {
-                        recursive: true,
-                      })
+                      // fs.rmdirSync(unZippedPath + '/' + file, {
+                      //   recursive: true,
+                      // })
 
                       fs.readdirSync(unZippedPath)
                         .filter(junk.not)
-                        .forEach((file) => {
-                          if (file !== `${pathName}.zip`) {
+                        .forEach((newFile) => {
+                          if (newFile !== `${pathName}.zip`) {
                             console.log(
-                              file,
-                              `${pathName}-${makeRandomString(14)}.${file
-                                .split('.')
-                                .pop()}`,
+                              newFile,
+                              `${pathName}-${makeRandomString(
+                                14,
+                              )}.${newFile.split('.').pop()}`,
                             )
 
                             fs.rename(
-                              unZippedPath + '/' + file,
+                              unZippedPath + '/' + newFile,
                               // unZippedPath + "/" + file.split(" ").join("-"),
                               `${unZippedPath}/${pathName}-${makeRandomString(
                                 14,
-                              )}.${file.split('.').pop()}`,
+                              )}.${newFile.split('.').pop()}`,
                               (err) => {
                                 if (err) {
-                                  logger.log('error', `${file}: ${err}`)
+                                  logger.log('error', `${newFile}: ${err}`)
                                 }
-                                console.log('Rename complete!')
+                                console.log('Rename complete!,961')
                               },
                             )
                           }
