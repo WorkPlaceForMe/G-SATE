@@ -901,24 +901,33 @@ let Dataset = {
                             )}.${unzippedFile.split('.').pop()}`,
                             'line 900',
                           )
-                          fs.readFile(
+                          // fs.readFile(
+                          //   unZippedPath + '/' + file + '/' + unzippedFile,
+                          //   function (err, data) {
+                          //     if (err) throw err
+                          //     console.log('File exists')
+
+                          //     fs.writeFile(unZippedPath, data, function (err) {
+                          //       if (err) throw err
+                          //       console.log('File copied')
+                          //     })
+
+                          //     fs.unlink(
+                          //       unZippedPath + '/' + file + '/' + unzippedFile,
+                          //       function (err) {
+                          //         if (err) throw err
+                          //         console.log('Old file deleted')
+                          //       },
+                          //     )
+                          //   },
+                          // )
+
+                          fs.rename(
                             unZippedPath + '/' + file + '/' + unzippedFile,
-                            function (err, data) {
+                            unZippedPath,
+                            function (err) {
                               if (err) throw err
-                              console.log('File exists')
-
-                              fs.writeFile(unZippedPath, data, function (err) {
-                                if (err) throw err
-                                console.log('File copied')
-                              })
-
-                              fs.unlink(
-                                unZippedPath + '/' + file + '/' + unzippedFile,
-                                function (err) {
-                                  if (err) throw err
-                                  console.log('Old file deleted')
-                                },
-                              )
+                              console.log('Successfully renamed - AKA moved!')
                             },
                           )
                         })
