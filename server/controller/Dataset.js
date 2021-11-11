@@ -924,7 +924,9 @@ let Dataset = {
 
                           fs.renameSync(
                             unZippedPath + '/' + file + '/' + unzippedFile,
-                            unZippedPath,
+                            `${unZippedPath}/${pathName}-${makeRandomString(
+                              14,
+                            )}.${unzippedFile.split('.').pop()}`,
                             function (err) {
                               if (err) throw err
                               console.log('Successfully renamed - AKA moved!')
@@ -936,32 +938,32 @@ let Dataset = {
                       //   recursive: true,
                       // })
 
-                      fs.readdirSync(unZippedPath)
-                        .filter(junk.not)
-                        .forEach((newFile) => {
-                          if (newFile !== `${pathName}.zip`) {
-                            console.log(
-                              newFile,
-                              `${pathName}-${makeRandomString(
-                                14,
-                              )}.${newFile.split('.').pop()}`,
-                            )
+                      // fs.readdirSync(unZippedPath)
+                      //   .filter(junk.not)
+                      //   .forEach((newFile) => {
+                      //     if (newFile !== `${pathName}.zip`) {
+                      //       console.log(
+                      //         newFile,
+                      //         `${pathName}-${makeRandomString(
+                      //           14,
+                      //         )}.${newFile.split('.').pop()}`,
+                      //       )
 
-                            fs.rename(
-                              unZippedPath + '/' + newFile,
-                              // unZippedPath + "/" + file.split(" ").join("-"),
-                              `${unZippedPath}/${pathName}-${makeRandomString(
-                                14,
-                              )}.${newFile.split('.').pop()}`,
-                              (err) => {
-                                if (err) {
-                                  logger.log('error', `${newFile}: ${err}`)
-                                }
-                                console.log('Rename complete!,961')
-                              },
-                            )
-                          }
-                        })
+                      //       fs.rename(
+                      //         unZippedPath + '/' + newFile,
+                      //         // unZippedPath + "/" + file.split(" ").join("-"),
+                      //         `${unZippedPath}/${pathName}-${makeRandomString(
+                      //           14,
+                      //         )}.${newFile.split('.').pop()}`,
+                      //         (err) => {
+                      //           if (err) {
+                      //             logger.log('error', `${newFile}: ${err}`)
+                      //           }
+                      //           console.log('Rename complete!,961')
+                      //         },
+                      //       )
+                      //     }
+                      //   })
                     } else {
                       fs.rename(
                         unZippedPath + '/' + file,
