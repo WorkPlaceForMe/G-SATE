@@ -922,7 +922,7 @@ let Dataset = {
                           //   },
                           // )
 
-                          fs.rename(
+                          fs.renameSync(
                             unZippedPath + '/' + file + '/' + unzippedFile,
                             unZippedPath,
                             function (err) {
