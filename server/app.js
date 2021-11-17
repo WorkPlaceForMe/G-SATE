@@ -587,7 +587,7 @@ var upload = multer({
 //   storage: storage,
 // }).single('photo')
 
-app.post('/api/upload/pic', function (req, res, next) {
+app.post('/api/upload/pic1', function (req, res, next) {
   console.log(req, 'req')
   console.log(req.body, 'req.body')
   console.log(req.file, 'req.file')
@@ -599,6 +599,39 @@ app.post('/api/upload/pic', function (req, res, next) {
       console.log(err)
       return res.status(422).send('an Error occured')
     }
+    // No error occured.
+    path = req.file.path
+    let datetimestamp = Date.now()
+    resizePath = `./uploads/photo-${datetimestamp}.jpg`
+    sharp(path)
+      .resize(710, 480)
+      .toFile(resizePath, function (err) {
+        if (err) {
+          res.status(500).json({
+            success: false,
+            message: err.message,
+          })
+        } else {
+          processImage(resizePath, path, res)
+        }
+      })
+    //return res.send("Upload Completed for " + path);
+  })
+})
+
+app.post('/api/upload/pic', upload, function (req, res, next) {
+  console.log(req, 'req')
+  console.log(req.body, 'req.body')
+  console.log(req.file, 'req.file')
+  let path = ''
+  let resizePath = ''
+  upload(req, res, function (err) {
+    if (err) {
+      // An error occurred when uploading
+      console.log(err)
+      return res.status(422).send('an Error occured')
+    }
+    console.log(req.file, 'req.file')
     // No error occured.
     path = req.file.path
     let datetimestamp = Date.now()
