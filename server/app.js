@@ -588,8 +588,8 @@ var storage = multer.diskStorage({
 // }).single('photo')
 
 app.post('/api/upload/pic', function (req, res, next) {
+  console.log(req, 'req')
   console.log(req.file, 'req.file')
-  console.log(req.photo, 'req.photo')
   let path = ''
   let resizePath = ''
   upload(req, res, function (err) {
