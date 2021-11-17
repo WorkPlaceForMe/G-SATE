@@ -582,11 +582,6 @@ var upload = multer({
   storage: storage,
 }).single('photo')
 
-// var uploadPic = multer({
-//   //multer settings
-//   storage: storage,
-// }).single('photo')
-
 app.post('/api/upload/pic', function (req, res, next) {
   console.log(req.file)
   let path = ''
@@ -617,37 +612,6 @@ app.post('/api/upload/pic', function (req, res, next) {
     //return res.send("Upload Completed for " + path);
   })
 })
-
-// app.post('/api/upload/pic', function (req, res, next) {
-//   console.log(req, 'req.file')
-//   console.log(req.photo, 'req.photo')
-//   let path = ''
-//   let resizePath = ''
-//   uploadPic(req, res, function (err) {
-//     if (err) {
-//       // An error occurred when uploading
-//       console.log(err)
-//       return res.status(422).send('an Error occured')
-//     }
-//     // No error occured.
-//     path = req.photo.path
-//     let datetimestamp = Date.now()
-//     resizePath = `./uploads/photo-${datetimestamp}.jpg`
-//     sharp(path)
-//       .resize(710, 480)
-//       .toFile(resizePath, function (err) {
-//         if (err) {
-//           res.status(500).json({
-//             success: false,
-//             message: err.message,
-//           })
-//         } else {
-//           processImage(resizePath, path, res)
-//         }
-//       })
-//     //return res.send("Upload Completed for " + path);
-//   })
-// })
 
 var processImage = (imgPath, path, res) => {
   try {
