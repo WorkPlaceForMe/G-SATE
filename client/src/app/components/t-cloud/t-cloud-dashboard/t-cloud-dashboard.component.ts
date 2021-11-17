@@ -40,7 +40,7 @@ export class TCloudDashboardComponent implements OnInit {
 
   public photoUploader: FileUploader = new FileUploader({
     url: imgURL,
-    itemAlias: "file",
+    itemAlias: "photo",
   });
 
   fileName: string = "";

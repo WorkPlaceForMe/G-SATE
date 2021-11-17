@@ -577,10 +577,10 @@ var storage = multer.diskStorage({
   },
 })
 
-// var upload = multer({
-//   //multer settings
-//   storage: storage,
-// }).single('photo')
+var upload = multer({
+  //multer settings
+  storage: storage,
+}).single('photo')
 
 // var uploadPic = multer({
 //   //multer settings
