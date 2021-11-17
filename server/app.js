@@ -17,6 +17,7 @@ const Datasets = require('./routes/Dataset')
 const Video = require('./routes/Video')
 const Relations = require('./routes/Relations')
 const Rel = require('./routes/Rel')
+const AuthRouter = require('./routes/Auth')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const cookieParser = require('cookie-parser')
@@ -130,6 +131,7 @@ app.use('/api/rel', Rel)
 app.use('/api/annotations', Annotation)
 app.use('/api/ppe/detection', PpeDetection)
 app.use('/api/home', Home)
+app.use('/api/user', AuthRouter)
 
 /** Serving from the same express Server
 No cors required */
@@ -575,23 +577,60 @@ var storage = multer.diskStorage({
   },
 })
 
-var upload = multer({
+// var upload = multer({
+//   //multer settings
+//   storage: storage,
+// }).single('photo')
+
+var uploadPic = multer({
   //multer settings
   storage: storage,
 }).single('photo')
 
+// app.post('/api/upload/pic', function (req, res, next) {
+//   console.log(req.file, 'req.file')
+//   console.log(req.photo, 'req.photo')
+//   let path = ''
+//   let resizePath = ''
+//   upload(req, res, function (err) {
+//     if (err) {
+//       // An error occurred when uploading
+//       console.log(err)
+//       return res.status(422).send('an Error occured')
+//     }
+//     // No error occured.
+//     path = req.file.path
+//     let datetimestamp = Date.now()
+//     resizePath = `./uploads/photo-${datetimestamp}.jpg`
+//     sharp(path)
+//       .resize(710, 480)
+//       .toFile(resizePath, function (err) {
+//         if (err) {
+//           res.status(500).json({
+//             success: false,
+//             message: err.message,
+//           })
+//         } else {
+//           processImage(resizePath, path, res)
+//         }
+//       })
+//     //return res.send("Upload Completed for " + path);
+//   })
+// })
+
 app.post('/api/upload/pic', function (req, res, next) {
-  console.log(req.file)
+  console.log(req.file, 'req.file')
+  console.log(req.photo, 'req.photo')
   let path = ''
   let resizePath = ''
-  upload(req, res, function (err) {
+  uploadPic(req, res, function (err) {
     if (err) {
       // An error occurred when uploading
       console.log(err)
       return res.status(422).send('an Error occured')
     }
     // No error occured.
-    path = req.file.path
+    path = req.photo.path
     let datetimestamp = Date.now()
     resizePath = `./uploads/photo-${datetimestamp}.jpg`
     sharp(path)

@@ -278,8 +278,9 @@ export class TCloudDashboardComponent implements OnInit {
           this.unAnnDatasetsNames = res;
           for (let i = 0; i < this.unAnnDatasetsNames.length; i++) {
             this.unAnnDatasetsNames[i]["open"] = false;
-            this.unAnnDatasetsNames[i]["name"] =
-              this.unAnnDatasetsNames[i]["name"];
+            this.unAnnDatasetsNames[i]["name"] = this.unAnnDatasetsNames[i][
+              "name"
+            ];
             this.unAnnDatasetsNames[i]["id"] = this.unAnnDatasetsNames[i]["id"];
           }
         } else if (thing == "class") {
@@ -388,6 +389,7 @@ export class TCloudDashboardComponent implements OnInit {
   }
 
   checkImg() {
+    console.log("checkImg");
     this.uploadImage = true;
     this.photoUploader.uploadAll();
     this.myImgInputVariable.nativeElement.value = null;
