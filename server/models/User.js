@@ -62,7 +62,7 @@ var User = {
 
   createNewUser: function (userDetails, callback) {
     return db.query(
-      `INSERT INTO users (name, email, password, uuid, mobileNumber, address, createdAt) VALUES ("${userDetails.name}","${userDetails.email}","${userDetails.password}","${userDetails.uuid}","${userDetails.mobileNumber}","${userDetails.address}","${userDetails.createdAt}")`,
+      `INSERT INTO users (name, email, password, uuid, mobileNumber, address, role, createdAt) VALUES ("${userDetails.name}","${userDetails.email}","${userDetails.password}","${userDetails.uuid}","${userDetails.mobileNumber}","${userDetails.address}","${userDetails.role}","${userDetails.createdAt}")`,
       callback,
     )
   },

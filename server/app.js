@@ -619,7 +619,7 @@ var uploadPic = multer({
 // })
 
 app.post('/api/upload/pic', function (req, res, next) {
-  console.log(req.file, 'req.file')
+  console.log(req, 'req.file')
   console.log(req.photo, 'req.photo')
   let path = ''
   let resizePath = ''

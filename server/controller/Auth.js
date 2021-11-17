@@ -29,6 +29,7 @@ let Auth = {
               password: bcryptedPassword,
               mobileNumber: body.mobileNumber || '',
               address: body.address || '',
+              role: 'OPERATOR',
               createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
             }
             console.log(userData)
@@ -80,6 +81,7 @@ let Auth = {
                 uuid: userDetails[0].uuid,
                 mobileNumber: userDetails[0].mobileNumber,
                 address: userDetails[0].address,
+                role: userDetails[0].role,
                 accessToken: tokenDetails.accessToken,
                 accessTokenExpiry: tokenDetails.accessTokenExpiry,
                 createdAt: userDetails[0].createdAt,
