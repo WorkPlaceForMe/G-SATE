@@ -41,6 +41,7 @@ const sharp = require("sharp");
 const Annotation = require("./routes/Annotation");
 const PpeDetection = require("./routes/PpeDetection");
 const Home = require("./routes/Home");
+const cors = require("cors");
 
 app.use(
   express.json({
@@ -60,6 +61,7 @@ app.use(bodyParser.urlencoded({
     parameterLimit:50000
 })); */
 app.use(cookieParser());
+app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
@@ -597,7 +599,7 @@ app.post("/api/upload/pic", function (req, res, next) {
     path = req.file.path;
     let datetimestamp = Date.now();
     resizePath = `./uploads/photo-${datetimestamp}.jpg`;
-    sharp("./" + path)
+    sharp(path)
       .resize(710, 480)
       .toFile(resizePath, function (err) {
         if (err) {

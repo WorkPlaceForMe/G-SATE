@@ -79,6 +79,8 @@ import { UiSwitchModule } from "ngx-toggle-switch";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
+import { LoginComponent } from "./components/auth/login/login.component";
+import { SignupComponent } from "./components/auth/signup/signup.component";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -87,10 +89,12 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     NavigationComponent,
     HomePageComponent,
     FaceFormComponent,
+    SignupComponent,
     ImagesFormComponent,
     TrustedUrlPipe,
     UrlPipe,
     PagenotfoundComponent,
+    LoginComponent,
     FaceListComponent,
     TCloudDashboardComponent,
     ScheduleComponent,

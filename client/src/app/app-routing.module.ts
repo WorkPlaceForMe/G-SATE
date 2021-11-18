@@ -32,8 +32,18 @@ import { HomePageComponent } from "./components/home-page/home-page.component";
 import { TestYourModelComponent } from "./components/test-your-model/test-your-model.component";
 import { TestResultComponent } from "./components/test-results/test-results.component";
 import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
+import { LoginComponent } from "./components/auth/login/login.component";
+import { SignupComponent } from "./components/auth/signup/signup.component";
 
 const routes: Routes = [
+  {
+    path: "auth/signup",
+    component: SignupComponent,
+  },
+  {
+    path: "auth/login",
+    component: LoginComponent,
+  },
   {
     path: "management",
     component: FaceListComponent,
