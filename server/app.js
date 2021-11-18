@@ -160,21 +160,21 @@ process.on("uncaughtException", function (err, promise) {
 });
 
 app.use(express.static("../client"));
-var storage = multer.diskStorage({
-  //multers disk storage settings
-  destination: function (req, file, cb) {
-    frPicPath = file.originalname.toString().split("_");
-    if (!fs.existsSync(process.env.resources + frPicPath[0])) {
-      fs.mkdirSync(process.env.resources + frPicPath[0]);
-    }
-    cb(null, process.env.resources + frPicPath[0]);
-  },
-  filename: function (req, file, cb) {
-    var newName = file.originalname.toString().split("_");
-    cb(null, newName[1]);
-    //file.originalname
-  },
-});
+// var storage = multer.diskStorage({
+//   //multers disk storage settings
+//   destination: function (req, file, cb) {
+//     frPicPath = file.originalname.toString().split("_");
+//     if (!fs.existsSync(process.env.resources + frPicPath[0])) {
+//       fs.mkdirSync(process.env.resources + frPicPath[0]);
+//     }
+//     cb(null, process.env.resources + frPicPath[0]);
+//   },
+//   filename: function (req, file, cb) {
+//     var newName = file.originalname.toString().split("_");
+//     cb(null, newName[1]);
+//     //file.originalname
+//   },
+// });
 
 var upload = multer({
   //multer settings
@@ -607,7 +607,7 @@ app.post("/api/upload/pic", function (req, res, next) {
           });
         } else {
           console.log("================> ", resizePath);
-          processImage(resizePath, path, res);
+          // processImage(resizePath, path, res);
         }
       });
     //return res.send("Upload Completed for " + path);
