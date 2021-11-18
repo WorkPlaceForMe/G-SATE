@@ -606,8 +606,7 @@ app.post("/api/upload/pic", function (req, res, next) {
             message: err.message,
           });
         } else {
-          console.log("================> ", resizePath);
-          // processImage(resizePath, path, res);
+          processImage(resizePath, path, res);
         }
       });
     //return res.send("Upload Completed for " + path);
@@ -645,8 +644,7 @@ var processImage = (imgPath, path, res) => {
         console.log("error.............", error);
         return res.status(500).json(error.message);
       }
-      console.log("path", path);
-      // fs.unlinkSync(path)
+      fs.unlinkSync(path);
       return res.json(response.body);
     });
   } catch (err) {
