@@ -607,7 +607,7 @@ app.post("/api/upload/pic", function (req, res, next) {
           });
         } else {
           console.log("================> ", resizePath);
-          // processImage(resizePath, path, res);
+          processImage(resizePath, path, res);
         }
       });
     //return res.send("Upload Completed for " + path);
@@ -616,6 +616,7 @@ app.post("/api/upload/pic", function (req, res, next) {
 
 var processImage = (imgPath, path, res) => {
   try {
+    console.log("======> processImage");
     var options = {
       method: "POST",
       url: process.env.vista_server_ip + "/api/v1/sync",
@@ -644,6 +645,7 @@ var processImage = (imgPath, path, res) => {
         console.log("error.............", error);
         return res.status(500).json(error.message);
       }
+      console.log("path", path);
       // fs.unlinkSync(path)
       return res.json(response.body);
     });
