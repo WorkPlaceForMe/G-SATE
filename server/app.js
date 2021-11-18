@@ -606,7 +606,8 @@ app.post("/api/upload/pic", function (req, res, next) {
             message: err.message,
           });
         } else {
-          processImage(resizePath, path, res);
+          console.log("================> ", resizePath);
+          // processImage(resizePath, path, res);
         }
       });
     //return res.send("Upload Completed for " + path);
