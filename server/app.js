@@ -599,13 +599,14 @@ app.post("/api/upload/pic", function (req, res, next) {
     resizePath = `./uploads/photo-${datetimestamp}.jpg`;
     sharp(path)
       .resize(710, 480)
-      .toFile(resizePath, function (err) {
+      .toFile(resizePath, function (err, res) {
         if (err) {
           res.status(500).json({
             success: false,
             message: err.message,
           });
         } else {
+          console.log("sharp => ", res);
           console.log("================> ", resizePath);
           // processImage(resizePath, path, res);
         }
