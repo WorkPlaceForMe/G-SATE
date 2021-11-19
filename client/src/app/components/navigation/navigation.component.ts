@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from "@angular/core";
 import { Router } from "@angular/router";
 import { NavigationService } from "../../shared/services/navigation.service";
 import { ip } from "../../models/IpServer";
+import { SessionStorageService } from "src/app/services/session-storage.service";
 
 @Component({
   selector: "app-navigation",
@@ -20,12 +21,12 @@ export class NavigationComponent implements OnInit {
   hasService6: boolean;
   constructor(
     private navigationService: NavigationService,
-    public router: Router
+    public router: Router,
+    private sessionStorageService: SessionStorageService
   ) {
     // Subscribe here, this will automatically update
     // "isUserLoggedIn" whenever a change to the subject is made.
     this.navigationService.isUserLoggedIn.subscribe((value) => {
-      console.log(value);
       this.isUserLoggedIn = value;
     });
     this.navigationService.userName.subscribe((value) => {
@@ -62,5 +63,6 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.navigationService.isUserLoggedIn.next(false);
     this.navigationService.isUserLoggedIn.next(null);
+    this.sessionStorageService.removeItems();
   }
 }

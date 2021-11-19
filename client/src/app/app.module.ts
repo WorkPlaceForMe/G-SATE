@@ -61,6 +61,8 @@ import { ObjDetImgComponent } from "./components/t-cloud/obj-det-img/obj-det-img
 import { MultipleImageDetectionComponent } from "./components/t-cloud/multiple-image-detection/multiple-image-detection.component";
 import { AnnotationsDetailsComponent } from "./components/t-cloud/annotations-details/annotations-details.component";
 import { PagerService } from "./services/pager.service";
+import { UserService } from "./services/user.service";
+import { SessionStorageService } from "./services/session-storage.service";
 import { AddVideoComponent } from "./components/cameras_conf/add-video/add-video.component";
 import { AnnotationsConfirmComponent } from "./components/t-cloud/annotations-confirm/annotations-confirm.component";
 import { ObjectDetectionConfirmComponent } from "./components/t-cloud/object-detection-confirm/object-detection-confirm.component";
@@ -170,6 +172,8 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     AnnotationsService,
     PagerService,
     ThemeService,
+    UserService,
+    SessionStorageService,
   ],
   bootstrap: [AppComponent],
 })

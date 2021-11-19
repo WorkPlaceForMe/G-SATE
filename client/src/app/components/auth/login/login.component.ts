@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../services/user.service";
 import { Router } from "@angular/router";
 import { NavigationService } from "src/app/shared/services/navigation.service";
+import { SessionStorageService } from "src/app/services/session-storage.service";
 
 @Component({
   selector: "app-login",
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private navigationService: NavigationService,
-    private router: Router
+    private router: Router,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit() {}
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/home"]);
           this.navigationService.isUserLoggedIn.next(true);
           this.navigationService.userName.next(res.name);
+          this.sessionStorageService.setItems(res);
         },
         (err) => {
           console.log(err);
