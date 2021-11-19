@@ -14,7 +14,7 @@ import { environment } from "../../environments/environment";
 })
 export class UserService {
   API_URI = "http://" + ip + ":3000/api";
-  API_LOCAL = "http://localhost:3001/api";
+  // API_LOCAL = "http://localhost:3001/api";
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,7 @@ export class UserService {
     let header = new HttpHeaders({ "X-API-KEY": environment.xApiKey });
 
     return this.http.post(
-      `${this.API_LOCAL}/user/login`,
+      `${this.API_URI}/user/login`,
       {
         email,
         password,
@@ -35,6 +35,6 @@ export class UserService {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append("X-API-KEY", environment.xApiKey);
 
-    return this.http.post(`${this.API_LOCAL}/user/signup`, obj, { headers });
+    return this.http.post(`${this.API_URI}/user/signup`, obj, { headers });
   }
 }
