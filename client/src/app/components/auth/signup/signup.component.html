@@ -1,14 +1,5 @@
 <div
-  class="
-    section-padding
-    header-padding
-    inner-banner inner-banner-full
-    bg-white
-    d-flex
-    align-items-center
-    justify-content-center
-    bg-after bg-after-darken bg-after-75
-  "
+  class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
   [ngStyle]="{ 'background-image': 'url(/assets/images/camera-edit-bg.jpg)' }"
 >
   <div class="container container-medium text-center z-index-1 text-white">
@@ -21,65 +12,179 @@
       </div>
     </div>
     <h2 class="mb-4 text-uppercase text-white">Sign Up</h2>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-        <div class="p-5 custom-card rounded">
-          <h5 class="mb-2 text-primary text-left">Name</h5>
-          <div class="form-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Name"
-              [(ngModel)]="name"
-            />
-          </div>
-          <h5 class="mb-2 text-primary text-left">Mobile Number</h5>
-          <div class="form-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Mobile No."
-              [(ngModel)]="mobileNumber"
-            />
-          </div>
-          <h5 class="mb-2 text-primary text-left">Address</h5>
-          <div class="form-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Address"
-              [(ngModel)]="address"
-            />
-          </div>
-          <h5 class="mb-2 text-primary text-left">Email</h5>
-          <div class="form-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Email"
-              [(ngModel)]="email"
-            />
-          </div>
-          <h5 class="mb-2 text-primary text-left">Password</h5>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Enter Password"
-              [(ngModel)]="password"
-            />
-          </div>
-          <div class="text-center pt-3">
-            <button
-              type="submit"
-              class="btn btn-primary btn-block"
-              (click)="signup()"
-            >
-              Signup
-            </button>
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+          <div class="p-5 custom-card rounded">
+            <h5 class="mb-2 text-primary text-left">Name</h5>
+            <div class="form-group mb-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Name"
+                formControlName="name"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.name.valid &&
+                  signupForm.controls.name.touched
+                "
+                class="error text-danger"
+              >
+                <span *ngIf="signupForm.controls.name.hasError('required')">
+                  Please enter your name
+                </span>
+              </span>
+            </div>
+            <h5 class="mb-2 text-primary text-left">Mobile Number</h5>
+            <div class="form-group mb-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Mobile No."
+                formControlName="mobileNumber"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.mobileNumber.valid &&
+                  signupForm.controls.mobileNumber.touched
+                "
+                class="error text-danger"
+              >
+                <span
+                  *ngIf="signupForm.controls.mobileNumber.hasError('pattern')"
+                >
+                  Please enter a valid mobile number
+                </span>
+              </span>
+            </div>
+            <h5 class="mb-2 text-primary text-left">Address</h5>
+            <div class="form-group mb-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Address"
+                formControlName="address"
+              />
+            </div>
+            <h5 class="mb-2 text-primary text-left">Email</h5>
+            <div class="form-group mb-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Email"
+                formControlName="email"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.email.valid &&
+                  signupForm.controls.email.touched
+                "
+                class="error text-danger"
+              >
+                <span *ngIf="signupForm.controls.email.hasError('required')">
+                  Please enter your email
+                </span>
+                <span *ngIf="signupForm.controls.email.hasError('email')">
+                  Please enter a valid email address
+                </span>
+              </span>
+            </div>
+            <h5 class="mb-2 text-primary text-left">Password</h5>
+            <div class="form-group mb-4">
+              <input
+                [type]="show ? 'text' : 'password'"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="password"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.password.valid &&
+                  signupForm.controls.password.touched
+                "
+                class="error text-danger"
+              >
+                <span *ngIf="signupForm.controls.password.hasError('required')">
+                  Please enter your password
+                </span>
+              </span>
+              <div style="float: left">
+                <input
+                  type="checkbox"
+                  id="togglePassword"
+                  name="togglePassword"
+                  (click)="showOrHidePassword('show')"
+                  class="mr-1"
+                />
+                <label for="togglePassword">Show password</label><br />
+              </div>
+            </div>
+            <!-- <h5 class="mb-2 text-primary text-left">Confirm Password</h5>
+            <div class="form-group mb-4">
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                class="form-control"
+                placeholder="Re-enter Password"
+                formControlName="confirmPassword"
+                [disabled]="signupForm.value.password.length === 0"
+              />
+              <span
+                style="float: left"
+                class="error text-danger"
+                *ngIf="
+                  signupForm.errors?.mismatch &&
+                  signupForm.value.password &&
+                  signupForm.value.confirmPassword
+                "
+              >
+                Passwords don't match
+              </span>
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.confirmPassword.valid &&
+                  signupForm.controls.confirmPassword.touched
+                "
+                class="error text-danger"
+              >
+                <span
+                  *ngIf="
+                    signupForm.controls.confirmPassword.hasError('required')
+                  "
+                >
+                  Please confirm your password
+                </span>
+              </span>
+              <div style="float: left">
+                <input
+                  type="checkbox"
+                  id="toggleConfirmPassword"
+                  name="toggleConfirmPassword"
+                  (click)="showOrHidePassword('showConfirmPassword')"
+                  class="mr-1"
+                />
+                <label for="toggleConfirmPassword">Show confirm password</label
+                ><br />
+              </div>
+            </div> -->
+
+            <div class="text-center pt-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                [disabled]="!signupForm.valid"
+              >
+                Signup
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

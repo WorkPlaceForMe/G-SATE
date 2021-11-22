@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../services/user.service";
 import { Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-signup",
@@ -8,29 +9,41 @@ import { Router } from "@angular/router";
   styleUrls: ["./signup.component.scss"],
 })
 export class SignupComponent implements OnInit {
+  signupForm: FormGroup;
   spin: boolean = false;
-  name;
-  email;
-  password;
-  mobileNumber;
-  address;
+  show: boolean = false;
+  // showConfirmPassword: boolean = false;
 
-  edit: boolean = false;
-
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.signupForm = this.fb.group(
+      {
+        email: ["", [Validators.required, Validators.email]],
+        password: ["", [Validators.required]],
+        name: ["", [Validators.required]],
+        mobileNumber: ["", [Validators.pattern(/^[0-9]\d*$/)]],
+        address: [""],
+        // confirmPassword: [{ value: "", disabled: true }, [Validators.required]],
+      }
+      //  { validator: this.passwordMatchValidator }
+    );
+  }
 
   ngOnInit() {}
 
   signup() {
-    if (this.email && this.password) {
+    if (this.signupForm.valid) {
       this.spin = true;
       this.userService
         .signup({
-          name: this.name,
-          mobileNumber: this.mobileNumber,
-          address: this.address,
-          email: this.email,
-          password: this.password,
+          name: this.signupForm.value.name,
+          mobileNumber: this.signupForm.value.mobileNumber,
+          address: this.signupForm.value.address,
+          email: this.signupForm.value.email,
+          password: this.signupForm.value.password,
         })
         .subscribe(
           (res) => {
@@ -46,4 +59,30 @@ export class SignupComponent implements OnInit {
         );
     }
   }
+
+  showOrHidePassword(type: string) {
+    if (type === "show") {
+      this.show = !this.show;
+    }
+    // if (type === "showConfirmPassword") {
+    //   this.showConfirmPassword = !this.showConfirmPassword;
+    // }
+  }
+
+  // passwordMatchValidator(form: FormGroup) {
+  //   return form.controls["password"].value ===
+  //     form.controls["confirmPassword"].value
+  //     ? null
+  //     : { mismatch: true };
+  // }
+
+  // onPasswordChange(value: string) {
+  //   if (value.length > 0) {
+  //     this.signupForm.get("confirmPassword").enable();
+  //   } else {
+  //     this.signupForm.get("confirmPassword").disable();
+  //   }
+  // }
+
+  // (input)="onPasswordChange($event.target.value)"
 }
