@@ -78,7 +78,7 @@ router.post('/cortarFrames', validateUserAccessToken, function (
   DsetController.createDataset(req, res)
 })
 
-router.post('/upZip', function (req, res, next) {
+router.post('/upZip', validateUserAccessToken, function (req, res, next) {
   DsetController.unzipDataset(req, res)
 })
 

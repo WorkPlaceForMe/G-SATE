@@ -601,7 +601,7 @@ var upload = multer({
   storage: storage,
 }).single('photo')
 
-app.post('/api/upload/pic', function (req, res, next) {
+app.post('/api/upload/pic', validateUserAccessToken, function (req, res, next) {
   let path = ''
   let resizePath = ''
   upload(req, res, function (err) {
@@ -610,7 +610,7 @@ app.post('/api/upload/pic', function (req, res, next) {
       console.log(err)
       return res.status(422).send('an Error occured')
     }
-    console.log(req.file, 'new req.file')
+    console.log(req.file, 'req.file')
     // No error occured.
     path = req.file.path
     let datetimestamp = Date.now()
@@ -632,52 +632,6 @@ app.post('/api/upload/pic', function (req, res, next) {
     //return res.send("Upload Completed for " + path);
   })
 })
-
-var processImage1 = (imgPath, path, res) => {
-  try {
-    console.log('======> processImage')
-    console.log(imgPath, 'imgPath')
-    console.log(path, 'path')
-    var options = {
-      method: 'POST',
-      url: process.env.vista_server_ip + '/api/v1/sync',
-      strictSSL: false,
-      headers: {
-        'Content-Type': `multipart/form-data;`,
-        // 'Authorization': 'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx' // 'Basic YWRtaW46YWRtaW4='
-      },
-      auth: {
-        username: 'gsate',
-        password: 'gsate',
-      },
-      formData: {
-        upload: {
-          value: fs.createReadStream(imgPath),
-          options: {
-            filename: imgPath,
-            contentType: null,
-          },
-        },
-        subscriptions: 'Object,themes,food,tags,face,fashion',
-      },
-    }
-    request(options, function (error, response) {
-      if (error) {
-        console.log('error.............', error)
-        return res.status(500).json(error.message)
-      }
-      fs.unlinkSync(path)
-      const responseUrl = imgPath.split('/')
-      response.body.image =
-        responseUrl[responseUrl.length - 2] +
-        '/' +
-        responseUrl[responseUrl.length - 1]
-      return res.json(response.body)
-    })
-  } catch (err) {
-    return res.status(500).json(error.message)
-  }
-}
 
 var processImage = (imgPath, path, res) => {
   try {

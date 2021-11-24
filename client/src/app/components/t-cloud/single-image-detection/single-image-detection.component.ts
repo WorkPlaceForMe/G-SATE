@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { FacesService } from "../../../services/faces.service";
 import { AnnotationsService } from "../../../services/annotations.service";
-import { vistaIP } from "../../../models/VistaServer";
 import { ip } from "../../../models/IpServer";
 import { Location } from "@angular/common";
 
