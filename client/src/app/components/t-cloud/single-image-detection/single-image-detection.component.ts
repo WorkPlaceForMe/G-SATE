@@ -7,7 +7,8 @@ import { vistaIP } from '../../../models/VistaServer';
 import { ip } from '../../../models/IpServer';
 import { Location } from '@angular/common';
 
-const baseURL = vistaIP;
+// const baseURL = vistaIP;
+const baseURL = ip + "/assets/shared-data/"
 @Component({
   selector: 'app-single-image-detection',
   templateUrl: './single-image-detection.component.html',

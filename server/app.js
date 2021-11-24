@@ -725,12 +725,58 @@ var processImage = (imgPath, path, res) => {
         return res.status(500).json(error.message)
       }
       fs.unlinkSync(path)
+      const responseUrl = imgPath.split('/')
+      response.body.image =
+        responseUrl[responseUrl.length - 2] +
+        '/' +
+        responseUrl[responseUrl.length - 1]
       return res.json(response.body)
     })
   } catch (err) {
     return res.status(500).json(error.message)
   }
 }
+
+// var processImage = (imgPath, path, res) => {
+//   try {
+//     console.log('======> processImage')
+//     console.log(imgPath, 'imgPath')
+//     console.log(path, 'path')
+//     var options = {
+//       method: 'POST',
+//       url: process.env.vista_server_ip + '/api/v1/sync',
+//       strictSSL: false,
+//       headers: {
+//         'Content-Type': `multipart/form-data;`,
+//         // 'Authorization': 'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx' // 'Basic YWRtaW46YWRtaW4='
+//       },
+//       auth: {
+//         username: 'gsate',
+//         password: 'gsate',
+//       },
+//       formData: {
+//         upload: {
+//           value: fs.createReadStream(imgPath),
+//           options: {
+//             filename: imgPath,
+//             contentType: null,
+//           },
+//         },
+//         subscriptions: 'Object,themes,food,tags,face,fashion',
+//       },
+//     }
+//     request(options, function (error, response) {
+//       if (error) {
+//         console.log('error.............', error)
+//         return res.status(500).json(error.message)
+//       }
+//       fs.unlinkSync(path)
+//       return res.json(response.body)
+//     })
+//   } catch (err) {
+//     return res.status(500).json(error.message)
+//   }
+// }
 
 app.get('/api/search/:keyword', validateUserAccessToken, async function (
   req,
