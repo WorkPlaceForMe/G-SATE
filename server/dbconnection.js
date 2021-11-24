@@ -1,5 +1,5 @@
-var mysql = require("mysql");
-require("dotenv").config({ path: "./config.env" });
+var mysql = require('mysql')
+require('dotenv').config({ path: './config.env' })
 
 var connection = mysql.createPool({
   host: process.env.host,
@@ -7,5 +7,5 @@ var connection = mysql.createPool({
   password: process.env.password,
   database: process.env.database,
   // port: 3307,
-});
-module.exports = connection;
+})
+module.exports = connection

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { HomeService } from "src/app/services/home.service";
-import { SessionStorageService } from "src/app/services/session-storage.service";
+// import { SessionStorageService } from "src/app/services/session-storage.service";
 
 @Component({
   selector: "app-home-page",
@@ -16,9 +16,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private homeService: HomeService,
-    private sessionStorageService: SessionStorageService
-  ) {
+    private homeService: HomeService
+  ) //  private sessionStorageService: SessionStorageService
+  {
     this.contactsForm = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(3)]],
       email: ["", [Validators.required, Validators.email]],
@@ -29,17 +29,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
+  // goto(page) {
+  //   const sessionItems = this.sessionStorageService.getItems();
+  //   if (page == "/annotations") {
+  //     if (sessionItems) {
+  //       this.router.navigate([page]);
+  //     } else {
+  //       this.router.navigate(["auth/login"]);
+  //     }
+  //   } else {
+  //     this.router.navigate([page]);
+  //   }
+  // }
+
   goto(page) {
-    const sessionItems = this.sessionStorageService.getItems();
-    if (page == "/annotations") {
-      if (sessionItems) {
-        this.router.navigate([page]);
-      } else {
-        this.router.navigate(["auth/login"]);
-      }
-    } else {
-      this.router.navigate([page]);
-    }
+    this.router.navigate([page]);
   }
 
   openTab(url) {

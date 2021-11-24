@@ -70,6 +70,10 @@ var User = {
   getUserByEmail: function (email, callback) {
     return db.query('SELECT * FROM users WHERE email = ?', [email], callback)
   },
+
+  getUserById: function (id, callback) {
+    return db.query('SELECT * FROM users WHERE id = ?', [id], callback)
+  },
 }
 
 module.exports = User

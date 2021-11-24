@@ -3,6 +3,8 @@ var router = express.Router()
 var Algorithm = require('../models/Algorithms')
 var Relations = require('../models/Relations')
 const fs = require('fs')
+const { validateUserAccessToken } = require('../middleware/AuthUser')
+router.use(validateUserAccessToken)
 
 router.get('/', function (req, res, next) {
   Algorithm.list(function (err, rows) {

@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit {
           (res: any) => {
             console.log(res);
             this.spin = false;
-            this.router.navigate(["/home"]);
+            // this.router.navigate(["/home"]);
+            this.handleNavigation();
             this.navigationService.isUserLoggedIn.next(true);
             this.navigationService.userName.next(res.name);
             this.sessionStorageService.setItems(res);
@@ -59,5 +60,15 @@ export class LoginComponent implements OnInit {
 
   showOrHidePassword() {
     this.show = !this.show;
+  }
+
+  handleNavigation() {
+    const queryParams = this.router.parseUrl(this.router.url).queryParams;
+    if (queryParams.hasOwnProperty("ref")) {
+      const ref = queryParams.ref.split(",").join("/");
+      this.router.navigate([`/${ref}`]);
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 }

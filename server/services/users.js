@@ -17,7 +17,23 @@ genrateUserTokens = (userDetails) => {
   }
 }
 
+verifyUserToken = (token, tokenSecret) => {
+  try {
+    const decoded = jwt.verify(token, tokenSecret)
+    return decoded
+  } catch (err) {
+    return false
+  }
+}
+
+parseBearer = (bearer) => {
+  const [_, token] = bearer.trim().split(' ')
+  return token
+}
+
 const userService = {
   genrateUserTokens: genrateUserTokens,
+  verifyUserToken: verifyUserToken,
+  parseBearer: parseBearer,
 }
 module.exports = userService

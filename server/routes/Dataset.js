@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Datasets = require('../models/Dataset')
 const DsetController = require('../controller/Dataset')
+const { validateUserAccessToken } = require('../middleware/AuthUser')
+router.use(validateUserAccessToken)
 
 router.get('/unannotated/:which', function (req, res, next) {
   let which = req.params.which

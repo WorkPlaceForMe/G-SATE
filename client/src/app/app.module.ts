@@ -83,6 +83,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
 import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
 import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
+import { InterceptorProviders } from "./interceptors";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -174,6 +175,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     ThemeService,
     UserService,
     SessionStorageService,
+    InterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })

@@ -34,6 +34,7 @@ import { TestResultComponent } from "./components/test-results/test-results.comp
 import { CustomTrainedModelsComponent } from "./components/custom-trained-models/custom-trained-models.component";
 import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
+import { AuthGuardService } from "./services/auth-guard.service";
 
 const routes: Routes = [
   {
@@ -47,22 +48,27 @@ const routes: Routes = [
   {
     path: "management",
     component: FaceListComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "user/schedule/:id",
     component: ScheduleComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "user/edit/:uuid",
     component: FaceFormComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "user/add",
     component: FaceFormComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations",
     component: TCloudDashboardComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "home",
@@ -75,74 +81,92 @@ const routes: Routes = [
   {
     path: "test-results",
     component: TestResultComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "custom-trained-models",
     component: CustomTrainedModelsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "user/images/:id",
     component: ImagesFormComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "settings",
     component: SettingsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/live/:id",
     component: LiveComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/heatmap/:uuid",
     component: HeatmapComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "classify/:choose",
     component: UnwantedVehicleComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "prediction/:choose",
     component: UnwantedVehicleComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/algorithms/:uuid/:id",
     component: ROIComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "user/search",
     component: SearchComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "camerasList",
     component: LivestreamComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/dataset/:method/:folder/:image",
     component: MultipleImageDetectionComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/dataset/:method/:folder/:image/details",
     component: ObjectDetectionDetailsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/objectDetection/confirm",
     component: ObjectDetectionConfirmComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/:method/:folder/:image",
     component: SingleImageDetectionComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/:method/:folder/:image/details",
     component: AnnotationsDetailsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/save",
     component: AnnotationsDetailsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "annotations/confirm",
     component: AnnotationsConfirmComponent,
+    canActivate: [AuthGuardService],
   },
   /* {
     path: 'objectDetection/:folder/:image',
@@ -151,42 +175,52 @@ const routes: Routes = [
   {
     path: "annotation/video/:cam_name/:date",
     component: SpeedingVehicleComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/edit/:uuid",
     component: VidComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/add_camera",
     component: VidComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/add_video",
     component: AddVideoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "analytics",
     component: AnalyticsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cameras/algorithms/:uuid",
     component: AlgorithmsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "documents",
     component: ClimbingBarricadeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "objectDetection",
     component: ObjectDetectionComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "objectDetection/img/label",
     component: SingleImageDetectionComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "test-your-model",
     component: TestYourModelComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "",

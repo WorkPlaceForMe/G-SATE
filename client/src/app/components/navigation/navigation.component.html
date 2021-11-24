@@ -1,11 +1,5 @@
 <nav
-  class="
-    navbar navbar-expand-lg navbar-light
-    position-absolute
-    z-index-2
-    w-100
-    py-3
-  "
+  class="navbar navbar-expand-lg navbar-light position-absolute z-index-2 w-100 py-3"
 >
   <div class="container">
     <a class="logo" href="/home"
@@ -120,7 +114,7 @@
             >Create Dataset</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isUserLoggedIn">
           <a
             class="nav-link"
             id="settings"
@@ -130,7 +124,7 @@
             >Test Results</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isUserLoggedIn">
           <a
             class="nav-link"
             id="settings"
@@ -162,7 +156,7 @@
             <i class="fas fa-user-circle"></i
           ></a>
           <div class="dropdown-menu" x-placement="bottom-start">
-            <a class="dropdown-item" routerLink="/home" (click)="logout()">
+            <a class="dropdown-item">
               <i class="fas fa-user-circle mr-2"></i>{{ userName }}
             </a>
             <a class="dropdown-item mt-2" routerLink="/home" (click)="logout()">

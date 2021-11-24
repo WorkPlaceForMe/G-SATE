@@ -1020,3 +1020,5 @@
 07-05-2021 10:37:20 PM - error: vlcsnap-2019-11-29-17h26m55s206.png: RequestError: Error: connect ETIMEDOUT 54.210.219.113:443
 07-05-2021 10:38:36 PM - error: vlcsnap-2019-11-29-17h27m05s738.png: RequestError: Error: connect ETIMEDOUT 54.210.219.113:443
 21-10-2021 03:54:57 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/video_test_2'
+23-11-2021 05:42:27 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/saima_test'
+23-11-2021 05:42:41 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/saima1'

@@ -72,7 +72,7 @@ let Auth = {
               })
             } else {
               const tokenDetails = await userService.genrateUserTokens(
-                userDetails,
+                userDetails[0],
               )
               const responseObj = {
                 id: userDetails[0].id,

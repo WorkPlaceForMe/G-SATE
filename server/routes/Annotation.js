@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const Annotation = require('../models/Annotation')
 const elastic = require('elasticsearch')
+const { validateUserAccessToken } = require('../middleware/AuthUser')
 const elasticIndex = 'image_annotations'
 const elasticType = 'annotaions'
 
@@ -14,6 +15,8 @@ const client = elastic.Client({
   // node: `${process.env.my_ip}:${process.env.server}`,
   host: process.env.elasticsearch_host,
 })
+
+router.use(validateUserAccessToken)
 
 router.get('/models', function (req, res, next) {
   Annotation.getModelDetails(function (err, annotation) {
