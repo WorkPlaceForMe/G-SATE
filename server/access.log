@@ -19861,3 +19861,40 @@ Date: Wed, 24 Nov 2021 06:01:23 GMT // Url: 127.0.0.1 // Method: GET/api/algorit
 Server started at: Wed Nov 24 2021 11:40:38 GMT+0530 (India Standard Time)
 From: localhost
 Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 12:37:14 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 12:38:38 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Wed, 24 Nov 2021 07:08:56 GMT // Url: 127.0.0.1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:08:57 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/annotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:08:57 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:08:57 GMT // Url: 127.0.0.1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:08:57 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/class // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:09:47 GMT // Url: 127.0.0.1 // Method: POST/api/upload/pic // Status:403 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:45 GMT // Url: 127.0.0.1 // Method: POST/api/user/login // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:52 GMT // Url: 127.0.0.1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:52 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:52 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/class // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:52 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/annotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:11:52 GMT // Url: 127.0.0.1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:12:06 GMT // Url: 127.0.0.1 // Method: POST/api/upload/pic // Status:403 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Wed Nov 24 2021 12:43:34 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Wed, 24 Nov 2021 07:16:04 GMT // Url: 127.0.0.1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:16:04 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/annotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:16:04 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:16:04 GMT // Url: 127.0.0.1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:16:05 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/class // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 07:16:15 GMT // Url: 127.0.0.1 // Method: POST/api/upload/pic // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Wed Nov 24 2021 12:50:46 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 12:50:51 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 12:51:16 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 

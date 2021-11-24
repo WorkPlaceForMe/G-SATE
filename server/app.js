@@ -600,8 +600,8 @@ var upload = multer({
   storage: storage,
 }).single('photo')
 
-app.post('/api/upload/pic', validateUserAccessToken, function (req, res, next) {
-  console.log(req.file)
+app.post('/api/upload/pic', function (req, res, next) {
+  //  console.log(req.file)
   let path = ''
   let resizePath = ''
   upload(req, res, function (err) {
@@ -634,6 +634,8 @@ app.post('/api/upload/pic', validateUserAccessToken, function (req, res, next) {
 var processImage = (imgPath, path, res) => {
   try {
     console.log('======> processImage')
+    console.log(imgPath, 'imgPath')
+    console.log(path, 'path')
     var options = {
       method: 'POST',
       url: process.env.vista_server_ip + '/api/v1/sync',
