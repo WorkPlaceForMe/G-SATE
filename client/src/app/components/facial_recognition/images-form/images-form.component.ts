@@ -1,59 +1,83 @@
-import { Component, OnInit, HostBinding, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostBinding,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Image } from 'src/app/models/Image';
-import { FacesService } from '../../../services/faces.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader, FileLikeObject } from 'ng2-file-upload';
-import { ip } from '../../../models/IpServer';
-import { v4 as uuid } from 'uuid';
-import { User } from 'src/app/models/User';
-import { AnnotationsService } from 'src/app/services/annotations.service';
+import { Image } from "src/app/models/Image";
+import { FacesService } from "../../../services/faces.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FileUploader, FileLikeObject } from "ng2-file-upload";
+import { ip } from "../../../models/IpServer";
+import { v4 as uuid } from "uuid";
+import { User } from "src/app/models/User";
+import { AnnotationsService } from "src/app/services/annotations.service";
+import { NavigationService } from "src/app/shared/services/navigation.service";
+import { SessionStorageService } from "src/app/services/session-storage.service";
+import { throwError } from "rxjs";
 
-const URL = 'http://' + ip + ':3000/upload';
+const URL = "http://" + ip + ":3000/upload";
 
 @Component({
-  selector: 'app-images-form',
-  templateUrl: './images-form.component.html',
-  styleUrls: ['./images-form.component.css']
+  selector: "app-images-form",
+  templateUrl: "./images-form.component.html",
+  styleUrls: ["./images-form.component.css"],
 })
 export class ImagesFormComponent implements OnInit {
-
-  @HostBinding('class') classes = 'row';
+  @HostBinding("class") classes = "row";
 
   form: FormGroup;
   uploadName: string;
   id: string;
-  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+  @ViewChild("fileInput", { static: false }) fileInput: ElementRef;
 
   images: any = [];
   imagesFiles: any = [];
   fileName: string = "";
   image: Image = {
     id: 0,
-    user_id: '',
-    location: '',
-    name: ''
+    user_id: "",
+    location: "",
+    name: "",
   };
   user: User = {
     id: 0,
-    name: '',
-    gender: '',
-    age_group: '',
-    role: '',
-    category: '',
-    uuid: ''
+    name: "",
+    gender: "",
+    age_group: "",
+    role: "",
+    category: "",
+    uuid: "",
   };
 
   uploadFileNames: Array<string> = [];
-  constructor(private facesService: FacesService, private activatedRoute: ActivatedRoute, private fb: FormBuilder, private annserv: AnnotationsService) {
+
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    itemAlias: "file",
+  });
+
+  constructor(
+    private router: Router,
+    private facesService: FacesService,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private annserv: AnnotationsService,
+    private sessionService: SessionStorageService,
+    private navigationService: NavigationService
+  ) {
+    const authInfo = this.sessionService.getItems();
+    const token = "Bearer " + authInfo.accessToken;
+    this.uploader.authToken = authInfo ? token : "";
     const params = this.activatedRoute.snapshot.params;
-    this.facesService.getUser(params.id)
-      .subscribe(
-        res => {
-          this.user = res;
-        },
-        err => console.error(err)
-      )
+    this.facesService.getUser(params.id).subscribe(
+      (res) => {
+        this.user = res;
+      },
+      (err) => console.error(err)
+    );
     this.createForm();
   }
 
@@ -61,29 +85,36 @@ export class ImagesFormComponent implements OnInit {
     this.form = this.fb.group({
       id: null,
       user_id: this.id,
-      location: null
+      location: null,
     });
   }
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
-      this.uploadName = this.activatedRoute.snapshot.params.id + '_' + uuid() + '.jpg';
+      this.uploadName =
+        this.activatedRoute.snapshot.params.id + "_" + uuid() + ".jpg";
       this.fileName += file.file.name + ",";
       file.file.name = this.uploadName;
       this.uploadFileNames.push(this.uploadName);
     };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      this.getImagesFiles();
-      console.log("Uploaded:", item, status, response);
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      if (status === 200) {
+        this.getImagesFiles();
+        console.log("Uploaded:", item, status, response);
+      } else if (status === 401) {
+        this.logout();
+      } else {
+        return throwError(response);
+      }
     };
     this.getImagesFiles();
   }
-
-  public uploader: FileUploader = new FileUploader({
-    url: URL,
-    itemAlias: 'file'
-  });
 
   size: any;
   name: any;
@@ -106,17 +137,30 @@ export class ImagesFormComponent implements OnInit {
   //   )
   // }
 
+  logout() {
+    this.navigationService.isUserLoggedIn.next(false);
+    this.navigationService.isUserLoggedIn.next(null);
+    this.sessionService.removeItems();
+    this.router.navigate(["/auth/login"]);
+  }
+
   getImagesFiles() {
     const hola = this.activatedRoute.snapshot.params.id;
-    this.annserv.getImages(hola, 'images').subscribe(
-      res => {
+    this.annserv.getImages(hola, "images").subscribe(
+      (res) => {
         this.imagesFiles = res;
         for (var a in this.imagesFiles) {
-          this.imagesFiles[a]['location'] = "http://" + ip + ":6503/pictures/" + hola + '/' + this.imagesFiles[a]['name']
+          this.imagesFiles[a]["location"] =
+            "http://" +
+            ip +
+            ":6503/pictures/" +
+            hola +
+            "/" +
+            this.imagesFiles[a]["name"];
         }
       },
-      err => console.log(err)
-    )
+      (err) => console.log(err)
+    );
   }
 
   //Not finished module of select the images to delete
@@ -149,7 +193,7 @@ export class ImagesFormComponent implements OnInit {
   }
 
   deleteImage(name: string) {
-    if (confirm('Do you want to delete this image?')) {
+    if (confirm("Do you want to delete this image?")) {
       // this.facesService.deleteImage(id).subscribe(
       //   res =>{
       //     console.log(res);
@@ -163,14 +207,15 @@ export class ImagesFormComponent implements OnInit {
       //   },
       //   err => console.log(err)
       // )
-      this.facesService.deleteImageFile(name, this.activatedRoute.snapshot.params.id).subscribe(
-        res => {
-          console.log(res);
-          this.getImagesFiles();
-        },
-        err => console.error(err)
-      )
+      this.facesService
+        .deleteImageFile(name, this.activatedRoute.snapshot.params.id)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.getImagesFiles();
+          },
+          (err) => console.error(err)
+        );
     }
   }
-
 }

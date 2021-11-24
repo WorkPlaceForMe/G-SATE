@@ -15,6 +15,9 @@ import { DatePipe } from "@angular/common";
 
 import * as jQuery from "jquery";
 import "select2";
+import { SessionStorageService } from "src/app/services/session-storage.service";
+import { NavigationService } from "src/app/shared/services/navigation.service";
+import { throwError } from "rxjs";
 
 const zipURL = "http://" + ip + ":3000/api/datasets/upZip";
 const imgURL = "http://" + ip + ":3000/api/upload/pic";
@@ -101,8 +104,15 @@ export class TCloudDashboardComponent implements OnInit {
     private facesservices: FacesService,
     private datepipe: DatePipe,
     private pagerService: PagerService,
-    private cdref: ChangeDetectorRef
-  ) {}
+    private cdref: ChangeDetectorRef,
+    private sessionService: SessionStorageService,
+    private navigationService: NavigationService
+  ) {
+    const authInfo = this.sessionService.getItems();
+    const token = "Bearer " + authInfo.accessToken;
+    this.photoUploader.authToken = authInfo ? token : "";
+    this.uploader.authToken = authInfo ? token : "";
+  }
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => {
@@ -120,10 +130,16 @@ export class TCloudDashboardComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      console.log("Uploaded:", status, response, headers);
-      this.uploadImage = false;
-      this.getUnAnnDsets("data");
-      alert("Dataset created successfully");
+      if (status === 200) {
+        console.log("Uploaded:", status, response, headers);
+        this.uploadImage = false;
+        this.getUnAnnDsets("data");
+        alert("Dataset created successfully");
+      } else if (status === 401) {
+        this.logout();
+      } else {
+        return throwError(response);
+      }
     };
     this.uploader.onProgressItem = (progress: any) => {
       this.spin = true;
@@ -164,15 +180,19 @@ export class TCloudDashboardComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      if (status == 500 || response == '"<h1>Server Error (500)</h1>"') {
-        this.uploadImage = false;
-        alert("There is an error Processing you request. Please try again.");
-      } else {
+      if (status === 200) {
         console.log("Image Upload Response - ", JSON.parse(response));
         this.router.navigate(
           ["/annotations/" + "object" + "/" + "image" + "/0"],
           { state: { data: JSON.parse(response) } }
         );
+      } else if (status == 500 || response == '"<h1>Server Error (500)</h1>"') {
+        this.uploadImage = false;
+        alert("There is an error Processing you request. Please try again.");
+      } else if (status === 401) {
+        this.logout();
+      } else {
+        return throwError(response);
       }
     };
     this.photoUploader.onProgressItem = (progress: any) => {
@@ -235,6 +255,13 @@ export class TCloudDashboardComponent implements OnInit {
   clearImageStack() {
     this.photoUploader.cancelAll();
     this.photoUploader.clearQueue();
+  }
+
+  logout() {
+    this.navigationService.isUserLoggedIn.next(false);
+    this.navigationService.isUserLoggedIn.next(null);
+    this.sessionService.removeItems();
+    this.router.navigate(["/auth/login"]);
   }
 
   setPage(page: number) {
