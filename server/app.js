@@ -601,7 +601,7 @@ var upload = multer({
   storage: storage,
 }).single('photo')
 
-app.post('/api/upload/pic', validateUserAccessToken, function (req, res, next) {
+app.post('/api/upload/pic', function (req, res, next) {
   let path = ''
   let resizePath = ''
   upload(req, res, function (err) {
