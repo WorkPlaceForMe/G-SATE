@@ -19898,3 +19898,27 @@ Using port 3000 for server and 4444 for socket.
 Server started at: Wed Nov 24 2021 12:51:16 GMT+0530 (India Standard Time)
 From: localhost
 Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 12:57:50 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Date: Wed, 24 Nov 2021 08:10:28 GMT // Url: 127.0.0.1 // Method: GET/api/readLabels // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 08:10:29 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/annotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 08:10:29 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/class // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 08:10:29 GMT // Url: 127.0.0.1 // Method: GET/api/datasets/unannotated/data // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 08:10:29 GMT // Url: 127.0.0.1 // Method: GET/api/cameras // Status:304 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Date: Wed, 24 Nov 2021 08:10:43 GMT // Url: 127.0.0.1 // Method: POST/api/upload/pic // Status:200 // User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+Server started at: Wed Nov 24 2021 13:46:30 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 13:52:38 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 13:55:46 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 13:57:17 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 
+Server started at: Wed Nov 24 2021 13:59:49 GMT+0530 (India Standard Time)
+From: localhost
+Using port 3000 for server and 4444 for socket. 

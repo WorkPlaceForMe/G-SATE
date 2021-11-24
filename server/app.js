@@ -574,13 +574,71 @@ app.delete('/api/delAll/:user_id', validateUserAccessToken, (req, res, err) => {
 
 app.use(express.static('../client'))
 
+// var storage = multer.diskStorage({
+//   //multers disk storage settings
+//   destination: function (req, file, cb) {
+//     if (!fs.existsSync('./uploads')) {
+//       fs.mkdirSync('./uploads')
+//     }
+//     cb(null, './uploads/')
+//   },
+//   filename: function (req, file, cb) {
+//     let datetimestamp = Date.now()
+//     cb(
+//       null,
+//       file.fieldname +
+//         '-' +
+//         datetimestamp +
+//         '.' +
+//         file.originalname.split('.')[file.originalname.split('.').length - 1],
+//     )
+//   },
+// })
+
+// var upload = multer({
+//   //multer settings
+//   storage: storage,
+// }).single('photo')
+
+// app.post('/api/upload/pic', function (req, res, next) {
+//   //  console.log(req.file)
+//   let path = ''
+//   let resizePath = ''
+//   upload(req, res, function (err) {
+//     if (err) {
+//       // An error occurred when uploading
+//       console.log(err)
+//       return res.status(422).send('an Error occured')
+//     }
+//     console.log(req.file, 'new req.file')
+//     // No error occured.
+//     path = req.file.path
+//     let datetimestamp = Date.now()
+//     resizePath = `./uploads/photo-${datetimestamp}.jpg`
+//     sharp(path)
+//       .resize(710, 480)
+//       .toFile(resizePath, function (err) {
+//         if (err) {
+//           res.status(500).json({
+//             success: false,
+//             message: err.message,
+//           })
+//         } else {
+//           processImage(resizePath, path, res)
+//         }
+//       })
+//     //return res.send("Upload Completed for " + path);
+//   })
+// })
+
 var storage = multer.diskStorage({
   //multers disk storage settings
   destination: function (req, file, cb) {
-    if (!fs.existsSync('./uploads')) {
-      fs.mkdirSync('./uploads')
+    var destFolder = process.env.resources2 + 'images/'
+    if (!fs.existsSync(destFolder)) {
+      fs.mkdirSync(destFolder)
     }
-    cb(null, './uploads/')
+    cb(null, destFolder)
   },
   filename: function (req, file, cb) {
     let datetimestamp = Date.now()
@@ -614,7 +672,9 @@ app.post('/api/upload/pic', function (req, res, next) {
     // No error occured.
     path = req.file.path
     let datetimestamp = Date.now()
-    resizePath = `./uploads/photo-${datetimestamp}.jpg`
+    resizePath =
+      process.env.resources2 + 'images/' + `photo-${datetimestamp}.jpg`
+
     sharp(path)
       .resize(710, 480)
       .toFile(resizePath, function (err) {
