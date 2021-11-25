@@ -5,8 +5,9 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class NavigationService {
-  public isUserLoggedIn: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   public userName: BehaviorSubject<string> = new BehaviorSubject<string>("");
   public isUserAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -27,6 +28,9 @@ export class NavigationService {
     false
   );
   public hasService6: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  public isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 

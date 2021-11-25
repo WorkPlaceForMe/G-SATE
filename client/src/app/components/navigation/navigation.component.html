@@ -159,6 +159,9 @@
             <a class="dropdown-item">
               <i class="fas fa-user-circle mr-2"></i>{{ userName }}
             </a>
+            <a class="dropdown-item" *ngIf="isAdmin" routerLink="/users">
+              <i class="fas fa-user-circle mr-2"></i>Manage Users
+            </a>
             <a class="dropdown-item mt-2" routerLink="/home" (click)="logout()">
               <i class="fas fa-sign-out-alt mr-2"></i>LOGOUT
             </a>

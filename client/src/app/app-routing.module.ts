@@ -35,6 +35,7 @@ import { CustomTrainedModelsComponent } from "./components/custom-trained-models
 import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
 import { AuthGuardService } from "./services/auth-guard.service";
+import { UsersComponent } from "./components/users/users.component";
 
 const routes: Routes = [
   {
@@ -86,6 +87,11 @@ const routes: Routes = [
   {
     path: "custom-trained-models",
     component: CustomTrainedModelsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "users",
+    component: UsersComponent,
     canActivate: [AuthGuardService],
   },
   {

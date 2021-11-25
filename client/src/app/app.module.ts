@@ -84,6 +84,7 @@ import { CustomTrainedModelsComponent } from "./components/custom-trained-models
 import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
 import { InterceptorProviders } from "./interceptors";
+import { UsersComponent } from "./components/users/users.component";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -133,6 +134,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     FooterComponent,
     TestResultComponent,
     CustomTrainedModelsComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

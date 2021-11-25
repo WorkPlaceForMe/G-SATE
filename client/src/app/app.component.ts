@@ -96,6 +96,8 @@ export class AppComponent implements OnInit {
     if (sessionItems) {
       this.navigationService.isUserLoggedIn.next(true);
       this.navigationService.userName.next(sessionItems.name);
+      const isAdmin = sessionItems.role === "ADMIN" ? true : false;
+      this.navigationService.isAdmin.next(isAdmin);
     }
   }
 }

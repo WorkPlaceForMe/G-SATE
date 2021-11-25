@@ -74,6 +74,29 @@ var User = {
   getUserById: function (id, callback) {
     return db.query('SELECT * FROM users WHERE id = ?', [id], callback)
   },
+
+  getUsersByAdmin: function (callback) {
+    return db.query(
+      'SELECT id,name,role,uuid,email,mobileNumber,address,createdAt FROM users WHERE role = "OPERATOR" ORDER BY id DESC',
+      callback,
+    )
+  },
+
+  getAdminUserById: function (id, callback) {
+    return db.query(
+      'SELECT * FROM users WHERE id = ? AND role = ?',
+      [id, 'ADMIN'],
+      callback,
+    )
+  },
+
+  updateAccessibility: function (data, callback) {
+    return db.query(
+      'UPDATE users set startDate=?,endDate=? where id=?',
+      [data.startDate, data.endDate, data.id],
+      callback,
+    )
+  },
 }
 
 module.exports = User

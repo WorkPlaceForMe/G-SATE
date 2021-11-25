@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   hasService4: boolean;
   hasService5: boolean;
   hasService6: boolean;
+  isAdmin: boolean;
   constructor(
     private navigationService: NavigationService,
     public router: Router,
@@ -52,6 +53,9 @@ export class NavigationComponent implements OnInit {
     });
     this.navigationService.hasService6.subscribe((value) => {
       this.hasService6 = value;
+    });
+    this.navigationService.isAdmin.subscribe((value) => {
+      this.isAdmin = value;
     });
   }
   ngOnInit() {}

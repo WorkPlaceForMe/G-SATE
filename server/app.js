@@ -41,6 +41,7 @@ const sharp = require('sharp')
 const Annotation = require('./routes/Annotation')
 const PpeDetection = require('./routes/PpeDetection')
 const Home = require('./routes/Home')
+const AdminRouter = require('./routes/Admin')
 const cors = require('cors')
 const {
   validateUserAccessToken,
@@ -138,6 +139,7 @@ app.use('/api/annotations', Annotation)
 app.use('/api/ppe/detection', PpeDetection)
 app.use('/api/home', Home)
 app.use('/api/user', AuthRouter)
+app.use('/api/admin', AdminRouter)
 
 /** Serving from the same express Server
 No cors required */

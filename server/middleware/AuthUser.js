@@ -76,7 +76,7 @@ validateUserAccessToken = async (req, res, next) => {
     token,
     process.env.userAccessTokenSecret,
   )
-  console.log(decodedData, 'decodedData')
+  console.log(decodedData, 'userDetails')
 
   if (!decodedData) {
     return res.status(401).send({
@@ -96,6 +96,7 @@ validateUserAccessToken = async (req, res, next) => {
             id: userDetails[0].id,
             name: userDetails[0].name,
             email: userDetails[0].email,
+            role: userDetails[0].role,
           }
           next()
         }

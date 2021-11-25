@@ -1,0 +1,55 @@
+<div
+  class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/camera-edit-bg.jpg)' }"
+>
+  <div class="container container-large text-center z-index-1 text-white">
+    <div
+      class="d-flex justify-content-center position-fixed loader"
+      *ngIf="spin"
+    >
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <h2 class="mb-4 text-uppercase text-white">Custom Trained Models</h2>
+    <div class="p-5 custom-card rounded text-left mb-3">
+      <ngx-datatable
+        [rows]="rows"
+        class="material"
+        [loadingIndicator]="loadingIndicator"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="50"
+        [columns]="columns"
+        [reorderable]="reorderable"
+      >
+        <ngx-datatable-column name="NAME">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="my-2">{{ row.name }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="EMAIL">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="my-2">{{ row.email }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="PHONE">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="my-2">{{ row.mobileNumber || "--" }} </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="ACTION">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button type="button" class="btn btn-warning btn-block">
+              Update Accessibility
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

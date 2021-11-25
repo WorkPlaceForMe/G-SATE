@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
             this.handleNavigation();
             this.navigationService.isUserLoggedIn.next(true);
             this.navigationService.userName.next(res.name);
+            const isAdmin = res.role === "ADMIN" ? true : false;
+            this.navigationService.isAdmin.next(isAdmin);
             this.sessionStorageService.setItems(res);
           },
           (err) => {
