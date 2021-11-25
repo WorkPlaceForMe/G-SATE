@@ -1,7 +1,11 @@
 var express = require('express')
-const { validateUserAccessToken } = require('../middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('../middleware/AuthUser')
 var router = express.Router()
 var hm = require('../models/Heatmap')
+router.use(validateApiKey)
 router.use(validateUserAccessToken)
 
 router.get('/first/:st/:end/:camera_id', function (req, res, next) {

@@ -42,7 +42,10 @@ const Annotation = require('./routes/Annotation')
 const PpeDetection = require('./routes/PpeDetection')
 const Home = require('./routes/Home')
 const cors = require('cors')
-const { validateUserAccessToken } = require('./middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('./middleware/AuthUser')
 
 app.use(
   express.json({
@@ -184,7 +187,11 @@ var upload = multer({
   storage: storage,
 }).single('file')
 /** API path that will upload the files */
-app.post('/upload/', validateUserAccessToken, function (req, res, next) {
+app.post('/upload/', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+  next,
+) {
   upload(req, res, function (err) {
     if (err) {
       res.json({
@@ -251,18 +258,27 @@ app.post('/upload/', validateUserAccessToken, function (req, res, next) {
   })
 })
 
-app.get('/api/v1/operation/:id', validateUserAccessToken, function (req, res) {
-  let id = req.params.id + '\r\n'
-  request.get(
-    `${process.env.vista_server_ip}/api/v1/operation/${id}`,
-    function (err, response) {
-      if (err) return res.error(err.message)
-      return res.json(response.body)
-    },
-  )
-})
+app.get(
+  '/api/v1/operation/:id',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let id = req.params.id + '\r\n'
+    request.get(
+      `${process.env.vista_server_ip}/api/v1/operation/${id}`,
+      function (err, response) {
+        if (err) return res.error(err.message)
+        return res.json(response.body)
+      },
+    )
+  },
+)
 
-app.get('/api/turnOn/', validateUserAccessToken, function (req, res, err) {
+app.get('/api/turnOn/', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+  err,
+) {
   cp.exec('node algo_server/app.js', function (err, data) {
     if (err) {
       console.log(err)
@@ -274,7 +290,11 @@ app.get('/api/turnOn/', validateUserAccessToken, function (req, res, err) {
   res.send('turning on')
 })
 
-app.get('/api/send/', validateUserAccessToken, function (req, res, err) {
+app.get('/api/send/', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+  err,
+) {
   var spawn = require('child_process').spawn
   const trigger = spawn('python3', ['offline_trigger.py', '-t'])
   trigger.stdout.on('data', (data) => {
@@ -303,109 +323,115 @@ let saveImg = function (uri, filePath, callback) {
   }
 }
 
-app.post('/api/general/object/detection', validateUserAccessToken, function (
+app.post(
+  '/api/general/object/detection',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let data = req.body
+    let image = data.img
+    let details = data.details
+    let singleImage = data.singleImage
+    console.log('details >>>>>>>>>>>>>>>>>>>>>>', image)
+    let xx, yy, zz
+    if (data.type === 'analytics') {
+      xx = image.split('/')[7]
+      image = process.env.vista_server_ip + image
+    } else {
+      xx = image.split('/')[7]
+      // xx = image.split("/shared-data")[1];
+    }
+    let imgName = xx
+    console.log('__dirname', __dirname)
+    // let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
+    let dir = './objdet/darknet/data/' + imgName
+    console.log('dir>>>>>>>>', dir)
+    //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
+    let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`
+    console.log('command - ', command)
+    saveImg(image, dir, function (err, data) {
+      cp.exec(command, function (err, data) {
+        console.log('Err LOG BY INT: ', err)
+        console.log('Data LOG BY INT: ', data)
+
+        if (err) {
+          console.log('Error : ', err)
+          res.json(err)
+        } else {
+          console.log('type of data>>>>>>>>', typeof data)
+          console.log('data>>>>>>>>>>>>>>', data)
+          let result = []
+          let single = []
+
+          console.log('data splitted >>>>>>>>>>>', data.split('\n'))
+          data.split('\n').forEach((ele) => {
+            if (ele.includes('Predicted in') || ele == '') {
+              console.log('element >>>>>>>>>>>>', ele)
+            } else {
+              let itm = ele.trim().split(' ')
+              console.log('single image ? ', singleImage)
+              if (singleImage) {
+                console.log('in if')
+                let obj1 = {
+                  x: itm[0],
+                  y: itm[1],
+                }
+                single.push(obj1)
+                let obj2 = {
+                  x: itm[2],
+                  y: itm[3],
+                }
+                single.push(obj2)
+                let obj3 = {
+                  general_detection: 'Yes',
+                }
+                single.push(obj3)
+                let obj4 = {
+                  label: '',
+                }
+                single.push(obj4)
+                result.push(single)
+                single = []
+              } else {
+                console.log('in else')
+                let obj1 = {
+                  x: (itm[0] * details.width) / details.res_width,
+                  y: (itm[1] * details.height) / details.res_height,
+                }
+                single.push(obj1)
+                let obj2 = {
+                  x: (itm[2] * details.width) / details.res_width,
+                  y: (itm[3] * details.height) / details.res_height,
+                }
+                single.push(obj2)
+                let obj3 = {
+                  general_detection: 'Yes',
+                }
+                single.push(obj3)
+                let obj4 = {
+                  label: '',
+                }
+                single.push(obj4)
+                result.push(single)
+                single = []
+              }
+            }
+          })
+          if (fs.existsSync(dir)) {
+            fs.unlinkSync(dir)
+          }
+          res.json(result)
+        }
+      })
+    })
+  },
+)
+
+app.get('/api/stopfr/', validateApiKey, validateUserAccessToken, function (
   req,
   res,
+  err,
 ) {
-  let data = req.body
-  let image = data.img
-  let details = data.details
-  let singleImage = data.singleImage
-  console.log('details >>>>>>>>>>>>>>>>>>>>>>', image)
-  let xx, yy, zz
-  if (data.type === 'analytics') {
-    xx = image.split('/')[7]
-    image = process.env.vista_server_ip + image
-  } else {
-    xx = image.split('/')[7]
-    // xx = image.split("/shared-data")[1];
-  }
-  let imgName = xx
-  console.log('__dirname', __dirname)
-  // let dir = "./objdet/darknet/data/" + imgName.split("/")[1];
-  let dir = './objdet/darknet/data/' + imgName
-  console.log('dir>>>>>>>>', dir)
-  //   let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`;
-  let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`
-  console.log('command - ', command)
-  saveImg(image, dir, function (err, data) {
-    cp.exec(command, function (err, data) {
-      console.log('Err LOG BY INT: ', err)
-      console.log('Data LOG BY INT: ', data)
-
-      if (err) {
-        console.log('Error : ', err)
-        res.json(err)
-      } else {
-        console.log('type of data>>>>>>>>', typeof data)
-        console.log('data>>>>>>>>>>>>>>', data)
-        let result = []
-        let single = []
-
-        console.log('data splitted >>>>>>>>>>>', data.split('\n'))
-        data.split('\n').forEach((ele) => {
-          if (ele.includes('Predicted in') || ele == '') {
-            console.log('element >>>>>>>>>>>>', ele)
-          } else {
-            let itm = ele.trim().split(' ')
-            console.log('single image ? ', singleImage)
-            if (singleImage) {
-              console.log('in if')
-              let obj1 = {
-                x: itm[0],
-                y: itm[1],
-              }
-              single.push(obj1)
-              let obj2 = {
-                x: itm[2],
-                y: itm[3],
-              }
-              single.push(obj2)
-              let obj3 = {
-                general_detection: 'Yes',
-              }
-              single.push(obj3)
-              let obj4 = {
-                label: '',
-              }
-              single.push(obj4)
-              result.push(single)
-              single = []
-            } else {
-              console.log('in else')
-              let obj1 = {
-                x: (itm[0] * details.width) / details.res_width,
-                y: (itm[1] * details.height) / details.res_height,
-              }
-              single.push(obj1)
-              let obj2 = {
-                x: (itm[2] * details.width) / details.res_width,
-                y: (itm[3] * details.height) / details.res_height,
-              }
-              single.push(obj2)
-              let obj3 = {
-                general_detection: 'Yes',
-              }
-              single.push(obj3)
-              let obj4 = {
-                label: '',
-              }
-              single.push(obj4)
-              result.push(single)
-              single = []
-            }
-          }
-        })
-        if (fs.existsSync(dir)) {
-          fs.unlinkSync(dir)
-        }
-        res.json(result)
-      }
-    })
-  })
-})
-
-app.get('/api/stopfr/', validateUserAccessToken, function (req, res, err) {
   cp.exec('bash stop.sh ' + process.env.passServer, function (err, data) {
     console.log('err: ', err)
     console.log('data: ', data)
@@ -413,50 +439,51 @@ app.get('/api/stopfr/', validateUserAccessToken, function (req, res, err) {
   })
 })
 
-app.get('/api/cameraImages/:camera_id', validateUserAccessToken, function (
-  req,
-  res,
-  err,
-) {
-  const camID = req.params.camera_id
-  if (camID == 'all') {
-    cp.exec(
-      'python heatmap.py --ip ' +
-        process.env.host +
-        '--user ' +
-        process.env.user +
-        ' --pwd ' +
-        process.env.password,
-      function (err, data) {
-        console.log('error: ', err)
-        console.log('data: ', data)
-        res.send('Executed!')
-      },
-    )
-  } else {
-    cp.exec(
-      'python heatmap.py --host ' +
-        process.env.host +
-        ' --ip ' +
-        process.env.my_ip +
-        ' --user ' +
-        process.env.user +
-        ' --pwd ' +
-        process.env.password +
-        ' --db ' +
-        process.env.database +
-        ' --path ' +
-        process.env.resources2 +
-        ' --cameraid ' +
-        camID,
-      function (err, data) {
-        console.log('error: ', err)
-        console.log('data: ', data)
-        res.send('Ex')
-      },
-    )
-  }
-})
+app.get(
+  '/api/cameraImages/:camera_id',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res, err) {
+    const camID = req.params.camera_id
+    if (camID == 'all') {
+      cp.exec(
+        'python heatmap.py --ip ' +
+          process.env.host +
+          '--user ' +
+          process.env.user +
+          ' --pwd ' +
+          process.env.password,
+        function (err, data) {
+          console.log('error: ', err)
+          console.log('data: ', data)
+          res.send('Executed!')
+        },
+      )
+    } else {
+      cp.exec(
+        'python heatmap.py --host ' +
+          process.env.host +
+          ' --ip ' +
+          process.env.my_ip +
+          ' --user ' +
+          process.env.user +
+          ' --pwd ' +
+          process.env.password +
+          ' --db ' +
+          process.env.database +
+          ' --path ' +
+          process.env.resources2 +
+          ' --cameraid ' +
+          camID,
+        function (err, data) {
+          console.log('error: ', err)
+          console.log('data: ', data)
+          res.send('Ex')
+        },
+      )
+    }
+  },
+)
 
 const documents = {}
 io.sockets.setMaxListeners(3)
@@ -516,6 +543,7 @@ io.on('connection', (socket) => {
 
 app.delete(
   '/api/delete/:user_id/:imageName',
+  validateApiKey,
   validateUserAccessToken,
   (req, res, err) => {
     fs.unlink(
@@ -533,6 +561,7 @@ app.delete(
 
 app.delete(
   '/api/deleteSome/:user_id/',
+  validateApiKey,
   validateUserAccessToken,
   (req, res, err) => {
     const pics = req.body
@@ -550,27 +579,32 @@ app.delete(
   },
 )
 
-app.delete('/api/delAll/:user_id', validateUserAccessToken, (req, res, err) => {
-  if (fs.existsSync(process.env.resources + req.params.user_id)) {
-    fs.rmdir(
-      process.env.resources + req.params.user_id,
-      {
-        recursive: true,
-      },
-      (err) => {
-        if (err) {
-          res.send(err)
-        } else {
-          res.json({
-            message: 'Successfully deleted folder',
-          })
-        }
-      },
-    )
-  } else {
-    res.json('It never existed')
-  }
-})
+app.delete(
+  '/api/delAll/:user_id',
+  validateApiKey,
+  validateUserAccessToken,
+  (req, res, err) => {
+    if (fs.existsSync(process.env.resources + req.params.user_id)) {
+      fs.rmdir(
+        process.env.resources + req.params.user_id,
+        {
+          recursive: true,
+        },
+        (err) => {
+          if (err) {
+            res.send(err)
+          } else {
+            res.json({
+              message: 'Successfully deleted folder',
+            })
+          }
+        },
+      )
+    } else {
+      res.json('It never existed')
+    }
+  },
+)
 
 app.use(express.static('../client'))
 
@@ -601,7 +635,11 @@ var upload = multer({
   storage: storage,
 }).single('photo')
 
-app.post('/api/upload/pic', validateUserAccessToken, function (req, res, next) {
+app.post('/api/upload/pic', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+  next,
+) {
   let path = ''
   let resizePath = ''
   upload(req, res, function (err) {
@@ -672,56 +710,60 @@ var processImage = (imgPath, path, res) => {
   }
 }
 
-app.get('/api/search/:keyword', validateUserAccessToken, async function (
-  req,
-  res,
-) {
-  let result = []
-  let count = 150
-  let offset = 0
-  let totalMatches = 0
-  let keyword = req.params.keyword
-  try {
-    let resp = await searchImages(keyword, count, offset)
-    console.log(
-      'Total Estimated Matches>>>>>>>>>>>>>>>>',
-      resp.totalEstimatedMatches,
-    )
-    result.push(resp.value)
-    totalMatches = resp.totalEstimatedMatches
-    for (let i = count; i < totalMatches; i) {
-      offset = count + offset
-      if (offset > totalMatches) {
-        break
-      }
-      //console.log('offset>>>>>>>>>>>>>>>>', offset);
-      resp = await searchImages(keyword, count, offset)
+app.get(
+  '/api/search/:keyword',
+  validateApiKey,
+  validateUserAccessToken,
+  async function (req, res) {
+    let result = []
+    let count = 150
+    let offset = 0
+    let totalMatches = 0
+    let keyword = req.params.keyword
+    try {
+      let resp = await searchImages(keyword, count, offset)
+      console.log(
+        'Total Estimated Matches>>>>>>>>>>>>>>>>',
+        resp.totalEstimatedMatches,
+      )
       result.push(resp.value)
-      i = offset
+      totalMatches = resp.totalEstimatedMatches
+      for (let i = count; i < totalMatches; i) {
+        offset = count + offset
+        if (offset > totalMatches) {
+          break
+        }
+        //console.log('offset>>>>>>>>>>>>>>>>', offset);
+        resp = await searchImages(keyword, count, offset)
+        result.push(resp.value)
+        i = offset
+      }
+      let resu = [].concat(...result)
+      res.status(200).json(resu)
+    } catch (err) {
+      console.log('error>>>>>>>>>>>>.', err)
+      res.status(500).json(err.message)
     }
-    let resu = [].concat(...result)
-    res.status(200).json(resu)
-  } catch (err) {
-    console.log('error>>>>>>>>>>>>.', err)
-    res.status(500).json(err.message)
-  }
-})
+  },
+)
 
-app.get('/api/search/:keyword/:count', validateUserAccessToken, async function (
-  req,
-  res,
-) {
-  let count = req.params.count
-  let offset = 0
-  let keyword = req.params.keyword
-  try {
-    const response = await searchImages(keyword, count, offset)
-    res.status(200).json(response)
-  } catch (err) {
-    console.log('error>>>>>>>>>>>>.', err)
-    res.status(500).json(err.message)
-  }
-})
+app.get(
+  '/api/search/:keyword/:count',
+  validateApiKey,
+  validateUserAccessToken,
+  async function (req, res) {
+    let count = req.params.count
+    let offset = 0
+    let keyword = req.params.keyword
+    try {
+      const response = await searchImages(keyword, count, offset)
+      res.status(200).json(response)
+    } catch (err) {
+      console.log('error>>>>>>>>>>>>.', err)
+      res.status(500).json(err.message)
+    }
+  },
+)
 
 function searchImages(keyword, count, offset) {
   let result = []
@@ -758,40 +800,42 @@ function searchImages(keyword, count, offset) {
   })
 }
 
-app.get('/api/classify/:path/:name/:yn', validateUserAccessToken, function (
-  req,
-  res,
-) {
-  var where_this_it =
-    process.env.resources2 + 'classifications/' + req.params.path
-  if (JSON.stringify(req.params.path).includes('_true')) {
-    where_this_it = where_this_it.replace('_true', '')
-  } else if (JSON.stringify(req.params.path).includes('_false')) {
-    where_this_it = where_this_it.replace('_false', '')
-  }
-  if (!fs.existsSync(where_this_it + '_' + req.params.yn)) {
-    fs.mkdirSync(where_this_it + '_' + req.params.yn)
-  }
-  if (req.params.path.includes('_true')) {
-    moveFile(
-      where_this_it + '_true/' + req.params.name,
-      where_this_it + '_' + req.params.yn + '/' + req.params.name,
-    )
-    res.json('moved')
-  } else if (req.params.path.includes('_false')) {
-    moveFile(
-      where_this_it + '_false/' + req.params.name,
-      where_this_it + '_' + req.params.yn + '/' + req.params.name,
-    )
-    res.json('moved')
-  } else {
-    moveFile(
-      where_this_it + '/' + req.params.name,
-      where_this_it + '_' + req.params.yn + '/' + req.params.name,
-    )
-    res.json('moved')
-  }
-})
+app.get(
+  '/api/classify/:path/:name/:yn',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    var where_this_it =
+      process.env.resources2 + 'classifications/' + req.params.path
+    if (JSON.stringify(req.params.path).includes('_true')) {
+      where_this_it = where_this_it.replace('_true', '')
+    } else if (JSON.stringify(req.params.path).includes('_false')) {
+      where_this_it = where_this_it.replace('_false', '')
+    }
+    if (!fs.existsSync(where_this_it + '_' + req.params.yn)) {
+      fs.mkdirSync(where_this_it + '_' + req.params.yn)
+    }
+    if (req.params.path.includes('_true')) {
+      moveFile(
+        where_this_it + '_true/' + req.params.name,
+        where_this_it + '_' + req.params.yn + '/' + req.params.name,
+      )
+      res.json('moved')
+    } else if (req.params.path.includes('_false')) {
+      moveFile(
+        where_this_it + '_false/' + req.params.name,
+        where_this_it + '_' + req.params.yn + '/' + req.params.name,
+      )
+      res.json('moved')
+    } else {
+      moveFile(
+        where_this_it + '/' + req.params.name,
+        where_this_it + '_' + req.params.yn + '/' + req.params.name,
+      )
+      res.json('moved')
+    }
+  },
+)
 
 function getStream(camera_name, rtsp_in, port, id, tries) {
   if (tries == undefined) {
@@ -847,48 +891,55 @@ function getStream(camera_name, rtsp_in, port, id, tries) {
   })
 }
 
-app.post('/api/StartWsStreaming/', validateUserAccessToken, function (
-  req,
-  res,
-) {
-  let body = req.body
-  let port = 9999
-  port = port - streams.length
-  stream = getStream(body.camera_name, body.rtsp_in, port, body.id)
-    .then((stream) => {
+app.post(
+  '/api/StartWsStreaming/',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let body = req.body
+    let port = 9999
+    port = port - streams.length
+    stream = getStream(body.camera_name, body.rtsp_in, port, body.id)
+      .then((stream) => {
+        res.status(200).send({
+          success: true,
+          my_ip: process.env.my_ip,
+          port: stream.port,
+          stream,
+        })
+      })
+      .catch((err) => {
+        if (stream && stream.stop) stream.stop()
+        console.log('error............', err)
+        res.status(500).send({
+          success: false,
+          message: err,
+        })
+      })
+  },
+)
+
+app.post(
+  '/api/StopWsStreaming/',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    stopCam = (req, res) => {
+      const data = req.body
+      for (let i = 0; i < streams.length; i++) {
+        if (streams[i].id == data.id) {
+          streams[i].str.stop()
+          streams.splice(i, 1)
+          //continue;
+        }
+      }
       res.status(200).send({
         success: true,
-        my_ip: process.env.my_ip,
-        port: stream.port,
-        stream,
+        message: 'Stopped',
       })
-    })
-    .catch((err) => {
-      if (stream && stream.stop) stream.stop()
-      console.log('error............', err)
-      res.status(500).send({
-        success: false,
-        message: err,
-      })
-    })
-})
-
-app.post('/api/StopWsStreaming/', validateUserAccessToken, function (req, res) {
-  stopCam = (req, res) => {
-    const data = req.body
-    for (let i = 0; i < streams.length; i++) {
-      if (streams[i].id == data.id) {
-        streams[i].str.stop()
-        streams.splice(i, 1)
-        //continue;
-      }
     }
-    res.status(200).send({
-      success: true,
-      message: 'Stopped',
-    })
-  }
-})
+  },
+)
 
 async function f(where) {
   streamWebCam = cp.exec('bash rtsp_webcam.sh', function (err, data) {
@@ -915,60 +966,71 @@ async function f(where) {
 
 let FFMPEG_PID = 0
 var pidWeb = 0
-app.get('/api/FeedWsStreaming/:port/:rtsp', validateUserAccessToken, function (
+app.get(
+  '/api/FeedWsStreaming/:port/:rtsp',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    rtsp = req.params.rtsp.split(' ').join('/')
+    let listen = req.params.port
+    ffmpeg_child = cp.exec(
+      'ffmpeg -i ' +
+        rtsp +
+        ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
+        listen +
+        '/yoursecret',
+      function (err, data) {
+        console.log('err: ', err)
+        console.log('data: ', data)
+      },
+    )
+    FFMPEG_PID = ffmpeg_child.pid + 1
+    res.json(FFMPEG_PID)
+  },
+)
+
+app.get('/api/getPorts', validateApiKey, validateUserAccessToken, function (
   req,
   res,
 ) {
-  rtsp = req.params.rtsp.split(' ').join('/')
-  let listen = req.params.port
-  ffmpeg_child = cp.exec(
-    'ffmpeg -i ' +
-      rtsp +
-      ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
-      listen +
-      '/yoursecret',
-    function (err, data) {
-      console.log('err: ', err)
-      console.log('data: ', data)
-    },
-  )
-  FFMPEG_PID = ffmpeg_child.pid + 1
-  res.json(FFMPEG_PID)
-})
-
-app.get('/api/getPorts', validateUserAccessToken, function (req, res) {
   res.json(ports)
 })
 
-app.get('/api/StartWsStreaming/', validateUserAccessToken, function (req, res) {
-  let listen, portUsed, num
-  for (let a = 0; a < ports.length; a++) {
-    if (ports[a].used == 0) {
-      listen = ports[a].in
-      ports[a].used = 1
-      portUsed = ports[a].out
-      a = ports.length
-      ws_child = cp.exec(
-        'node websocket-relay.js yoursecret ' + listen + ' ' + portUsed,
-        function (err, data) {
-          console.log('err: ', err)
-          console.log('data: ', data)
-        },
-      )
-      num = ws_child.pid + 1
-      res.json({
-        pid: num,
-        portL: listen,
-        portW: portUsed,
-      })
-    } else if (ports[a].used == 1 && a == ports.length - 1) {
-      res.json('ports full')
+app.get(
+  '/api/StartWsStreaming/',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let listen, portUsed, num
+    for (let a = 0; a < ports.length; a++) {
+      if (ports[a].used == 0) {
+        listen = ports[a].in
+        ports[a].used = 1
+        portUsed = ports[a].out
+        a = ports.length
+        ws_child = cp.exec(
+          'node websocket-relay.js yoursecret ' + listen + ' ' + portUsed,
+          function (err, data) {
+            console.log('err: ', err)
+            console.log('data: ', data)
+          },
+        )
+        num = ws_child.pid + 1
+        res.json({
+          pid: num,
+          portL: listen,
+          portW: portUsed,
+        })
+      } else if (ports[a].used == 1 && a == ports.length - 1) {
+        res.json('ports full')
+      }
     }
-  }
-})
+  },
+)
 
 app.get(
   '/api/KillWsStreaming/:pid/:port/:server',
+  validateApiKey,
   validateUserAccessToken,
   function (req, res) {
     if (req.params.server == 'true') {
@@ -1000,161 +1062,179 @@ app.get(
   },
 )
 
-app.get('/api/readAnn/:path', validateUserAccessToken, function (req, res) {
-  const nameAnn = req.params.path.split(' ')
-  if (nameAnn[1].includes('.jpg')) {
-    nameAnn[1] = nameAnn[1].replace('.jpg', '')
-  } else if (nameAnn[1].includes('.png')) {
-    nameAnn[1] = nameAnn[1].replace('.png', '')
-  } else if (nameAnn[1].includes('.JPG')) {
-    nameAnn[1] = nameAnn[1].replace('.JPG', '')
-  } else if (nameAnn[1].includes('.jpeg')) {
-    nameAnn[1] = nameAnn[1].replace('.jpeg', '')
-  }
-  if (nameAnn[1].includes('.PNG')) {
-    nameAnn[1] = nameAnn[1].replace('.PNG', '')
-  }
-  const paths =
-    process.env.resources2 +
-    'datasets/' +
-    nameAnn[0] +
-    '/' +
-    nameAnn[1] +
-    '.txt'
-  if (fs.existsSync(paths)) {
-    fs.readFile(paths, (e, data) => {
-      if (e) throw e
-      console.log(data.toString())
-      res.json(data.toString())
-    })
-  } else {
-    res.json("it doesn't exists this annotation")
-  }
-})
-
-app.post('/api/createAnn/:pathPic', validateUserAccessToken, function (
-  req,
-  res,
-) {
-  let annotation = JSON.stringify(req.body)
-  const joinedPath = req.params.pathPic.split(' ')
-  if (joinedPath[1].includes('.jpg')) {
-    joinedPath[1] = joinedPath[1].replace('.jpg', '')
-  } else if (joinedPath[1].includes('.png')) {
-    joinedPath[1] = joinedPath[1].replace('.png', '')
-  } else if (joinedPath[1].includes('.JPG')) {
-    joinedPath[1] = joinedPath[1].replace('.JPG', '')
-  } else if (joinedPath[1].includes('.jpeg')) {
-    joinedPath[1] = joinedPath[1].replace('.jpeg', '')
-  }
-  if (joinedPath[1].includes('.PNG')) {
-    joinedPath[1] = joinedPath[1].replace('.PNG', '')
-  }
-  res.json('buena')
-  let writeStream = fs.createWriteStream(
-    process.env.resources2 +
-      'datasets/' +
-      joinedPath[0] +
-      '/' +
-      joinedPath[1] +
-      '.txt',
-  )
-
-  writeStream.write(annotation)
-})
-
-app.get('/api/getImages/:path/:where', validateUserAccessToken, function (
-  req,
-  res,
-) {
-  let arreglo = []
-  if (req.params.where == 'data') {
-    var theEnd = 'datasets/'
-  } else if (req.params.where == 'class') {
-    var theEnd = 'classifications/'
-  } else if (req.params.where == 'images') {
-    var theEnd = 'pictures/'
-  }
-  // const newStuff = req.params.path.split(' ').join('/');
-  const newStuff = process.env.resources2 + theEnd + req.params.path
-  const files = fs.readdirSync(newStuff)
-  // Math.ceil(files.length / num)
-  for (let i = 0; i < files.length; i++) {
-    const fileName = newStuff + '/' + files[i]
-    const idk = files[i]
-    const file = fs.statSync(fileName)
-    if (file.isFile()) {
-      if (
-        idk.includes('.jpg') ||
-        idk.includes('.png') ||
-        idk.includes('.JPG') ||
-        idk.includes('.jpeg') ||
-        idk.includes('.PNG')
-      ) {
-        let dimension = sizeOf(newStuff + '/' + idk)
-        arreglo.push({
-          name: idk,
-          width: dimension.width,
-          height: dimension.height,
-        })
-      }
+app.get(
+  '/api/readAnn/:path',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    const nameAnn = req.params.path.split(' ')
+    if (nameAnn[1].includes('.jpg')) {
+      nameAnn[1] = nameAnn[1].replace('.jpg', '')
+    } else if (nameAnn[1].includes('.png')) {
+      nameAnn[1] = nameAnn[1].replace('.png', '')
+    } else if (nameAnn[1].includes('.JPG')) {
+      nameAnn[1] = nameAnn[1].replace('.JPG', '')
+    } else if (nameAnn[1].includes('.jpeg')) {
+      nameAnn[1] = nameAnn[1].replace('.jpeg', '')
     }
-  }
-  // if(files.length > 0){
-  //     arreglo.push({'total':files.length})
-  // }
-  res.json(arreglo)
-})
-
-app.get('/api/writeLabel/:label', validateUserAccessToken, function (req, res) {
-  var theThing = req.params.label + '\r\n'
-  fs.createWriteStream(process.env.resources2 + 'labels.txt', {
-    flags: 'a',
-  }).write(theThing)
-  res.json('listoque')
-})
-
-app.get('/api/readStatus/:mod', validateUserAccessToken, function (
-  req,
-  res,
-  err,
-) {
-  const statusFr = process.env.resources2 + 'statusFr.json'
-  if (req.params.mod == 0) {
-    if (!fs.existsSync(statusFr)) {
-      fs.createWriteStream(statusFr).write('{"fr":0}')
-      fs.readFile(statusFr, (e, data) => {
+    if (nameAnn[1].includes('.PNG')) {
+      nameAnn[1] = nameAnn[1].replace('.PNG', '')
+    }
+    const paths =
+      process.env.resources2 +
+      'datasets/' +
+      nameAnn[0] +
+      '/' +
+      nameAnn[1] +
+      '.txt'
+    if (fs.existsSync(paths)) {
+      fs.readFile(paths, (e, data) => {
         if (e) throw e
-        const yapo = JSON.parse(data)
-        res.json(yapo.fr)
+        console.log(data.toString())
+        res.json(data.toString())
       })
     } else {
+      res.json("it doesn't exists this annotation")
+    }
+  },
+)
+
+app.post(
+  '/api/createAnn/:pathPic',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let annotation = JSON.stringify(req.body)
+    const joinedPath = req.params.pathPic.split(' ')
+    if (joinedPath[1].includes('.jpg')) {
+      joinedPath[1] = joinedPath[1].replace('.jpg', '')
+    } else if (joinedPath[1].includes('.png')) {
+      joinedPath[1] = joinedPath[1].replace('.png', '')
+    } else if (joinedPath[1].includes('.JPG')) {
+      joinedPath[1] = joinedPath[1].replace('.JPG', '')
+    } else if (joinedPath[1].includes('.jpeg')) {
+      joinedPath[1] = joinedPath[1].replace('.jpeg', '')
+    }
+    if (joinedPath[1].includes('.PNG')) {
+      joinedPath[1] = joinedPath[1].replace('.PNG', '')
+    }
+    res.json('buena')
+    let writeStream = fs.createWriteStream(
+      process.env.resources2 +
+        'datasets/' +
+        joinedPath[0] +
+        '/' +
+        joinedPath[1] +
+        '.txt',
+    )
+
+    writeStream.write(annotation)
+  },
+)
+
+app.get(
+  '/api/getImages/:path/:where',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    let arreglo = []
+    if (req.params.where == 'data') {
+      var theEnd = 'datasets/'
+    } else if (req.params.where == 'class') {
+      var theEnd = 'classifications/'
+    } else if (req.params.where == 'images') {
+      var theEnd = 'pictures/'
+    }
+    // const newStuff = req.params.path.split(' ').join('/');
+    const newStuff = process.env.resources2 + theEnd + req.params.path
+    const files = fs.readdirSync(newStuff)
+    // Math.ceil(files.length / num)
+    for (let i = 0; i < files.length; i++) {
+      const fileName = newStuff + '/' + files[i]
+      const idk = files[i]
+      const file = fs.statSync(fileName)
+      if (file.isFile()) {
+        if (
+          idk.includes('.jpg') ||
+          idk.includes('.png') ||
+          idk.includes('.JPG') ||
+          idk.includes('.jpeg') ||
+          idk.includes('.PNG')
+        ) {
+          let dimension = sizeOf(newStuff + '/' + idk)
+          arreglo.push({
+            name: idk,
+            width: dimension.width,
+            height: dimension.height,
+          })
+        }
+      }
+    }
+    // if(files.length > 0){
+    //     arreglo.push({'total':files.length})
+    // }
+    res.json(arreglo)
+  },
+)
+
+app.get(
+  '/api/writeLabel/:label',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res) {
+    var theThing = req.params.label + '\r\n'
+    fs.createWriteStream(process.env.resources2 + 'labels.txt', {
+      flags: 'a',
+    }).write(theThing)
+    res.json('listoque')
+  },
+)
+
+app.get(
+  '/api/readStatus/:mod',
+  validateApiKey,
+  validateUserAccessToken,
+  function (req, res, err) {
+    const statusFr = process.env.resources2 + 'statusFr.json'
+    if (req.params.mod == 0) {
+      if (!fs.existsSync(statusFr)) {
+        fs.createWriteStream(statusFr).write('{"fr":0}')
+        fs.readFile(statusFr, (e, data) => {
+          if (e) throw e
+          const yapo = JSON.parse(data)
+          res.json(yapo.fr)
+        })
+      } else {
+        fs.readFile(statusFr, (e, data) => {
+          if (e) throw e
+          const yapo = JSON.parse(data)
+          res.json(yapo.fr)
+        })
+      }
+    } else if (req.params.mod == 1) {
       fs.readFile(statusFr, (e, data) => {
         if (e) throw e
-        const yapo = JSON.parse(data)
-        res.json(yapo.fr)
+        const dat = JSON.parse(data)
+        if (dat.fr == 0) {
+          dat.fr = 1
+        } else if (dat.fr == 2) {
+          dat.fr = 3
+          setTimeout(() => {
+            dat.fr = 0
+            fs.createWriteStream(statusFr).write(JSON.stringify(dat))
+          }, 8000)
+        }
+        fs.createWriteStream(statusFr).write(JSON.stringify(dat))
+        res.json(dat.fr)
       })
     }
-  } else if (req.params.mod == 1) {
-    fs.readFile(statusFr, (e, data) => {
-      if (e) throw e
-      const dat = JSON.parse(data)
-      if (dat.fr == 0) {
-        dat.fr = 1
-      } else if (dat.fr == 2) {
-        dat.fr = 3
-        setTimeout(() => {
-          dat.fr = 0
-          fs.createWriteStream(statusFr).write(JSON.stringify(dat))
-        }, 8000)
-      }
-      fs.createWriteStream(statusFr).write(JSON.stringify(dat))
-      res.json(dat.fr)
-    })
-  }
-})
+  },
+)
 
-app.get('/api/readLabels/', validateUserAccessToken, function (req, res) {
+app.get('/api/readLabels/', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+) {
   fs.readFile(process.env.resources2 + 'labels.txt', (e, data) => {
     if (e) throw e
     console.log(data.toString())
@@ -1162,7 +1242,11 @@ app.get('/api/readLabels/', validateUserAccessToken, function (req, res) {
   })
 })
 
-app.post('/api/getInfo/', validateUserAccessToken, function (req, res, next) {
+app.post('/api/getInfo/', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+  next,
+) {
   let writeStream = fs.createWriteStream('./access.log', {
     flags: 'a',
   })
@@ -1227,7 +1311,10 @@ messOff = function () {
   console.log('shutting off')
 }
 
-app.get('/api/turnOff', validateUserAccessToken, function (req, res) {
+app.get('/api/turnOff', validateApiKey, validateUserAccessToken, function (
+  req,
+  res,
+) {
   gracefulExit.gracefulExitHandler(app, server, {
     log: true,
     callback: messOff(),

@@ -1,7 +1,11 @@
 var express = require('express')
-const { validateUserAccessToken } = require('../middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('../middleware/AuthUser')
 var router = express.Router()
 var Face = require('../models/Face')
+router.use(validateApiKey)
 router.use(validateUserAccessToken)
 
 router.get('/', function (req, res, next) {

@@ -3,7 +3,11 @@ const router = express.Router()
 const cp = require('child_process')
 const request = require('request')
 const fs = require('fs')
-const { validateUserAccessToken } = require('../middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('../middleware/AuthUser')
+router.use(validateApiKey)
 router.use(validateUserAccessToken)
 
 router.post('/object/detection', function (req, res, next) {

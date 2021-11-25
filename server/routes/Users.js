@@ -1,6 +1,8 @@
 var express = require('express')
+const { validateApiKey } = require('../middleware/AuthUser')
 var router = express.Router()
 var User = require('../models/User')
+router.use(validateApiKey)
 
 router.get('/', function (req, res, next) {
   User.users(function (err, rows) {

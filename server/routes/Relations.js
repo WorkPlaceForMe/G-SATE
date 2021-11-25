@@ -1,7 +1,11 @@
 var express = require('express')
 var router = express.Router()
 var Relations = require('../models/Relations')
-const { validateUserAccessToken } = require('../middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('../middleware/AuthUser')
+router.use(validateApiKey)
 router.use(validateUserAccessToken)
 
 router.get('/:uuid', function (req, res, next) {

@@ -1,7 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const videoController = require('../controller/Video')
-const { validateUserAccessToken } = require('../middleware/AuthUser')
+const {
+  validateUserAccessToken,
+  validateApiKey,
+} = require('../middleware/AuthUser')
+router.use(validateApiKey)
 router.use(validateUserAccessToken)
 
 router.post('/upload', function (req, res, next) {

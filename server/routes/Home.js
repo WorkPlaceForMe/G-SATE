@@ -1,6 +1,8 @@
 var express = require('express')
+const { validateApiKey } = require('../middleware/AuthUser')
 var router = express.Router()
 var Home = require('../models/Home')
+router.use(validateApiKey)
 
 router.post('/contact', function (req, res, next) {
   const contactDetails = req.body

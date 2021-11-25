@@ -17,6 +17,7 @@ import { AnnotationsService } from "src/app/services/annotations.service";
 import { NavigationService } from "src/app/shared/services/navigation.service";
 import { SessionStorageService } from "src/app/services/session-storage.service";
 import { throwError } from "rxjs";
+import { environment } from "src/environments/environment";
 
 const URL = "http://" + ip + ":3000/upload";
 
@@ -57,6 +58,7 @@ export class ImagesFormComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({
     url: URL,
     itemAlias: "file",
+    headers: [{ name: "x-api-key", value: environment.xApiKey }],
   });
 
   constructor(

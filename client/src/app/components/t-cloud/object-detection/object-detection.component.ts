@@ -8,6 +8,7 @@ import { DatePipe } from "@angular/common";
 import { SessionStorageService } from "src/app/services/session-storage.service";
 import { NavigationService } from "src/app/shared/services/navigation.service";
 import { throwError } from "rxjs";
+import { environment } from "src/environments/environment";
 
 const URL = "http://" + ip + ":3000/api/upload/pic";
 
@@ -20,6 +21,7 @@ export class ObjectDetectionComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({
     url: URL,
     itemAlias: "photo",
+    headers: [{ name: "x-api-key", value: environment.xApiKey }],
   });
 
   constructor(
