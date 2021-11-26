@@ -89,7 +89,7 @@ export class ObjectDetectionComponent implements OnInit {
         );
         // this.router.navigate(['/objectDetection/img/label'], { state: { data: JSON.parse(response) } });
       } else if (status === 401) {
-        this.logout();
+        this.logout(response);
       } else {
         return throwError(response);
       }
@@ -115,7 +115,8 @@ export class ObjectDetectionComponent implements OnInit {
     );
   }
 
-  logout() {
+  logout(response: any) {
+    alert(JSON.parse(response).message);
     this.navigationService.isUserLoggedIn.next(false);
     this.navigationService.isUserLoggedIn.next(null);
     this.sessionService.removeItems();

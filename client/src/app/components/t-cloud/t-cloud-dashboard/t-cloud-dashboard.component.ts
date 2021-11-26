@@ -139,7 +139,7 @@ export class TCloudDashboardComponent implements OnInit {
         this.getUnAnnDsets("data");
         alert("Dataset created successfully");
       } else if (status === 401) {
-        this.logout();
+        this.logout(response);
       } else {
         return throwError(response);
       }
@@ -193,7 +193,7 @@ export class TCloudDashboardComponent implements OnInit {
         this.uploadImage = false;
         alert("There is an error Processing you request. Please try again.");
       } else if (status === 401) {
-        this.logout();
+        this.logout(response);
       } else {
         return throwError(response);
       }
@@ -260,7 +260,8 @@ export class TCloudDashboardComponent implements OnInit {
     this.photoUploader.clearQueue();
   }
 
-  logout() {
+  logout(response: any) {
+    alert(JSON.parse(response).message);
     this.navigationService.isUserLoggedIn.next(false);
     this.navigationService.isUserLoggedIn.next(null);
     this.sessionService.removeItems();

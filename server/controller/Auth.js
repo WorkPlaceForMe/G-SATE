@@ -71,9 +71,23 @@ let Auth = {
                 message: 'Invalid password!',
               })
             } else {
+              if (userDetails[0].role !== 'ADMIN') {
+                const accessibility = await userService.checkAccessibility(
+                  userDetails[0].startDate,
+                  userDetails[0].endDate,
+                )
+                if (!accessibility) {
+                  return res.status(400).send({
+                    message:
+                      'You are not authorized to login, Please contact with admin panel!',
+                  })
+                }
+              }
+
               const tokenDetails = await userService.genrateUserTokens(
                 userDetails[0],
               )
+
               const responseObj = {
                 id: userDetails[0].id,
                 name: userDetails[0].name,
@@ -85,6 +99,8 @@ let Auth = {
                 accessToken: tokenDetails.accessToken,
                 accessTokenExpiry: tokenDetails.accessTokenExpiry,
                 createdAt: userDetails[0].createdAt,
+                startDate: userDetails[0].startDate,
+                endDate: userDetails[0].endDate,
               }
               res.status(200).json(responseObj)
             }

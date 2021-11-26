@@ -34,10 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          this.navigationService.isUserLoggedIn.next(false);
-          this.navigationService.isUserLoggedIn.next(null);
-          this.sessionService.removeItems();
-          this.router.navigate(["/auth/login"]);
+          this.logoutAndNavigateToLogin(error);
         } else {
           return throwError(error);
         }
@@ -51,5 +48,13 @@ export class AuthInterceptor implements HttpInterceptor {
         authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  private logoutAndNavigateToLogin(error: any) {
+    alert(error.error.message);
+    this.navigationService.isUserLoggedIn.next(false);
+    this.navigationService.isUserLoggedIn.next(null);
+    this.sessionService.removeItems();
+    this.router.navigate(["/auth/login"]);
   }
 }

@@ -110,7 +110,7 @@ export class ImagesFormComponent implements OnInit {
         this.getImagesFiles();
         console.log("Uploaded:", item, status, response);
       } else if (status === 401) {
-        this.logout();
+        this.logout(response);
       } else {
         return throwError(response);
       }
@@ -139,7 +139,8 @@ export class ImagesFormComponent implements OnInit {
   //   )
   // }
 
-  logout() {
+  logout(response: any) {
+    alert(JSON.parse(response).message);
     this.navigationService.isUserLoggedIn.next(false);
     this.navigationService.isUserLoggedIn.next(null);
     this.sessionService.removeItems();

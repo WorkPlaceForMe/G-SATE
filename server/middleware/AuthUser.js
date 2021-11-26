@@ -83,7 +83,7 @@ validateUserAccessToken = async (req, res, next) => {
       message: 'Unauthorized Access',
     })
   } else {
-    User.getUserById(decodedData.id, function (err, userDetails) {
+    User.getUserById(decodedData.id, async function (err, userDetails) {
       if (err) {
         return res.json(err)
       } else {
@@ -92,6 +92,16 @@ validateUserAccessToken = async (req, res, next) => {
             message: 'Unauthorized Access',
           })
         } else {
+          const accessibility = await userService.checkAccessibility(
+            userDetails[0].startDate,
+            userDetails[0].endDate,
+          )
+          if (!accessibility) {
+            return res.status(401).send({
+              message:
+                'You are not authorized to be loggedin, Please contact with admin panel!',
+            })
+          }
           req['userDetails'] = {
             id: userDetails[0].id,
             name: userDetails[0].name,

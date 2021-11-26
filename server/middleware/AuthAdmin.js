@@ -46,6 +46,7 @@ validateAdminAccessToken = async (req, res, next) => {
 
 validateUpdateAccessibility = async (req, res, next) => {
   const body = req.body
+  const format = 'YYYY-MM-DD HH:mm:ss'
   if (!req.params.id) {
     return res.status(400).send({
       message: 'User id is required!',
@@ -61,23 +62,20 @@ validateUpdateAccessibility = async (req, res, next) => {
       message: 'End date is required!',
     })
   }
-  if (!moment(body.startDate, 'DD/MM/YYYY', true).isValid()) {
+  if (!moment(body.startDate, format, true).isValid()) {
     return res.status(400).send({
-      message: 'Invalid start date format,pattern must be (DD/MM/YYYY)',
+      message: `Invalid start date format,pattern must be ${format}`,
     })
   }
-  if (!moment(body.endDate, 'DD/MM/YYYY', true).isValid()) {
+  if (!moment(body.endDate, format, true).isValid()) {
     return res.status(400).send({
-      message: 'Invalid end date format,pattern must be (DD/MM/YYYY)',
+      message: `Invalid end date format,pattern must be ${format}`,
     })
   }
 
-  req.body.startDate = moment(
-    moment(String(body.startDate), 'DD/MM/YYYY').format(),
+  const difference = moment(body.startDate, format).diff(
+    moment(body.endDate, format),
   )
-  req.body.endDate = moment(moment(String(body.endDate), 'DD/MM/YYYY').format())
-  const difference = req.body.startDate.diff(req.body.endDate, 'days')
-
   if (difference > 0) {
     return res.status(400).send({
       message: 'End date must be greater than start date',

@@ -77,7 +77,7 @@ var User = {
 
   getUsersByAdmin: function (callback) {
     return db.query(
-      'SELECT id,name,role,uuid,email,mobileNumber,address,createdAt FROM users WHERE role = "OPERATOR" ORDER BY id DESC',
+      'SELECT id,name,role,uuid,email,mobileNumber,address,createdAt,startDate,endDate FROM users WHERE role = "OPERATOR" ORDER BY id DESC',
       callback,
     )
   },

@@ -13,4 +13,8 @@ export class AdminService {
   getUsers() {
     return this.http.get<any>(`${this.API_URL}/admin/users`);
   }
+
+  updateUserAccessibility(id: string, dateTime: any) {
+    return this.http.put(`${this.API_URL}/admin/accessibility/${id}`, dateTime);
+  }
 }

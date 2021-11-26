@@ -36,20 +36,76 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="PHONE">
+        <ngx-datatable-column name="ACCESSIBILITY">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <span class="my-2">{{ row.mobileNumber || "--" }} </span>
+            <span class="my-2"
+              >{{
+                (row.startDate ? (row.startDate | date: "MM/dd/yyyy") : "") +
+                  "-" +
+                  (row.endDate ? (row.endDate | date: "MM/dd/yyyy") : "")
+              }}
+            </span>
           </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column name="ACTION">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <button type="button" class="btn btn-warning btn-block">
+            <button
+              type="button"
+              class="btn btn-warning btn-block"
+              data-dismiss="modal"
+              (click)="openModal(template, row)"
+            >
               Update Accessibility
             </button>
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
+
+      <ng-template #template>
+        <div class="modal-header">
+          <h5 class="modal-title pull-left">Select Date Range</h5>
+          <button
+            type="button"
+            class="close pull-right"
+            aria-label="Close"
+            (click)="hideModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="mb-4">
+              <input
+                class="form-control"
+                #drp="bsDaterangepicker"
+                bsDaterangepicker
+                [minDate]="minDate"
+                [(ngModel)]="bsRangeValue"
+              />
+            </div>
+            <!-- <div>
+              <button
+                class="btn btn-success"
+                (click)="drp.toggle()"
+                [attr.aria-expanded]="drp.isOpen"
+                type="button"
+              >
+                Date Range Picker
+              </button>
+            </div> -->
+            <button
+              type="button"
+              class="btn btn-primary btn-block"
+              data-dismiss="modal"
+              (click)="submit()"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

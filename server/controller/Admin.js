@@ -19,6 +19,7 @@ let Admin = {
   updateUserAccessibility: async (req, res) => {
     try {
       const requestData = req.body
+      console.log(requestData)
       User.getUserById(req.params.id, function (err, userDetails) {
         if (err) {
           return res.json(err)
@@ -34,12 +35,8 @@ let Admin = {
           } else {
             const updateData = {
               id: userDetails[0].id,
-              startDate: moment(new Date(requestData.startDate)).format(
-                'YYYY-MM-DD HH:mm:ss',
-              ),
-              endDate: moment(new Date(requestData.endDate)).format(
-                'YYYY-MM-DD HH:mm:ss',
-              ),
+              startDate: requestData.startDate,
+              endDate: requestData.endDate,
             }
             console.log(updateData)
             User.updateAccessibility(updateData, function (err, updated) {
