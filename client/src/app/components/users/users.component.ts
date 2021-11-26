@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
       (res: any) => {
         this.spin = false;
         this.rows = res;
+        console.log(res);
       },
       (err) => {
         this.spin = false;
@@ -51,9 +52,13 @@ export class UsersComponent implements OnInit {
 
   openModal(template: TemplateRef<any>, data: any) {
     if (data.startDate && data.endDate) {
+      // const dateValue = [
+      //   new Date(moment(data.startDate).format(format)),
+      //   new Date(moment(data.endDate).format(format)),
+      // ];
       const dateValue = [
-        new Date(moment(data.startDate).format(format)),
-        new Date(moment(data.endDate).format(format)),
+        new Date(moment.utc(data.startDate).format(format)),
+        new Date(moment.utc(data.endDate).format(format)),
       ];
       this.bsRangeValue = dateValue;
     }
@@ -95,4 +100,16 @@ export class UsersComponent implements OnInit {
     this.modalRef.hide();
     this.bsRangeValue = [this.bsValue, this.maxDate];
   }
+
+  formatDate(start: string, end: string) {
+    const startDate = moment.utc(start).format("YYYY/MM/DD");
+    const endDate = moment.utc(end).format("YYYY/MM/DD");
+    return start && end ? `${startDate}-${endDate}` : "-";
+  }
+
+  // {{
+  //   (row.startDate ? (row.startDate | date: "MM/dd/yyyy") : "") +
+  //     "-" +
+  //     (row.endDate ? (row.endDate | date: "MM/dd/yyyy") : "")
+  // }}
 }

@@ -39,11 +39,7 @@
         <ngx-datatable-column name="ACCESSIBILITY">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <span class="my-2"
-              >{{
-                (row.startDate ? (row.startDate | date: "MM/dd/yyyy") : "") +
-                  "-" +
-                  (row.endDate ? (row.endDate | date: "MM/dd/yyyy") : "")
-              }}
+              >{{ formatDate(row.startDate, row.endDate) }}
             </span>
           </ng-template>
         </ngx-datatable-column>
