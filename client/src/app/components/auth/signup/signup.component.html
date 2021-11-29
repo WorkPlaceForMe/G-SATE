@@ -60,6 +60,32 @@
                 </span>
               </span>
             </div>
+            <h5 class="mb-2 text-primary text-left">User Role</h5>
+            <div class="form-group mb-4">
+              <select class="form-control select-picker" formControlName="role">
+                <option value="" disabled selected="selected">
+                  Select User Role
+                </option>
+                <option
+                  *ngFor="let userRole of userRoleArray"
+                  [value]="userRole.value"
+                >
+                  {{ userRole.name }}
+                </option>
+              </select>
+              <span
+                style="float: left"
+                *ngIf="
+                  !signupForm.controls.role.valid &&
+                  signupForm.controls.role.touched
+                "
+                class="error text-danger"
+              >
+                <span *ngIf="signupForm.controls.role.hasError('required')">
+                  Please select an user role
+                </span>
+              </span>
+            </div>
             <h5 class="mb-2 text-primary text-left">Address</h5>
             <div class="form-group mb-4">
               <input

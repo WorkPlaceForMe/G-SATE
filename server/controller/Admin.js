@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const moment = require('moment')
+const userRoleArray = ['BRANCH', 'CLIENT', 'USER']
 
 let Admin = {
   getUsers: async (req, res) => {
@@ -28,7 +28,7 @@ let Admin = {
             return res.status(400).send({
               message: 'User not exists',
             })
-          } else if (userDetails[0].role !== 'OPERATOR') {
+          } else if (!userRoleArray.includes(userDetails[0].role)) {
             return res.status(400).send({
               message: 'Can not do this action',
             })

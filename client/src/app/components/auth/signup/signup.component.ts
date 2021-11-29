@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../services/user.service";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UserRoleName, UserRoleValue } from "src/app/models/User";
 
 @Component({
   selector: "app-signup",
@@ -12,6 +13,11 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   spin: boolean = false;
   show: boolean = false;
+  userRoleArray = [
+    { name: UserRoleName.branch, value: UserRoleValue.branch },
+    { name: UserRoleName.client, value: UserRoleValue.client },
+    { name: UserRoleName.user, value: UserRoleValue.user },
+  ];
   // showConfirmPassword: boolean = false;
 
   constructor(
@@ -26,6 +32,7 @@ export class SignupComponent implements OnInit {
         name: ["", [Validators.required]],
         mobileNumber: ["", [Validators.pattern(/^[0-9]\d*$/)]],
         address: [""],
+        role: ["", [Validators.required]],
         // confirmPassword: [{ value: "", disabled: true }, [Validators.required]],
       }
       //  { validator: this.passwordMatchValidator }
@@ -41,6 +48,7 @@ export class SignupComponent implements OnInit {
         .signup({
           name: this.signupForm.value.name,
           mobileNumber: this.signupForm.value.mobileNumber,
+          role: this.signupForm.value.role,
           address: this.signupForm.value.address,
           email: this.signupForm.value.email,
           password: this.signupForm.value.password,

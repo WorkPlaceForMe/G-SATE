@@ -3,6 +3,7 @@ const moment = require('moment')
 const bcrypt = require('bcrypt')
 const userService = require('../services/users')
 const { v4: uuidv4 } = require('uuid')
+const userRoleArray = ['BRANCH', 'CLIENT', 'USER', 'ADMIN']
 
 let Auth = {
   signup: async (req, res) => {
@@ -29,7 +30,7 @@ let Auth = {
               password: bcryptedPassword,
               mobileNumber: body.mobileNumber || '',
               address: body.address || '',
-              role: 'OPERATOR',
+              role: body.role,
               createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
             }
             console.log(userData)
@@ -62,6 +63,11 @@ let Auth = {
               message: 'Please provide your registered email address!',
             })
           } else {
+            if (!userRoleArray.includes(userDetails[0].role)) {
+              return res.status(400).send({
+                message: 'Can not do this action, You are not a valid user!',
+              })
+            }
             const isSame = await bcrypt.compare(
               reqBody.password,
               userDetails[0].password,

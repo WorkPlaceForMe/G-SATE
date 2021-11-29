@@ -1,4 +1,4 @@
-export interface User{
+export interface User {
   id?: number;
   name?: string;
   gender?: string;
@@ -8,4 +8,16 @@ export interface User{
   uuid?: string;
   errors?: string;
   //The ? is for make it optionals
+}
+
+export enum UserRoleName {
+  branch = "Branch",
+  client = "Client",
+  user = "User",
+}
+
+export enum UserRoleValue {
+  branch = "BRANCH",
+  client = "CLIENT",
+  user = "USER",
 }

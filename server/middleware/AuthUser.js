@@ -1,5 +1,6 @@
 const userService = require('../services/users')
 const User = require('../models/User')
+const userRoleArray = ['BRANCH', 'CLIENT', 'USER']
 
 validateApiKey = (req, res, next) => {
   const apiKey = req.headers['x-api-key']
@@ -37,6 +38,17 @@ validateSignupApi = (req, res, next) => {
   if (!body.password) {
     return res.status(400).send({
       message: 'Password is required!',
+    })
+  }
+
+  if (!body.role) {
+    return res.status(400).send({
+      message: 'User role is required!',
+    })
+  }
+  if (!userRoleArray.includes(body.role)) {
+    return res.status(400).send({
+      message: `User role must be one of ${userRoleArray}`,
     })
   }
   next()
@@ -92,15 +104,23 @@ validateUserAccessToken = async (req, res, next) => {
             message: 'Unauthorized Access',
           })
         } else {
-          const accessibility = await userService.checkAccessibility(
-            userDetails[0].startDate,
-            userDetails[0].endDate,
-          )
-          if (!accessibility) {
+          userRoleArray.push('ADMIN')
+          if (!userRoleArray.includes(userDetails[0].role)) {
             return res.status(401).send({
-              message:
-                'You are not authorized to be loggedin, Please contact with admin panel!',
+              message: 'Unauthorized Access',
             })
+          }
+          if (userDetails[0].role !== 'ADMIN') {
+            const accessibility = await userService.checkAccessibility(
+              userDetails[0].startDate,
+              userDetails[0].endDate,
+            )
+            if (!accessibility) {
+              return res.status(401).send({
+                message:
+                  'You are not authorized to be loggedin, Please contact with admin panel!',
+              })
+            }
           }
           req['userDetails'] = {
             id: userDetails[0].id,

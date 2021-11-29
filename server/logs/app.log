@@ -1022,3 +1022,4 @@
 21-10-2021 03:54:57 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/video_test_2'
 23-11-2021 05:42:27 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/saima_test'
 23-11-2021 05:42:41 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/saima1'
+29-11-2021 02:59:57 PM - error: process_api: Error: ENOENT: no such file or directory, scandir '../resources/datasets/merge datasets'
