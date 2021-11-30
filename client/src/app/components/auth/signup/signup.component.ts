@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../services/user.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserRoleName, UserRoleValue } from "src/app/models/User";
 
@@ -23,7 +23,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     this.signupForm = this.fb.group(
       {
@@ -57,7 +58,13 @@ export class SignupComponent implements OnInit {
           (res) => {
             this.spin = false;
             console.log(res);
-            this.router.navigate(["/auth/login"]);
+            alert(
+              `${res.message},Verification OTP sent to your registered email ${this.signupForm.value.email}`
+            );
+            this.router.navigate(["/auth/verify-otp"], {
+              relativeTo: this.activatedRoute,
+              queryParams: { email: this.signupForm.value.email },
+            });
           },
           (err) => {
             this.spin = false;

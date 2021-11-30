@@ -62,7 +62,7 @@ var User = {
 
   createNewUser: function (userDetails, callback) {
     return db.query(
-      `INSERT INTO users (name, email, password, uuid, mobileNumber, address, role, createdAt) VALUES ("${userDetails.name}","${userDetails.email}","${userDetails.password}","${userDetails.uuid}","${userDetails.mobileNumber}","${userDetails.address}","${userDetails.role}","${userDetails.createdAt}")`,
+      `INSERT INTO users (name, email, password, uuid, mobileNumber, address, role, createdAt, verificationOTP, otpExpiredAt) VALUES ("${userDetails.name}","${userDetails.email}","${userDetails.password}","${userDetails.uuid}","${userDetails.mobileNumber}","${userDetails.address}","${userDetails.role}","${userDetails.createdAt}","${userDetails.verificationOTP}","${userDetails.otpExpiredAt}")`,
       callback,
     )
   },
@@ -94,6 +94,30 @@ var User = {
     return db.query(
       'UPDATE users set startDate=?,endDate=? where id=?',
       [data.startDate, data.endDate, data.id],
+      callback,
+    )
+  },
+
+  verifyOTPByEmail: function (data, callback) {
+    return db.query(
+      'SELECT * FROM users WHERE email = ? AND verificationOTP = ?',
+      [data.email, data.verificationOTP],
+      callback,
+    )
+  },
+
+  updateVerificationStatus: function (data, callback) {
+    return db.query(
+      'UPDATE users set verificationStatus=? where id=?',
+      [data.status, data.id],
+      callback,
+    )
+  },
+
+  updateVerificationOTP: function (data, callback) {
+    return db.query(
+      'UPDATE users set verificationOTP=?, otpExpiredAt=? where id=?',
+      [data.verificationOTP, data.otpExpiredAt, data.id],
       callback,
     )
   },

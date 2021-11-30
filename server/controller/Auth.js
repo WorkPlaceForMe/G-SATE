@@ -3,7 +3,9 @@ const moment = require('moment')
 const bcrypt = require('bcrypt')
 const userService = require('../services/users')
 const { v4: uuidv4 } = require('uuid')
+const emailService = require('../services/email')
 const userRoleArray = ['BRANCH', 'CLIENT', 'USER', 'ADMIN']
+const format = 'YYYY-MM-DD HH:mm:ss'
 
 let Auth = {
   signup: async (req, res) => {
@@ -22,6 +24,7 @@ let Auth = {
               body.password,
               Number(process.env.passwordSaltRound),
             )
+            const OTP = await emailService.generateOTP()
 
             const userData = {
               uuid: uuidv4(),
@@ -31,16 +34,93 @@ let Auth = {
               mobileNumber: body.mobileNumber || '',
               address: body.address || '',
               role: body.role,
-              createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+              createdAt: moment().format(format),
+              verificationOTP: OTP,
+              otpExpiredAt: moment()
+                .add(Number(process.env.otpExpiry), 'minutes')
+                .format(format),
             }
-            console.log(userData)
-            User.createNewUser(userData, function (err, userCreated) {
+            console.log(
+              `OTP -- ${userData.email}`,
+              userData.verificationOTP,
+              userData.otpExpiredAt,
+            )
+            User.createNewUser(userData, async function (err, userCreated) {
               if (err) {
                 return res.json(err)
               } else {
                 res.status(200).json({
                   message: 'You have registered successfully',
                 })
+                await emailService.sendOTP(OTP, userData)
+              }
+            })
+          }
+        }
+      })
+    } catch (e) {
+      console.log('error', e)
+    }
+  },
+
+  verifyOTP: async (req, res) => {
+    try {
+      const requestData = {
+        email: req.body.email,
+        verificationOTP: req.body.otp,
+      }
+      User.getUserByEmail(requestData.email, async function (err, userDetails) {
+        if (err) {
+          return res.json(err)
+        } else {
+          if (userDetails && userDetails.length !== 1) {
+            return res.status(400).send({
+              message: 'Provided email is not registered!',
+            })
+          } else {
+            User.verifyOTPByEmail(requestData, async function (err, data) {
+              if (err) {
+                return res.json(err)
+              } else {
+                if (data && data.length !== 1) {
+                  return res.status(400).send({
+                    message: 'Invalid OTP Provided',
+                  })
+                } else {
+                  if (data[0].verificationStatus === 1) {
+                    return res.status(400).send({
+                      message:
+                        'Provided email is already verified, Please go to login!',
+                    })
+                  } else {
+                    const otpExpired = await userService.checkOTPExpired(
+                      data[0].otpExpiredAt,
+                    )
+                    if (otpExpired) {
+                      return res.status(400).send({
+                        message:
+                          'OTP expired,Click on resend OTP to get new OTP!',
+                      })
+                    } else {
+                      User.updateVerificationStatus(
+                        { status: 1, id: data[0].id },
+                        async function (err, updated) {
+                          if (err) {
+                            return res.json(err)
+                          } else {
+                            res.status(200).json({
+                              message: 'OTP verified successfully',
+                            })
+                            await emailService.sendVerificationMail({
+                              name: data[0].name,
+                              email: data[0].email,
+                            })
+                          }
+                        },
+                      )
+                    }
+                  }
+                }
               }
             })
           }
@@ -107,9 +187,94 @@ let Auth = {
                 createdAt: userDetails[0].createdAt,
                 startDate: userDetails[0].startDate,
                 endDate: userDetails[0].endDate,
+                verificationStatus: userDetails[0].verificationStatus,
               }
               res.status(200).json(responseObj)
             }
+          }
+        }
+      })
+    } catch (e) {
+      console.log('error', e)
+    }
+  },
+
+  resendOTP: async (req, res) => {
+    const body = req.body
+    try {
+      User.getUserByEmail(body.email, async function (err, data) {
+        if (err) {
+          return res.json(err)
+        } else {
+          if (data && data.length !== 1) {
+            return res.status(400).send({
+              message: 'Provided email is not registered!',
+            })
+          } else {
+            if (data[0].verificationStatus === 1) {
+              return res.status(400).send({
+                message:
+                  'Provided email is already verified, Please go to login!',
+              })
+            } else {
+              const OTP = await emailService.generateOTP()
+              const userData = {
+                id: data[0].id,
+                verificationOTP: OTP,
+                otpExpiredAt: moment()
+                  .add(Number(process.env.otpExpiry), 'minutes')
+                  .format(format),
+              }
+              console.log(
+                `OTP -- ${body.email}`,
+                userData.verificationOTP,
+                userData.otpExpiredAt,
+              )
+              User.updateVerificationOTP(userData, async function (
+                err,
+                updated,
+              ) {
+                if (err) {
+                  return res.json(err)
+                } else {
+                  res.status(200).json({
+                    message: 'OTP resent successfully',
+                  })
+                  await emailService.sendOTP(OTP, {
+                    name: data[0].name,
+                    email: body.email,
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
+    } catch (e) {
+      console.log('error', e)
+    }
+  },
+
+  verificationStatus: async (req, res) => {
+    if (!req.params.email) {
+      return res.status(400).send({
+        message: 'Email is required!',
+      })
+    }
+    try {
+      User.getUserByEmail(req.params.email, async function (err, userDetails) {
+        if (err) {
+          return res.json(err)
+        } else {
+          if (userDetails && userDetails.length !== 1) {
+            return res.status(400).send({
+              message: 'Provided email is not registered!',
+            })
+          } else {
+            res.status(200).json({
+              verificationStatus: userDetails[0].verificationStatus,
+              role: userDetails[0].role,
+            })
           }
         }
       })

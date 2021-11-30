@@ -85,6 +85,8 @@ import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
 import { InterceptorProviders } from "./interceptors";
 import { UsersComponent } from "./components/users/users.component";
+import { OtpVerificationComponent } from "./components/auth/otp-verification/otp-verification.component";
+import { NgxOtpInputModule } from "ngx-otp-input";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -135,6 +137,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     TestResultComponent,
     CustomTrainedModelsComponent,
     UsersComponent,
+    OtpVerificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -165,6 +168,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     UiSwitchModule,
     NgxDatatableModule,
     ModalModule.forRoot(),
+    NgxOtpInputModule,
   ],
   providers: [
     FacesService,

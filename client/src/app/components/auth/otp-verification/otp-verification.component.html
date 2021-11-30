@@ -1,0 +1,50 @@
+<div
+  class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/camera-edit-bg.jpg)' }"
+>
+  <div class="container container-medium text-center z-index-1 text-white">
+    <div
+      class="d-flex justify-content-center position-fixed loader"
+      *ngIf="spin"
+    >
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <h2 class="text-white">PLEASE VERIFY YOUR EMAIL {{ email }}</h2>
+    <h5 class="mb-4 text-white">OTP is valid only for 10 min</h5>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div class="p-5 custom-card rounded">
+          <div class="text-center pl-3 mb-2">
+            <h4 class="mb-2 text-primary text-left">Enter OTP</h4>
+            <ngx-otp-input
+              [config]="otpInputConfig"
+              (otpChange)="handeOtpChange($event)"
+              (fill)="handleFillEvent($event)"
+            >
+            </ngx-otp-input>
+          </div>
+          <div class="text-center pt-3">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block"
+              [disabled]="!email || this.otp.length !== 5"
+              (click)="verify()"
+            >
+              Verify
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary btn-block"
+              [disabled]="!email"
+              (click)="resendOTP()"
+            >
+              Resend OTP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

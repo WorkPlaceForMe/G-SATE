@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const moment = require('moment')
+const format = 'YYYY-MM-DD HH:mm:ss'
 
 genrateUserTokens = (userDetails) => {
   const accessTokenExpiry = Number(process.env.accessTokenExpiry)
@@ -33,7 +34,6 @@ parseBearer = (bearer) => {
 }
 
 checkAccessibility = (startTime, endTime) => {
-  const format = 'YYYY-MM-DD HH:mm:ss'
   const currentDateTime = moment().format(format)
   const startDateTime = moment(new Date(startTime)).format(format)
   const endDateTime = moment(new Date(endTime)).format(format)
@@ -47,10 +47,16 @@ checkAccessibility = (startTime, endTime) => {
   }
 }
 
+checkOTPExpired = (time) => {
+  const expired = moment().isAfter(new Date(time))
+  return expired ? true : false
+}
+
 const userService = {
   genrateUserTokens: genrateUserTokens,
   verifyUserToken: verifyUserToken,
   parseBearer: parseBearer,
   checkAccessibility: checkAccessibility,
+  checkOTPExpired: checkOTPExpired,
 }
 module.exports = userService

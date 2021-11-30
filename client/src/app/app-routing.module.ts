@@ -36,11 +36,16 @@ import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
 import { AuthGuardService } from "./services/auth-guard.service";
 import { UsersComponent } from "./components/users/users.component";
+import { OtpVerificationComponent } from "./components/auth/otp-verification/otp-verification.component";
 
 const routes: Routes = [
   {
     path: "auth/signup",
     component: SignupComponent,
+  },
+  {
+    path: "auth/verify-otp",
+    component: OtpVerificationComponent,
   },
   {
     path: "auth/login",

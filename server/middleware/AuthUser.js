@@ -135,10 +135,37 @@ validateUserAccessToken = async (req, res, next) => {
   }
 }
 
+validateOTPVerification = (req, res, next) => {
+  const body = req.body
+  if (!body.email) {
+    return res.status(400).send({
+      message: 'Email is required!',
+    })
+  }
+  if (!body.otp) {
+    return res.status(400).send({
+      message: 'OTP is required!',
+    })
+  }
+  next()
+}
+
+validateResendOTP = (req, res, next) => {
+  const body = req.body
+  if (!body.email) {
+    return res.status(400).send({
+      message: 'Email is required!',
+    })
+  }
+  next()
+}
+
 const authUser = {
   validateApiKey: validateApiKey,
   validateSignupApi: validateSignupApi,
   validateLoginApi: validateLoginApi,
   validateUserAccessToken: validateUserAccessToken,
+  validateOTPVerification: validateOTPVerification,
+  validateResendOTP: validateResendOTP,
 }
 module.exports = authUser
