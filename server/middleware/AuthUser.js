@@ -54,7 +54,7 @@ validateSignupApi = (req, res, next) => {
   next()
 }
 
-validateLoginApi = (req, res, next) => {
+validateEmailPassword = (req, res, next) => {
   const body = req.body
   if (!body.email) {
     return res.status(400).send({
@@ -163,7 +163,7 @@ validateResendOTP = (req, res, next) => {
 const authUser = {
   validateApiKey: validateApiKey,
   validateSignupApi: validateSignupApi,
-  validateLoginApi: validateLoginApi,
+  validateEmailPassword: validateEmailPassword,
   validateUserAccessToken: validateUserAccessToken,
   validateOTPVerification: validateOTPVerification,
   validateResendOTP: validateResendOTP,

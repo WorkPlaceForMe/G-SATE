@@ -1,14 +1,14 @@
 const nodemailer = require('nodemailer')
 
-sendEmail = async (body, to, subject) => {
+sendEmail = async (body, to, subject, credentials) => {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
-      user: process.env.gmailUserName,
-      pass: process.env.gmailPassword,
+      user: credentials.email || process.env.gmailUserName,
+      pass: credentials.password || process.env.gmailPassword,
     },
   })
   const recipients = to.toString()
@@ -27,15 +27,16 @@ sendEmail = async (body, to, subject) => {
   return sent
 }
 
-sendOTP = async (code, user) => {
+sendOTP = async (code, user, credentials) => {
   const message = `<h3>Hi ${user.name},</h3>
-          <p>Here's the verification OTP: <strong>${code}</strong></p>
+          <p>Here's the OTP for verification: <strong>${code}</strong></p>
           <p>If you believe you did this in error, please ignore this email.</p>`
 
   const sentMail = await sendEmail(
     message,
     [user.email],
     'OTP Verification Code',
+    credentials,
   )
   if (!sentMail) {
     return false
@@ -43,7 +44,7 @@ sendOTP = async (code, user) => {
   return true
 }
 
-sendVerificationMail = async (user) => {
+sendVerificationMail = async (user, credentials) => {
   const message = `<h3>Hi ${user.name},</h3>
         <p>You have registered & verified <strong>successfully</strong></p>`
 
@@ -51,6 +52,7 @@ sendVerificationMail = async (user) => {
     message,
     [user.email],
     'Verified Successfully',
+    credentials,
   )
   if (!sentMail) {
     return false

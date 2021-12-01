@@ -87,6 +87,7 @@ import { InterceptorProviders } from "./interceptors";
 import { UsersComponent } from "./components/users/users.component";
 import { OtpVerificationComponent } from "./components/auth/otp-verification/otp-verification.component";
 import { NgxOtpInputModule } from "ngx-otp-input";
+import { ManageSMTPComponent } from "./components/manage-smtp/manage-smtp.component";
 const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
 
 @NgModule({
@@ -138,6 +139,7 @@ const config: SocketIoConfig = { url: "http://" + ip + ":4444", options: {} };
     CustomTrainedModelsComponent,
     UsersComponent,
     OtpVerificationComponent,
+    ManageSMTPComponent,
   ],
   imports: [
     BrowserModule,

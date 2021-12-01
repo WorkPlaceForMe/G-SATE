@@ -1,6 +1,7 @@
 const userService = require('../services/users')
 const User = require('../models/User')
 const moment = require('moment')
+const Settings = require('../models/Settings')
 
 validateAdminAccessToken = async (req, res, next) => {
   const token = await userService.parseBearer(
@@ -85,8 +86,20 @@ validateUpdateAccessibility = async (req, res, next) => {
   next()
 }
 
+smtpDetails = (req, res, next) => {
+  Settings.getSettingsDetailsByUser(async function (err, settings) {
+    const credentials = {
+      email: settings && settings.length > 0 ? settings[0].email : '',
+      password: settings && settings.length > 0 ? settings[0].password : '',
+    }
+    req['smtpDetails'] = credentials
+    next()
+  })
+}
+
 const authAdmin = {
   validateAdminAccessToken: validateAdminAccessToken,
   validateUpdateAccessibility: validateUpdateAccessibility,
+  smtpDetails: smtpDetails,
 }
 module.exports = authAdmin

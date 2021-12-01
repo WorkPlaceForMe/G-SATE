@@ -37,6 +37,7 @@ import { SignupComponent } from "./components/auth/signup/signup.component";
 import { AuthGuardService } from "./services/auth-guard.service";
 import { UsersComponent } from "./components/users/users.component";
 import { OtpVerificationComponent } from "./components/auth/otp-verification/otp-verification.component";
+import { ManageSMTPComponent } from "./components/manage-smtp/manage-smtp.component";
 
 const routes: Routes = [
   {
@@ -97,6 +98,11 @@ const routes: Routes = [
   {
     path: "users",
     component: UsersComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "manage-smtp-details",
+    component: ManageSMTPComponent,
     canActivate: [AuthGuardService],
   },
   {

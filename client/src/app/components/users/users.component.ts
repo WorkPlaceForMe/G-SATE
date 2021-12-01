@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { AdminService } from "src/app/services/admin.service";
 import * as moment from "moment-timezone";
+import { UserRoleName } from "src/app/models/User";
 const format = "YYYY-MM-DD HH:mm:ss";
 
 @Component({
@@ -105,6 +106,10 @@ export class UsersComponent implements OnInit {
     const startDate = moment.utc(start).format("YYYY/MM/DD");
     const endDate = moment.utc(end).format("YYYY/MM/DD");
     return start && end ? `${startDate}-${endDate}` : "-";
+  }
+
+  formatRole(role: string) {
+    return UserRoleName[role.toLowerCase()];
   }
 
   // {{

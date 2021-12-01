@@ -1,0 +1,92 @@
+<div
+  class="section-padding header-padding inner-banner inner-banner-full bg-white d-flex align-items-center justify-content-center bg-after bg-after-darken bg-after-75"
+  [ngStyle]="{ 'background-image': 'url(/assets/images/camera-edit-bg.jpg)' }"
+>
+  <div class="container container-medium text-center z-index-1 text-white">
+    <div
+      class="d-flex justify-content-center position-fixed loader"
+      *ngIf="spin"
+    >
+      <div class="spinner-border spin" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <h2 class="mb-4 text-uppercase text-white">MANAGE SMTP DETAILS</h2>
+    <form [formGroup]="manageSMTPForm" (ngSubmit)="smtpDetailsSubmit()">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+          <div class="p-5 custom-card rounded">
+            <h4 class="mb-2 text-primary text-left">Email</h4>
+            <div class="form-group mb-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Email"
+                formControlName="email"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !manageSMTPForm.controls.email.valid &&
+                  manageSMTPForm.controls.email.touched
+                "
+                class="error text-danger"
+              >
+                <span
+                  *ngIf="manageSMTPForm.controls.email.hasError('required')"
+                >
+                  Please enter your email
+                </span>
+                <span *ngIf="manageSMTPForm.controls.email.hasError('email')">
+                  Please enter a valid email address
+                </span>
+              </span>
+            </div>
+            <h4 class="mb-2 text-primary text-left">Password</h4>
+            <div class="form-group mb-4">
+              <input
+                [type]="show ? 'text' : 'password'"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="password"
+              />
+              <span
+                style="float: left"
+                *ngIf="
+                  !manageSMTPForm.controls.password.valid &&
+                  manageSMTPForm.controls.password.touched
+                "
+                class="error text-danger"
+              >
+                <span
+                  *ngIf="manageSMTPForm.controls.password.hasError('required')"
+                >
+                  Please enter your password
+                </span>
+              </span>
+              <div style="float: left">
+                <input
+                  type="checkbox"
+                  id="togglePassword"
+                  name="togglePassword"
+                  (click)="showOrHidePassword()"
+                  class="mr-1"
+                />
+                <label for="togglePassword">Show password</label><br />
+              </div>
+            </div>
+            <div class="text-center pt-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                [disabled]="!manageSMTPForm.valid"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

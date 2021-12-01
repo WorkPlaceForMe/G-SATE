@@ -17,4 +17,15 @@ export class AdminService {
   updateUserAccessibility(id: string, dateTime: any) {
     return this.http.put(`${this.API_URL}/admin/accessibility/${id}`, dateTime);
   }
+
+  getSMTPDetails() {
+    return this.http.get<any>(`${this.API_URL}/admin/smtp-details`);
+  }
+
+  updateSMTPDetails(data: any) {
+    return this.http.post<any>(
+      `${this.API_URL}/admin/manage-smtp-details`,
+      data
+    );
+  }
 }

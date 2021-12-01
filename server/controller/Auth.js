@@ -10,6 +10,7 @@ const format = 'YYYY-MM-DD HH:mm:ss'
 let Auth = {
   signup: async (req, res) => {
     const body = req.body
+    const smtpDetails = req['smtpDetails']
     try {
       User.getUserByEmail(body.email, async function (err, data) {
         if (err) {
@@ -52,7 +53,8 @@ let Auth = {
                 res.status(200).json({
                   message: 'You have registered successfully',
                 })
-                await emailService.sendOTP(OTP, userData)
+
+                await emailService.sendOTP(OTP, userData, smtpDetails)
               }
             })
           }
@@ -64,6 +66,7 @@ let Auth = {
   },
 
   verifyOTP: async (req, res) => {
+    const smtpDetails = req['smtpDetails']
     try {
       const requestData = {
         email: req.body.email,
@@ -111,10 +114,13 @@ let Auth = {
                             res.status(200).json({
                               message: 'OTP verified successfully',
                             })
-                            await emailService.sendVerificationMail({
-                              name: data[0].name,
-                              email: data[0].email,
-                            })
+                            await emailService.sendVerificationMail(
+                              {
+                                name: data[0].name,
+                                email: data[0].email,
+                              },
+                              smtpDetails,
+                            )
                           }
                         },
                       )
@@ -201,6 +207,7 @@ let Auth = {
 
   resendOTP: async (req, res) => {
     const body = req.body
+    const smtpDetails = req['smtpDetails']
     try {
       User.getUserByEmail(body.email, async function (err, data) {
         if (err) {
@@ -240,10 +247,14 @@ let Auth = {
                   res.status(200).json({
                     message: 'OTP resent successfully',
                   })
-                  await emailService.sendOTP(OTP, {
-                    name: data[0].name,
-                    email: body.email,
-                  })
+                  await emailService.sendOTP(
+                    OTP,
+                    {
+                      name: data[0].name,
+                      email: body.email,
+                    },
+                    smtpDetails,
+                  )
                 }
               })
             }

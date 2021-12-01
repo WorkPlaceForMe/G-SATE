@@ -5,7 +5,10 @@ const {
   validateAdminAccessToken,
   validateUpdateAccessibility,
 } = require('../middleware/AuthAdmin')
-const { validateApiKey } = require('../middleware/AuthUser')
+const {
+  validateApiKey,
+  validateEmailPassword,
+} = require('../middleware/AuthUser')
 router.use(validateApiKey)
 router.use(validateAdminAccessToken)
 
@@ -19,6 +22,18 @@ router.put('/accessibility/:id', validateUpdateAccessibility, function (
   next,
 ) {
   AdminController.updateUserAccessibility(req, res, next)
+})
+
+router.post('/manage-smtp-details', validateEmailPassword, function (
+  req,
+  res,
+  next,
+) {
+  AdminController.addOrUpdateSMTPDetails(req, res, next)
+})
+
+router.get('/smtp-details', function (req, res, next) {
+  AdminController.getSMTPDetails(req, res, next)
 })
 
 module.exports = router
