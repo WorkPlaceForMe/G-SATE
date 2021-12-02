@@ -58,6 +58,49 @@ let Admin = {
     }
   },
 
+  removeUserAccessibility: async (req, res) => {
+    try {
+      if (!req.params.id) {
+        return res.status(400).send({
+          message: 'User id is required!',
+        })
+      }
+      User.getUserById(req.params.id, function (err, userDetails) {
+        if (err) {
+          return res.json(err)
+        } else {
+          if (userDetails && userDetails.length !== 1) {
+            return res.status(400).send({
+              message: 'User not exists',
+            })
+          } else if (!userRoleArray.includes(userDetails[0].role)) {
+            return res.status(400).send({
+              message: 'Can not do this action',
+            })
+          } else {
+            const updateData = {
+              id: userDetails[0].id,
+              startDate: null,
+              endDate: null,
+            }
+            User.updateAccessibility(updateData, function (err, updated) {
+              if (err) {
+                return res.json(err)
+              } else {
+                res.status(200).send({
+                  success: true,
+                  message: 'User accessibility removed successfully!',
+                })
+              }
+            })
+          }
+        }
+      })
+    } catch (e) {
+      console.log('error', e)
+    }
+  },
+
   addOrUpdateSMTPDetails: async (req, res) => {
     try {
       const adminDetails = req.adminDetails

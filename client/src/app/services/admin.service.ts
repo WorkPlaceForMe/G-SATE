@@ -18,6 +18,10 @@ export class AdminService {
     return this.http.put(`${this.API_URL}/admin/accessibility/${id}`, dateTime);
   }
 
+  removeUserAccessibility(id: string) {
+    return this.http.delete(`${this.API_URL}/admin/accessibility/${id}`);
+  }
+
   getSMTPDetails() {
     return this.http.get<any>(`${this.API_URL}/admin/smtp-details`);
   }

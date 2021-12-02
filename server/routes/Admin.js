@@ -24,6 +24,10 @@ router.put('/accessibility/:id', validateUpdateAccessibility, function (
   AdminController.updateUserAccessibility(req, res, next)
 })
 
+router.delete('/accessibility/:id', function (req, res, next) {
+  AdminController.removeUserAccessibility(req, res, next)
+})
+
 router.post('/manage-smtp-details', validateEmailPassword, function (
   req,
   res,
