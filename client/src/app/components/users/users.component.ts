@@ -148,8 +148,6 @@ export class UsersComponent implements OnInit {
     const expired = moment().isAfter(
       new Date(moment.utc(endDate).format(format))
     );
-    // console.log(moment().format(format), "current date time");
-    // console.log(moment.utc(endDate).format(format), "end date time");
 
     return expired ? true : false;
   }
