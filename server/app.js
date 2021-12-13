@@ -685,8 +685,8 @@ var processImage = (imgPath, path, res) => {
         // 'Authorization': 'Basic cGVydW1hbDpHTVRDNHBlcnVtYWwx' // 'Basic YWRtaW46YWRtaW4='
       },
       auth: {
-        username: 'gsate',
-        password: 'gsate',
+        username: process.env.vistaServerUserName,
+        password: process.env.vistaServerPassword,
       },
       formData: {
         upload: {
