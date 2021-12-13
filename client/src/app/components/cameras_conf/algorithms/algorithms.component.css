@@ -84,12 +84,12 @@
   background-color: #2eb8b8;
   }
 
-.but{
+  .but{
   background-color:yellow;
 }
-  but:hover{background-color:orange;}
+  /* but:hover{background-color:orange;}
 
-  but:focus{background-color:red;}
+  but:focus{background-color:red;} */
   
 
   .alfons{
