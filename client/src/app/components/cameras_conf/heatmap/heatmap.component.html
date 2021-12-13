@@ -1,53 +1,84 @@
 <div class="card border-info mb-3">
-    <div class="card-body">
-        <div id="testNotSameName">
-            <img [src]="camera.heatmap_pic" width="{{heatmap_size.width}}" height="{{heatmap_size.height}}"></div>
-        
-<br>
-<div class="row">
-    <div class="col-md-4" align='center'>
-  <div class="example-wrapper">
-    <label class="example-input-wrapper">
-           Initial Time:
-        <input placeholder="Date" [(ngModel)]="dates" [owlDateTime]="dt1" [max]="max" [selectMode]="'rangeFrom'">
-        <span class="example-trigger" [owlDateTimeTrigger]="dt1">
-                &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
-        </span>
-        <owl-date-time #dt1 firstDayOfWeek='1'></owl-date-time>
-    </label>
-</div>
-</div>
-<div class="col-md-4" align='center'>
-    <a class="btn btn-info btn-block" [href]="['/cameras/heatmap/'+ id]">Erase data</a>
-</div>
-<div class="col-md-4" align='center'>
-<div class="example-wrapper">
-    <label class="example-input-wrapper">
+  <div class="card-body">
+    <div id="testNotSameName">
+      <img
+        [src]="camera.heatmap_pic"
+        alt=""
+        width="{{ heatmap_size.width }}"
+        height="{{ heatmap_size.height }}"
+      />
+    </div>
+
+    <br />
+    <div class="row">
+      <div class="col-md-4" align="center">
+        <div class="example-wrapper">
+          <label class="example-input-wrapper">
+            Initial Time:
+            <input
+              placeholder="Date"
+              [(ngModel)]="dates"
+              [owlDateTime]="dt1"
+              [max]="max"
+              [selectMode]="'rangeFrom'"
+            />
+            <span class="example-trigger" [owlDateTimeTrigger]="dt1">
+              &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+            </span>
+            <owl-date-time #dt1 firstDayOfWeek="1"></owl-date-time>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4" align="center">
+        <a class="btn btn-info btn-block" [href]="['/cameras/heatmap/' + id]"
+          >Erase data</a
+        >
+      </div>
+      <div class="col-md-4" align="center">
+        <div class="example-wrapper">
+          <label class="example-input-wrapper">
             Finish Time:
-        <input placeholder="Date" [(ngModel)]="dates" [owlDateTime]="dt2" [max]="max" [selectMode]="'rangeTo'">
-        <span class="example-trigger" [owlDateTimeTrigger]="dt2">
-                &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
-        </span>
-        <owl-date-time #dt2 firstDayOfWeek='1'></owl-date-time>
-    </label>
-</div>
-</div>
-<br>
-<div class="col-md-4 offset-md-4" align='center'>
-    <label class="example-input-wrapper">
-        Waiting time
-        <select name="dwell" [(ngModel)]="date.dwell" class="custom-select" (change)="onChange1($event)">
+            <input
+              placeholder="Date"
+              [(ngModel)]="dates"
+              [owlDateTime]="dt2"
+              [max]="max"
+              [selectMode]="'rangeTo'"
+            />
+            <span class="example-trigger" [owlDateTimeTrigger]="dt2">
+              &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+            </span>
+            <owl-date-time #dt2 firstDayOfWeek="1"></owl-date-time>
+          </label>
+        </div>
+      </div>
+      <br />
+      <div class="col-md-4 offset-md-4" align="center">
+        <label class="example-input-wrapper">
+          Waiting time
+          <select
+            name="dwell"
+            [(ngModel)]="date.dwell"
+            class="custom-select"
+            (change)="onChange1($event)"
+          >
             <option value="0">People passing by</option>
             <option value="1">People that have wait</option>
             <option value="2">Every person</option>
-        </select>
-    </label>
-</div>
-
-</div>
-<br>
-<button class="btn btn-success btn-block" (click)="getHms(dates[0],dates[1])"><i class="fas fa-dice-d20"></i> Generate</button>
-<br>
-<button class="btn btn-success btn-block" (click)="getAll()"><i class="fas fa-dice-d20"></i> All</button>
-</div>
+          </select>
+        </label>
+      </div>
+    </div>
+    <br />
+    <button
+      class="btn btn-success btn-block"
+      (click)="getHms(dates[0], dates[1])"
+    >
+      <i class="fas fa-dice-d20"></i> Generate
+    </button>
+    <br />
+    <button class="btn btn-success btn-block" (click)="getAll()">
+      <i class="fas fa-dice-d20"></i> All
+    </button>
+  </div>
 </div>

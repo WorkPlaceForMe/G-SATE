@@ -442,7 +442,7 @@ export class AlgorithmsComponent implements OnInit {
       for (let i = 0; i < this.polygons[e].length; i++) {
         if (i == 0) {
           this.ctx.moveTo(this.polygons[e][i]["x"], this.polygons[e][i]["y"]);
-          end;
+          // end;
           this.ctx.fillStyle = pred_colour;
           this.ctx.fillRect(
             this.polygons[e][i]["x"] - 2,
@@ -452,7 +452,7 @@ export class AlgorithmsComponent implements OnInit {
           );
         } else {
           this.ctx.lineTo(this.polygons[e][i]["x"], this.polygons[e][i]["y"]);
-          end;
+          // end;
           this.ctx.fillStyle = pred_colour;
           this.ctx.fillRect(
             this.polygons[e][i]["x"] - 2,
