@@ -23,7 +23,7 @@
               [selectMode]="'rangeFrom'"
             />
             <span class="example-trigger" [owlDateTimeTrigger]="dt1">
-              &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+              &nbsp;&nbsp;<em class="fas fa-calendar-alt"></em>
             </span>
             <owl-date-time #dt1 firstDayOfWeek="1"></owl-date-time>
           </label>
@@ -46,7 +46,7 @@
               [selectMode]="'rangeTo'"
             />
             <span class="example-trigger" [owlDateTimeTrigger]="dt2">
-              &nbsp;&nbsp;<i class="fas fa-calendar-alt"></i>
+              &nbsp;&nbsp;<em class="fas fa-calendar-alt"></em>
             </span>
             <owl-date-time #dt2 firstDayOfWeek="1"></owl-date-time>
           </label>
@@ -74,11 +74,11 @@
       class="btn btn-success btn-block"
       (click)="getHms(dates[0], dates[1])"
     >
-      <i class="fas fa-dice-d20"></i> Generate
+      <em class="fas fa-dice-d20"></em> Generate
     </button>
     <br />
     <button class="btn btn-success btn-block" (click)="getAll()">
-      <i class="fas fa-dice-d20"></i> All
+      <em class="fas fa-dice-d20"></em> All
     </button>
   </div>
 </div>
