@@ -6,6 +6,6 @@ var connection = mysql.createPool({
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
-  // port: 3307,
+  //port: 3307,
 })
 module.exports = connection
