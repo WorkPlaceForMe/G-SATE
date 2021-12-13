@@ -90,8 +90,8 @@ const operationFunction = async (id) => {
         'Content-Type': `application/json`,
       },
       auth: {
-        username: 'gsate',
-        password: 'gsate',
+        username: process.env.vistaServerUserName,
+        password: process.env.vistaServerPassword,
       },
     }
     // return rp(operationOptions)
@@ -194,8 +194,8 @@ let Dataset = {
         'Content-Type': `multipart/form-data;`,
       },
       auth: {
-        username: 'gsate',
-        password: 'gsate',
+        username: process.env.vistaServerUserName,
+        password: process.env.vistaServerPassword,
       },
       formData: {
         upload: {
@@ -232,8 +232,8 @@ let Dataset = {
           'Content-Type': `application/json`,
         },
         auth: {
-          username: 'gsate',
-          password: 'gsate',
+          username: process.env.vistaServerUserName,
+          password: process.env.vistaServerPassword,
         },
         body: JSON.stringify({
           upload: req.body.image_paths,
@@ -334,8 +334,8 @@ let Dataset = {
           'Content-Type': `application/json`,
         },
         auth: {
-          username: 'gsate',
-          password: 'gsate',
+          username: process.env.vistaServerUserName,
+          password: process.env.vistaServerPassword,
         },
         body: JSON.stringify({
           upload: req.body.video_url,
