@@ -213,41 +213,41 @@ app.post('/upload/', validateApiKey, validateUserAccessToken, function (
             res.json('no tiene exif')
           } else if (exifData.image.Orientation == 6) {
             const form = frPicPath[1].split('.')
-            cp.exec(
+            const cmd =
               'ffmpeg -y -i ' +
+              process.env.resources +
+              frPicPath[0] +
+              '/' +
+              form[0] +
+              '.' +
+              form[1] +
+              ' -vf transpose=1 ' +
+              process.env.resources +
+              frPicPath[0] +
+              '/' +
+              form[0] +
+              '_1.' +
+              form[1]
+
+            cp.exec(cmd, { shell: false }, function (err, data) {
+              console.log('err: ', err)
+              console.log('data: ', data)
+              fs.unlink(
                 process.env.resources +
-                frPicPath[0] +
-                '/' +
-                form[0] +
-                '.' +
-                form[1] +
-                ' -vf transpose=1 ' +
-                process.env.resources +
-                frPicPath[0] +
-                '/' +
-                form[0] +
-                '_1.' +
-                form[1],
-              function (err, data) {
-                console.log('err: ', err)
-                console.log('data: ', data)
-                fs.unlink(
-                  process.env.resources +
-                    frPicPath[0] +
-                    '/' +
-                    form[0] +
-                    '.' +
-                    form[1],
-                  (err) => {
-                    if (err) res.send(err)
-                    res.json({
-                      message: 'Successfully deleted',
-                    })
-                    console.log('success')
-                  },
-                )
-              },
-            )
+                  frPicPath[0] +
+                  '/' +
+                  form[0] +
+                  '.' +
+                  form[1],
+                (err) => {
+                  if (err) res.send(err)
+                  res.json({
+                    message: 'Successfully deleted',
+                  })
+                  console.log('success')
+                },
+              )
+            })
           } else {
             res.json('success')
           }
@@ -281,7 +281,7 @@ app.get('/api/turnOn/', validateApiKey, validateUserAccessToken, function (
   res,
   err,
 ) {
-  cp.exec('node algo_server/app.js', function (err, data) {
+  cp.exec('node algo_server/app.js', { shell: false }, function (err, data) {
     if (err) {
       console.log(err)
     }
@@ -352,7 +352,7 @@ app.post(
     let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`
     console.log('command - ', command)
     saveImg(image, dir, function (err, data) {
-      cp.exec(command, function (err, data) {
+      cp.exec(command, { shell: false }, function (err, data) {
         console.log('Err LOG BY INT: ', err)
         console.log('Data LOG BY INT: ', data)
 
@@ -434,7 +434,10 @@ app.get('/api/stopfr/', validateApiKey, validateUserAccessToken, function (
   res,
   err,
 ) {
-  cp.exec('bash stop.sh ' + process.env.passServer, function (err, data) {
+  cp.exec('bash stop.sh ' + process.env.passServer, { shell: false }, function (
+    err,
+    data,
+  ) {
     console.log('err: ', err)
     console.log('data: ', data)
     res.send('success')
@@ -455,6 +458,7 @@ app.get(
           process.env.user +
           ' --pwd ' +
           process.env.password,
+        { shell: false },
         function (err, data) {
           console.log('error: ', err)
           console.log('data: ', data)
@@ -477,6 +481,7 @@ app.get(
           process.env.resources2 +
           ' --cameraid ' +
           camID,
+        { shell: false },
         function (err, data) {
           console.log('error: ', err)
           console.log('data: ', data)
@@ -944,7 +949,10 @@ app.post(
 )
 
 async function f(where) {
-  streamWebCam = cp.exec('bash rtsp_webcam.sh', function (err, data) {
+  streamWebCam = cp.exec('bash rtsp_webcam.sh', { shell: false }, function (
+    err,
+    data,
+  ) {
     console.log('err: ', err)
     console.log('data: ', data)
   })
@@ -957,6 +965,7 @@ async function f(where) {
       ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
       where +
       '/yoursecret',
+    { shell: false },
     function (err, data) {
       console.log('err: ', err)
       console.log('data: ', data)
@@ -981,6 +990,7 @@ app.get(
         ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
         listen +
         '/yoursecret',
+      { shell: false },
       function (err, data) {
         console.log('err: ', err)
         console.log('data: ', data)
@@ -1012,6 +1022,7 @@ app.get(
         a = ports.length
         ws_child = cp.exec(
           'node websocket-relay.js yoursecret ' + listen + ' ' + portUsed,
+          { shell: false },
           function (err, data) {
             console.log('err: ', err)
             console.log('data: ', data)
@@ -1043,18 +1054,22 @@ app.get(
       }
     }
     if (process.platform == 'win32') {
-      cp.exec('taskkill /PID ' + req.params.pid + ' /F', function (err, data) {
-        console.log('err: ', err)
-        console.log('data: ', data)
-      })
+      cp.exec(
+        'taskkill /PID ' + req.params.pid + ' /F',
+        { shell: false },
+        function (err, data) {
+          console.log('err: ', err)
+          console.log('data: ', data)
+        },
+      )
       res.json('FFMPEG killed ' + req.params.pid)
     } else {
-      cp.exec('kill ' + req.params.pid, function (err, data) {
+      cp.exec('kill ' + req.params.pid, { shell: false }, function (err, data) {
         console.log('err: ', err)
         console.log('data: ', data)
       })
       if (pidWeb != 0) {
-        cp.exec('kill ' + pidWeb, function (err, data) {
+        cp.exec('kill ' + pidWeb, { shell: false }, function (err, data) {
           console.log('err: ', err)
           console.log('data: ', data)
         })
