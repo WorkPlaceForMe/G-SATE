@@ -213,41 +213,41 @@ app.post('/upload/', validateApiKey, validateUserAccessToken, function (
             res.json('no tiene exif')
           } else if (exifData.image.Orientation == 6) {
             const form = frPicPath[1].split('.')
-            cp.exec(
+            const cmd =
               'ffmpeg -y -i ' +
+              process.env.resources +
+              frPicPath[0] +
+              '/' +
+              form[0] +
+              '.' +
+              form[1] +
+              ' -vf transpose=1 ' +
+              process.env.resources +
+              frPicPath[0] +
+              '/' +
+              form[0] +
+              '_1.' +
+              form[1]
+
+            cp.exec(cmd, function (err, data) {
+              console.log('err: ', err)
+              console.log('data: ', data)
+              fs.unlink(
                 process.env.resources +
-                frPicPath[0] +
-                '/' +
-                form[0] +
-                '.' +
-                form[1] +
-                ' -vf transpose=1 ' +
-                process.env.resources +
-                frPicPath[0] +
-                '/' +
-                form[0] +
-                '_1.' +
-                form[1],
-              function (err, data) {
-                console.log('err: ', err)
-                console.log('data: ', data)
-                fs.unlink(
-                  process.env.resources +
-                    frPicPath[0] +
-                    '/' +
-                    form[0] +
-                    '.' +
-                    form[1],
-                  (err) => {
-                    if (err) res.send(err)
-                    res.json({
-                      message: 'Successfully deleted',
-                    })
-                    console.log('success')
-                  },
-                )
-              },
-            )
+                  frPicPath[0] +
+                  '/' +
+                  form[0] +
+                  '.' +
+                  form[1],
+                (err) => {
+                  if (err) res.send(err)
+                  res.json({
+                    message: 'Successfully deleted',
+                  })
+                  console.log('success')
+                },
+              )
+            })
           } else {
             res.json('success')
           }
