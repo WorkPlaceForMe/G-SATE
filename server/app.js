@@ -229,7 +229,7 @@ app.post('/upload/', validateApiKey, validateUserAccessToken, function (
               '_1.' +
               form[1]
 
-            cp.exec(cmd, { shell: false }, function (err, data) {
+            cp.exec(cmd, function (err, data) {
               console.log('err: ', err)
               console.log('data: ', data)
               fs.unlink(
@@ -281,7 +281,7 @@ app.get('/api/turnOn/', validateApiKey, validateUserAccessToken, function (
   res,
   err,
 ) {
-  cp.exec('node algo_server/app.js', { shell: false }, function (err, data) {
+  cp.exec('node algo_server/app.js', function (err, data) {
     if (err) {
       console.log(err)
     }
@@ -352,7 +352,7 @@ app.post(
     let command = `cd ./objdet/darknet && ./darknet detector test cfg/combine9k.data cfg/objdet.cfg ../general-objdet-weights/objdet.weights data/${imgName}`
     console.log('command - ', command)
     saveImg(image, dir, function (err, data) {
-      cp.exec(command, { shell: false }, function (err, data) {
+      cp.exec(command, function (err, data) {
         console.log('Err LOG BY INT: ', err)
         console.log('Data LOG BY INT: ', data)
 
@@ -434,10 +434,7 @@ app.get('/api/stopfr/', validateApiKey, validateUserAccessToken, function (
   res,
   err,
 ) {
-  cp.exec('bash stop.sh ' + process.env.passServer, { shell: false }, function (
-    err,
-    data,
-  ) {
+  cp.exec('bash stop.sh ' + process.env.passServer, function (err, data) {
     console.log('err: ', err)
     console.log('data: ', data)
     res.send('success')
@@ -458,7 +455,6 @@ app.get(
           process.env.user +
           ' --pwd ' +
           process.env.password,
-        { shell: false },
         function (err, data) {
           console.log('error: ', err)
           console.log('data: ', data)
@@ -481,7 +477,6 @@ app.get(
           process.env.resources2 +
           ' --cameraid ' +
           camID,
-        { shell: false },
         function (err, data) {
           console.log('error: ', err)
           console.log('data: ', data)
@@ -949,10 +944,7 @@ app.post(
 )
 
 async function f(where) {
-  streamWebCam = cp.exec('bash rtsp_webcam.sh', { shell: false }, function (
-    err,
-    data,
-  ) {
+  streamWebCam = cp.exec('bash rtsp_webcam.sh', function (err, data) {
     console.log('err: ', err)
     console.log('data: ', data)
   })
@@ -965,7 +957,6 @@ async function f(where) {
       ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
       where +
       '/yoursecret',
-    { shell: false },
     function (err, data) {
       console.log('err: ', err)
       console.log('data: ', data)
@@ -990,7 +981,6 @@ app.get(
         ' -f mpegts -codec:v mpeg1video -b:v 800k -r 25 http://localhost:' +
         listen +
         '/yoursecret',
-      { shell: false },
       function (err, data) {
         console.log('err: ', err)
         console.log('data: ', data)
@@ -1022,7 +1012,6 @@ app.get(
         a = ports.length
         ws_child = cp.exec(
           'node websocket-relay.js yoursecret ' + listen + ' ' + portUsed,
-          { shell: false },
           function (err, data) {
             console.log('err: ', err)
             console.log('data: ', data)
@@ -1054,22 +1043,18 @@ app.get(
       }
     }
     if (process.platform == 'win32') {
-      cp.exec(
-        'taskkill /PID ' + req.params.pid + ' /F',
-        { shell: false },
-        function (err, data) {
-          console.log('err: ', err)
-          console.log('data: ', data)
-        },
-      )
+      cp.exec('taskkill /PID ' + req.params.pid + ' /F', function (err, data) {
+        console.log('err: ', err)
+        console.log('data: ', data)
+      })
       res.json('FFMPEG killed ' + req.params.pid)
     } else {
-      cp.exec('kill ' + req.params.pid, { shell: false }, function (err, data) {
+      cp.exec('kill ' + req.params.pid, function (err, data) {
         console.log('err: ', err)
         console.log('data: ', data)
       })
       if (pidWeb != 0) {
-        cp.exec('kill ' + pidWeb, { shell: false }, function (err, data) {
+        cp.exec('kill ' + pidWeb, function (err, data) {
           console.log('err: ', err)
           console.log('data: ', data)
         })
