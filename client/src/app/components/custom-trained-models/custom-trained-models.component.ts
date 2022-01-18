@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { AnnotationsService } from "src/app/services/annotations.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { NavigationService } from "src/app/shared/services/navigation.service";
 
 @Component({
   selector: "app-custom-trained-models",
@@ -16,11 +17,17 @@ export class CustomTrainedModelsComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   modalWarning: string = "";
+  isAdmin: boolean = false;
 
   constructor(
     private annotationsServ: AnnotationsService,
-    private modalService: BsModalService
-  ) {}
+    private modalService: BsModalService,
+    private navigationService: NavigationService
+  ) {
+    this.navigationService.isAdmin.subscribe((value) => {
+      this.isAdmin = value;
+    });
+  }
 
   ngOnInit() {
     this.getCustomTrainedModels();

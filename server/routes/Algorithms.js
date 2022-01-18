@@ -7,10 +7,10 @@ const {
   validateUserAccessToken,
   validateApiKey,
 } = require('../middleware/AuthUser')
+const { validateAdminAccessToken } = require('../middleware/AuthAdmin')
 router.use(validateApiKey)
-router.use(validateUserAccessToken)
 
-router.get('/', function (req, res, next) {
+router.get('/', validateUserAccessToken, function (req, res, next) {
   Algorithm.list(function (err, rows) {
     if (err) {
       res.json(err)
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
   })
 })
 
-router.post('/', function (req, res, next) {
+router.post('/', validateUserAccessToken, function (req, res, next) {
   const algoName = req.body.name
   Algorithm.getOne(algoName, function (err, algorithm) {
     if (err) {
@@ -63,7 +63,7 @@ router.post('/', function (req, res, next) {
   })
 })
 
-router.get('/custom', function (req, res, next) {
+router.get('/custom', validateUserAccessToken, function (req, res, next) {
   Algorithm.getCustomAlgorithms(function (err, algos) {
     if (err) {
       res.json(err)
@@ -73,7 +73,11 @@ router.get('/custom', function (req, res, next) {
   })
 })
 
-router.delete('/custom/:id', function (req, res, next) {
+router.delete('/custom/:id', validateAdminAccessToken, function (
+  req,
+  res,
+  next,
+) {
   const customAlgoId = req.params.id
   Algorithm.getCustomAlgorithmById(customAlgoId, function (err, customAlgo) {
     if (err) {
